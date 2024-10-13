@@ -14,6 +14,9 @@ importers:
       '@react-navigation/native':
         specifier: ^6.0.2
         version: 6.1.18(react-native@0.74.5(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0)
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       expo:
         specifier: ~51.0.28
         version: 51.0.37(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8))
@@ -68,6 +71,9 @@ importers:
       react-native-web:
         specifier: ~0.19.10
         version: 0.19.12(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      tailwind-merge:
+        specifier: ^2.5.3
+        version: 2.5.3
     devDependencies:
       '@babel/core':
         specifier: ^7.20.0
@@ -1846,6 +1852,10 @@ packages:
   clone@2.1.2:
     resolution: {integrity: sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==}
     engines: {node: '>=0.8'}
+
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
 
   co@4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
@@ -4493,6 +4503,9 @@ packages:
 
   symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
+
+  tailwind-merge@2.5.3:
+    resolution: {integrity: sha512-d9ZolCAIzom1nf/5p4LdD5zvjmgSxY0BGgdSvmXIoMYAiPdAW/dSpP7joCDYFY7r/HkEa2qmPtkgsu0xjQeQtw==}
 
   tailwindcss@3.3.2:
     resolution: {integrity: sha512-9jPkMiIBXvPc2KywkraqsUfbfj+dHDb+JPWtSJa9MLFdrPyazI7q6WX2sUrm7R9eVR7qqv3Pas7EvQFzxKnI6w==}
@@ -7590,6 +7603,8 @@ snapshots:
   clone@1.0.4: {}
 
   clone@2.1.2: {}
+
+  clsx@2.1.1: {}
 
   co@4.6.0: {}
 
@@ -10703,6 +10718,8 @@ snapshots:
   supports-preserve-symlinks-flag@1.0.0: {}
 
   symbol-tree@3.2.4: {}
+
+  tailwind-merge@2.5.3: {}
 
   tailwindcss@3.3.2:
     dependencies:

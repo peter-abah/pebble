@@ -12,6 +12,7 @@ web-build/
 
 # expo app example
 app-example/
+components-example/
 
 # macOS
 .DS_Store
