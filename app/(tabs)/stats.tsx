@@ -4,7 +4,7 @@ import { Text } from "react-native";
 const Stats = () => {
   return (
     <ScreenWrapper>
-      <Text>Stats</Text>
+      <Text className="text-red-500">Stats</Text>
     </ScreenWrapper>
   );
 };
