@@ -2,6 +2,7 @@ import "../global.css";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Theme, ThemeProvider } from "@react-navigation/native";
+import { PortalHost } from "@rn-primitives/portal";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
@@ -20,7 +21,7 @@ const DARK_THEME: Theme = {
 
 export {
   // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
+  ErrorBoundary
 } from "expo-router";
 
 // Prevent the splash screen from auto-hiding before getting the color scheme.
@@ -60,9 +61,12 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-      <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-      <Stack screenOptions={{ headerShown: false }} />
-    </ThemeProvider>
+    <>
+      <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+        <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+        <Stack screenOptions={{ headerShown: false }} />
+      </ThemeProvider>
+      <PortalHost />
+    </>
   );
 }

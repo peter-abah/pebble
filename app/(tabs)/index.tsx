@@ -1,6 +1,7 @@
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Text } from "@/components/ui/text";
 import { Plus } from "@/lib/icons/Plus";
+import { Link } from "expo-router";
 import { Pressable, ScrollView, View } from "react-native";
 
 const transactions = [
@@ -72,8 +73,8 @@ export default function Home() {
 
 const AddButton = () => {
   return (
-    <Pressable className="absolute bottom-6 right-6 bg-primary active:bg-primary/80 p-4 rounded-2xl shadow">
+    <Link href="/(others)/create-transaction" className="absolute bottom-6 right-6 bg-primary active:bg-primary/80 p-4 rounded-2xl shadow">
       <Plus className="text-primary-foreground" />
-    </Pressable>
+    </Link>
   );
 };
