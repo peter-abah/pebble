@@ -1,10 +1,10 @@
 import ScreenWrapper from "@/components/screen-wrapper";
-import { Text } from "react-native";
+import { Text } from "@/components/ui/text";
 
 const Stats = () => {
   return (
     <ScreenWrapper>
-      <Text className="text-red-500">Stats</Text>
+      <Text className="">Stats</Text>
     </ScreenWrapper>
   );
 };

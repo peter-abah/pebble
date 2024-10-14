@@ -1,7 +1,7 @@
 import ScreenWrapper from "@/components/screen-wrapper";
-import { Colors } from "@/constants/Colors";
-import { AntDesign } from "@expo/vector-icons";
-import { FlatList, Pressable, ScrollView, Text, View } from "react-native";
+import { Text } from "@/components/ui/text";
+import { Plus } from "@/lib/icons/Plus";
+import { Pressable, ScrollView, View } from "react-native";
 
 const transactions = [
   { name: "Groceries", price: 100, category: "Food" },
@@ -20,36 +20,36 @@ export default function Home() {
       <ScrollView contentContainerStyle={{ padding: 24 }}>
         <Text className="font-bold text-3xl mb-6">Overview</Text>
         <View className="gap-4">
-          <View className="gap-1 bg-gray-800 rounded-lg p-4">
-            <Text className="text-gray-50">Current Balance</Text>
-            <Text className="font-bold text-2xl text-gray-50">$2000.00</Text>
+          <View className="gap-1 border rounded-lg p-4 bg-primary">
+            <Text className="text-primary-foreground">Current Balance</Text>
+            <Text className="font-bold text-2xl text-primary-foreground">$2000.00</Text>
           </View>
 
-          <View className="gap-1 bg-gray-50 rounded-lg p-4">
-            <Text className="text-gray-800">Income (This month)</Text>
-            <Text className="font-bold text-2xl text-gray-800">$500.00</Text>
+          <View className="gap-1 rounded-lg p-4 bg-primary/10">
+            <Text className="text-muted-foreground">Income (This month)</Text>
+            <Text className="font-bold text-2xl">$500.00</Text>
           </View>
 
-          <View className="gap-1 bg-gray-50 rounded-lg p-4">
-            <Text className="text-gray-800">Expenses (This month)</Text>
-            <Text className="font-bold text-2xl text-gray-800">$756.00</Text>
+          <View className="gap-1 rounded-lg p-4 bg-primary/10">
+            <Text className="text-muted-foreground">Expenses (This month)</Text>
+            <Text className="font-bold text-2xl">-$900.00</Text>
           </View>
         </View>
 
         <View className="mt-6">
           <View className="flex-row items-center justify-between mb-2">
             <Text className="font-medium text-xl">Recent Transactions</Text>
-            <Pressable className="px-2 py-1 -my-1 -mx-2 rounded-sm active:bg-gray-300">
+            <Pressable className="px-2 py-1 -my-1 -mx-2 rounded-sm active:">
               <Text>View all</Text>
             </Pressable>
           </View>
 
           {transactions.map((item) => (
             <Pressable
-              className="flex-row items-center active:bg-gray-300 px-2 py-1 rounded-lg mb-4 -mx-2"
+              className="flex-row items-center active:bg-background/50 px-2 py-1 rounded-lg mb-4 -mx-2"
               key={item.name}
             >
-              <View className="w-12 h-12 bg-green-800/20 rounded-full items-center justify-center mr-2">
+              <View className="w-12 h-12 rounded-full bg-primary/20 items-center justify-center mr-2">
                 <Text className="text-xl font-bold">{item.category[0]}</Text>
               </View>
 
@@ -57,10 +57,10 @@ export default function Home() {
                 <Text className="text-lg font-semibold leading-none" numberOfLines={1}>
                   {item.name}
                 </Text>
-                <Text className="font-medium text-gray-700 leading-none">{item.category}</Text>
+                <Text className="font-medium  leading-none">{item.category}</Text>
               </View>
 
-              <Text className="text-gray-900 font-bold ml-auto">-${item.price.toFixed(2)}</Text>
+              <Text className=" font-bold ml-auto">-${item.price.toFixed(2)}</Text>
             </Pressable>
           ))}
         </View>
@@ -72,8 +72,8 @@ export default function Home() {
 
 const AddButton = () => {
   return (
-    <Pressable className="absolute bottom-6 right-6 bg-gray-800 active:bg-gray-600 p-4 rounded-2xl shadow">
-      <AntDesign name="plus" size={20} color={Colors.light["primary-foreground"].DEFAULT} />
+    <Pressable className="absolute bottom-6 right-6 bg-primary active:bg-primary/80 p-4 rounded-2xl shadow">
+      <Plus className="text-primary-foreground" />
     </Pressable>
   );
 };

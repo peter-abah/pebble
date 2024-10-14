@@ -1,18 +1,11 @@
-import { Colors } from "@/constants/Colors";
 import { AntDesign, Entypo, FontAwesome6 } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
-import { useColorScheme } from "react-native";
 
 export default function TabLayout() {
-  let colorScheme = useColorScheme();
-  colorScheme ??= "light";
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].primary.DEFAULT,
         tabBarShowLabel: true,
-        tabBarStyle: { backgroundColor: Colors[colorScheme].background.DEFAULT },
         headerShown: false,
       }}
     >

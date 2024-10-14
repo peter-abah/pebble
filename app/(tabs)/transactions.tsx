@@ -1,5 +1,5 @@
 import ScreenWrapper from "@/components/screen-wrapper";
-import { Text } from "react-native";
+import { Text } from "@/components/ui/text";
 
 const Transactions = () => {
   return (
