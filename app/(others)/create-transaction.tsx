@@ -8,16 +8,41 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
 import { Textarea } from "@/components/ui/textarea";
 import { ChevronLeft } from "@/lib/icons/ChevronLeft";
+import { createMoney } from "@/lib/money";
+import { useStoreContext } from "@/lib/store-context";
+import { TRANSACTION_TYPES } from "@/lib/types";
+import { isStringNumeric, titleCase } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
-import { Pressable, ScrollView, View } from "react-native";
+import { nanoid } from "nanoid";
+import { Controller, useForm } from "react-hook-form";
+import { ScrollView, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import * as z from "zod";
+
+const formSchema = z.object({
+  amount: z.union([
+    z
+      .string()
+      .refine(isStringNumeric, { message: "Enter a number" })
+      .transform(Number)
+      .refine((v) => v > 0, { message: "Enter amount greater than zero" }),
+    z.number().positive({ message: "Enter amount greater than zero" }),
+  ]),
+  datetime: z.date(),
+  title: z.string().min(1, { message: "Enter title" }),
+  categoryID: z.string().min(1, { message: "Select category" }),
+  note: z.string().optional(),
+  type: z.enum(TRANSACTION_TYPES),
+});
+
+type FormSchema = z.infer<typeof formSchema>;
 
 const CreateTransaction = () => {
   const insets = useSafeAreaInsets();
@@ -26,6 +51,42 @@ const CreateTransaction = () => {
     bottom: insets.bottom,
     left: 12,
     right: 12,
+  };
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<FormSchema>({
+    defaultValues: {
+      title: "",
+      datetime: new Date(),
+      note: "",
+      categoryID: "",
+      type: "debit",
+    },
+    resolver: zodResolver(formSchema),
+  });
+
+  const categories = useStoreContext((state) => state.categories);
+  const createTransaction = useStoreContext((state) => state.upsertTransaction);
+  const mainAccount = useStoreContext((state) => state.accounts[state.defaultAccountID]);
+  const currency = mainAccount.currency;
+  const categoriesList = Object.values(categories);
+
+  const onSubmit = ({ amount, title, note, type, categoryID, datetime }: FormSchema) => {
+    createTransaction({
+      id: nanoid(),
+      amount: createMoney(amount, currency),
+      type,
+      categoryID,
+      title,
+      note,
+      accountID: mainAccount.id,
+      datetime: datetime.toISOString(),
+    });
+    router.replace("/");
+    reset;
   };
 
   return (
@@ -44,107 +105,144 @@ const CreateTransaction = () => {
 
       <ScrollView contentContainerClassName="py-4 gap-4" style={{ flex: 1 }}>
         <View className="flex-row gap-1 items-center mb-6">
-          <Text className="text-3xl font-semibold">$</Text>
-          <Input
-            placeholder="Enter Amount"
-            aria-labelledby="amount"
-            autoFocus
-            inputMode="numeric"
-            className="text-3xl font-semibold border-none p-0"
+          <Text className="text-3xl font-semibold leading-none mt-2">{currency.symbol}</Text>
+          <Controller
+            control={control}
+            render={({ field: { value, onChange, onBlur } }) => (
+              <Input
+                placeholder="Enter Amount"
+                aria-labelledby="amount"
+                autoFocus
+                value={value?.toString() || ""}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                inputMode="numeric"
+                className="text-3xl font-semibold p-0 grow"
+                numberOfLines={1}
+              />
+            )}
+            name="amount"
           />
         </View>
 
         <View className="gap-2">
-          <Label nativeID="catgory" className="text-lg">
-            Transaction Type
+          <Label nativeID="type" className="text-lg">
+            Type
           </Label>
-          <Select defaultValue={{ value: "apple", label: "Apple" }}>
-            <SelectTrigger className="w-full" aria-aria-labelledby="category">
-              <SelectValue
-                className="text-foreground text-sm native:text-lg"
-                placeholder="Select a fruit"
-              />
-            </SelectTrigger>
-            <SelectContent insets={contentInsets} className="w-[250px]">
-              <SelectGroup>
-                <SelectLabel>Fruits</SelectLabel>
-                <SelectItem label="Apple" value="apple">
-                  Apple
-                </SelectItem>
-                <SelectItem label="Banana" value="banana">
-                  Banana
-                </SelectItem>
-                <SelectItem label="Blueberry" value="blueberry">
-                  Blueberry
-                </SelectItem>
-                <SelectItem label="Grapes" value="grapes">
-                  Grapes
-                </SelectItem>
-                <SelectItem label="Pineapple" value="pineapple">
-                  Pineapple
-                </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <Controller
+            control={control}
+            render={({ field: { value, onChange, onBlur } }) => (
+              <Select
+                value={{ value, label: titleCase(value) }}
+                onValueChange={(option) => onChange(option?.value)}
+              >
+                <SelectTrigger className="w-full" aria-aria-labelledby="type">
+                  <SelectValue
+                    className="text-foreground text-sm native:text-lg"
+                    placeholder="Select transaction type"
+                  />
+                </SelectTrigger>
+                <SelectContent insets={contentInsets} className="w-full">
+                  <SelectGroup>
+                    {TRANSACTION_TYPES.map((type) => (
+                      <SelectItem key={type} label={titleCase(type)} value={type}>
+                        {titleCase(type)}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            )}
+            name="type"
+          />
         </View>
 
         <View className="gap-2">
-          <Label nativeID="catgory" className="text-lg">
+          <Label nativeID="category" className="text-lg">
             Category
           </Label>
-          <Select defaultValue={{ value: "apple", label: "Apple" }}>
-            <SelectTrigger className="w-full" aria-aria-labelledby="category">
-              <SelectValue
-                className="text-foreground text-sm native:text-lg"
-                placeholder="Select a fruit"
-              />
-            </SelectTrigger>
-            <SelectContent insets={contentInsets} className="w-[250px]">
-              <SelectGroup>
-                <SelectLabel>Fruits</SelectLabel>
-                <SelectItem label="Apple" value="apple">
-                  Apple
-                </SelectItem>
-                <SelectItem label="Banana" value="banana">
-                  Banana
-                </SelectItem>
-                <SelectItem label="Blueberry" value="blueberry">
-                  Blueberry
-                </SelectItem>
-                <SelectItem label="Grapes" value="grapes">
-                  Grapes
-                </SelectItem>
-                <SelectItem label="Pineapple" value="pineapple">
-                  Pineapple
-                </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <Controller
+            control={control}
+            render={({ field: { value, onChange, onBlur } }) => (
+              <Select
+                value={{ value, label: categories[value]?.name }}
+                onValueChange={(option) => onChange(option?.value)}
+              >
+                <SelectTrigger className="w-full" aria-aria-labelledby="type">
+                  <SelectValue
+                    className="text-foreground text-sm native:text-lg"
+                    placeholder="Select Category"
+                  />
+                </SelectTrigger>
+                <SelectContent insets={contentInsets} className="w-full">
+                  <SelectGroup>
+                    {categoriesList.map((category) => (
+                      <SelectItem key={category.id} label={category.name} value={category.id}>
+                        {category.name}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            )}
+            name="categoryID"
+          />
         </View>
 
         <View className="gap-2">
           <Label nativeID="date" className="text-lg">
             Date
           </Label>
-          <DateTimePicker onChange={() => {}} date={new Date()} />
+          <Controller
+            control={control}
+            render={({ field: { value, onChange, onBlur } }) => (
+              <DateTimePicker onChange={onChange} date={value} />
+            )}
+            name="datetime"
+          />
         </View>
 
         <View className="gap-2">
           <Label nativeID="title" className="text-lg">
             Title
           </Label>
-          <Input className="px-3 py-2 border border-border rounded" />
+          <Controller
+            control={control}
+            render={({ field: { value, onChange, onBlur } }) => (
+              <TextInput
+                className="px-3 py-2 border border-border rounded"
+                value={value}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                aria-labelledby="title"
+                placeholder="Describe transaction"
+              />
+            )}
+            name="title"
+          />
         </View>
 
         <View className="gap-2">
-          <Label nativeID="title" className="text-lg">
+          <Label nativeID="note" className="text-lg">
             Note
           </Label>
-          <Textarea className="px-3 py-2 border border-border rounded" />
+          <Controller
+            control={control}
+            render={({ field: { value, onChange, onBlur } }) => (
+              <Textarea
+                value={value}
+                aria-labelledby="note"
+                onChangeText={onChange}
+                onBlur={onBlur}
+                className="px-3 py-2 border border-border rounded"
+              />
+            )}
+            name="note"
+          />
         </View>
       </ScrollView>
 
-      <Button>
+      <Button onPress={handleSubmit(onSubmit)}>
         <Text className="text-lg">Save</Text>
       </Button>
     </ScreenWrapper>

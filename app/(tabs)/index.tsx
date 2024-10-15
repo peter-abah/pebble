@@ -1,21 +1,27 @@
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Text } from "@/components/ui/text";
 import { Plus } from "@/lib/icons/Plus";
+import { CURRENCIES, addMoney, createMoney, formatMoney } from "@/lib/money";
+import { useStoreContext } from "@/lib/store-context";
+import { Transaction } from "@/lib/types";
 import { Link } from "expo-router";
 import { Pressable, ScrollView, View } from "react-native";
 
-const transactions = [
-  { name: "Groceries", price: 100, category: "Food" },
-  { name: "Data", price: 50, category: "Phone" },
-  { name: "Iphone 13", price: 500, category: "Electronics" },
-  { name: "Coffee", price: 5, category: "Snacks" },
-  { name: "lon", price: 200, category: "Food" },
-  { name: "Spotify", price: 8, category: "Entertainment" },
-  { name: "T shirts", price: 190, category: "Clothing" },
-  { name: "Econs textbook", price: 2000, category: "Education" },
-];
-const item = transactions[0];
+const sumTransactions = (transactions: Array<Transaction>) => {
+  return transactions.reduce(
+    (acc, curr) => addMoney(acc, curr.amount),
+    createMoney(0, CURRENCIES.NGN)
+  );
+};
 export default function Home() {
+  const transactionsRecord = useStoreContext((state) => state.transactions);
+  // TODO: support multiple accounts with different currencies
+  const account = useStoreContext((state) => state.accounts[state.defaultAccountID]);
+  const categories = useStoreContext((state) => state.categories);
+  const transactionsList = Object.values(transactionsRecord);
+  const expenses = sumTransactions(transactionsList.filter(({ type }) => type === "debit"));
+  const income = sumTransactions(transactionsList.filter(({ type }) => type === "credit"));
+
   return (
     <ScreenWrapper className="h-full">
       <ScrollView contentContainerStyle={{ padding: 24 }}>
@@ -23,17 +29,19 @@ export default function Home() {
         <View className="gap-4">
           <View className="gap-1 border rounded-lg p-4 bg-primary">
             <Text className="text-primary-foreground">Current Balance</Text>
-            <Text className="font-bold text-2xl text-primary-foreground">$2000.00</Text>
+            <Text className="font-bold text-2xl text-primary-foreground">
+              {formatMoney(account.balance)}
+            </Text>
           </View>
 
           <View className="gap-1 rounded-lg p-4 bg-primary/10">
             <Text className="text-muted-foreground">Income (This month)</Text>
-            <Text className="font-bold text-2xl">$500.00</Text>
+            <Text className="font-bold text-2xl">{formatMoney(income)}</Text>
           </View>
 
           <View className="gap-1 rounded-lg p-4 bg-primary/10">
             <Text className="text-muted-foreground">Expenses (This month)</Text>
-            <Text className="font-bold text-2xl">-$900.00</Text>
+            <Text className="font-bold text-2xl">{formatMoney(expenses)}</Text>
           </View>
         </View>
 
@@ -45,23 +53,25 @@ export default function Home() {
             </Pressable>
           </View>
 
-          {transactions.map((item) => (
+          {transactionsList.map((item) => (
             <Pressable
               className="flex-row items-center active:bg-background/50 px-2 py-1 rounded-lg mb-4 -mx-2"
-              key={item.name}
+              key={item.id}
             >
               <View className="w-12 h-12 rounded-full bg-primary/20 items-center justify-center mr-2">
-                <Text className="text-xl font-bold">{item.category[0]}</Text>
+                <Text className="text-xl font-bold">{categories[item.categoryID].name[0]}</Text>
               </View>
 
               <View>
                 <Text className="text-lg font-semibold leading-none" numberOfLines={1}>
-                  {item.name}
+                  {item.title}
                 </Text>
-                <Text className="font-medium  leading-none">{item.category}</Text>
+                <Text className="font-medium  leading-none">
+                  {categories[item.categoryID].name}
+                </Text>
               </View>
 
-              <Text className=" font-bold ml-auto">-${item.price.toFixed(2)}</Text>
+              <Text className=" font-bold ml-auto">{formatMoney(item.amount)}</Text>
             </Pressable>
           ))}
         </View>
@@ -73,7 +83,10 @@ export default function Home() {
 
 const AddButton = () => {
   return (
-    <Link href="/(others)/create-transaction" className="absolute bottom-6 right-6 bg-primary active:bg-primary/80 p-4 rounded-2xl shadow">
+    <Link
+      href="/(others)/create-transaction"
+      className="absolute bottom-6 right-6 bg-primary active:bg-primary/80 p-4 rounded-2xl shadow"
+    >
       <Plus className="text-primary-foreground" />
     </Link>
   );

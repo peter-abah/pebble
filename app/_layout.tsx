@@ -1,5 +1,8 @@
+import { getInitialData } from "@/lib/data";
 import "../global.css";
 
+import { StoreProvider } from "@/lib/store-context";
+import { arrayToRecord } from "@/lib/utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Theme, ThemeProvider } from "@react-navigation/native";
 import { PortalHost } from "@rn-primitives/portal";
@@ -21,12 +24,13 @@ const DARK_THEME: Theme = {
 
 export {
   // Catch any errors thrown by the Layout component.
-  ErrorBoundary
+  ErrorBoundary,
 } from "expo-router";
 
 // Prevent the splash screen from auto-hiding before getting the color scheme.
 SplashScreen.preventAutoHideAsync();
 
+const { transactions, accounts, categories } = getInitialData();
 export default function RootLayout() {
   const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = useState(false);
@@ -62,10 +66,17 @@ export default function RootLayout() {
 
   return (
     <>
-      <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-        <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-        <Stack screenOptions={{ headerShown: false }} />
-      </ThemeProvider>
+      <StoreProvider
+        accounts={arrayToRecord(accounts, "id")}
+        categories={arrayToRecord(categories, "id")}
+        transactions={arrayToRecord(transactions, "id")}
+        defaultAccountID={accounts[0].id}
+      >
+        <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+          <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+          <Stack screenOptions={{ headerShown: false }} />
+        </ThemeProvider>
+      </StoreProvider>
       <PortalHost />
     </>
   );
