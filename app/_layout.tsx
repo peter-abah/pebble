@@ -30,7 +30,7 @@ export {
 // Prevent the splash screen from auto-hiding before getting the color scheme.
 SplashScreen.preventAutoHideAsync();
 
-const { transactions, accounts, categories } = getInitialData();
+const { accounts, categories } = getInitialData();
 export default function RootLayout() {
   const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = useState(false);
@@ -69,12 +69,11 @@ export default function RootLayout() {
       <StoreProvider
         accounts={arrayToRecord(accounts, "id")}
         categories={arrayToRecord(categories, "id")}
-        transactions={arrayToRecord(transactions, "id")}
         defaultAccountID={accounts[0].id}
       >
         <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
           <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-          <Stack screenOptions={{ headerShown: false }} />
+          <Stack screenOptions={{ headerShown: false }} initialRouteName="tabs" />
         </ThemeProvider>
       </StoreProvider>
       <PortalHost />

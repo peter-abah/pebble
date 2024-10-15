@@ -1,6 +1,7 @@
 import { CURRENCIES, addMoney, subtractMoney } from "@/lib/money";
 import { Account, Currency, Transaction, TransactionCategory } from "@/lib/types";
 import { setAutoFreeze } from "immer";
+import { memoize } from "proxy-memoize";
 import "react-native-get-random-values";
 import { createStore } from "zustand";
 import { immer } from "zustand/middleware/immer";
@@ -117,5 +118,11 @@ export const createAppStore = (initProps?: Partial<AppState>) => {
     }))
   );
 };
+
+export const getSortedTransactionsByDate = memoize((state: AppState) => {
+  const transactions = Object.values(state.transactions);
+  transactions.sort((a, b) => b.datetime.localeCompare(a.datetime));
+  return transactions;
+});
 
 export type AppStore = ReturnType<typeof createAppStore>;

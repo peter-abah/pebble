@@ -36,7 +36,7 @@ const formSchema = z.object({
     z.number().positive({ message: "Enter amount greater than zero" }),
   ]),
   datetime: z.date(),
-  title: z.string().min(1, { message: "Enter title" }),
+  title: z.string().optional(),
   categoryID: z.string().min(1, { message: "Select category" }),
   note: z.string().optional(),
   type: z.enum(TRANSACTION_TYPES),

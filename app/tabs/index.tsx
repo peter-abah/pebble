@@ -2,6 +2,7 @@ import ScreenWrapper from "@/components/screen-wrapper";
 import { Text } from "@/components/ui/text";
 import { Plus } from "@/lib/icons/Plus";
 import { CURRENCIES, addMoney, createMoney, formatMoney } from "@/lib/money";
+import { getSortedTransactionsByDate } from "@/lib/store";
 import { useStoreContext } from "@/lib/store-context";
 import { Transaction } from "@/lib/types";
 import { Link } from "expo-router";
@@ -14,7 +15,7 @@ const sumTransactions = (transactions: Array<Transaction>) => {
   );
 };
 export default function Home() {
-  const transactionsRecord = useStoreContext((state) => state.transactions);
+  const transactionsRecord = useStoreContext(getSortedTransactionsByDate);
   // TODO: support multiple accounts with different currencies
   const account = useStoreContext((state) => state.accounts[state.defaultAccountID]);
   const categories = useStoreContext((state) => state.categories);
@@ -35,12 +36,12 @@ export default function Home() {
           </View>
 
           <View className="gap-1 rounded-lg p-4 bg-primary/10">
-            <Text className="text-muted-foreground">Income (This month)</Text>
+            <Text className="">Income (This month)</Text>
             <Text className="font-bold text-2xl">{formatMoney(income)}</Text>
           </View>
 
-          <View className="gap-1 rounded-lg p-4 bg-primary/10">
-            <Text className="text-muted-foreground">Expenses (This month)</Text>
+          <View className="gap-1 rounded-lg p-4 bg-destructive/10">
+            <Text className="">Expenses (This month)</Text>
             <Text className="font-bold text-2xl">{formatMoney(expenses)}</Text>
           </View>
         </View>
@@ -64,11 +65,13 @@ export default function Home() {
 
               <View>
                 <Text className="text-lg font-semibold leading-none" numberOfLines={1}>
-                  {item.title}
+                  {item.title || categories[item.categoryID].name}
                 </Text>
-                <Text className="font-medium  leading-none">
-                  {categories[item.categoryID].name}
-                </Text>
+                {item.title && (
+                  <Text className="font-medium  leading-none">
+                    {categories[item.categoryID].name}
+                  </Text>
+                )}
               </View>
 
               <Text className=" font-bold ml-auto">{formatMoney(item.amount)}</Text>
@@ -84,7 +87,7 @@ export default function Home() {
 const AddButton = () => {
   return (
     <Link
-      href="/(others)/create-transaction"
+      href="/transactions/create"
       className="absolute bottom-6 right-6 bg-primary active:bg-primary/80 p-4 rounded-2xl shadow"
     >
       <Plus className="text-primary-foreground" />
