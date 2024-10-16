@@ -39,7 +39,6 @@ const loadInitData = async (store: AppStore) => {
     };
   });
   state.updateState("transactions", arrayToRecord(testTransactions, "id"));
-  // testTransactions.forEach((t) => state.upsertTransaction(t));
   state.updateState("isFirstInstall", false);
 };
 

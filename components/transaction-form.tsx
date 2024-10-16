@@ -17,7 +17,8 @@ import { Currency, TRANSACTION_TYPES } from "@/lib/types";
 import { isStringNumeric, roundNumber, titleCase } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import { ScrollView, TextInput, View } from "react-native";
+import { TextInput, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
 
@@ -48,7 +49,18 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
   const categories = useStoreContext((state) => state.categories);
   const mainAccount = useStoreContext((state) => state.accounts[state.defaultAccountID]);
   const currency = mainAccount.currency;
-  const categoriesList = Object.values(categories);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    watch,
+  } = useForm<FormSchema>({
+    defaultValues,
+    resolver: zodResolver(createFormSchema(currency)),
+  });
+  const type = watch("type");
+  const categoriesList = Object.values(categories).filter((c) => c.type === type || !c.type);
 
   const insets = useSafeAreaInsets();
   const contentInsets = {
@@ -57,15 +69,6 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
     left: 12,
     right: 12,
   };
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<FormSchema>({
-    defaultValues,
-    resolver: zodResolver(createFormSchema(currency)),
-  });
 
   return (
     <View style={{ flex: 1 }}>
@@ -74,23 +77,18 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
           <Text className="text-3xl font-semibold leading-none mt-1.5">{currency.symbol}</Text>
           <Controller
             control={control}
-            render={({ field: { value, onChange, onBlur } }) => {
-              console.log({ value, t: typeof value });
-              return (
-                <Input
-                  placeholder="Enter Amount"
-                  aria-labelledby="amount"
-                  autoFocus={!defaultValues.amount}
-                  value={
-                    typeof value === "string" ? value : value?.toFixed(currency.minorUnit) || ""
-                  }
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  inputMode="numeric"
-                  className="text-3xl font-semibold p-0 grow"
-                />
-              );
-            }}
+            render={({ field: { value, onChange, onBlur } }) => (
+              <Input
+                placeholder="Enter Amount"
+                aria-labelledby="amount"
+                autoFocus={!defaultValues.amount}
+                value={typeof value === "string" ? value : value?.toFixed(currency.minorUnit) || ""}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                inputMode="numeric"
+                className="text-3xl font-semibold p-0 grow"
+              />
+            )}
             name="amount"
           />
         </View>
@@ -127,7 +125,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
           />
         </View>
 
-        <View className="gap-2">
+        <View className="gap-2 relative">
           <Label nativeID="category" className="text-lg">
             Category
           </Label>
@@ -145,13 +143,13 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                   />
                 </SelectTrigger>
                 <SelectContent insets={contentInsets} className="w-full">
-                  <SelectGroup>
+                  <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
                     {categoriesList.map((category) => (
                       <SelectItem key={category.id} label={category.name} value={category.id}>
                         {category.name}
                       </SelectItem>
                     ))}
-                  </SelectGroup>
+                  </ScrollView>
                 </SelectContent>
               </Select>
             )}

@@ -29,6 +29,7 @@ export interface TransactionCategory {
         emoji: string;
         type: "emoji";
       };
+  type?: TransactionType; // if undefined, then applies to all types
 }
 
 export interface Account {
