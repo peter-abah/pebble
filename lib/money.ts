@@ -50,3 +50,7 @@ export const formatMoney = ({ valueInMinorUnits, currency }: Money) => {
   const currencySymbol = currency.symbol;
   return currencySymbol + amountStr;
 };
+
+export const getMoneyValueInMajorUnits = ({ valueInMinorUnits, currency }: Money) => {
+  return valueInMinorUnits / 10 ** currency.minorUnit;
+};

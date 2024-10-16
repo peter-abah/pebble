@@ -55,27 +55,26 @@ export default function Home() {
           </View>
 
           {transactionsList.map((item) => (
-            <Pressable
-              className="flex-row items-center active:bg-background/50 px-2 py-1 rounded-lg mb-4 -mx-2"
-              key={item.id}
-            >
-              <View className="w-12 h-12 rounded-full bg-primary/20 items-center justify-center mr-2">
-                <Text className="text-xl font-bold">{categories[item.categoryID].name[0]}</Text>
-              </View>
+            <Link href={`/transactions/${item.id}/edit`} key={item.id} asChild>
+              <View className="w-full flex-row items-center active:bg-background/50 px-2 py-1 rounded-lg mb-4 -mx-2">
+                <View className="w-12 h-12 rounded-full bg-primary/20 items-center justify-center mr-2">
+                  <Text className="text-xl font-bold">{categories[item.categoryID].name[0]}</Text>
+                </View>
 
-              <View>
-                <Text className="text-lg font-semibold leading-none" numberOfLines={1}>
-                  {item.title || categories[item.categoryID].name}
-                </Text>
-                {item.title && (
-                  <Text className="font-medium  leading-none">
-                    {categories[item.categoryID].name}
+                <View>
+                  <Text className="text-lg font-semibold leading-none" numberOfLines={1}>
+                    {item.title || categories[item.categoryID].name}
                   </Text>
-                )}
-              </View>
+                  {item.title && (
+                    <Text className="font-medium  leading-none">
+                      {categories[item.categoryID].name}
+                    </Text>
+                  )}
+                </View>
 
-              <Text className=" font-bold ml-auto">{formatMoney(item.amount)}</Text>
-            </Pressable>
+                <Text className=" font-bold ml-auto">{formatMoney(item.amount)}</Text>
+              </View>
+            </Link>
           ))}
         </View>
       </ScrollView>
