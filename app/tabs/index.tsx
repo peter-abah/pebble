@@ -1,12 +1,16 @@
+import AddDataModal from "@/components/add-data-modal";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
 import { Text } from "@/components/ui/text";
+import { testTransactions } from "@/lib/data";
 import { Plus } from "@/lib/icons/Plus";
 import { CURRENCIES, addMoney, createMoney, formatMoney } from "@/lib/money";
-import { getSortedTransactionsByDate } from "@/lib/store";
-import { useStoreContext } from "@/lib/store-context";
+import { AppStore, getSortedTransactionsByDate } from "@/lib/store";
+import { StoreContext, useStoreContext } from "@/lib/store-context";
 import { Transaction } from "@/lib/types";
+import { arrayToRecord } from "@/lib/utils";
 import { Link } from "expo-router";
+import { useContext, useState } from "react";
 import { Pressable, ScrollView, View } from "react-native";
 
 const sumTransactions = (transactions: Array<Transaction>) => {
@@ -15,15 +19,51 @@ const sumTransactions = (transactions: Array<Transaction>) => {
     createMoney(0, CURRENCIES.NGN)
   );
 };
+
+const loadInitData = async (store: AppStore) => {
+  const state = store.getState();
+  state.reset();
+  testTransactions.sort((a, b) => b.datetime.localeCompare(a.datetime));
+  const balanceFromTransactions = testTransactions.reduce(
+    (acc, curr) =>
+      curr.type === "credit"
+        ? acc + curr.amount.valueInMinorUnits
+        : acc - curr.amount.valueInMinorUnits,
+    0
+  );
+  store.setState((state) => {
+    const defaultAccount = state.accounts[state.defaultAccountID];
+    defaultAccount.balance = {
+      valueInMinorUnits: balanceFromTransactions,
+      currency: defaultAccount.currency,
+    };
+  });
+  state.updateState("transactions", arrayToRecord(testTransactions, "id"));
+  // testTransactions.forEach((t) => state.upsertTransaction(t));
+  state.updateState("isFirstInstall", false);
+};
+
 export default function Home() {
+  const store = useContext(StoreContext)!;
   const transactionsRecord = useStoreContext(getSortedTransactionsByDate);
   // TODO: support multiple accounts with different currencies
   const account = useStoreContext((state) => state.accounts[state.defaultAccountID]);
-  const categories = useStoreContext((state) => state.categories);
+  const isFirstInstall = useStoreContext((state) => state.isFirstInstall);
+  const updateState = useStoreContext((state) => state.updateState);
   const transactionsList = Object.values(transactionsRecord);
+
+  const [isModalOpen, setIsModalOpen] = useState(isFirstInstall);
+  const [isLoading, setIsLoading] = useState(false);
+
   const expenses = sumTransactions(transactionsList.filter(({ type }) => type === "debit"));
   const income = sumTransactions(transactionsList.filter(({ type }) => type === "credit"));
 
+  const handleLoadData = async () => {
+    setIsModalOpen(false);
+    setIsLoading(true);
+    await loadInitData(store);
+    updateState("isFirstInstall", false);
+  };
   return (
     <ScreenWrapper className="h-full">
       <ScrollView contentContainerStyle={{ padding: 24 }}>
@@ -55,12 +95,13 @@ export default function Home() {
             </Pressable>
           </View>
 
-          {transactionsList.map((transaction) => (
+          {transactionsList.slice(0, 10).map((transaction) => (
             <TransactionCard transaction={transaction} key={transaction.id} />
           ))}
         </View>
       </ScrollView>
       <AddButton />
+      <AddDataModal open={isModalOpen} setOpen={setIsModalOpen} onYes={handleLoadData} />
     </ScreenWrapper>
   );
 }

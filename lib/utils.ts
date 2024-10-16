@@ -24,3 +24,7 @@ export function isStringNumeric(str: string) {
 export const titleCase = (value: string) => {
   return value[0].toLocaleUpperCase() + value.slice(1);
 };
+
+export const  roundNumber = (num: number, dec: number) => {
+  return Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
+}

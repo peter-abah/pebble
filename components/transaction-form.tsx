@@ -13,37 +13,43 @@ import {
 import { Text } from "@/components/ui/text";
 import { Textarea } from "@/components/ui/textarea";
 import { useStoreContext } from "@/lib/store-context";
-import { TRANSACTION_TYPES } from "@/lib/types";
-import { isStringNumeric, titleCase } from "@/lib/utils";
+import { Currency, TRANSACTION_TYPES } from "@/lib/types";
+import { isStringNumeric, roundNumber, titleCase } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { ScrollView, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
 
-const formSchema = z.object({
-  amount: z.union([
-    z
-      .string()
-      .refine(isStringNumeric, { message: "Enter a number" })
-      .transform(Number)
-      .refine((v) => v > 0, { message: "Enter amount greater than zero" }),
-    z.number().positive({ message: "Enter amount greater than zero" }),
-  ]),
-  datetime: z.date(),
-  title: z.string().optional(),
-  categoryID: z.string().min(1, { message: "Select category" }),
-  note: z.string().optional(),
-  type: z.enum(TRANSACTION_TYPES),
-});
+const createFormSchema = (currency: Currency) =>
+  z.object({
+    amount: z.union([
+      z
+        .string()
+        .refine(isStringNumeric, { message: "Enter a number" })
+        .transform((n) => roundNumber(Number(n), currency.minorUnit))
+        .refine((v) => v > 0, { message: "Enter amount greater than zero" }),
+      z.number().positive({ message: "Enter amount greater than zero" }),
+    ]),
+    datetime: z.date(),
+    title: z.string().optional(),
+    categoryID: z.string().min(1, { message: "Select category" }),
+    note: z.string().optional(),
+    type: z.enum(TRANSACTION_TYPES),
+  });
 
-export type FormSchema = z.infer<typeof formSchema>;
+export type FormSchema = z.infer<ReturnType<typeof createFormSchema>>;
 
 interface TransactionFormProps {
   defaultValues: Partial<FormSchema>;
   onSubmit: (values: FormSchema) => void;
 }
 const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
+  const categories = useStoreContext((state) => state.categories);
+  const mainAccount = useStoreContext((state) => state.accounts[state.defaultAccountID]);
+  const currency = mainAccount.currency;
+  const categoriesList = Object.values(categories);
+
   const insets = useSafeAreaInsets();
   const contentInsets = {
     top: insets.top,
@@ -58,13 +64,8 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
     reset,
   } = useForm<FormSchema>({
     defaultValues,
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(createFormSchema(currency)),
   });
-
-  const categories = useStoreContext((state) => state.categories);
-  const mainAccount = useStoreContext((state) => state.accounts[state.defaultAccountID]);
-  const currency = mainAccount.currency;
-  const categoriesList = Object.values(categories);
 
   return (
     <View style={{ flex: 1 }}>
@@ -73,19 +74,23 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
           <Text className="text-3xl font-semibold leading-none mt-1.5">{currency.symbol}</Text>
           <Controller
             control={control}
-            render={({ field: { value, onChange, onBlur } }) => (
-              <Input
-                placeholder="Enter Amount"
-                aria-labelledby="amount"
-                autoFocus={!defaultValues.amount}
-                value={value?.toString() || ""}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                inputMode="numeric"
-                className="text-3xl font-semibold p-0 grow"
-                numberOfLines={1}
-              />
-            )}
+            render={({ field: { value, onChange, onBlur } }) => {
+              console.log({ value, t: typeof value });
+              return (
+                <Input
+                  placeholder="Enter Amount"
+                  aria-labelledby="amount"
+                  autoFocus={!defaultValues.amount}
+                  value={
+                    typeof value === "string" ? value : value?.toFixed(currency.minorUnit) || ""
+                  }
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  inputMode="numeric"
+                  className="text-3xl font-semibold p-0 grow"
+                />
+              );
+            }}
             name="amount"
           />
         </View>

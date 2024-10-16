@@ -28,7 +28,10 @@ const TransactionCard = ({ transaction }: TransactionCardProps) => {
           {transaction.title && <Text className="font-medium  leading-none">{category.name}</Text>}
         </View>
 
-        <Text className=" font-bold ml-auto">{formatMoney(transaction.amount)}</Text>
+        <Text className=" font-bold ml-auto">
+          {transaction.type === "debit" && "-"}
+          {formatMoney(transaction.amount)}
+        </Text>
       </View>
     </Link>
   );
