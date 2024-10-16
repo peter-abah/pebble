@@ -69,6 +69,7 @@ export default function RootLayout() {
       <StoreProvider
         accounts={arrayToRecord(accounts, "id")}
         categories={arrayToRecord(categories, "id")}
+        transactions={arrayToRecord(transactions, "id")}
         defaultAccountID={accounts[0].id}
       >
         <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>

@@ -1,5 +1,5 @@
-export const TRANSACTION_TYPES = ["debit" , "credit" , "transfer"] as const;
-export type TransactionType = typeof TRANSACTION_TYPES[number];
+export const TRANSACTION_TYPES = ["debit", "credit", "transfer"] as const;
+export type TransactionType = (typeof TRANSACTION_TYPES)[number];
 
 export type AccountType = "cash" | "card" | "general";
 
@@ -19,6 +19,16 @@ export interface TransactionCategory {
   name: string;
   id: string; // unique
   parentID?: string | null;
+  color: string; // css color
+  icon: // can either be app provided icons or emojis
+  | {
+        name: string;
+        type: "icon";
+      }
+    | {
+        emoji: string;
+        type: "emoji";
+      };
 }
 
 export interface Account {

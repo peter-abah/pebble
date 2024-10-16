@@ -1,4 +1,5 @@
 import ScreenWrapper from "@/components/screen-wrapper";
+import TransactionCard from "@/components/transaction-card";
 import { Text } from "@/components/ui/text";
 import { Plus } from "@/lib/icons/Plus";
 import { CURRENCIES, addMoney, createMoney, formatMoney } from "@/lib/money";
@@ -54,27 +55,8 @@ export default function Home() {
             </Pressable>
           </View>
 
-          {transactionsList.map((item) => (
-            <Link href={`/transactions/${item.id}/edit`} key={item.id} asChild>
-              <View className="w-full flex-row items-center active:bg-background/50 px-2 py-1 rounded-lg mb-4 -mx-2">
-                <View className="w-12 h-12 rounded-full bg-primary/20 items-center justify-center mr-2">
-                  <Text className="text-xl font-bold">{categories[item.categoryID].name[0]}</Text>
-                </View>
-
-                <View>
-                  <Text className="text-lg font-semibold leading-none" numberOfLines={1}>
-                    {item.title || categories[item.categoryID].name}
-                  </Text>
-                  {item.title && (
-                    <Text className="font-medium  leading-none">
-                      {categories[item.categoryID].name}
-                    </Text>
-                  )}
-                </View>
-
-                <Text className=" font-bold ml-auto">{formatMoney(item.amount)}</Text>
-              </View>
-            </Link>
+          {transactionsList.map((transaction) => (
+            <TransactionCard transaction={transaction} key={transaction.id} />
           ))}
         </View>
       </ScrollView>

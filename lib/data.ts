@@ -18,22 +18,47 @@ export const getInitialData = () => {
     {
       id: "household",
       name: "Household",
+      color: "hsla(0 100% 50% / 0.1)",
+      icon: {
+        type: "emoji",
+        emoji: "🏠",
+      },
     },
     {
       id: "food",
       name: "Food",
+      color: "hsla(60 100% 50% / 0.1)",
+      icon: {
+        type: "emoji",
+        emoji: "🍽️",
+      },
     },
     {
       id: "transport",
       name: "Transport",
+      color: "hsla(120 100% 50% / 0.1)",
+      icon: {
+        type: "emoji",
+        emoji: "🚌",
+      },
     },
     {
       id: "apparel",
       name: "Apparel",
+      color: "hsla(180 100% 50% / 0.1)",
+      icon: {
+        type: "emoji",
+        emoji: "👕",
+      },
     },
     {
       id: "life",
       name: "Life and Entertainment",
+      color: "hsla(240 100% 50% / 0.1)",
+      icon: {
+        type: "emoji",
+        emoji: "🛋️",
+      },
     },
   ];
 
