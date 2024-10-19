@@ -33,7 +33,7 @@ const CreateTransaction = () => {
 
   const onDelete = () => {
     deleteTransaction(transaction.id);
-    router.replace("/");
+    router.back();
   };
 
   return (

@@ -25,7 +25,7 @@ const CreateTransaction = () => {
       accountID: mainAccount.id,
       datetime: datetime.toISOString(),
     });
-    router.replace("/");
+    router.back();
   };
 
   return (

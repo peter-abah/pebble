@@ -1,3 +1,4 @@
+import AddButton from "@/components/add-button";
 import AddDataModal from "@/components/add-data-modal";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
@@ -104,14 +105,3 @@ export default function Home() {
     </ScreenWrapper>
   );
 }
-
-const AddButton = () => {
-  return (
-    <Link
-      href="/transactions/create"
-      className="absolute bottom-6 right-6 bg-primary active:bg-primary/80 p-4 rounded-2xl shadow"
-    >
-      <Plus className="text-primary-foreground" />
-    </Link>
-  );
-};
