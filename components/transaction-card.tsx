@@ -1,7 +1,7 @@
 import { formatMoney } from "@/lib/money";
-import { useStoreContext } from "@/lib/store-context";
+import { useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { Link } from "expo-router";
 import { vars } from "nativewind";
 import { Text, View } from "react-native";
@@ -10,7 +10,7 @@ interface TransactionCardProps {
   transaction: Transaction;
 }
 const TransactionCard = ({ transaction }: TransactionCardProps) => {
-  const category = useStoreContext((state) => state.categories[transaction.categoryID]);
+  const category = useAppStore((state) => state.categories[transaction.categoryID]);
   const icon = category.icon.type === "emoji" ? category.icon.emoji : category.name[0];
   return (
     <Link href={`/transactions/${transaction.id}/edit`} asChild>

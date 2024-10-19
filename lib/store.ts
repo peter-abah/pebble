@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setAutoFreeze } from "immer";
 import { memoize } from "proxy-memoize";
 import "react-native-get-random-values";
-import { createStore } from "zustand";
+import { create, createStore, useStore } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { arrayToRecord } from "./utils";
@@ -18,7 +18,8 @@ export interface AppState {
   categories: Record<TransactionCategory["id"], TransactionCategory>;
   currency: Currency;
   defaultAccountID: Account["id"];
-  isFirstInstall: boolean;
+  _isFirstOpen: boolean;
+  _hasHydrated: boolean;
 }
 
 export interface AppStateActions {
@@ -46,105 +47,104 @@ const DEFAULT_STATE: AppState = {
   transactions: {},
   categories: arrayToRecord(categories, "id"),
   defaultAccountID: "1",
-  isFirstInstall: true,
+  _isFirstOpen: true,
+  _hasHydrated: false,
 };
 
-export const createAppStore = (initProps?: Partial<AppState>) => {
-  return createStore<AppState & AppStateActions>()(
-    persist(
-      immer((set) => ({
-        ...DEFAULT_STATE,
-        ...initProps,
+export const useAppStore = create<AppState & AppStateActions>()(
+  persist(
+    immer((set) => ({
+      ...DEFAULT_STATE,
 
-        upsertTransaction: (transaction) => {
-          set((state) => {
-            const prevTransaction = state.transactions[transaction.id];
-            if (prevTransaction) {
-              // TODO: transfers will cause bug
-              // revert previous transaction from balance
-              const { type, accountID, amount } = prevTransaction;
-              state.accounts[accountID].balance =
-                type === "credit"
-                  ? subtractMoney(state.accounts[accountID].balance, amount)
-                  : addMoney(state.accounts[accountID].balance, amount);
-            }
+      upsertTransaction: (transaction) => {
+        set((state) => {
+          const prevTransaction = state.transactions[transaction.id];
+          if (prevTransaction) {
+            // TODO: transfers will cause bug
+            // revert previous transaction from balance
+            const { type, accountID, amount } = prevTransaction;
+            state.accounts[accountID].balance =
+              type === "credit"
+                ? subtractMoney(state.accounts[accountID].balance, amount)
+                : addMoney(state.accounts[accountID].balance, amount);
+          }
 
-            // update transaction balance
+          // update transaction balance
+          const { type, accountID, amount } = transaction;
+          state.accounts[accountID].balance =
+            type === "credit"
+              ? addMoney(state.accounts[accountID].balance, amount)
+              : subtractMoney(state.accounts[accountID].balance, amount);
+
+          // Add or update transaction
+          state.transactions[transaction.id] = transaction;
+        });
+      },
+
+      deleteTransaction: (transactionID) => {
+        set((state) => {
+          const transaction = state.transactions[transactionID];
+
+          if (transaction) {
+            // TODO: transfers will cause bug
+            // revert  transaction from balance
             const { type, accountID, amount } = transaction;
             state.accounts[accountID].balance =
               type === "credit"
-                ? addMoney(state.accounts[accountID].balance, amount)
-                : subtractMoney(state.accounts[accountID].balance, amount);
+                ? subtractMoney(state.accounts[accountID].balance, amount)
+                : addMoney(state.accounts[accountID].balance, amount);
 
-            // Add or update transaction
-            state.transactions[transaction.id] = transaction;
-          });
-        },
+            // delete
+            delete state.transactions[transactionID];
+          }
+        });
+      },
 
-        deleteTransaction: (transactionID) => {
-          set((state) => {
-            const transaction = state.transactions[transactionID];
+      addCategory: (category) => {
+        set((state) => {
+          state.categories[category.id] = category;
+        });
+      },
 
-            if (transaction) {
-              // TODO: transfers will cause bug
-              // revert  transaction from balance
-              const { type, accountID, amount } = transaction;
-              state.accounts[accountID].balance =
-                type === "credit"
-                  ? subtractMoney(state.accounts[accountID].balance, amount)
-                  : addMoney(state.accounts[accountID].balance, amount);
+      addAccount: (account) => {
+        set((state) => {
+          state.accounts[account.id] = account;
+        });
+      },
 
-              // delete
-              delete state.transactions[transactionID];
-            }
-          });
-        },
+      updateAccount: (account) => {
+        set((state) => {
+          state.accounts[account.id] = account;
+        });
+      },
 
-        addCategory: (category) => {
-          set((state) => {
-            state.categories[category.id] = category;
-          });
-        },
+      deleteAccount: (accountID) => {
+        set((state) => {
+          delete state.accounts[accountID];
+        });
+      },
 
-        addAccount: (account) => {
-          set((state) => {
-            state.accounts[account.id] = account;
-          });
-        },
-
-        updateAccount: (account) => {
-          set((state) => {
-            state.accounts[account.id] = account;
-          });
-        },
-
-        deleteAccount: (accountID) => {
-          set((state) => {
-            delete state.accounts[accountID];
-          });
-        },
-
-        updateState: (key, value) => {
-          set((state) => {
-            (state as AppState)[key] = value;
-          });
-        },
-        reset: () => {
-          set(DEFAULT_STATE);
-        },
-      })),
-      {
-        name: "app-storage",
-        storage: createJSONStorage(() => AsyncStorage),
-      }
-    )
-  );
-};
+      updateState: (key, value) => {
+        set((state) => {
+          (state as AppState)[key] = value;
+        });
+      },
+      reset: () => {
+        set(DEFAULT_STATE);
+      },
+    })),
+    {
+      name: "app-storage",
+      storage: createJSONStorage(() => AsyncStorage),
+      onRehydrateStorage: (state) => {
+        return () => state.updateState("_hasHydrated", true);
+      },
+    }
+  )
+);
 
 export const getSortedTransactionsByDate = memoize((state: AppState) => {
   const transactions = Object.values(state.transactions);
   transactions.sort((a, b) => b.datetime.localeCompare(a.datetime));
   return transactions;
 });
-
-export type AppStore = ReturnType<typeof createAppStore>;

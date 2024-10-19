@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
 import { Textarea } from "@/components/ui/textarea";
-import { useStoreContext } from "@/lib/store-context";
+import { useAppStore } from "@/lib/store";
 import { Currency, TRANSACTION_TYPES } from "@/lib/types";
 import { isStringNumeric, roundNumber, titleCase } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -46,8 +46,8 @@ interface TransactionFormProps {
   onSubmit: (values: FormSchema) => void;
 }
 const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
-  const categories = useStoreContext((state) => state.categories);
-  const mainAccount = useStoreContext((state) => state.accounts[state.defaultAccountID]);
+  const categories = useAppStore((state) => state.categories);
+  const mainAccount = useAppStore((state) => state.accounts[state.defaultAccountID]);
   const currency = mainAccount.currency;
   const {
     control,

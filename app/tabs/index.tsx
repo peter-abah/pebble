@@ -4,14 +4,11 @@ import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
 import { Text } from "@/components/ui/text";
 import { testTransactions } from "@/lib/data";
-import { Plus } from "@/lib/icons/Plus";
 import { CURRENCIES, addMoney, createMoney, formatMoney } from "@/lib/money";
-import { AppStore, getSortedTransactionsByDate } from "@/lib/store";
-import { StoreContext, useStoreContext } from "@/lib/store-context";
+import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
 import { arrayToRecord } from "@/lib/utils";
-import { Link } from "expo-router";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Pressable, ScrollView, View } from "react-native";
 
 const sumTransactions = (transactions: Array<Transaction>) => {
@@ -21,8 +18,8 @@ const sumTransactions = (transactions: Array<Transaction>) => {
   );
 };
 
-const loadInitData = async (store: AppStore) => {
-  const state = store.getState();
+const loadInitData = async () => {
+  const state = useAppStore.getState();
   state.reset();
   testTransactions.sort((a, b) => b.datetime.localeCompare(a.datetime));
   const balanceFromTransactions = testTransactions.reduce(
@@ -32,7 +29,7 @@ const loadInitData = async (store: AppStore) => {
         : acc - curr.amount.valueInMinorUnits,
     0
   );
-  store.setState((state) => {
+  useAppStore.setState((state) => {
     const defaultAccount = state.accounts[state.defaultAccountID];
     defaultAccount.balance = {
       valueInMinorUnits: balanceFromTransactions,
@@ -40,16 +37,15 @@ const loadInitData = async (store: AppStore) => {
     };
   });
   state.updateState("transactions", arrayToRecord(testTransactions, "id"));
-  state.updateState("isFirstInstall", false);
+  state.updateState("_isFirstOpen", false);
 };
 
 export default function Home() {
-  const store = useContext(StoreContext)!;
-  const transactionsRecord = useStoreContext(getSortedTransactionsByDate);
+  const transactionsRecord = useAppStore(getSortedTransactionsByDate);
   // TODO: support multiple accounts with different currencies
-  const account = useStoreContext((state) => state.accounts[state.defaultAccountID]);
-  const isFirstInstall = useStoreContext((state) => state.isFirstInstall);
-  const updateState = useStoreContext((state) => state.updateState);
+  const account = useAppStore((state) => state.accounts[state.defaultAccountID]);
+  const isFirstInstall = useAppStore((state) => state._isFirstOpen);
+  const updateState = useAppStore((state) => state.updateState);
   const transactionsList = Object.values(transactionsRecord);
 
   const [isModalOpen, setIsModalOpen] = useState(isFirstInstall);
@@ -61,8 +57,8 @@ export default function Home() {
   const handleLoadData = async () => {
     setIsModalOpen(false);
     setIsLoading(true);
-    await loadInitData(store);
-    updateState("isFirstInstall", false);
+    await loadInitData();
+    updateState("_isFirstOpen", false);
   };
   return (
     <ScreenWrapper className="h-full">

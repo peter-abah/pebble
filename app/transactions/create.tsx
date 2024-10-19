@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { ChevronLeft } from "@/lib/icons/ChevronLeft";
 import { createMoney } from "@/lib/money";
-import { useStoreContext } from "@/lib/store-context";
+import { useAppStore } from "@/lib/store";
 import { router } from "expo-router";
 import { nanoid } from "nanoid";
 import { View } from "react-native";
 
 const CreateTransaction = () => {
-  const createTransaction = useStoreContext((state) => state.upsertTransaction);
-  const mainAccount = useStoreContext((state) => state.accounts[state.defaultAccountID]);
+  const createTransaction = useAppStore((state) => state.upsertTransaction);
+  const mainAccount = useAppStore((state) => state.accounts[state.defaultAccountID]);
   const currency = mainAccount.currency;
 
   const onSubmit = ({ amount, title, note, type, categoryID, datetime }: FormSchema) => {

@@ -1,3 +1,4 @@
 {
-    "docwriter.style": "NumPy"
+    "docwriter.style": "NumPy",
+    "cmake.sourceDirectory": "/home/peter/code/projects/pebble/node_modules/react-native/ReactAndroid/src/main/jni/first-party/fbgloginit"
 }

@@ -1,6 +1,6 @@
+import { useAppStore } from "@/lib/store";
 import "../global.css";
 
-import { StoreProvider } from "@/lib/store-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Theme, ThemeProvider } from "@react-navigation/native";
 import { PortalHost } from "@rn-primitives/portal";
@@ -32,9 +32,10 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = useState(false);
+  const hasStoreHydrated = useAppStore((state) => state._hasHydrated);
 
   useEffect(() => {
-    (async () => {
+    const loadTheme = async () => {
       const theme = await AsyncStorage.getItem("theme");
       if (Platform.OS === "web") {
         // Adds the background color to the html element to prevent white background on overscroll.
@@ -53,10 +54,15 @@ export default function RootLayout() {
         return;
       }
       setIsColorSchemeLoaded(true);
-    })().finally(() => {
-      SplashScreen.hideAsync();
-    });
+    };
+    loadTheme();
   }, []);
+
+  useEffect(() => {
+    if (hasStoreHydrated && isColorSchemeLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [hasStoreHydrated, isColorSchemeLoaded]);
 
   if (!isColorSchemeLoaded) {
     return null;
@@ -64,17 +70,17 @@ export default function RootLayout() {
 
   return (
     <>
-      <StoreProvider>
-        <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-          <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <Stack screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="tabs" />
-            </Stack>
-            <PortalHost />
-          </GestureHandlerRootView>
-        </ThemeProvider>
-      </StoreProvider>
+      {/* <StoreProvider> */}
+      <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+        <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="tabs" />
+          </Stack>
+          <PortalHost />
+        </GestureHandlerRootView>
+      </ThemeProvider>
+      {/* </StoreProvider> */}
     </>
   );
 }

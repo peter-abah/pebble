@@ -5,16 +5,16 @@ import { Text } from "@/components/ui/text";
 import { ChevronLeft } from "@/lib/icons/ChevronLeft";
 import { Trash } from "@/lib/icons/Trash";
 import { createMoney, getMoneyValueInMajorUnits } from "@/lib/money";
-import { useStoreContext } from "@/lib/store-context";
+import { useAppStore } from "@/lib/store";
 import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 
 const CreateTransaction = () => {
   const { id } = useLocalSearchParams() as { id: string };
-  const updateTransaction = useStoreContext((state) => state.upsertTransaction);
-  const deleteTransaction = useStoreContext((state) => state.deleteTransaction);
-  const transaction = useStoreContext((state) => state.transactions[id]);
-  const mainAccount = useStoreContext((state) => state.accounts[state.defaultAccountID]);
+  const updateTransaction = useAppStore((state) => state.upsertTransaction);
+  const deleteTransaction = useAppStore((state) => state.deleteTransaction);
+  const transaction = useAppStore((state) => state.transactions[id]);
+  const mainAccount = useAppStore((state) => state.accounts[state.defaultAccountID]);
   const currency = mainAccount.currency;
 
   const onSubmit = ({ amount, title, note, type, categoryID, datetime }: FormSchema) => {

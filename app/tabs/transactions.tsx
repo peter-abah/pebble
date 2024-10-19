@@ -16,7 +16,7 @@ import { ChevronLeft } from "@/lib/icons/ChevronLeft";
 import { ChevronRight } from "@/lib/icons/ChevronRIght";
 import { Filter } from "@/lib/icons/Filter";
 import { Search } from "@/lib/icons/Search";
-import { useStoreContext } from "@/lib/store-context";
+import { useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
 import { memoize } from "proxy-memoize";
 import { useRef, useState } from "react";
@@ -37,7 +37,7 @@ const groupTransactionsByMonth = memoize((transactions: Record<string, Transacti
 );
 
 const Transactions = () => {
-  const transactionsRecord = useStoreContext((state) => state.transactions);
+  const transactionsRecord = useAppStore((state) => state.transactions);
   const transactions = groupTransactionsByMonth(transactionsRecord);
   const todayRef = useRef(new Date());
   const [currentMonth, setCurrentMonth] = useState({
