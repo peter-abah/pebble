@@ -146,7 +146,7 @@ const Transactions = () => {
 
   return (
     <ScreenWrapper className="!pb-6 !pt-6">
-      <View className="flex-row gap-4 items-center mb-2 px-4 justify-between">
+      <View className="flex-row gap-4 items-center mb-4 px-4 justify-between">
         <Text className="font-semibold text-2xl">Transactions</Text>
 
         <View className="flex-row items-center gap-4">
@@ -156,7 +156,7 @@ const Transactions = () => {
             variant="ghost"
             size="icon"
           >
-            <FilterIcon className="text-foreground" size={24} />
+            <FilterIcon className="text-foreground" size={20} />
           </Button>
           <Button
             onPress={() => {}}
@@ -164,19 +164,19 @@ const Transactions = () => {
             variant="ghost"
             size="icon"
           >
-            <SearchIcon className="text-foreground" size={24} />
+            <SearchIcon className="text-foreground" size={20} />
           </Button>
         </View>
       </View>
 
-      <View className="mb-6 px-4 flex-row items-center justify-between">
+      <View className="mb-4 px-4 flex-row items-center justify-between">
         <View className="flex-row gap-1 items-center">
           <Button variant={"ghost"} size="icon" onPress={decrementDate} className="-ml-2">
-            <ChevronLeftIcon className="text-foreground" />
+            <ChevronLeftIcon className="text-foreground" size={20} />
           </Button>
           <Text className="font-semibold">{renderDate()}</Text>
           <Button variant={"ghost"} size="icon" onPress={incrementDate}>
-            <ChevronRightIcon className="text-foreground" />
+            <ChevronRightIcon className="text-foreground" size={20} />
           </Button>
         </View>
         <View className="flex-row gap-2 items-center">
@@ -184,9 +184,9 @@ const Transactions = () => {
             value={{ value: currentDate.period, label: titleCase(currentDate.period) }}
             onValueChange={handlePeriodChange}
           >
-            <SelectTrigger className="gap-1" aria-aria-labelledby="type">
+            <SelectTrigger className="gap-4" aria-aria-labelledby="type">
               <SelectValue
-                className="text-foreground text-sm native:text-lg"
+                className="text-foreground"
                 placeholder="Select transaction type"
               />
             </SelectTrigger>
