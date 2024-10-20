@@ -12,10 +12,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
-import { ChevronLeft } from "@/lib/icons/ChevronLeft";
-import { ChevronRight } from "@/lib/icons/ChevronRIght";
-import { Filter } from "@/lib/icons/Filter";
-import { Search } from "@/lib/icons/Search";
+import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
+import { ChevronRightIcon } from "@/lib/icons/ChevronRIght";
+import { FilterIcon } from "@/lib/icons/Filter";
+import { SearchIcon } from "@/lib/icons/Search";
 import { useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
 import { titleCase } from "@/lib/utils";
@@ -156,7 +156,7 @@ const Transactions = () => {
             variant="ghost"
             size="icon"
           >
-            <Filter className="text-foreground" size={24} />
+            <FilterIcon className="text-foreground" size={24} />
           </Button>
           <Button
             onPress={() => {}}
@@ -164,7 +164,7 @@ const Transactions = () => {
             variant="ghost"
             size="icon"
           >
-            <Search className="text-foreground" size={24} />
+            <SearchIcon className="text-foreground" size={24} />
           </Button>
         </View>
       </View>
@@ -172,11 +172,11 @@ const Transactions = () => {
       <View className="mb-6 px-4 flex-row items-center justify-between">
         <View className="flex-row gap-1 items-center">
           <Button variant={"ghost"} size="icon" onPress={decrementDate} className="-ml-2">
-            <ChevronLeft className="text-foreground" />
+            <ChevronLeftIcon className="text-foreground" />
           </Button>
           <Text className="font-semibold">{renderDate()}</Text>
           <Button variant={"ghost"} size="icon" onPress={incrementDate}>
-            <ChevronRight className="text-foreground" />
+            <ChevronRightIcon className="text-foreground" />
           </Button>
         </View>
         <View className="flex-row gap-2 items-center">

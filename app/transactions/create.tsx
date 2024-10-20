@@ -2,7 +2,7 @@ import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionForm, { FormSchema } from "@/components/transaction-form";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import { ChevronLeft } from "@/lib/icons/ChevronLeft";
+import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { createMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { router } from "expo-router";
@@ -37,7 +37,7 @@ const CreateTransaction = () => {
           variant="ghost"
           size="icon"
         >
-          <ChevronLeft className="text-foreground" size={28} />
+          <ChevronLeftIcon className="text-foreground" size={28} />
         </Button>
         <Text className="font-bold text-3xl">Add transaction</Text>
       </View>
