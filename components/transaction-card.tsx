@@ -4,7 +4,8 @@ import { Transaction } from "@/lib/types";
 import dayjs from "dayjs";
 import { Link } from "expo-router";
 import { vars } from "nativewind";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import { Text } from "@/components/ui/text";
 
 interface TransactionCardProps {
   transaction: Transaction;
