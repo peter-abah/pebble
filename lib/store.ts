@@ -7,7 +7,7 @@ import "react-native-get-random-values";
 import { create, createStore, useStore } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { arrayToRecord } from "./utils";
+import { arrayToRecord, generateColors, shuffle } from "./utils";
 import { categories } from "./data";
 import { Platform } from "react-native";
 
@@ -19,6 +19,7 @@ export interface AppState {
   categories: Record<TransactionCategory["id"], TransactionCategory>;
   currency: Currency;
   defaultAccountID: Account["id"];
+  chartColors: Array<string>;
   _isFirstOpen: boolean;
   _hasHydrated: boolean;
 }
@@ -34,6 +35,9 @@ export interface AppStateActions {
   reset: () => void;
 }
 
+const chartColors = generateColors(categories.length);
+shuffle(chartColors);
+
 const DEFAULT_STATE: AppState = {
   accounts: {
     "1": {
@@ -47,6 +51,7 @@ const DEFAULT_STATE: AppState = {
   currency: CURRENCIES.NGN,
   transactions: {},
   categories: arrayToRecord(categories, "id"),
+  chartColors,
   defaultAccountID: "1",
   _isFirstOpen: true,
   _hasHydrated: false,

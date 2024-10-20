@@ -1,4 +1,5 @@
 import { Currency, Money } from "@/lib/types";
+import { roundNumber } from "@/lib/utils";
 
 export const CURRENCIES: Record<"NGN" | "USD" | string, Currency> = {
   NGN: {
@@ -41,7 +42,10 @@ export const subtractMoney = (a: Money, b: Money): Money => {
 };
 
 export const formatMoney = ({ valueInMinorUnits, currency }: Money) => {
-  const valueInMajorUnits = valueInMinorUnits / 10 ** currency.minorUnit;
+  const valueInMajorUnits = roundNumber(
+    valueInMinorUnits / 10 ** currency.minorUnit,
+    currency.minorUnit
+  );
   const noFractionDigits = Number.isInteger(valueInMajorUnits) ? 0 : currency.minorUnit;
   const amountStr = valueInMajorUnits.toLocaleString(undefined, {
     maximumFractionDigits: noFractionDigits,

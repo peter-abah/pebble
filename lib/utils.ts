@@ -36,3 +36,28 @@ export function createRange(start: number, end: number) {
   }
   return range;
 }
+
+export const generateColors = (n: number) => {
+  let colors = [];
+  for (let i = 0; i < n; i++) {
+    let hue = ((i * 360) / n) % 360;
+    colors.push(`hsl(${hue}, 100%, ${Math.random() * 80 + 10}%)`); // 
+  }
+  shuffle(colors);
+  return colors;
+};
+
+// shuffles in place
+export const shuffle = <T>(array: Array<T>) => {
+  let currentIndex = array.length;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+    // Pick a remaining element...
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+  }
+};

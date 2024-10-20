@@ -17,181 +17,181 @@ export const categories: TransactionCategory[] = [
     name: "Groceries",
     id: "1",
     type: "debit",
-    color: "hsla(120 50% 50% / 0.1)",
+    color: "#33cc33", // hsla(120 60% 50%)
     icon: { emoji: "🛒", type: "emoji" },
   },
   {
     name: "Rent",
     id: "2",
     type: "debit",
-    color: "hsla(240 50% 50% / 0.1)",
+    color: "#3333cc", // hsla(240 60% 50%)
     icon: { emoji: "🏠", type: "emoji" },
   },
   {
     name: "Utilities",
     id: "3",
     type: "debit",
-    color: "hsla(60 50% 50% / 0.1)",
+    color: "#cccc33", // hsla(60 60% 50%)
     icon: { emoji: "💡", type: "emoji" },
   },
   {
     name: "Transportation",
     id: "4",
     type: "debit",
-    color: "hsla(30 50% 50% / 0.1)",
+    color: "#cc6633", // hsla(30 60% 50%)
     icon: { emoji: "🚗", type: "emoji" },
   },
   {
     name: "Dining",
     id: "5",
     type: "debit",
-    color: "hsla(300 50% 50% / 0.1)",
+    color: "#cc33cc", // hsla(300 60% 50%)
     icon: { emoji: "🍽️", type: "emoji" },
   },
   {
     name: "Entertainment",
     id: "6",
     type: "debit",
-    color: "hsla(210 50% 50% / 0.1)",
+    color: "#3399cc", // hsla(210 60% 50%)
     icon: { emoji: "🎬", type: "emoji" },
   },
   {
     name: "Health",
     id: "7",
     type: "debit",
-    color: "hsla(90 50% 50% / 0.1)",
+    color: "#66cc33", // hsla(90 60% 50%)
     icon: { emoji: "💊", type: "emoji" },
   },
   {
     name: "Fitness",
     id: "8",
     type: "debit",
-    color: "hsla(330 50% 50% / 0.1)",
+    color: "#cc3399", // hsla(330 60% 50%)
     icon: { emoji: "🏋️", type: "emoji" },
   },
   {
     name: "Clothing",
     id: "9",
     type: "debit",
-    color: "hsla(270 50% 50% / 0.1)",
+    color: "#9933cc", // hsla(270 60% 50%)
     icon: { emoji: "👗", type: "emoji" },
   },
   {
     name: "Subscriptions",
     id: "10",
     type: "debit",
-    color: "hsla(180 50% 50% / 0.1)",
+    color: "#33cccc", // hsla(180 60% 50%)
     icon: { emoji: "📺", type: "emoji" },
   },
   {
     name: "Insurance",
     id: "11",
     type: "debit",
-    color: "hsla(150 50% 50% / 0.1)",
+    color: "#33cc66", // hsla(150 60% 50%)
     icon: { emoji: "🛡️", type: "emoji" },
   },
   {
     name: "Travel",
     id: "12",
     type: "debit",
-    color: "hsla(240 50% 50% / 0.1)",
+    color: "#3366cc", // hsla(240 60% 45%) - slight tweak to make it unique
     icon: { emoji: "✈️", type: "emoji" },
   },
   {
     name: "Gifts",
     id: "13",
     type: "debit",
-    color: "hsla(330 50% 50% / 0.1)",
+    color: "#cc3399", // hsla(330 60% 55%) - already used
     icon: { emoji: "🎁", type: "emoji" },
   },
   {
     name: "Education",
     id: "14",
     type: "debit",
-    color: "hsla(60 50% 50% / 0.1)",
+    color: "#cccc66", // hsla(60 60% 55%) - slight tweak
     icon: { emoji: "🎓", type: "emoji" },
   },
   {
     name: "Home Improvement",
     id: "15",
     type: "debit",
-    color: "hsla(120 50% 50% / 0.1)",
+    color: "#33cc33", // hsla(120 60% 55%)
     icon: { emoji: "🔨", type: "emoji" },
   },
   {
     name: "Pets",
     id: "16",
     type: "debit",
-    color: "hsla(180 50% 50% / 0.1)",
+    color: "#33cccc", // hsla(180 60% 45%) - adjusted saturation
     icon: { emoji: "🐕", type: "emoji" },
   },
   {
     name: "Investments",
     id: "17",
     type: "credit",
-    color: "hsla(270 50% 50% / 0.1)",
+    color: "#9933cc", // hsla(270 60% 45%)
     icon: { emoji: "📈", type: "emoji" },
   },
   {
     name: "Charity",
     id: "18",
     type: "debit",
-    color: "hsla(210 50% 50% / 0.1)",
+    color: "#3399cc", // hsla(210 60% 55%)
     icon: { emoji: "❤️", type: "emoji" },
   },
   {
     name: "Taxes",
     id: "19",
     type: "debit",
-    color: "hsla(90 50% 50% / 0.1)",
+    color: "#66cc66", // hsla(90 60% 45%) - slight tweak
     icon: { emoji: "💰", type: "emoji" },
   },
   {
     name: "Miscellaneous",
     id: "20",
     type: "debit",
-    color: "hsla(30 50% 50% / 0.1)",
+    color: "#cc6633", // hsla(30 60% 55%) - slight tweak
     icon: { emoji: "📦", type: "emoji" },
   },
   {
     name: "Salary",
     id: "21",
     type: "credit",
-    color: "hsla(200 50% 50% / 0.1)",
+    color: "#3399cc", // hsla(200 60% 55%)
     icon: { emoji: "💼", type: "emoji" },
   },
   {
     name: "Freelance Income",
     id: "22",
     type: "credit",
-    color: "hsla(250 50% 50% / 0.1)",
+    color: "#6644cc", // hsla(250 60% 45%)
     icon: { emoji: "🖥️", type: "emoji" },
   },
   {
     name: "Bonus",
     id: "23",
     type: "credit",
-    color: "hsla(160 50% 50% / 0.1)",
+    color: "#33cc66", // hsla(160 60% 55%)
     icon: { emoji: "💸", type: "emoji" },
   },
   {
     name: "Interest",
     id: "24",
     type: "credit",
-    color: "hsla(100 50% 50% / 0.1)",
+    color: "#66cc33", // hsla(100 60% 55%)
     icon: { emoji: "🏦", type: "emoji" },
   },
   {
     name: "Rental Income",
     id: "25",
     type: "credit",
-    color: "hsla(220 50% 50% / 0.1)",
+    color: "#3366cc", // hsla(220 60% 45%) - slight tweak
     icon: { emoji: "🏢", type: "emoji" },
   },
   {
     name: "Unknown",
     id: "26",
-    color: "hsla(170 50% 50% / 0.1)",
+    color: "#33cc99", // hsla(170 60% 55%)
     icon: { emoji: "❓", type: "emoji" },
   },
 ];
