@@ -1,148 +1,42 @@
 import AddButton from "@/components/add-button";
 import ScreenWrapper from "@/components/screen-wrapper";
+import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
-import {
-  Option,
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
-import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
-import { ChevronRightIcon } from "@/lib/icons/ChevronRIght";
 import { FilterIcon } from "@/lib/icons/Filter";
 import { SearchIcon } from "@/lib/icons/Search";
-import { useAppStore } from "@/lib/store";
+import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
-import { titleCase } from "@/lib/utils";
-import dayjs, { Dayjs } from "dayjs";
-import { memoize } from "proxy-memoize";
+import {
+  dateToKey,
+  groupTransactionsByMonth,
+  groupTransactionsByWeek,
+  groupTransactionsByYear,
+} from "@/lib/utils";
+import dayjs from "dayjs";
 import { useState } from "react";
 import { View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-const groupTransactionsByMonth = memoize((transactions: Record<string, Transaction>) =>
-  Object.values(transactions).reduce((result, transaction) => {
-    const monthAndYear = transaction.datetime.slice(0, 7); // e.g 2024-10
-    if (result[monthAndYear]) {
-      result[monthAndYear].push(transaction);
-    } else {
-      result[monthAndYear] = [transaction];
-    }
-    return result;
-  }, {} as Record<string, Array<Transaction>>)
-);
-
-const groupTransactionsByWeek = memoize((transactions: Record<string, Transaction>) =>
-  Object.values(transactions).reduce((result, transaction) => {
-    const firstDayOfWeek = dayjs(transaction.datetime).day(0).toISOString().slice(0, 10); // first day of week e.g 2024-10-20
-    if (result[firstDayOfWeek]) {
-      result[firstDayOfWeek].push(transaction);
-    } else {
-      result[firstDayOfWeek] = [transaction];
-    }
-    return result;
-  }, {} as Record<string, Array<Transaction>>)
-);
-
-const groupTransactionsByYear = memoize((transactions: Record<string, Transaction>) =>
-  Object.values(transactions).reduce((result, transaction) => {
-    const year = transaction.datetime.slice(0, 4); // e.g 2024
-    if (result[year]) {
-      result[year].push(transaction);
-    } else {
-      result[year] = [transaction];
-    }
-    return result;
-  }, {} as Record<string, Array<Transaction>>)
-);
-
-const dateToKey = ({ period, date }: { period: Period; date: Dayjs }) => {
-  switch (period) {
-    case "annually":
-      return date.year().toString();
-    case "monthly":
-      return date.toISOString().slice(0, 7);
-    case "weekly":
-      return date.day(0).toISOString().slice(0, 10);
-  }
-};
 
 const periods = ["monthly", "weekly", "annually"] as const;
 type Period = (typeof periods)[number];
 
 const Transactions = () => {
-  const transactionsRecord = useAppStore((state) => state.transactions);
+  const transactions = useAppStore(getSortedTransactionsByDate);
   const groupedTransactions: Record<Period, Record<string, Transaction[]>> = {
-    monthly: groupTransactionsByMonth(transactionsRecord),
-    annually: groupTransactionsByYear(transactionsRecord),
-    weekly: groupTransactionsByWeek(transactionsRecord),
+    monthly: groupTransactionsByMonth(transactions),
+    annually: groupTransactionsByYear(transactions),
+    weekly: groupTransactionsByWeek(transactions),
   };
 
-  const [currentDate, setCurrentDate] = useState<{ period: Period; date: Dayjs }>(() => ({
+  const [currentTimePeriod, setCurrentTimePeriod] = useState<TimePeriod>(() => ({
     date: dayjs(),
     period: "monthly",
   }));
 
-  const currentTransactions = groupedTransactions[currentDate.period][dateToKey(currentDate)];
-  const insets = useSafeAreaInsets();
-  const contentInsets = {
-    top: insets.top,
-    bottom: insets.bottom,
-    left: 12,
-    right: 12,
-  };
-
-  const incrementDate = () => {
-    switch (currentDate.period) {
-      case "monthly":
-        setCurrentDate((prev) => ({ period: prev.period, date: prev.date.add(1, "month") }));
-        break;
-      case "weekly":
-        setCurrentDate((prev) => ({ period: prev.period, date: prev.date.add(1, "week") }));
-        break;
-      case "annually":
-        setCurrentDate((prev) => ({ period: prev.period, date: prev.date.add(1, "year") }));
-        break;
-    }
-  };
-
-  const decrementDate = () => {
-    switch (currentDate.period) {
-      case "monthly":
-        setCurrentDate((prev) => ({ period: prev.period, date: prev.date.subtract(1, "month") }));
-        break;
-      case "weekly":
-        setCurrentDate((prev) => ({ period: prev.period, date: prev.date.subtract(1, "week") }));
-        break;
-      case "annually":
-        setCurrentDate((prev) => ({ period: prev.period, date: prev.date.subtract(1, "year") }));
-        break;
-    }
-  };
-
-  const renderDate = () => {
-    switch (currentDate.period) {
-      case "annually":
-        return currentDate.date.year();
-      case "monthly":
-        return currentDate.date.format("MMM YYYY");
-      case "weekly":
-        const firstDay = currentDate.date.day(0);
-        const lastDay = currentDate.date.day(6);
-        return `${firstDay.format("MMM DD")} - ${lastDay.format("MMM DD, YYYY")}`;
-    }
-  };
-
-  const handlePeriodChange = (option: Option) => {
-    if (!option) return;
-    setCurrentDate((prev) => ({ period: option.value as Period, date: prev.date.day(0) }));
-  };
+  const currentTransactions =
+    groupedTransactions[currentTimePeriod.period][dateToKey(currentTimePeriod)];
 
   return (
     <ScreenWrapper className="!pb-6 !pt-6">
@@ -169,38 +63,8 @@ const Transactions = () => {
         </View>
       </View>
 
-      <View className="mb-4 px-4 flex-row items-center justify-between">
-        <View className="flex-row gap-1 items-center">
-          <Button variant={"ghost"} size="icon" onPress={decrementDate} className="-ml-2">
-            <ChevronLeftIcon className="text-foreground" size={20} />
-          </Button>
-          <Text className="font-semibold">{renderDate()}</Text>
-          <Button variant={"ghost"} size="icon" onPress={incrementDate}>
-            <ChevronRightIcon className="text-foreground" size={20} />
-          </Button>
-        </View>
-        <View className="flex-row gap-2 items-center">
-          <Select
-            value={{ value: currentDate.period, label: titleCase(currentDate.period) }}
-            onValueChange={handlePeriodChange}
-          >
-            <SelectTrigger className="gap-4" aria-aria-labelledby="type">
-              <SelectValue
-                className="text-foreground"
-                placeholder="Select transaction type"
-              />
-            </SelectTrigger>
-            <SelectContent insets={contentInsets}>
-              <SelectGroup>
-                {periods.map((period) => (
-                  <SelectItem key={period} value={period} label={titleCase(period)}>
-                    {titleCase(period)}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </View>
+      <View className="px-4 mb-4">
+        <TimePeriodPicker timePeriod={currentTimePeriod} onValueChange={setCurrentTimePeriod} />
       </View>
 
       <FlatList
