@@ -49,7 +49,7 @@ const Stats = () => {
         <Text className="font-semibold text-2xl">Stats</Text>
       </View>
 
-      <View className="flex-1 px-4">
+      <ScrollView className="flex-1 px-4">
         <TimePeriodPicker timePeriod={currentTimePeriod} onValueChange={setCurrentTimePeriod} />
         {chartData && (
           <View className="justify-center flex-row my-4">
@@ -66,7 +66,7 @@ const Stats = () => {
           >
             <Text
               className={cn(
-                "text-lg text-center",
+                "text-center",
                 transactionType === "debit" && "text-primary-foreground"
               )}
             >
@@ -82,7 +82,7 @@ const Stats = () => {
           >
             <Text
               className={cn(
-                "text-lg text-center",
+                "text-center",
                 transactionType === "credit" && "text-primary-foreground"
               )}
             >
@@ -92,7 +92,7 @@ const Stats = () => {
         </View>
 
         {chartData && (
-          <ScrollView className="flex-1" contentContainerClassName="gap-3">
+          <View className="gap-3">
             {chartData.map(({ categoryID, color, value }) => (
               <View key={categoryID} className="flex-row items-center">
                 <View
@@ -105,9 +105,9 @@ const Stats = () => {
                 </Text>
               </View>
             ))}
-          </ScrollView>
+          </View>
         )}
-      </View>
+      </ScrollView>
     </ScreenWrapper>
   );
 };
