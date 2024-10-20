@@ -8,8 +8,9 @@ import { CURRENCIES, addMoney, createMoney, formatMoney } from "@/lib/money";
 import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
 import { arrayToRecord } from "@/lib/utils";
+import { Link } from "expo-router";
 import { useState } from "react";
-import { Pressable, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 
 const sumTransactions = (transactions: Array<Transaction>) => {
   return transactions.reduce(
@@ -41,29 +42,27 @@ const loadInitData = async () => {
 };
 
 export default function Home() {
-  const transactionsRecord = useAppStore(getSortedTransactionsByDate);
+  const transactions = useAppStore(getSortedTransactionsByDate);
   // TODO: support multiple accounts with different currencies
   const account = useAppStore((state) => state.accounts[state.defaultAccountID]);
   const isFirstInstall = useAppStore((state) => state._isFirstOpen);
   const updateState = useAppStore((state) => state.updateState);
-  const transactionsList = Object.values(transactionsRecord);
 
   const [isModalOpen, setIsModalOpen] = useState(isFirstInstall);
-  const [isLoading, setIsLoading] = useState(false);
 
-  const expenses = sumTransactions(transactionsList.filter(({ type }) => type === "debit"));
-  const income = sumTransactions(transactionsList.filter(({ type }) => type === "credit"));
+  const expenses = sumTransactions(transactions.filter(({ type }) => type === "debit"));
+  const income = sumTransactions(transactions.filter(({ type }) => type === "credit"));
 
   const handleLoadData = async () => {
     setIsModalOpen(false);
-    setIsLoading(true);
     await loadInitData();
     updateState("_isFirstOpen", false);
   };
+
   return (
     <ScreenWrapper className="h-full">
       <ScrollView contentContainerStyle={{ padding: 24 }}>
-        <Text className="font-bold text-3xl mb-6">Overview</Text>
+        <Text className="font-bold text-3xl mb-6">Home</Text>
         <View className="gap-4">
           <View className="gap-1 border rounded-lg p-4 bg-primary">
             <Text className="text-primary-foreground">Current Balance</Text>
@@ -85,13 +84,16 @@ export default function Home() {
 
         <View className="mt-6">
           <View className="flex-row items-center justify-between mb-2">
-            <Text className="font-medium text-xl">Recent Transactions</Text>
-            <Pressable className="px-2 py-1 -my-1 -mx-2 rounded-sm active:">
-              <Text>View all</Text>
-            </Pressable>
+            <Text className="font-medium text-xl">Transactions</Text>
+            <Link
+              href="/tabs/transactions"
+              className="px-2 py-1 -my-1 -mx-2 rounded-sm active:bg-muted"
+            >
+              <Text>See all</Text>
+            </Link>
           </View>
 
-          {transactionsList.slice(0, 10).map((transaction) => (
+          {transactions.slice(0, 5).map((transaction) => (
             <TransactionCard transaction={transaction} key={transaction.id} />
           ))}
         </View>
