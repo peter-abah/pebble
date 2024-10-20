@@ -200,7 +200,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a9afcc0d-f157-4c84-be6f-61c46ee5a226",
     amount: createMoney(767.1 * 1000, CURRENCIES.NGN),
-    datetime: "2024-06-15T07:10:20.102033",
+    datetime: "2024-06-15T07:10:20.102033Z",
     type: "credit",
     categoryID: "5",
     accountID: "1",
@@ -211,7 +211,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e504f5ee-733d-479e-b0a8-d5263d1cae01",
     amount: createMoney(945.77 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-17T21:51:19.102033",
+    datetime: "2021-11-17T21:51:19.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -222,7 +222,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "356b9034-c1c9-40c2-9903-98de4c924714",
     amount: createMoney(534.92 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-16T20:01:46.102033",
+    datetime: "2023-08-16T20:01:46.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -233,7 +233,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "890848ca-dab1-49f3-a754-a54e0df0747c",
     amount: createMoney(944.09 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-20T08:22:33.102033",
+    datetime: "2024-07-20T08:22:33.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -244,7 +244,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b11f963c-09a1-4f8a-b497-47778aa4ae78",
     amount: createMoney(632.15 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-25T10:03:50.102033",
+    datetime: "2022-06-25T10:03:50.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -255,7 +255,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8c64049c-2dc8-4fef-9095-ff3c22ec4ed1",
     amount: createMoney(876.5 * 1000, CURRENCIES.NGN),
-    datetime: "2024-06-23T09:49:05.102033",
+    datetime: "2024-06-23T09:49:05.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -266,7 +266,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8eb0b55d-722b-40fa-bcfd-a2b84d6beb35",
     amount: createMoney(404.74 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-12T03:25:30.102033",
+    datetime: "2022-08-12T03:25:30.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -277,7 +277,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "afc2e6d1-7a4f-4fd4-a0ef-a4e55f598a9d",
     amount: createMoney(604.36 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-02T05:06:05.102033",
+    datetime: "2024-03-02T05:06:05.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -288,7 +288,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "46886d32-9d57-436e-9fdb-73490613c695",
     amount: createMoney(689.17 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-17T21:16:55.102033",
+    datetime: "2022-12-17T21:16:55.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -299,7 +299,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "515af1b3-0d33-4a33-8dd4-4212adcb3456",
     amount: createMoney(897.46 * 100, CURRENCIES.NGN),
-    datetime: "2024-10-05T17:24:40.102033",
+    datetime: "2024-10-05T17:24:40.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -310,7 +310,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "40ad0214-3dfe-4f52-8854-1d8576816a1a",
     amount: createMoney(460.7 * 1000, CURRENCIES.NGN),
-    datetime: "2023-04-13T00:24:57.102033",
+    datetime: "2023-04-13T00:24:57.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -321,7 +321,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1d9fe4a5-3c10-40d7-9aa8-cc954ea7ac69",
     amount: createMoney(654.24 * 1000, CURRENCIES.NGN),
-    datetime: "2023-03-25T14:01:16.102033",
+    datetime: "2023-03-25T14:01:16.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -332,7 +332,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1b57212f-ac73-45bc-b69b-5727b2bce205",
     amount: createMoney(513.65 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-30T23:25:33.102033",
+    datetime: "2022-12-30T23:25:33.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -343,7 +343,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "de19dbdf-2abe-4b6c-a7dc-58bbe4325702",
     amount: createMoney(277.83 * 1000, CURRENCIES.NGN),
-    datetime: "2023-12-09T20:03:33.102033",
+    datetime: "2023-12-09T20:03:33.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -354,7 +354,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "60095c91-0887-4748-9f3b-24a85f54988b",
     amount: createMoney(381.69 * 1000, CURRENCIES.NGN),
-    datetime: "2023-03-01T15:55:04.102033",
+    datetime: "2023-03-01T15:55:04.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -365,7 +365,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "af780ddb-5390-4088-b758-bd99468e9fea",
     amount: createMoney(493.98 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-25T08:40:56.102033",
+    datetime: "2023-03-25T08:40:56.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -376,7 +376,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fa80d4fd-6080-40f9-83e1-ca1b4956a050",
     amount: createMoney(914.56 * 100, CURRENCIES.NGN),
-    datetime: "2021-10-18T00:58:39.102033",
+    datetime: "2021-10-18T00:58:39.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -387,7 +387,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8b31d2f8-337c-4f0d-aae6-36bfcc2ecbcb",
     amount: createMoney(558.71 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-17T23:00:38.102033",
+    datetime: "2022-12-17T23:00:38.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -398,7 +398,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d70b365f-84ee-439a-bc55-785abb4ace5d",
     amount: createMoney(35.6 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-28T23:24:49.102033",
+    datetime: "2024-07-28T23:24:49.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -409,7 +409,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e466fa7b-c9ae-4193-b32f-20db59517e55",
     amount: createMoney(472.05 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-04T02:26:58.102033",
+    datetime: "2022-02-04T02:26:58.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -420,7 +420,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a5637d10-ea5e-4fe1-b401-1e110c045bc7",
     amount: createMoney(520.61 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-15T07:23:23.102033",
+    datetime: "2022-07-15T07:23:23.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -431,7 +431,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f2b8174d-f7ec-4d0c-9d69-d305bca545a7",
     amount: createMoney(474.7 * 1000, CURRENCIES.NGN),
-    datetime: "2023-06-17T13:06:34.102033",
+    datetime: "2023-06-17T13:06:34.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -442,7 +442,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3a4e3491-4167-4fc0-8d5e-347e34fe9158",
     amount: createMoney(680.98 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-25T22:26:12.102033",
+    datetime: "2024-08-25T22:26:12.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -453,7 +453,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5fe3a5f2-8793-4e95-896c-0054273f00b1",
     amount: createMoney(393.57 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-25T00:23:50.102033",
+    datetime: "2022-11-25T00:23:50.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -464,7 +464,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "372da900-f794-4d7e-8119-4d61a8f55f0d",
     amount: createMoney(437.56 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-18T18:28:42.102033",
+    datetime: "2023-01-18T18:28:42.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -475,7 +475,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9b243a8d-f260-4de2-a6cf-c368a1a0e3f7",
     amount: createMoney(714.7 * 1000, CURRENCIES.NGN),
-    datetime: "2022-07-04T05:15:30.102033",
+    datetime: "2022-07-04T05:15:30.102033Z",
     type: "credit",
     categoryID: "18",
     accountID: "1",
@@ -486,7 +486,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c8cddc79-5049-4251-9678-06af4a4e19f9",
     amount: createMoney(674.23 * 1000, CURRENCIES.NGN),
-    datetime: "2022-06-15T23:33:53.102033",
+    datetime: "2022-06-15T23:33:53.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -497,7 +497,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "15b1a9c0-aeca-4c34-acfb-d4e00e0bec2f",
     amount: createMoney(494.01 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-31T11:27:05.102033",
+    datetime: "2022-10-31T11:27:05.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -508,7 +508,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1e6bdd81-4419-44b7-8e0f-5b9330ac76c9",
     amount: createMoney(946.06 * 1000, CURRENCIES.NGN),
-    datetime: "2024-09-11T04:54:19.102033",
+    datetime: "2024-09-11T04:54:19.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -519,7 +519,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "071bfa86-41a1-4402-925c-6df7ec842526",
     amount: createMoney(178.47 * 1000, CURRENCIES.NGN),
-    datetime: "2023-03-07T02:57:38.102033",
+    datetime: "2023-03-07T02:57:38.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -530,7 +530,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "47211c00-5044-4768-83ac-2b3c74a748c6",
     amount: createMoney(118.81 * 1000, CURRENCIES.NGN),
-    datetime: "2022-12-29T03:11:14.102033",
+    datetime: "2022-12-29T03:11:14.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -541,7 +541,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "eefc9f8b-45f2-42b2-a173-3d1ff73b567a",
     amount: createMoney(268.21 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-15T01:51:41.102033",
+    datetime: "2024-03-15T01:51:41.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -552,7 +552,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "87d72409-e7d7-45b4-acd9-36bb66c49ea9",
     amount: createMoney(268.08 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-21T11:44:57.102033",
+    datetime: "2021-11-21T11:44:57.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -563,7 +563,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "991e33de-e5e6-4a2a-8698-3df7772a6081",
     amount: createMoney(415.08 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-11T22:44:03.102033",
+    datetime: "2024-05-11T22:44:03.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -574,7 +574,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "bbd704c0-529e-4c45-9a7c-2a76e5aa7a27",
     amount: createMoney(438.82 * 1000, CURRENCIES.NGN),
-    datetime: "2024-09-11T09:58:40.102033",
+    datetime: "2024-09-11T09:58:40.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -585,7 +585,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "96d83c38-a3f2-4c7b-b273-fadb2a8db91b",
     amount: createMoney(723.65 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-15T11:41:09.102033",
+    datetime: "2023-01-15T11:41:09.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -596,7 +596,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6ebc6f00-7661-40c6-8644-c0a613490971",
     amount: createMoney(195.56 * 1000, CURRENCIES.NGN),
-    datetime: "2022-01-30T23:21:40.102033",
+    datetime: "2022-01-30T23:21:40.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -607,7 +607,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d301d5f9-6524-4385-97ef-795c4a177ebc",
     amount: createMoney(172.37 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-19T09:26:51.102033",
+    datetime: "2021-11-19T09:26:51.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -618,7 +618,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6585298c-780b-45ef-a3af-e1823345d19a",
     amount: createMoney(394.99 * 1000, CURRENCIES.NGN),
-    datetime: "2022-12-23T19:57:07.102033",
+    datetime: "2022-12-23T19:57:07.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -629,7 +629,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a1b432d9-c64b-4ebe-b442-0039d9fadeeb",
     amount: createMoney(808.57 * 1000, CURRENCIES.NGN),
-    datetime: "2023-01-06T11:28:46.102033",
+    datetime: "2023-01-06T11:28:46.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -640,7 +640,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "44c75dc2-3bac-4404-bda9-2ac0dbd31f21",
     amount: createMoney(173.96 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-07T03:55:28.102033",
+    datetime: "2022-10-07T03:55:28.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -651,7 +651,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "77fce8c7-3361-4005-b2ed-f888bbb3c222",
     amount: createMoney(492.76 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-19T19:08:17.102033",
+    datetime: "2023-12-19T19:08:17.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -662,7 +662,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2f9198a2-76ae-4fcd-821e-1c8999c47c73",
     amount: createMoney(701.56 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-26T03:16:35.102033",
+    datetime: "2023-10-26T03:16:35.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -673,7 +673,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "08b16cc6-1dcd-4f36-8230-b57b96a4d333",
     amount: createMoney(587.46 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-10T02:16:01.102033",
+    datetime: "2022-04-10T02:16:01.102033Z",
     type: "credit",
     categoryID: "6",
     accountID: "1",
@@ -684,7 +684,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ecbe56cf-09e4-45d3-9b8a-f1e82f42b72c",
     amount: createMoney(451.72 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-29T21:10:09.102033",
+    datetime: "2021-11-29T21:10:09.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -695,7 +695,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9c37645d-5571-4fe8-a997-27bf2bb95fbe",
     amount: createMoney(469.49 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-20T15:08:52.102033",
+    datetime: "2022-01-20T15:08:52.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -706,7 +706,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "046f0c82-1eae-41bb-8549-fd254ac2464f",
     amount: createMoney(861.32 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-31T06:59:58.102033",
+    datetime: "2022-08-31T06:59:58.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -717,7 +717,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8dcf15ba-d5b9-447f-bf87-d28ea4e1daa2",
     amount: createMoney(53.44 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-13T19:47:50.102033",
+    datetime: "2024-05-13T19:47:50.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -728,7 +728,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "34131371-4dcc-4e68-81f1-74779579663f",
     amount: createMoney(50.33 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-28T21:42:18.102033",
+    datetime: "2022-08-28T21:42:18.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -739,7 +739,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4692faac-5dd8-44f1-a8dc-f53bc8375bd7",
     amount: createMoney(392.86 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-30T15:19:54.102033",
+    datetime: "2021-11-30T15:19:54.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -750,7 +750,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "740e6ecd-ea9e-418e-8a87-506380f91243",
     amount: createMoney(703.56 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-20T22:05:43.102033",
+    datetime: "2022-09-20T22:05:43.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -761,7 +761,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c7c16159-3861-4a0b-a6b8-d4e2986af259",
     amount: createMoney(136.08 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-18T01:21:45.102033",
+    datetime: "2023-03-18T01:21:45.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -772,7 +772,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d3b333f6-3d45-4433-b645-42ec26fd4d2e",
     amount: createMoney(980.56 * 100, CURRENCIES.NGN),
-    datetime: "2023-05-22T20:26:12.102033",
+    datetime: "2023-05-22T20:26:12.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -783,7 +783,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1c1bbb5e-9abf-4cc3-aa02-5049ec6075fb",
     amount: createMoney(896.0 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-27T18:02:14.102033",
+    datetime: "2023-08-27T18:02:14.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -794,7 +794,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "89482424-fcd3-4da2-b33e-46ebefec997e",
     amount: createMoney(940.93 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-27T11:03:21.102033",
+    datetime: "2022-04-27T11:03:21.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -805,7 +805,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5a483d6e-d25d-485f-a29d-50892cc67d68",
     amount: createMoney(46.66 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-02T00:30:52.102033",
+    datetime: "2023-10-02T00:30:52.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -816,7 +816,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2c0d197c-166d-4358-8ef9-fc0a61d186f2",
     amount: createMoney(555.63 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-13T12:08:00.102033",
+    datetime: "2024-09-13T12:08:00.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -827,7 +827,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b111a1a0-0ae8-4833-a84d-c9090ed7466b",
     amount: createMoney(110.82 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-05T22:11:13.102033",
+    datetime: "2024-05-05T22:11:13.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -838,7 +838,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "317c5fa7-cd84-4fbd-9c0d-1032f969309d",
     amount: createMoney(113.92 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-10T17:14:39.102033",
+    datetime: "2022-08-10T17:14:39.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -849,7 +849,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a224b721-3cab-49ae-90ad-707e9b81e107",
     amount: createMoney(15.37 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-06T06:04:17.102033",
+    datetime: "2021-11-06T06:04:17.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -860,7 +860,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4231c5d6-6973-4405-bf0a-e41724e9da2f",
     amount: createMoney(672.66 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-13T19:12:27.102033",
+    datetime: "2022-06-13T19:12:27.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -871,7 +871,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d461a435-45a3-4fa7-af91-41e508a3839d",
     amount: createMoney(705.99 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-24T23:28:50.102033",
+    datetime: "2022-07-24T23:28:50.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -882,7 +882,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "89b83076-a664-4341-90a5-a8dd2934251b",
     amount: createMoney(680.65 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-27T07:50:26.102033",
+    datetime: "2022-04-27T07:50:26.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -893,7 +893,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "48f090a1-de59-47a5-9831-c2073829c910",
     amount: createMoney(389.29 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-23T09:56:42.102033",
+    datetime: "2023-11-23T09:56:42.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -904,7 +904,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b57529ee-4ed6-4c60-8bd6-06bedd9fe818",
     amount: createMoney(666.25 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-26T15:15:07.102033",
+    datetime: "2022-12-26T15:15:07.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -915,7 +915,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "536dbfcf-c43b-4ee8-aace-a3300703966b",
     amount: createMoney(655.85 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-09T22:04:50.102033",
+    datetime: "2023-07-09T22:04:50.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -926,7 +926,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1fce04fd-e784-471a-8129-e464cb18f635",
     amount: createMoney(978.35 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-22T06:59:50.102033",
+    datetime: "2022-09-22T06:59:50.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -937,7 +937,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6f102fd2-177e-4476-aae7-f4f0e4d5a6ec",
     amount: createMoney(398.96 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-05T02:50:23.102033",
+    datetime: "2022-01-05T02:50:23.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -948,7 +948,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ac4b0f93-d5fe-4d58-b626-c5873feefd18",
     amount: createMoney(873.9 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-16T00:33:36.102033",
+    datetime: "2022-06-16T00:33:36.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -959,7 +959,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d94649aa-e258-4160-9dcc-d1161b8dbb61",
     amount: createMoney(800.24 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-09T04:43:27.102033",
+    datetime: "2024-09-09T04:43:27.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -970,7 +970,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a5010ba0-9d5f-4adb-bdb3-9ee233dc3950",
     amount: createMoney(105.14 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-02T01:04:54.102033",
+    datetime: "2023-08-02T01:04:54.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -981,7 +981,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2ba8eb11-a2aa-404f-b2c5-d1e5a2d0bc45",
     amount: createMoney(193.54 * 100, CURRENCIES.NGN),
-    datetime: "2024-02-21T08:20:13.102033",
+    datetime: "2024-02-21T08:20:13.102033Z",
     type: "credit",
     categoryID: "5",
     accountID: "1",
@@ -992,7 +992,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e8c650c3-0e71-458a-9b4e-2bfc8f1fcadc",
     amount: createMoney(839.42 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-27T01:24:13.102033",
+    datetime: "2024-01-27T01:24:13.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -1003,7 +1003,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "37b27f83-9176-4999-a911-d00f2e689c92",
     amount: createMoney(930.0 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-06T18:55:39.102033",
+    datetime: "2022-07-06T18:55:39.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -1014,7 +1014,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c8fc7df5-35ce-427b-84a1-ddc36cb4dfd0",
     amount: createMoney(245.56 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-08T12:01:30.102033",
+    datetime: "2022-02-08T12:01:30.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -1025,7 +1025,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8bfdcc9b-f13a-4970-8fb1-f35df6a64d8a",
     amount: createMoney(53.48 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-25T17:48:22.102033",
+    datetime: "2022-03-25T17:48:22.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -1036,7 +1036,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0ff9715f-0503-4b52-8fa1-8dfbaf901fa1",
     amount: createMoney(777.27 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-29T19:01:00.102033",
+    datetime: "2022-12-29T19:01:00.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -1047,7 +1047,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b511a85e-5bdd-4559-8701-8611ca593b69",
     amount: createMoney(222.16 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-18T09:58:09.102033",
+    datetime: "2024-04-18T09:58:09.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -1058,7 +1058,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "338e0a9f-02c3-45d7-99ac-cb0cae5eded7",
     amount: createMoney(595.79 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-19T05:22:54.102033",
+    datetime: "2024-07-19T05:22:54.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -1069,7 +1069,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0c8a7bf0-da86-4d76-b0a7-6996b7635f73",
     amount: createMoney(490.94 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-20T08:59:55.102033",
+    datetime: "2023-10-20T08:59:55.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -1080,7 +1080,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "895c8170-d2dc-4d5a-aab2-1457035f3fc3",
     amount: createMoney(38.5 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-14T02:28:03.102033",
+    datetime: "2022-06-14T02:28:03.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -1091,7 +1091,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5142cf59-8cc0-47e4-b31e-60166edd320e",
     amount: createMoney(621.72 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-06T01:24:44.102033",
+    datetime: "2024-08-06T01:24:44.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -1102,7 +1102,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "bb69b580-3c98-4ac1-a59d-e3e1cf18601e",
     amount: createMoney(705.85 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-24T09:41:09.102033",
+    datetime: "2023-01-24T09:41:09.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -1113,7 +1113,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "69c3cfa0-edab-4071-b60e-b3c9ecd2ff69",
     amount: createMoney(235.23 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-13T02:29:55.102033",
+    datetime: "2024-04-13T02:29:55.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -1124,7 +1124,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9f62eeb2-fb07-47d5-a961-59e0341e246d",
     amount: createMoney(111.72 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-21T19:45:00.102033",
+    datetime: "2022-08-21T19:45:00.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -1135,7 +1135,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0d4883ec-f9ce-4f8b-93d3-7ea04b00f282",
     amount: createMoney(521.94 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-12T06:49:00.102033",
+    datetime: "2021-12-12T06:49:00.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -1146,7 +1146,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "60d2ac82-7291-414e-8bf2-7199654a29fd",
     amount: createMoney(192.25 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-29T05:01:44.102033",
+    datetime: "2022-07-29T05:01:44.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -1157,7 +1157,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f5828c79-7ae6-4814-9e4b-3d14a59a1d00",
     amount: createMoney(380.2 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-14T18:31:30.102033",
+    datetime: "2023-02-14T18:31:30.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -1168,7 +1168,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1f8e42b2-aa18-43a5-94fd-0d1007badbec",
     amount: createMoney(484.76 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-03T11:36:27.102033",
+    datetime: "2022-01-03T11:36:27.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -1179,7 +1179,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f8840ada-8f1d-4626-ac56-fe177ec067c9",
     amount: createMoney(296.43 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-25T16:31:29.102033",
+    datetime: "2023-07-25T16:31:29.102033Z",
     type: "credit",
     categoryID: "5",
     accountID: "1",
@@ -1190,7 +1190,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ddd1e1f4-bad2-40f0-a592-12bc74abf5b3",
     amount: createMoney(998.34 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-14T05:12:29.102033",
+    datetime: "2022-10-14T05:12:29.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -1201,7 +1201,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b2a1e80e-277f-49f9-afd6-fd821c0116ec",
     amount: createMoney(766.57 * 100, CURRENCIES.NGN),
-    datetime: "2021-10-24T16:20:57.102033",
+    datetime: "2021-10-24T16:20:57.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -1212,7 +1212,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8cbe3cb4-21f7-4e20-9204-1f7339660ea0",
     amount: createMoney(396.83 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-19T22:21:54.102033",
+    datetime: "2022-05-19T22:21:54.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -1223,7 +1223,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "07d5761a-7232-434d-ab09-565b57957f17",
     amount: createMoney(870.9 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-23T14:07:03.102033",
+    datetime: "2022-05-23T14:07:03.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -1234,7 +1234,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "48836f35-90a0-4042-a490-bf7a8277547d",
     amount: createMoney(831.2 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-03T05:44:38.102033",
+    datetime: "2023-09-03T05:44:38.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -1245,7 +1245,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4ad488ea-9d94-4320-97ad-2f3e37c87bb1",
     amount: createMoney(344.28 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-07T20:56:21.102033",
+    datetime: "2021-11-07T20:56:21.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -1256,7 +1256,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "962af0c4-bc3b-4609-8e70-ab4991af38ac",
     amount: createMoney(228.44 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-05T02:10:35.102033",
+    datetime: "2023-03-05T02:10:35.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -1267,7 +1267,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9ac1d6ba-fe12-4643-9ee1-d960a6db303a",
     amount: createMoney(417.52 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-15T20:21:03.102033",
+    datetime: "2024-03-15T20:21:03.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -1278,7 +1278,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "bc952eed-26d2-46a8-bab2-df85c8fc1427",
     amount: createMoney(660.19 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-02T02:00:54.102033",
+    datetime: "2022-01-02T02:00:54.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -1289,7 +1289,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "66f5aaf4-289d-42f1-a365-78602dc5312f",
     amount: createMoney(842.73 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-28T11:56:37.102033",
+    datetime: "2024-05-28T11:56:37.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -1300,7 +1300,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "20fd5e8b-2e0e-4fa9-8dd2-4cea70eeff03",
     amount: createMoney(361.23 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-02T11:55:02.102033",
+    datetime: "2023-04-02T11:55:02.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -1311,7 +1311,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "93361c49-1f8c-46f0-80b5-59ce4c3753c8",
     amount: createMoney(91.55 * 100, CURRENCIES.NGN),
-    datetime: "2024-10-02T06:56:33.102033",
+    datetime: "2024-10-02T06:56:33.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -1322,7 +1322,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "415fecde-165a-442a-81d7-60fe8607def9",
     amount: createMoney(199.89 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-28T17:29:33.102033",
+    datetime: "2024-09-28T17:29:33.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -1333,7 +1333,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b819a81d-c869-4301-a575-d6e123591724",
     amount: createMoney(238.79 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-22T14:03:33.102033",
+    datetime: "2022-02-22T14:03:33.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -1344,7 +1344,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "62a0b360-9610-4644-8468-33997eebb5aa",
     amount: createMoney(99.7 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-27T06:55:01.102033",
+    datetime: "2022-02-27T06:55:01.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -1355,7 +1355,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "442e935d-5d67-4a61-95b5-c6de7783f395",
     amount: createMoney(598.91 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-02T00:46:17.102033",
+    datetime: "2024-08-02T00:46:17.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -1366,7 +1366,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "febb245e-3f01-4be1-9795-c29e5111c2bb",
     amount: createMoney(954.06 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-04T04:49:45.102033",
+    datetime: "2024-09-04T04:49:45.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -1377,7 +1377,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6c32f8c3-aaac-4d8e-8c0a-fc01389e8be1",
     amount: createMoney(88.55 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-31T23:49:31.102033",
+    datetime: "2023-12-31T23:49:31.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -1388,7 +1388,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8dce34b7-2874-470f-9838-78478cb62e90",
     amount: createMoney(668.79 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-23T03:07:20.102033",
+    datetime: "2022-10-23T03:07:20.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -1399,7 +1399,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f683345a-ec68-4454-86bf-63ae4da9fcc6",
     amount: createMoney(564.29 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-11T18:18:07.102033",
+    datetime: "2023-01-11T18:18:07.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -1410,7 +1410,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a239793f-aa5c-4b20-9869-b0f0d2476e76",
     amount: createMoney(627.65 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-29T20:50:44.102033",
+    datetime: "2024-01-29T20:50:44.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -1421,7 +1421,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6c03a1f0-8066-4dfc-9ecf-413b52cf4385",
     amount: createMoney(225.08 * 100, CURRENCIES.NGN),
-    datetime: "2024-02-14T18:24:40.102033",
+    datetime: "2024-02-14T18:24:40.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -1432,7 +1432,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ddc92877-fc4b-465c-9049-fb1bc7885c08",
     amount: createMoney(393.3 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-08T08:52:22.102033",
+    datetime: "2023-11-08T08:52:22.102033Z",
     type: "credit",
     categoryID: "6",
     accountID: "1",
@@ -1443,7 +1443,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2bfc325b-9d5c-4bcd-bb91-00e889ca6266",
     amount: createMoney(469.06 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-17T22:59:14.102033",
+    datetime: "2023-03-17T22:59:14.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -1454,7 +1454,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9a2b2dbb-b789-4e55-b4e6-c3afe11c9a99",
     amount: createMoney(709.9 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-09T22:56:43.102033",
+    datetime: "2022-12-09T22:56:43.102033Z",
     type: "credit",
     categoryID: "6",
     accountID: "1",
@@ -1465,7 +1465,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "65dac564-3d6b-4eec-84cb-16aebcef2da8",
     amount: createMoney(195.25 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-22T03:33:44.102033",
+    datetime: "2022-05-22T03:33:44.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -1476,7 +1476,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "193c384f-dde5-4402-9dbb-f124f043d299",
     amount: createMoney(378.41 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-28T08:36:48.102033",
+    datetime: "2023-03-28T08:36:48.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -1487,7 +1487,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d9159ed2-9aa7-4b45-94f1-d12facebfcb5",
     amount: createMoney(636.89 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-22T04:18:49.102033",
+    datetime: "2024-07-22T04:18:49.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -1498,7 +1498,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a26565b6-15fe-408c-bdb1-c0ab79fcae4b",
     amount: createMoney(41.06 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-30T06:42:26.102033",
+    datetime: "2022-09-30T06:42:26.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -1509,7 +1509,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f695d723-09be-43fd-b69b-149f409ea9cf",
     amount: createMoney(99.51 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-25T03:50:18.102033",
+    datetime: "2022-07-25T03:50:18.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -1520,7 +1520,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7ca56222-cf6b-4e81-b111-d623e7235b06",
     amount: createMoney(983.83 * 100, CURRENCIES.NGN),
-    datetime: "2024-02-11T02:40:10.102033",
+    datetime: "2024-02-11T02:40:10.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -1531,7 +1531,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "309fb038-7749-45b9-88ba-a5d84f34b2f9",
     amount: createMoney(562.39 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-31T20:09:25.102033",
+    datetime: "2024-03-31T20:09:25.102033Z",
     type: "credit",
     categoryID: "18",
     accountID: "1",
@@ -1542,7 +1542,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "48b9aeb4-3207-4594-8de9-3e3f46cb5287",
     amount: createMoney(805.53 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-13T02:27:22.102033",
+    datetime: "2024-09-13T02:27:22.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -1553,7 +1553,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4d8a3219-9431-4bd3-a10e-3313462e2ce3",
     amount: createMoney(287.78 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-05T17:00:22.102033",
+    datetime: "2023-12-05T17:00:22.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -1564,7 +1564,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8ebb7556-2c0c-4b2c-89f6-a4cfec542063",
     amount: createMoney(205.67 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-16T01:01:40.102033",
+    datetime: "2022-09-16T01:01:40.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -1575,7 +1575,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "22604508-5230-431e-995a-e6fcc4b032fe",
     amount: createMoney(365.28 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-26T12:51:37.102033",
+    datetime: "2023-06-26T12:51:37.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -1586,7 +1586,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "afaf5559-f712-425e-ab99-8895bd3a316d",
     amount: createMoney(815.71 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-24T01:53:12.102033",
+    datetime: "2022-02-24T01:53:12.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -1597,7 +1597,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5f01f0f5-92ac-4707-b26d-9883893f3e4d",
     amount: createMoney(940.34 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-29T03:41:45.102033",
+    datetime: "2023-04-29T03:41:45.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -1608,7 +1608,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "549d1e34-14ef-430e-8522-36b1d052147e",
     amount: createMoney(670.51 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-06T13:04:49.102033",
+    datetime: "2023-10-06T13:04:49.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -1619,7 +1619,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5cdbe766-f92b-4608-bf00-cee25a2e2f7e",
     amount: createMoney(707.87 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-28T16:31:26.102033",
+    datetime: "2022-03-28T16:31:26.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -1630,7 +1630,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "aa04085a-d9ff-4b3e-871a-e17d798acd0b",
     amount: createMoney(67.51 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-11T05:01:02.102033",
+    datetime: "2024-07-11T05:01:02.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -1641,7 +1641,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "97a36894-a56c-4bd4-92b8-396b9c381beb",
     amount: createMoney(302.54 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-05T01:55:32.102033",
+    datetime: "2022-12-05T01:55:32.102033Z",
     type: "credit",
     categoryID: "5",
     accountID: "1",
@@ -1652,7 +1652,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ae22a003-2d68-4d7c-8efa-608291fdd1fd",
     amount: createMoney(452.0 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-04T11:05:27.102033",
+    datetime: "2022-07-04T11:05:27.102033Z",
     type: "credit",
     categoryID: "6",
     accountID: "1",
@@ -1663,7 +1663,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f5a6f62c-4534-41c5-aded-784e3a17475b",
     amount: createMoney(620.5 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-14T17:58:53.102033",
+    datetime: "2022-07-14T17:58:53.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -1674,7 +1674,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0db93ef9-b1a6-46b4-b6c2-8c0789b15a35",
     amount: createMoney(429.55 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-23T03:56:53.102033",
+    datetime: "2022-04-23T03:56:53.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -1685,7 +1685,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "eb8cb065-0d75-48a3-9c47-01a17159009e",
     amount: createMoney(90.58 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-25T16:59:00.102033",
+    datetime: "2024-04-25T16:59:00.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -1696,7 +1696,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1e432338-cf08-40d6-ab51-a241ef2e8027",
     amount: createMoney(580.58 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-09T23:11:45.102033",
+    datetime: "2023-12-09T23:11:45.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -1707,7 +1707,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "716879ff-f81b-4dbd-850a-00dff86c8c5c",
     amount: createMoney(615.31 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-19T09:57:14.102033",
+    datetime: "2022-01-19T09:57:14.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -1718,7 +1718,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2ae35945-f4d3-4d45-ac10-cebb03e81911",
     amount: createMoney(379.07 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-17T07:28:05.102033",
+    datetime: "2024-05-17T07:28:05.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -1729,7 +1729,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5ebcf2e5-09ce-4ac2-b3f8-4b332a0d142c",
     amount: createMoney(950.6 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-05T06:45:34.102033",
+    datetime: "2023-10-05T06:45:34.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -1740,7 +1740,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e12444e4-6a05-4fdf-81fc-0bb749b8c8a7",
     amount: createMoney(746.88 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-30T09:29:15.102033",
+    datetime: "2024-07-30T09:29:15.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -1751,7 +1751,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a3dd5dee-270f-4946-b6b9-33f90d6c9325",
     amount: createMoney(896.07 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-10T16:54:33.102033",
+    datetime: "2024-09-10T16:54:33.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -1762,7 +1762,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "916e5739-b1bb-4dae-aa7c-e1480a1f3b4d",
     amount: createMoney(27.22 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-03T04:04:39.102033",
+    datetime: "2022-05-03T04:04:39.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -1773,7 +1773,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4cc727f0-3846-4e4a-95c4-06f4ccc1ce17",
     amount: createMoney(472.55 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-28T04:16:53.102033",
+    datetime: "2023-03-28T04:16:53.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -1784,7 +1784,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "431162dc-fe64-4fdc-a600-ef5404dc8594",
     amount: createMoney(166.46 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-08T09:37:20.102033",
+    datetime: "2024-06-08T09:37:20.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -1795,7 +1795,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2a3f0e27-9140-45f2-9bc9-463d195b84f1",
     amount: createMoney(677.99 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-20T08:24:17.102033",
+    datetime: "2023-11-20T08:24:17.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -1806,7 +1806,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1d04f054-ddca-449d-bc43-193ff35ce979",
     amount: createMoney(688.34 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-24T00:33:00.102033",
+    datetime: "2024-04-24T00:33:00.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -1817,7 +1817,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f7d8df51-7510-4d78-b76b-c08bd6f0411f",
     amount: createMoney(32.65 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-22T02:23:57.102033",
+    datetime: "2023-08-22T02:23:57.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -1828,7 +1828,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5ffe016d-7a30-403b-a143-3307db360e7d",
     amount: createMoney(428.08 * 100, CURRENCIES.NGN),
-    datetime: "2021-10-24T06:31:52.102033",
+    datetime: "2021-10-24T06:31:52.102033Z",
     type: "credit",
     categoryID: "18",
     accountID: "1",
@@ -1839,7 +1839,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "235f3644-0939-4393-a3bf-c41d24bea02b",
     amount: createMoney(37.3 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-20T00:04:15.102033",
+    datetime: "2024-01-20T00:04:15.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -1850,7 +1850,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6f469eb8-3c2c-491a-ac4a-dacb58bdfb8f",
     amount: createMoney(335.9 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-08T09:48:28.102033",
+    datetime: "2023-02-08T09:48:28.102033Z",
     type: "credit",
     categoryID: "6",
     accountID: "1",
@@ -1861,7 +1861,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "08313d67-6281-4f11-a44a-b69d4444eb18",
     amount: createMoney(195.17 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-12T22:07:24.102033",
+    datetime: "2022-07-12T22:07:24.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -1872,7 +1872,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "215029e3-395b-4049-b202-2543553b0b40",
     amount: createMoney(647.76 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-14T19:23:03.102033",
+    datetime: "2022-09-14T19:23:03.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -1883,7 +1883,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "828b586a-ecf1-426f-bf27-30f52bece454",
     amount: createMoney(790.43 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-05T08:30:45.102033",
+    datetime: "2023-02-05T08:30:45.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -1894,7 +1894,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ffe871a7-4930-4474-aa90-9d64bf915483",
     amount: createMoney(138.6 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-30T10:07:45.102033",
+    datetime: "2022-12-30T10:07:45.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -1905,7 +1905,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0a9f3415-b918-4014-8d27-10e8c22ea0f6",
     amount: createMoney(510.24 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-04T21:36:02.102033",
+    datetime: "2022-08-04T21:36:02.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -1916,7 +1916,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a3df5cda-cb17-4ebb-acc3-0583a2881a0f",
     amount: createMoney(330.26 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-28T18:08:30.102033",
+    datetime: "2023-02-28T18:08:30.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -1927,7 +1927,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fbe73c89-69cd-4d38-8840-99fccd15e86b",
     amount: createMoney(973.66 * 100, CURRENCIES.NGN),
-    datetime: "2024-10-06T06:49:41.102033",
+    datetime: "2024-10-06T06:49:41.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -1938,7 +1938,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "335aa048-ad4e-4603-abb3-1ab86a9ad611",
     amount: createMoney(423.32 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-06T08:38:51.102033",
+    datetime: "2023-01-06T08:38:51.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -1949,7 +1949,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3fdbacb2-f474-4f34-97e1-9e3fb98a66f8",
     amount: createMoney(348.9 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-19T05:20:10.102033",
+    datetime: "2024-09-19T05:20:10.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -1960,7 +1960,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "62508b38-6299-4535-ad3e-9c847abd9fd9",
     amount: createMoney(392.54 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-12T13:03:51.102033",
+    datetime: "2023-08-12T13:03:51.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -1971,7 +1971,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8addd5c8-de7d-43e4-91c6-4c01a2c11d98",
     amount: createMoney(236.73 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-12T11:09:45.102033",
+    datetime: "2021-12-12T11:09:45.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -1982,7 +1982,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "445342a6-f1a0-4fba-a99c-cd2a0fb775be",
     amount: createMoney(158.84 * 100, CURRENCIES.NGN),
-    datetime: "2021-10-18T01:13:11.102033",
+    datetime: "2021-10-18T01:13:11.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -1993,7 +1993,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "70c1c268-1395-41af-b8c7-b08be35b5293",
     amount: createMoney(69.61 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-04T12:58:40.102033",
+    datetime: "2022-02-04T12:58:40.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -2004,7 +2004,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f15dcbed-6473-4c83-be29-c32913f06ac9",
     amount: createMoney(634.08 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-21T01:02:21.102033",
+    datetime: "2023-08-21T01:02:21.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -2015,7 +2015,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9da2349b-d321-4bc3-82a0-294c57e477b5",
     amount: createMoney(438.27 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-01T10:17:28.102033",
+    datetime: "2022-08-01T10:17:28.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -2026,7 +2026,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0a4ca946-93ec-4148-a212-40543faf970b",
     amount: createMoney(665.9 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-19T09:43:48.102033",
+    datetime: "2022-10-19T09:43:48.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -2037,7 +2037,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "118264f2-1696-49bb-9c6a-6930f236c17d",
     amount: createMoney(195.31 * 100, CURRENCIES.NGN),
-    datetime: "2023-05-03T05:05:54.102033",
+    datetime: "2023-05-03T05:05:54.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -2048,7 +2048,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1d5e125b-46f1-4d2b-8e3f-d8cf42e5cbb3",
     amount: createMoney(40.94 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-11T15:31:31.102033",
+    datetime: "2022-12-11T15:31:31.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -2059,7 +2059,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d96a781a-9b84-443b-aa15-f565436341af",
     amount: createMoney(944.04 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-13T16:15:22.102033",
+    datetime: "2024-08-13T16:15:22.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -2070,7 +2070,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "73885d08-bde2-42ea-9906-f555117d65fc",
     amount: createMoney(530.4 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-04T23:25:12.102033",
+    datetime: "2022-11-04T23:25:12.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -2081,7 +2081,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "858211ca-0998-4d28-abec-569196196369",
     amount: createMoney(800.14 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-13T08:38:20.102033",
+    datetime: "2023-12-13T08:38:20.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -2092,7 +2092,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ad2a0b3d-bc97-4cc6-b8a1-0c39ddb3c82e",
     amount: createMoney(305.55 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-29T07:40:57.102033",
+    datetime: "2024-03-29T07:40:57.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -2103,7 +2103,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f5082fb1-4e82-403c-b7a9-d7111e183dea",
     amount: createMoney(804.68 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-09T02:00:11.102033",
+    datetime: "2023-11-09T02:00:11.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -2114,7 +2114,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f5e06691-b930-4b30-96da-e6133e7c71be",
     amount: createMoney(18.89 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-29T21:44:44.102033",
+    datetime: "2024-09-29T21:44:44.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -2125,7 +2125,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a4153dad-7af7-484b-9ab5-c9d34a697c5f",
     amount: createMoney(23.52 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-29T13:23:33.102033",
+    datetime: "2021-11-29T13:23:33.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -2136,7 +2136,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "79a66975-ee5a-4dbc-8787-6556b254fe49",
     amount: createMoney(198.7 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-18T19:00:33.102033",
+    datetime: "2022-02-18T19:00:33.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -2147,7 +2147,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a39317ee-6d3f-4573-88a6-afaf7f7e9337",
     amount: createMoney(34.2 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-11T07:02:29.102033",
+    datetime: "2024-01-11T07:02:29.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -2158,7 +2158,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "da1e7184-3eca-49ba-bc9e-c0d04154a819",
     amount: createMoney(503.52 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-20T21:48:11.102033",
+    datetime: "2022-07-20T21:48:11.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -2169,7 +2169,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3d98b122-5e8d-4e5a-9bd2-111158b436bf",
     amount: createMoney(680.49 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-10T09:24:37.102033",
+    datetime: "2024-07-10T09:24:37.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -2180,7 +2180,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "157ed0aa-a952-4842-a5b5-a2d396a46e56",
     amount: createMoney(51.12 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-24T03:43:51.102033",
+    datetime: "2024-06-24T03:43:51.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -2191,7 +2191,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4453a7d7-1ade-4680-ac87-66a0d379cac1",
     amount: createMoney(113.22 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-01T21:40:42.102033",
+    datetime: "2024-05-01T21:40:42.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -2202,7 +2202,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0cb53c0d-8f41-4de2-8d9d-07d0123f69e1",
     amount: createMoney(841.64 * 100, CURRENCIES.NGN),
-    datetime: "2023-05-31T07:02:50.102033",
+    datetime: "2023-05-31T07:02:50.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -2213,7 +2213,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c1570501-8396-4e9b-a497-3d378e1aa8f2",
     amount: createMoney(320.11 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-18T00:14:21.102033",
+    datetime: "2023-08-18T00:14:21.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -2224,7 +2224,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a4212dcb-4a44-42e5-a398-3adb2e2e1438",
     amount: createMoney(975.57 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-26T12:30:14.102033",
+    datetime: "2022-08-26T12:30:14.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -2235,7 +2235,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7fa66e8c-b8d7-452a-9558-be53bd52125a",
     amount: createMoney(429.02 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-17T04:55:43.102033",
+    datetime: "2022-06-17T04:55:43.102033Z",
     type: "credit",
     categoryID: "6",
     accountID: "1",
@@ -2246,7 +2246,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9ca79904-fd32-4c5e-b722-26d001f3e4b4",
     amount: createMoney(410.04 * 100, CURRENCIES.NGN),
-    datetime: "2024-02-19T09:20:59.102033",
+    datetime: "2024-02-19T09:20:59.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -2257,7 +2257,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c806fb14-e7df-4c80-980c-ed2ec1f2b82b",
     amount: createMoney(623.84 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-24T23:15:55.102033",
+    datetime: "2023-03-24T23:15:55.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -2268,7 +2268,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1f06c0a4-a6f9-43b9-ac54-4d166b60e5cd",
     amount: createMoney(879.16 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-30T15:00:10.102033",
+    datetime: "2022-09-30T15:00:10.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -2279,7 +2279,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6b2fdb30-a8d3-4ae7-9b4c-b2218cc85438",
     amount: createMoney(479.34 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-27T23:32:13.102033",
+    datetime: "2023-06-27T23:32:13.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -2290,7 +2290,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d5de6d22-56df-4a8d-ab8e-6c46843e0e0c",
     amount: createMoney(481.02 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-10T19:16:40.102033",
+    datetime: "2022-10-10T19:16:40.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -2301,7 +2301,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ca8cdc42-27df-4aa3-9c63-22b5419cb8a1",
     amount: createMoney(711.48 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-23T01:58:02.102033",
+    datetime: "2024-08-23T01:58:02.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -2312,7 +2312,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "279dd502-3542-4030-8b0a-be19a6a9f77d",
     amount: createMoney(210.67 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-11T04:44:46.102033",
+    datetime: "2022-12-11T04:44:46.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -2323,7 +2323,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "401c2dda-bacd-4774-93a7-803319131005",
     amount: createMoney(282.9 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-14T19:22:57.102033",
+    datetime: "2023-01-14T19:22:57.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -2334,7 +2334,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1ac8ef38-1b06-4558-a759-46109840bbf0",
     amount: createMoney(811.0 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-15T10:39:29.102033",
+    datetime: "2023-01-15T10:39:29.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -2345,7 +2345,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6d006cf8-6d44-428e-9f30-2e366da9e17b",
     amount: createMoney(771.95 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-21T08:05:29.102033",
+    datetime: "2022-12-21T08:05:29.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -2356,7 +2356,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8cfec0d2-6d6b-4fd3-80d9-ee233f33f9a6",
     amount: createMoney(991.72 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-19T15:28:50.102033",
+    datetime: "2023-08-19T15:28:50.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -2367,7 +2367,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b8f1ede0-54df-46a6-9266-a3d9a5b43cec",
     amount: createMoney(360.97 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-29T16:04:23.102033",
+    datetime: "2023-06-29T16:04:23.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -2378,7 +2378,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c3b7719a-e855-4f25-9a1c-8d85a0a1756b",
     amount: createMoney(862.92 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-03T19:27:53.102033",
+    datetime: "2024-05-03T19:27:53.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -2389,7 +2389,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8b7adfea-ab62-4152-87f4-f5b34fde4b75",
     amount: createMoney(188.77 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-19T12:12:48.102033",
+    datetime: "2021-12-19T12:12:48.102033Z",
     type: "credit",
     categoryID: "11",
     accountID: "1",
@@ -2400,7 +2400,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "676ac5ff-4e71-4541-ad7e-82721f31d9d3",
     amount: createMoney(273.97 * 100, CURRENCIES.NGN),
-    datetime: "2024-02-08T18:35:57.102033",
+    datetime: "2024-02-08T18:35:57.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -2411,7 +2411,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f71128c4-d43b-43fb-b62c-1dc23652e191",
     amount: createMoney(574.89 * 100, CURRENCIES.NGN),
-    datetime: "2024-02-14T02:07:26.102033",
+    datetime: "2024-02-14T02:07:26.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -2422,7 +2422,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b6f4fbc2-5623-4600-aba9-423ffddc27a2",
     amount: createMoney(964.58 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-09T05:18:37.102033",
+    datetime: "2023-11-09T05:18:37.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -2433,7 +2433,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "eda11111-84cd-4cb5-bf22-f77f34010840",
     amount: createMoney(455.82 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-22T10:21:24.102033",
+    datetime: "2024-09-22T10:21:24.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -2444,7 +2444,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "67d6c001-d29b-4c80-9b10-e94e203a2979",
     amount: createMoney(299.04 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-06T06:15:07.102033",
+    datetime: "2023-09-06T06:15:07.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -2455,7 +2455,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9fbb8bac-ac3e-43dc-a306-28b37a69b735",
     amount: createMoney(440.14 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-01T13:10:03.102033",
+    datetime: "2024-08-01T13:10:03.102033Z",
     type: "credit",
     categoryID: "11",
     accountID: "1",
@@ -2466,7 +2466,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "af7a2b73-651d-442d-8615-cf1858a0d752",
     amount: createMoney(76.2 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-11T21:13:45.102033",
+    datetime: "2024-08-11T21:13:45.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -2477,7 +2477,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6ad95ac2-a08f-4a41-b089-60ac2ba431de",
     amount: createMoney(857.8 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-19T04:39:20.102033",
+    datetime: "2024-08-19T04:39:20.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -2488,7 +2488,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f0a79733-b5f3-4a8e-8622-757791499627",
     amount: createMoney(668.52 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-17T17:52:11.102033",
+    datetime: "2022-03-17T17:52:11.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -2499,7 +2499,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0cabf7f9-b6dd-416e-8431-6e0b5298f286",
     amount: createMoney(86.1 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-07T19:28:07.102033",
+    datetime: "2022-04-07T19:28:07.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -2510,7 +2510,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8405734b-932a-43a6-980e-52ebe83ef46d",
     amount: createMoney(213.99 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-12T00:29:00.102033",
+    datetime: "2021-11-12T00:29:00.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -2521,7 +2521,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "48b37cbb-5279-4e3c-bdf8-099f21211b42",
     amount: createMoney(295.58 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-22T03:35:39.102033",
+    datetime: "2022-02-22T03:35:39.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -2532,7 +2532,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a911cbc2-7065-4f03-ae2e-969985b69de5",
     amount: createMoney(350.78 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-26T05:37:11.102033",
+    datetime: "2023-04-26T05:37:11.102033Z",
     type: "credit",
     categoryID: "18",
     accountID: "1",
@@ -2543,7 +2543,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1067fdec-dd5a-4a03-86b5-3f4cff2b5459",
     amount: createMoney(830.01 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-24T07:55:08.102033",
+    datetime: "2023-04-24T07:55:08.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -2554,7 +2554,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a7611e9d-a8d2-49d5-9ecb-1b513a5aab33",
     amount: createMoney(214.31 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-09T17:12:49.102033",
+    datetime: "2022-06-09T17:12:49.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -2565,7 +2565,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "afce057e-4326-4028-9af9-cd5cd7aa061c",
     amount: createMoney(196.71 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-23T06:22:02.102033",
+    datetime: "2022-06-23T06:22:02.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -2576,7 +2576,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0072c1d3-f716-4e38-aedd-7d9a4bb05657",
     amount: createMoney(306.17 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-25T04:15:03.102033",
+    datetime: "2021-11-25T04:15:03.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -2587,7 +2587,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b3e10c7e-e676-4fa2-9b5e-137e59c812b4",
     amount: createMoney(826.27 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-02T09:33:08.102033",
+    datetime: "2023-09-02T09:33:08.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -2598,7 +2598,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6cf113e0-27a9-49a4-926c-531d3a460f84",
     amount: createMoney(961.06 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-23T11:47:57.102033",
+    datetime: "2023-11-23T11:47:57.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -2609,7 +2609,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e120a408-118d-4a2a-866b-1c30063310f7",
     amount: createMoney(630.55 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-07T07:22:09.102033",
+    datetime: "2021-12-07T07:22:09.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -2620,7 +2620,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1010054c-fdbd-47cf-8292-c00407261c82",
     amount: createMoney(468.1 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-30T17:41:18.102033",
+    datetime: "2022-06-30T17:41:18.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -2631,7 +2631,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8a20e348-e1e9-445d-bfac-118f9e0ab275",
     amount: createMoney(366.4 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-07T10:13:31.102033",
+    datetime: "2023-02-07T10:13:31.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -2642,7 +2642,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fbd2d24d-753f-4cfa-9aba-c4cb325d60a8",
     amount: createMoney(957.23 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-27T10:06:22.102033",
+    datetime: "2024-03-27T10:06:22.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -2653,7 +2653,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "49d28f10-abdf-4104-b53b-916eecbbd89a",
     amount: createMoney(380.96 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-21T11:19:22.102033",
+    datetime: "2022-07-21T11:19:22.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -2664,7 +2664,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b34293b9-bdc2-4f42-8c81-058fe7b1bcab",
     amount: createMoney(442.49 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-15T15:54:18.102033",
+    datetime: "2022-12-15T15:54:18.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -2675,7 +2675,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c67475a0-986f-4411-8b0a-b885e6415dd3",
     amount: createMoney(399.6 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-31T00:24:56.102033",
+    datetime: "2024-07-31T00:24:56.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -2686,7 +2686,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f47b791b-0be0-4957-aa3d-7abaf094e084",
     amount: createMoney(39.0 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-16T07:06:52.102033",
+    datetime: "2022-10-16T07:06:52.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -2697,7 +2697,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "96c39fc0-2426-4225-bc2d-e02a2a837571",
     amount: createMoney(35.04 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-26T10:50:01.102033",
+    datetime: "2023-01-26T10:50:01.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -2708,7 +2708,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d5a30b26-2bc3-4fbd-b9db-daf8e8db27cf",
     amount: createMoney(254.7 * 100, CURRENCIES.NGN),
-    datetime: "2021-10-23T13:31:24.102033",
+    datetime: "2021-10-23T13:31:24.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -2719,7 +2719,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3379e11a-3bd1-4780-9cb9-8d2d8ebad1a9",
     amount: createMoney(470.37 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-13T02:59:28.102033",
+    datetime: "2022-08-13T02:59:28.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -2730,7 +2730,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "445e0ea5-072b-4f31-8d6f-7acb57fcf515",
     amount: createMoney(35.23 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-27T06:47:29.102033",
+    datetime: "2023-03-27T06:47:29.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -2741,7 +2741,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "999e8b43-3afa-4c0f-9615-e57ee9eaca8a",
     amount: createMoney(132.08 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-02T10:24:37.102033",
+    datetime: "2021-12-02T10:24:37.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -2752,7 +2752,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "67dacb45-995d-4eb5-9644-f073af4a6f89",
     amount: createMoney(534.27 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-12T21:40:09.102033",
+    datetime: "2021-12-12T21:40:09.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -2763,7 +2763,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b4053880-6f3c-4a3b-9ffd-623bfb35ec9f",
     amount: createMoney(218.08 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-30T04:29:31.102033",
+    datetime: "2022-01-30T04:29:31.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -2774,7 +2774,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0c99b8ad-d999-4e8e-ae3d-3ec3b0dbca08",
     amount: createMoney(769.62 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-03T15:35:57.102033",
+    datetime: "2022-08-03T15:35:57.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -2785,7 +2785,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6bff3efa-26a4-4314-94ec-88c4f9ca9db9",
     amount: createMoney(529.06 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-02T05:50:01.102033",
+    datetime: "2023-09-02T05:50:01.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -2796,7 +2796,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "877cdeb4-77e0-40d4-97a9-bd21598986f0",
     amount: createMoney(673.38 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-08T12:48:54.102033",
+    datetime: "2022-10-08T12:48:54.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -2807,7 +2807,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6befa29e-c476-4a4b-b315-40177c0eae3e",
     amount: createMoney(84.43 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-29T10:19:59.102033",
+    datetime: "2022-10-29T10:19:59.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -2818,7 +2818,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f1ccd2db-f0f6-4774-b152-62366c2afb36",
     amount: createMoney(24.29 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-08T16:26:46.102033",
+    datetime: "2024-09-08T16:26:46.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -2829,7 +2829,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9e6e4685-b320-4c92-aabc-8aa5d3dfc645",
     amount: createMoney(643.21 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-02T05:07:26.102033",
+    datetime: "2022-04-02T05:07:26.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -2840,7 +2840,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c29686cc-fba1-4be9-97fc-1c0743f693be",
     amount: createMoney(796.81 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-14T10:27:05.102033",
+    datetime: "2022-04-14T10:27:05.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -2851,7 +2851,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f40c98de-52c3-4ad3-9a26-03b60083ce1e",
     amount: createMoney(847.79 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-26T21:46:54.102033",
+    datetime: "2023-01-26T21:46:54.102033Z",
     type: "credit",
     categoryID: "11",
     accountID: "1",
@@ -2862,7 +2862,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4482a986-c336-45b4-8eb7-50350c4c8bbd",
     amount: createMoney(406.68 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-21T17:24:40.102033",
+    datetime: "2024-03-21T17:24:40.102033Z",
     type: "credit",
     categoryID: "11",
     accountID: "1",
@@ -2873,7 +2873,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a8d9e95b-2826-4413-9d56-cb5e36f7de36",
     amount: createMoney(981.79 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-21T03:36:03.102033",
+    datetime: "2022-12-21T03:36:03.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -2884,7 +2884,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3021ae18-56c8-4590-a5ad-c73215e418cd",
     amount: createMoney(863.76 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-26T16:08:44.102033",
+    datetime: "2024-01-26T16:08:44.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -2895,7 +2895,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "39f60754-a7ec-4d10-ae0c-1e094fbbcbfe",
     amount: createMoney(923.77 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-11T15:59:40.102033",
+    datetime: "2021-11-11T15:59:40.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -2906,7 +2906,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b52b9e16-23d7-4cf2-9f40-6064f2806bf1",
     amount: createMoney(796.61 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-30T03:45:43.102033",
+    datetime: "2023-12-30T03:45:43.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -2917,7 +2917,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "355ccd08-4f88-44a1-8561-c6cc04dd8b7d",
     amount: createMoney(645.75 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-09T12:02:47.102033",
+    datetime: "2022-08-09T12:02:47.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -2928,7 +2928,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "42a3cbea-eaaa-41ec-bd70-2dce724cd119",
     amount: createMoney(73.42 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-28T00:07:57.102033",
+    datetime: "2022-01-28T00:07:57.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -2939,7 +2939,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "487ccc07-f97a-425b-965f-38f7b7c44842",
     amount: createMoney(960.22 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-19T15:21:37.102033",
+    datetime: "2022-11-19T15:21:37.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -2950,7 +2950,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ddb1b752-cf54-4b79-a44a-3095dde377c2",
     amount: createMoney(533.37 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-14T16:43:06.102033",
+    datetime: "2023-07-14T16:43:06.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -2961,7 +2961,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "feb2bec4-d82d-412d-a3cc-fcfddb77588a",
     amount: createMoney(938.57 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-17T18:17:27.102033",
+    datetime: "2022-04-17T18:17:27.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -2972,7 +2972,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "00c64d6b-aff8-411c-b0c7-5d7c0631a0b6",
     amount: createMoney(307.2 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-17T01:02:34.102033",
+    datetime: "2022-03-17T01:02:34.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -2983,7 +2983,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "89e393e4-e5da-40dc-9bbe-afc6bb97da9d",
     amount: createMoney(654.15 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-30T16:55:29.102033",
+    datetime: "2023-07-30T16:55:29.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -2994,7 +2994,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a56f99dd-bdca-4655-aef4-46802b971e14",
     amount: createMoney(474.06 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-04T19:31:36.102033",
+    datetime: "2022-08-04T19:31:36.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -3005,7 +3005,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e5b208d8-2ccc-4769-bba9-cb5c6fac8e05",
     amount: createMoney(363.2 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-05T06:56:13.102033",
+    datetime: "2023-07-05T06:56:13.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -3016,7 +3016,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d7b31196-fddb-4856-8a8f-c4a35e3b2655",
     amount: createMoney(912.95 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-03T03:40:00.102033",
+    datetime: "2022-01-03T03:40:00.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -3027,7 +3027,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3b390b47-ded6-4d93-88b1-1c0a926e9f5a",
     amount: createMoney(21.83 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-18T02:31:40.102033",
+    datetime: "2024-08-18T02:31:40.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -3038,7 +3038,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3a2d60e3-72d9-46f3-9645-605d0ea2f037",
     amount: createMoney(96.78 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-29T02:02:23.102033",
+    datetime: "2022-10-29T02:02:23.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -3049,7 +3049,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4e18b05a-cf8c-4e62-b7a9-7cb9e0b62086",
     amount: createMoney(53.85 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-21T01:25:07.102033",
+    datetime: "2022-01-21T01:25:07.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -3060,7 +3060,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e0f77ded-9b75-41c5-8655-324aba4dd143",
     amount: createMoney(843.25 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-01T12:19:59.102033",
+    datetime: "2023-10-01T12:19:59.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -3071,7 +3071,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f9beaa0b-7c46-4a38-948e-0fef23a5b8dd",
     amount: createMoney(842.28 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-28T08:46:12.102033",
+    datetime: "2022-09-28T08:46:12.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -3082,7 +3082,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "24c82f24-874f-49aa-a053-0c0149954fc6",
     amount: createMoney(681.35 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-27T09:24:12.102033",
+    datetime: "2021-11-27T09:24:12.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -3093,7 +3093,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2a4924ff-0ce0-46c4-9ed1-c619b12cb0e5",
     amount: createMoney(944.97 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-03T21:52:32.102033",
+    datetime: "2022-08-03T21:52:32.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -3104,7 +3104,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7a8ba198-f8f7-4d9e-b3d8-b83605c088dc",
     amount: createMoney(572.56 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-21T10:06:25.102033",
+    datetime: "2023-12-21T10:06:25.102033Z",
     type: "credit",
     categoryID: "5",
     accountID: "1",
@@ -3115,7 +3115,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2fedad8c-36d2-46fd-a456-a96300f08596",
     amount: createMoney(815.72 * 100, CURRENCIES.NGN),
-    datetime: "2021-10-30T11:53:27.102033",
+    datetime: "2021-10-30T11:53:27.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -3126,7 +3126,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c317d4ff-5cfd-41b9-98da-4fa6ce235253",
     amount: createMoney(675.48 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-08T21:24:09.102033",
+    datetime: "2022-04-08T21:24:09.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -3137,7 +3137,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8a67a987-c6dc-47bc-8772-d2c5e134ba3c",
     amount: createMoney(620.19 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-29T01:02:52.102033",
+    datetime: "2024-03-29T01:02:52.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -3148,7 +3148,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c78ac1e3-adca-4ca3-8f67-525d0f5fc0b9",
     amount: createMoney(690.96 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-17T21:04:52.102033",
+    datetime: "2022-07-17T21:04:52.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -3159,7 +3159,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3723a1f5-05ae-445c-9c79-5d82cbd63603",
     amount: createMoney(538.34 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-18T10:34:13.102033",
+    datetime: "2023-09-18T10:34:13.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -3170,7 +3170,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4ffa70fc-c6fe-42ac-b444-ad0632aa4cdc",
     amount: createMoney(747.2 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-25T10:57:57.102033",
+    datetime: "2023-03-25T10:57:57.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -3181,7 +3181,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d05947ed-6a53-447a-a7ac-d67d4829fa0c",
     amount: createMoney(721.14 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-28T09:12:09.102033",
+    datetime: "2023-11-28T09:12:09.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -3192,7 +3192,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d55aff6e-f7a8-4b93-9a29-692393683865",
     amount: createMoney(871.61 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-22T18:35:08.102033",
+    datetime: "2022-08-22T18:35:08.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -3203,7 +3203,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5f1ebe93-0b5a-45b0-bb1c-67a6e92c3df7",
     amount: createMoney(121.1 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-20T00:26:37.102033",
+    datetime: "2024-03-20T00:26:37.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -3214,7 +3214,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ab8b2da8-8344-42f5-80d6-2a0ce36edb62",
     amount: createMoney(43.03 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-10T06:24:06.102033",
+    datetime: "2023-09-10T06:24:06.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -3225,7 +3225,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ea14cbfb-667e-4e52-b4b9-5bc46833cd4a",
     amount: createMoney(29.8 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-12T17:00:42.102033",
+    datetime: "2022-10-12T17:00:42.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -3236,7 +3236,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a887a143-73ea-4e11-93f1-b4f1543c2f08",
     amount: createMoney(67.4 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-17T20:35:49.102033",
+    datetime: "2024-06-17T20:35:49.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -3247,7 +3247,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "55f29464-2a90-4b03-98b4-cee2fd9cbfad",
     amount: createMoney(879.73 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-11T09:51:41.102033",
+    datetime: "2022-01-11T09:51:41.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -3258,7 +3258,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "75595fb6-173f-480e-95c1-5d4c9fcfa484",
     amount: createMoney(536.56 * 100, CURRENCIES.NGN),
-    datetime: "2024-10-14T19:01:17.102033",
+    datetime: "2024-10-14T19:01:17.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -3269,7 +3269,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ec851a54-4a59-4e6e-b4ba-7a8d04d0a6d1",
     amount: createMoney(216.51 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-14T02:24:32.102033",
+    datetime: "2022-06-14T02:24:32.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -3280,7 +3280,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "12ce048d-e42a-49da-bca4-0e39b802c6c5",
     amount: createMoney(465.2 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-05T14:11:50.102033",
+    datetime: "2024-05-05T14:11:50.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -3291,7 +3291,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7eae0755-b697-4d6c-965e-6141676620b4",
     amount: createMoney(524.54 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-16T18:07:24.102033",
+    datetime: "2024-08-16T18:07:24.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -3302,7 +3302,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f85a5630-3407-46f0-b0f2-7d34033348c4",
     amount: createMoney(152.83 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-29T21:10:18.102033",
+    datetime: "2022-11-29T21:10:18.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -3313,7 +3313,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ab94414c-6809-4dc4-aaf1-9ff4d2d17663",
     amount: createMoney(966.29 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-17T11:33:11.102033",
+    datetime: "2024-07-17T11:33:11.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -3324,7 +3324,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d2cee43d-8531-4b7b-a672-873194d3c2dc",
     amount: createMoney(46.21 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-09T15:41:02.102033",
+    datetime: "2022-12-09T15:41:02.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -3335,7 +3335,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "21a5b45e-5887-4695-af21-b377f4211ca2",
     amount: createMoney(220.54 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-15T10:30:55.102033",
+    datetime: "2022-09-15T10:30:55.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -3346,7 +3346,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "69a08954-d7e6-4775-9c63-ae5afdad4094",
     amount: createMoney(428.46 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-07T20:20:05.102033",
+    datetime: "2024-06-07T20:20:05.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -3357,7 +3357,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "edeee246-9ccc-4d44-85fb-e7e4db4f8416",
     amount: createMoney(850.61 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-09T16:02:29.102033",
+    datetime: "2023-07-09T16:02:29.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -3368,7 +3368,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5f947ba6-05e9-4663-8585-25d3e18320f1",
     amount: createMoney(631.02 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-13T06:38:50.102033",
+    datetime: "2021-11-13T06:38:50.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -3379,7 +3379,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0d494bb9-314a-453e-a8ba-40db6a2a781a",
     amount: createMoney(28.17 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-02T04:04:40.102033",
+    datetime: "2024-08-02T04:04:40.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -3390,7 +3390,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fb811fe0-f6db-489a-8c23-09864c58448f",
     amount: createMoney(486.91 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-30T02:30:56.102033",
+    datetime: "2021-11-30T02:30:56.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -3401,7 +3401,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "329a4bbe-9357-4e6f-8fc6-8c76dd888c32",
     amount: createMoney(48.74 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-29T14:38:42.102033",
+    datetime: "2024-04-29T14:38:42.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -3412,7 +3412,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "85e7a47e-8e69-4aef-8423-bc4bd0497663",
     amount: createMoney(899.49 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-10T03:51:16.102033",
+    datetime: "2022-02-10T03:51:16.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -3423,7 +3423,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8e719a28-d3b1-415a-909f-2ed02f120c71",
     amount: createMoney(765.68 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-27T09:34:12.102033",
+    datetime: "2021-12-27T09:34:12.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -3434,7 +3434,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7f71c98c-64ab-4931-b643-53caca66083e",
     amount: createMoney(455.47 * 100, CURRENCIES.NGN),
-    datetime: "2024-02-11T02:43:07.102033",
+    datetime: "2024-02-11T02:43:07.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -3445,7 +3445,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8e48748a-5094-450a-8754-788adce435b0",
     amount: createMoney(798.2 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-17T11:15:56.102033",
+    datetime: "2023-11-17T11:15:56.102033Z",
     type: "credit",
     categoryID: "5",
     accountID: "1",
@@ -3456,7 +3456,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c5f3bd65-6755-490f-9e3a-0c8566553489",
     amount: createMoney(175.62 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-31T14:33:08.102033",
+    datetime: "2024-08-31T14:33:08.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -3467,7 +3467,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "846bc5a2-cc41-42cf-af66-b8756f952634",
     amount: createMoney(947.01 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-19T13:26:16.102033",
+    datetime: "2024-09-19T13:26:16.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -3478,7 +3478,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fb5d3d06-5c1c-4a2c-9fdd-4e9d27913d09",
     amount: createMoney(249.64 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-10T21:00:57.102033",
+    datetime: "2024-03-10T21:00:57.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -3489,7 +3489,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c1d85989-4145-476a-8f5e-c81b7298e1f6",
     amount: createMoney(614.07 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-27T06:42:09.102033",
+    datetime: "2022-01-27T06:42:09.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -3500,7 +3500,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8c40fac2-b896-43a7-89da-72937ab62f7f",
     amount: createMoney(822.79 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-06T12:19:55.102033",
+    datetime: "2023-07-06T12:19:55.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -3511,7 +3511,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "85b1be80-744a-4807-94b8-762d7de6573b",
     amount: createMoney(566.69 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-16T02:06:38.102033",
+    datetime: "2022-07-16T02:06:38.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -3522,7 +3522,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7dcc6c88-0295-452f-af71-c130567233ed",
     amount: createMoney(519.85 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-15T08:42:17.102033",
+    datetime: "2023-04-15T08:42:17.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -3533,7 +3533,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0f4d3226-209d-4cfb-b589-689170f93bb9",
     amount: createMoney(612.13 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-29T12:11:56.102033",
+    datetime: "2022-10-29T12:11:56.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -3544,7 +3544,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ec8270f1-bc8f-4995-a30e-9ce2fa1dda9f",
     amount: createMoney(142.56 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-23T03:11:26.102033",
+    datetime: "2022-07-23T03:11:26.102033Z",
     type: "credit",
     categoryID: "11",
     accountID: "1",
@@ -3555,7 +3555,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2bc4cee8-bf5a-41e5-8034-b99e7d0fe0b0",
     amount: createMoney(860.19 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-21T00:44:57.102033",
+    datetime: "2024-04-21T00:44:57.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -3566,7 +3566,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9e1f5b89-fea5-41ec-b5ec-a2fe9466dc51",
     amount: createMoney(654.3 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-26T18:01:51.102033",
+    datetime: "2021-11-26T18:01:51.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -3577,7 +3577,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "47ae8a15-9151-4d95-8b2b-e828d051cddc",
     amount: createMoney(904.39 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-03T12:43:23.102033",
+    datetime: "2022-11-03T12:43:23.102033Z",
     type: "credit",
     categoryID: "18",
     accountID: "1",
@@ -3588,7 +3588,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "999f277b-2790-4fa2-aa3e-181242f485ec",
     amount: createMoney(495.62 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-25T17:48:17.102033",
+    datetime: "2023-12-25T17:48:17.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -3599,7 +3599,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9cee6ec6-6dea-4e6e-b4b8-a6df83508b44",
     amount: createMoney(988.57 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-06T14:10:12.102033",
+    datetime: "2023-09-06T14:10:12.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -3610,7 +3610,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "548d477c-751d-4479-92f5-b15cafe88157",
     amount: createMoney(397.99 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-25T07:09:50.102033",
+    datetime: "2022-02-25T07:09:50.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -3621,7 +3621,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "afc1d339-5553-4e9c-8cfa-32aa513853ba",
     amount: createMoney(948.88 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-24T01:00:02.102033",
+    datetime: "2022-02-24T01:00:02.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -3632,7 +3632,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "62cf395f-ed32-4517-baa1-088bbfaa7028",
     amount: createMoney(87.62 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-30T16:13:32.102033",
+    datetime: "2023-12-30T16:13:32.102033Z",
     type: "credit",
     categoryID: "18",
     accountID: "1",
@@ -3643,7 +3643,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0f1f10e6-829c-42c9-a876-8dd747eb6a4d",
     amount: createMoney(988.75 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-21T13:05:50.102033",
+    datetime: "2024-08-21T13:05:50.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -3654,7 +3654,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "66586598-d40d-455f-9d96-52c2642d1e30",
     amount: createMoney(606.84 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-30T00:48:12.102033",
+    datetime: "2023-07-30T00:48:12.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -3665,7 +3665,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8da5cea8-0ae0-4426-81be-e2c2890f1949",
     amount: createMoney(805.71 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-20T11:45:30.102033",
+    datetime: "2024-08-20T11:45:30.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -3676,7 +3676,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9970416c-42c3-4ae6-a98d-73ad993870c1",
     amount: createMoney(120.91 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-20T14:46:06.102033",
+    datetime: "2023-09-20T14:46:06.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -3687,7 +3687,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "119e2e7b-a765-4b2b-b24e-52dc9ce78cde",
     amount: createMoney(393.04 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-25T20:20:22.102033",
+    datetime: "2023-10-25T20:20:22.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -3698,7 +3698,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1c7eefa2-a9eb-4364-b5be-86643942ed32",
     amount: createMoney(358.33 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-10T23:52:28.102033",
+    datetime: "2022-02-10T23:52:28.102033Z",
     type: "credit",
     categoryID: "18",
     accountID: "1",
@@ -3709,7 +3709,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c369b19b-b9f1-47f4-a77d-a64985314469",
     amount: createMoney(137.17 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-11T19:59:51.102033",
+    datetime: "2024-01-11T19:59:51.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -3720,7 +3720,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4ed1c1ed-6c92-4425-9efe-9773304fcfed",
     amount: createMoney(590.14 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-02T05:12:19.102033",
+    datetime: "2024-01-02T05:12:19.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -3731,7 +3731,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "74ce2db0-3b0d-4355-b6ae-dbcaba745fef",
     amount: createMoney(299.05 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-13T04:33:23.102033",
+    datetime: "2024-05-13T04:33:23.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -3742,7 +3742,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1fff5007-6420-4524-bb3a-50a2c230b98a",
     amount: createMoney(784.63 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-18T15:37:48.102033",
+    datetime: "2023-11-18T15:37:48.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -3753,7 +3753,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4baa9ccd-bee6-4626-9cf1-8e610298d7ba",
     amount: createMoney(400.32 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-12T19:47:38.102033",
+    datetime: "2023-12-12T19:47:38.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -3764,7 +3764,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e9897503-81a7-4feb-9458-c170e4697568",
     amount: createMoney(807.47 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-13T01:13:51.102033",
+    datetime: "2021-11-13T01:13:51.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -3775,7 +3775,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4a101398-5c45-4f0c-ab44-9c30398f361b",
     amount: createMoney(198.95 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-01T22:52:30.102033",
+    datetime: "2023-03-01T22:52:30.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -3786,7 +3786,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f7010a86-17aa-4fc1-8703-f3531ceca07e",
     amount: createMoney(564.01 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-06T06:50:31.102033",
+    datetime: "2024-05-06T06:50:31.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -3797,7 +3797,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "92381654-84a0-4132-9441-34936b531930",
     amount: createMoney(97.94 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-18T18:49:11.102033",
+    datetime: "2022-10-18T18:49:11.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -3808,7 +3808,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "006156af-7c83-4441-85e9-79c5baaea6ad",
     amount: createMoney(885.16 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-05T11:54:46.102033",
+    datetime: "2021-12-05T11:54:46.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -3819,7 +3819,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "14f1270a-f13d-4826-ab49-7a4843e7900a",
     amount: createMoney(641.27 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-28T23:27:48.102033",
+    datetime: "2021-12-28T23:27:48.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -3830,7 +3830,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "bb55e7c0-de6f-4bf9-8346-63f658d430c7",
     amount: createMoney(864.34 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-22T20:41:47.102033",
+    datetime: "2022-03-22T20:41:47.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -3841,7 +3841,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b801c150-16f7-4414-b21c-a69c45ffd5f0",
     amount: createMoney(958.71 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-28T06:08:09.102033",
+    datetime: "2023-03-28T06:08:09.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -3852,7 +3852,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fe0e1947-1d16-435d-9b65-2bf929f13af6",
     amount: createMoney(639.16 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-15T09:36:33.102033",
+    datetime: "2024-05-15T09:36:33.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -3863,7 +3863,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "646fcc8a-be99-4c0c-a18b-b5417a677cd8",
     amount: createMoney(297.58 * 100, CURRENCIES.NGN),
-    datetime: "2021-10-29T22:53:25.102033",
+    datetime: "2021-10-29T22:53:25.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -3874,7 +3874,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "db56e564-f41a-4a7a-9c58-62e5a92ba86b",
     amount: createMoney(882.71 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-14T20:20:40.102033",
+    datetime: "2022-09-14T20:20:40.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -3885,7 +3885,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fb390e7c-0848-4354-9ca2-d57d97a988e9",
     amount: createMoney(317.3 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-29T01:16:49.102033",
+    datetime: "2023-03-29T01:16:49.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -3896,7 +3896,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "937571a7-a328-4150-8681-3e0f4969841a",
     amount: createMoney(447.38 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-17T03:35:23.102033",
+    datetime: "2022-03-17T03:35:23.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -3907,7 +3907,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e8c79fb5-2aeb-4fc8-9f5d-7148af4dd675",
     amount: createMoney(21.22 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-30T19:33:47.102033",
+    datetime: "2023-03-30T19:33:47.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -3918,7 +3918,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "82f963af-c489-41a4-862e-32ea2a3188e6",
     amount: createMoney(365.63 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-25T03:34:27.102033",
+    datetime: "2024-09-25T03:34:27.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -3929,7 +3929,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6321e2fc-82b9-449f-8fca-45e5a4f45981",
     amount: createMoney(233.49 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-10T02:42:16.102033",
+    datetime: "2021-11-10T02:42:16.102033Z",
     type: "credit",
     categoryID: "5",
     accountID: "1",
@@ -3940,7 +3940,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "72cfb597-579b-4292-849b-f14ff95b1145",
     amount: createMoney(535.29 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-14T10:55:49.102033",
+    datetime: "2024-07-14T10:55:49.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -3951,7 +3951,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ed42d7ca-d3d5-4da6-914b-47230996d4f1",
     amount: createMoney(132.37 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-19T21:11:48.102033",
+    datetime: "2022-06-19T21:11:48.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -3962,7 +3962,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3fae2763-e9ca-4ee9-9a91-95819866ca9d",
     amount: createMoney(856.61 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-19T16:01:16.102033",
+    datetime: "2022-05-19T16:01:16.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -3973,7 +3973,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d8c330f9-c7f9-4641-beeb-57e6e1a9263d",
     amount: createMoney(668.81 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-02T20:03:47.102033",
+    datetime: "2024-03-02T20:03:47.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -3984,7 +3984,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9c3d2c02-4031-4898-b24d-f02fedce3065",
     amount: createMoney(493.15 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-03T02:03:01.102033",
+    datetime: "2023-12-03T02:03:01.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -3995,7 +3995,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "73b4abb2-0ef1-4763-ace6-e53a6f10a5aa",
     amount: createMoney(804.8 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-13T11:41:39.102033",
+    datetime: "2023-02-13T11:41:39.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -4006,7 +4006,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "737a708e-726d-4b70-8648-67a6b35402b8",
     amount: createMoney(763.73 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-10T04:16:14.102033",
+    datetime: "2023-12-10T04:16:14.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -4017,7 +4017,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "313aa681-afa1-492f-9ab1-8f4dd5146b89",
     amount: createMoney(43.1 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-22T04:06:09.102033",
+    datetime: "2022-02-22T04:06:09.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -4028,7 +4028,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "bf883c91-d2ad-4a5e-9c06-cf98dbc3a8a9",
     amount: createMoney(146.0 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-15T19:22:30.102033",
+    datetime: "2023-08-15T19:22:30.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -4039,7 +4039,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b15c0778-67fd-4145-8110-8514f1557b28",
     amount: createMoney(548.16 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-25T08:42:48.102033",
+    datetime: "2021-12-25T08:42:48.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -4050,7 +4050,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5125c03e-5ad1-48a6-a313-6737c603e2de",
     amount: createMoney(430.54 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-10T15:35:56.102033",
+    datetime: "2023-11-10T15:35:56.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -4061,7 +4061,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ebcd77a2-bf00-4a26-bd61-dc5cc2be9aae",
     amount: createMoney(863.39 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-12T11:39:28.102033",
+    datetime: "2021-12-12T11:39:28.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -4072,7 +4072,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ed4091a7-fce8-416f-9e29-7655163d0ad0",
     amount: createMoney(131.9 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-03T09:39:29.102033",
+    datetime: "2022-09-03T09:39:29.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -4083,7 +4083,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "49bb95be-a358-436a-b257-d015eb79e735",
     amount: createMoney(627.96 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-15T21:18:06.102033",
+    datetime: "2024-07-15T21:18:06.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -4094,7 +4094,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "099c102e-f32c-45e4-b88f-ec9ab65327eb",
     amount: createMoney(670.93 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-09T06:00:33.102033",
+    datetime: "2023-02-09T06:00:33.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -4105,7 +4105,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9f65ea86-a693-4852-a215-e2657f3d9418",
     amount: createMoney(836.52 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-24T17:35:30.102033",
+    datetime: "2022-12-24T17:35:30.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -4116,7 +4116,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "97a56d48-43a0-433c-bfe0-75d56278363e",
     amount: createMoney(572.86 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-03T08:58:39.102033",
+    datetime: "2024-08-03T08:58:39.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -4127,7 +4127,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1f2c2f0c-96e5-471a-8608-9919cd1ae501",
     amount: createMoney(278.82 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-01T08:09:44.102033",
+    datetime: "2023-07-01T08:09:44.102033Z",
     type: "credit",
     categoryID: "5",
     accountID: "1",
@@ -4138,7 +4138,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0b55ace7-8163-4608-8571-367f4f88584f",
     amount: createMoney(569.07 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-28T13:55:00.102033",
+    datetime: "2024-09-28T13:55:00.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -4149,7 +4149,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b90fa48e-0a59-4777-8b18-e64114cdb42f",
     amount: createMoney(125.36 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-19T10:30:07.102033",
+    datetime: "2022-02-19T10:30:07.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -4160,7 +4160,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5f79a84d-967c-46be-a471-9a3dc9a1aafc",
     amount: createMoney(730.31 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-22T04:54:23.102033",
+    datetime: "2023-03-22T04:54:23.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -4171,7 +4171,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5d14cb15-2c90-4506-a167-f574e8971de1",
     amount: createMoney(17.97 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-30T04:37:22.102033",
+    datetime: "2023-01-30T04:37:22.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -4182,7 +4182,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fa83d6ea-dfec-47a9-b883-456d04fe9b9d",
     amount: createMoney(881.27 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-27T07:39:09.102033",
+    datetime: "2024-07-27T07:39:09.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -4193,7 +4193,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ea444201-c7d1-47ef-aeb9-a8572a7c7196",
     amount: createMoney(432.68 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-24T18:58:17.102033",
+    datetime: "2024-04-24T18:58:17.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -4204,7 +4204,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1af8eb8a-84cd-444d-b961-ccca56f2f0b7",
     amount: createMoney(184.08 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-20T15:53:56.102033",
+    datetime: "2022-07-20T15:53:56.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -4215,7 +4215,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f45b56d3-aec2-4e85-a377-f0b718b723aa",
     amount: createMoney(60.12 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-29T10:52:54.102033",
+    datetime: "2023-12-29T10:52:54.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -4226,7 +4226,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "49de7648-2897-475a-afa0-e109dc0ed816",
     amount: createMoney(597.16 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-29T11:56:33.102033",
+    datetime: "2022-07-29T11:56:33.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -4237,7 +4237,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6c686922-9eea-4956-9008-4c4404cddbc4",
     amount: createMoney(533.52 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-04T07:58:30.102033",
+    datetime: "2023-03-04T07:58:30.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -4248,7 +4248,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "30b5dd3b-2ea0-4ba8-83e5-caf6cc4ec442",
     amount: createMoney(763.11 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-15T01:36:18.102033",
+    datetime: "2022-07-15T01:36:18.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -4259,7 +4259,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b9862751-d4a9-45f0-acb0-0d1eec28fb41",
     amount: createMoney(930.29 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-19T15:22:54.102033",
+    datetime: "2022-05-19T15:22:54.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -4270,7 +4270,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5e3a7566-c80b-4804-b186-e8fb24909133",
     amount: createMoney(224.33 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-26T08:18:59.102033",
+    datetime: "2023-01-26T08:18:59.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -4281,7 +4281,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1791746c-9048-43d3-8fff-b780f4edf1da",
     amount: createMoney(647.83 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-14T22:35:01.102033",
+    datetime: "2023-02-14T22:35:01.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -4292,7 +4292,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b51aaba4-f754-45dd-8646-2a361f0c22a0",
     amount: createMoney(659.27 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-28T10:48:38.102033",
+    datetime: "2024-06-28T10:48:38.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -4303,7 +4303,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0e7acc84-902e-4e5f-b826-a432d6016d14",
     amount: createMoney(849.7 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-07T13:54:44.102033",
+    datetime: "2022-02-07T13:54:44.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -4314,7 +4314,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a3a40779-24bc-4d61-ac43-a6232f260a2b",
     amount: createMoney(525.8 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-14T00:54:44.102033",
+    datetime: "2021-12-14T00:54:44.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -4325,7 +4325,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "28417414-3c7f-4220-8919-4cf55e137543",
     amount: createMoney(400.57 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-25T02:07:15.102033",
+    datetime: "2022-09-25T02:07:15.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -4336,7 +4336,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c70244bc-4988-4d18-a875-5f2da0866f6b",
     amount: createMoney(47.54 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-09T00:43:53.102033",
+    datetime: "2024-03-09T00:43:53.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -4347,7 +4347,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e5975a27-b92f-4f6e-8328-6e1a5eeef43d",
     amount: createMoney(304.94 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-28T14:31:35.102033",
+    datetime: "2022-10-28T14:31:35.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -4358,7 +4358,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "678c700d-4889-4eaf-a56e-b0b0d3f6de7a",
     amount: createMoney(61.32 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-03T12:32:00.102033",
+    datetime: "2023-06-03T12:32:00.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -4369,7 +4369,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e747d32c-0d0f-47df-bc6a-457aec80b2d5",
     amount: createMoney(116.1 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-26T03:29:27.102033",
+    datetime: "2022-06-26T03:29:27.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -4380,7 +4380,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f4de4108-0c5b-4c9c-89b0-4c6f5392ac07",
     amount: createMoney(189.61 * 100, CURRENCIES.NGN),
-    datetime: "2024-02-19T01:05:17.102033",
+    datetime: "2024-02-19T01:05:17.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -4391,7 +4391,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "78b1c1e5-d8be-40c6-a9fa-a7fb98bc830e",
     amount: createMoney(317.59 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-12T07:21:47.102033",
+    datetime: "2022-03-12T07:21:47.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -4402,7 +4402,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d7e425e7-73cb-4d71-b3c4-8a3cccbff3e1",
     amount: createMoney(868.34 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-16T21:40:12.102033",
+    datetime: "2022-08-16T21:40:12.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -4413,7 +4413,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5d6c3de6-0bf2-499f-8645-36dc762bcaf6",
     amount: createMoney(203.27 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-27T20:13:12.102033",
+    datetime: "2024-01-27T20:13:12.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -4424,7 +4424,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "23b91331-f867-4636-875c-009b347ccd2c",
     amount: createMoney(737.76 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-08T03:37:27.102033",
+    datetime: "2024-08-08T03:37:27.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -4435,7 +4435,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c720d3e5-8c17-443f-8306-8f6bc9d709a6",
     amount: createMoney(177.34 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-05T06:37:05.102033",
+    datetime: "2023-01-05T06:37:05.102033Z",
     type: "credit",
     categoryID: "18",
     accountID: "1",
@@ -4446,7 +4446,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "db86d2b1-58c4-4bdd-a0ad-6017733fe129",
     amount: createMoney(46.31 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-06T15:31:15.102033",
+    datetime: "2023-07-06T15:31:15.102033Z",
     type: "credit",
     categoryID: "11",
     accountID: "1",
@@ -4457,7 +4457,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f650b176-4d9c-4ef5-9bb8-17f2d4c91ea4",
     amount: createMoney(936.59 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-03T18:34:55.102033",
+    datetime: "2023-10-03T18:34:55.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -4468,7 +4468,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d01b88af-0bc7-4f90-b2e4-d441ae6a8afb",
     amount: createMoney(671.14 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-01T19:31:25.102033",
+    datetime: "2023-03-01T19:31:25.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -4479,7 +4479,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "08944c87-5cd0-4e5b-a3c5-363dfcf36d1b",
     amount: createMoney(659.79 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-03T05:25:03.102033",
+    datetime: "2021-12-03T05:25:03.102033Z",
     type: "credit",
     categoryID: "11",
     accountID: "1",
@@ -4490,7 +4490,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9749ca20-21e5-48e0-a30c-25f0e308a03a",
     amount: createMoney(85.62 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-29T08:33:46.102033",
+    datetime: "2022-12-29T08:33:46.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -4501,7 +4501,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "90a1b3a4-b569-4317-947d-9bbf9f3735c7",
     amount: createMoney(80.18 * 100, CURRENCIES.NGN),
-    datetime: "2024-02-05T15:46:22.102033",
+    datetime: "2024-02-05T15:46:22.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -4512,7 +4512,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "bb05c4f2-898b-46f8-8c6e-460fb658110d",
     amount: createMoney(229.94 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-06T10:45:20.102033",
+    datetime: "2022-05-06T10:45:20.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -4523,7 +4523,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "97336fd7-3af1-446e-9ac1-f3c2464800da",
     amount: createMoney(939.43 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-20T22:48:49.102033",
+    datetime: "2022-08-20T22:48:49.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -4534,7 +4534,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d13b5990-aedd-46c2-b8c5-713adbaf1008",
     amount: createMoney(900.62 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-25T21:34:02.102033",
+    datetime: "2023-11-25T21:34:02.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -4545,7 +4545,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "155fcfef-809a-4eec-b80d-a6725f40d209",
     amount: createMoney(991.86 * 100, CURRENCIES.NGN),
-    datetime: "2021-10-30T19:46:27.102033",
+    datetime: "2021-10-30T19:46:27.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -4556,7 +4556,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a332808b-f3ad-4f6c-b787-9ae5f6f3c146",
     amount: createMoney(964.38 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-28T01:32:42.102033",
+    datetime: "2022-08-28T01:32:42.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -4567,7 +4567,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6f945e69-f0e6-40f8-8f55-fcd67b414c36",
     amount: createMoney(566.2 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-19T16:03:23.102033",
+    datetime: "2022-10-19T16:03:23.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -4578,7 +4578,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "14a3a9f5-767d-499c-b4df-9bd29de02644",
     amount: createMoney(400.65 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-06T09:37:15.102033",
+    datetime: "2022-09-06T09:37:15.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -4589,7 +4589,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a67ae63f-8b75-4e6e-b218-ab0f690f346a",
     amount: createMoney(271.13 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-13T07:34:48.102033",
+    datetime: "2023-11-13T07:34:48.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -4600,7 +4600,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e9035e11-bafc-480b-bdf5-790701ffb377",
     amount: createMoney(904.51 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-16T16:15:53.102033",
+    datetime: "2022-05-16T16:15:53.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -4611,7 +4611,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ab880f83-d785-4e65-af8e-9545b376d354",
     amount: createMoney(806.72 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-20T11:17:15.102033",
+    datetime: "2023-12-20T11:17:15.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -4622,7 +4622,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ff94338f-4b93-4332-8ee0-277be857fa58",
     amount: createMoney(930.29 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-20T12:17:17.102033",
+    datetime: "2024-04-20T12:17:17.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -4633,7 +4633,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c3f86296-3212-46a5-84f0-012983959273",
     amount: createMoney(562.56 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-14T10:40:29.102033",
+    datetime: "2022-10-14T10:40:29.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -4644,7 +4644,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "947c0012-5859-4458-9c45-7e46a0b237a8",
     amount: createMoney(741.92 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-18T08:35:17.102033",
+    datetime: "2022-04-18T08:35:17.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -4655,7 +4655,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "31f9ba52-7a8b-4fb7-8d22-bec93c019cef",
     amount: createMoney(850.54 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-21T02:44:44.102033",
+    datetime: "2023-01-21T02:44:44.102033Z",
     type: "credit",
     categoryID: "5",
     accountID: "1",
@@ -4666,7 +4666,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2db17748-86b4-4614-8df0-5e78f18c3b38",
     amount: createMoney(897.3 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-09T06:40:34.102033",
+    datetime: "2024-01-09T06:40:34.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -4677,7 +4677,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "811340c0-2457-4efe-973a-42caf896c22b",
     amount: createMoney(591.33 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-31T23:57:22.102033",
+    datetime: "2022-05-31T23:57:22.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -4688,7 +4688,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b1d9d67a-7dc9-433a-aba8-200b07cadd46",
     amount: createMoney(344.63 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-17T11:45:41.102033",
+    datetime: "2022-10-17T11:45:41.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -4699,7 +4699,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6744d9e0-1c77-45d6-a922-91b7ace1b878",
     amount: createMoney(883.31 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-06T11:06:25.102033",
+    datetime: "2022-08-06T11:06:25.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -4710,7 +4710,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f031d80f-55e5-423a-b403-0cedb7114352",
     amount: createMoney(514.3 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-13T09:22:09.102033",
+    datetime: "2023-01-13T09:22:09.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -4721,7 +4721,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fe3d15ac-4b56-4c57-bea4-a3a11a46c1ae",
     amount: createMoney(719.94 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-03T16:52:08.102033",
+    datetime: "2023-01-03T16:52:08.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -4732,7 +4732,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a8a942c6-b114-4e25-b80b-06555c9e7dce",
     amount: createMoney(388.61 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-27T21:19:21.102033",
+    datetime: "2022-09-27T21:19:21.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -4743,7 +4743,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d757c1d1-f185-4e97-815e-ac1cc211bbf9",
     amount: createMoney(567.9 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-03T09:20:41.102033",
+    datetime: "2023-12-03T09:20:41.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -4754,7 +4754,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "124775f3-1512-4c2a-9698-0c1d8c88c8bb",
     amount: createMoney(73.84 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-23T07:39:22.102033",
+    datetime: "2022-11-23T07:39:22.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -4765,7 +4765,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f190f3cb-d53b-406f-8dc6-3af17c2a11ef",
     amount: createMoney(32.96 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-21T14:51:30.102033",
+    datetime: "2022-09-21T14:51:30.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -4776,7 +4776,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a2cdff32-e739-4ecc-adf0-9f86bbd7ecfd",
     amount: createMoney(998.51 * 100, CURRENCIES.NGN),
-    datetime: "2023-05-24T21:38:32.102033",
+    datetime: "2023-05-24T21:38:32.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -4787,7 +4787,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5b3f8276-fc29-45a7-8f39-4971fc40acce",
     amount: createMoney(510.82 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-01T21:10:44.102033",
+    datetime: "2023-06-01T21:10:44.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -4798,7 +4798,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a6abc8a8-4a7a-4416-b1a5-4dc57c85c485",
     amount: createMoney(797.55 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-07T05:46:40.102033",
+    datetime: "2024-05-07T05:46:40.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -4809,7 +4809,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "85f5552a-fa6f-4898-87c9-6c76bdeff697",
     amount: createMoney(72.88 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-26T07:36:13.102033",
+    datetime: "2022-12-26T07:36:13.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -4820,7 +4820,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f9d99f06-053f-4f25-aaca-8d11c7b144a3",
     amount: createMoney(580.21 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-17T16:18:28.102033",
+    datetime: "2024-07-17T16:18:28.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -4831,7 +4831,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d1ded156-0f96-4d00-9603-94c84b586e5d",
     amount: createMoney(653.59 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-07T04:50:20.102033",
+    datetime: "2022-01-07T04:50:20.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -4842,7 +4842,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7c25047f-2bd0-4d30-82a4-d5b7e985a2fe",
     amount: createMoney(569.85 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-11T04:55:46.102033",
+    datetime: "2023-02-11T04:55:46.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -4853,7 +4853,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "39deface-c64a-41e7-b128-72d88a13c63e",
     amount: createMoney(84.74 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-29T22:27:28.102033",
+    datetime: "2023-06-29T22:27:28.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -4864,7 +4864,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8ebae95e-a729-45ce-ba2f-b9e38dd1d076",
     amount: createMoney(853.26 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-07T20:01:32.102033",
+    datetime: "2022-06-07T20:01:32.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -4875,7 +4875,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "47d5c803-6577-4ab8-8eb9-2546a5157396",
     amount: createMoney(494.38 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-02T05:40:47.102033",
+    datetime: "2024-07-02T05:40:47.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -4886,7 +4886,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "57eb7439-0da4-4ed6-819c-047fbeac0ce4",
     amount: createMoney(851.96 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-11T16:07:23.102033",
+    datetime: "2022-05-11T16:07:23.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -4897,7 +4897,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "83323f4a-2d2f-4d07-9736-4dca00d3044c",
     amount: createMoney(154.05 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-27T05:52:20.102033",
+    datetime: "2023-09-27T05:52:20.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -4908,7 +4908,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "22beef3a-6533-4b61-b937-8d04cf92e027",
     amount: createMoney(375.53 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-18T09:33:58.102033",
+    datetime: "2023-09-18T09:33:58.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -4919,7 +4919,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f92ca898-8e95-4593-a3bd-507b6c9d5ab3",
     amount: createMoney(675.9 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-27T16:26:46.102033",
+    datetime: "2023-03-27T16:26:46.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -4930,7 +4930,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c88440dc-92e0-471f-bab7-4c82154458ea",
     amount: createMoney(665.15 * 100, CURRENCIES.NGN),
-    datetime: "2021-10-29T13:45:20.102033",
+    datetime: "2021-10-29T13:45:20.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -4941,7 +4941,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3d85ab14-f37f-43eb-bb84-0143e859b002",
     amount: createMoney(717.18 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-29T21:01:49.102033",
+    datetime: "2023-01-29T21:01:49.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -4952,7 +4952,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fcc8221e-1c0f-4ead-a729-2ce17dfe4c25",
     amount: createMoney(774.13 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-16T23:24:30.102033",
+    datetime: "2024-06-16T23:24:30.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -4963,7 +4963,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ed150d09-aa27-45c8-8427-54b7d46c2cd7",
     amount: createMoney(995.23 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-17T10:52:40.102033",
+    datetime: "2023-07-17T10:52:40.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -4974,7 +4974,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f15e6e85-1d57-4917-9850-d0305c3ebeab",
     amount: createMoney(908.6 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-25T05:20:43.102033",
+    datetime: "2023-07-25T05:20:43.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -4985,7 +4985,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7f883cbd-c4ce-4ad5-bc76-f726e4f561dd",
     amount: createMoney(905.56 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-21T09:17:46.102033",
+    datetime: "2022-03-21T09:17:46.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -4996,7 +4996,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4550d13f-4c1f-42d0-a77c-ba855606a22a",
     amount: createMoney(481.58 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-11T06:45:13.102033",
+    datetime: "2022-10-11T06:45:13.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -5007,7 +5007,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6c53e82b-9f9f-458d-8051-72f60c84b39d",
     amount: createMoney(526.83 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-15T08:02:35.102033",
+    datetime: "2022-07-15T08:02:35.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -5018,7 +5018,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "24be2f79-80a0-4942-b395-1ae72cd2c03f",
     amount: createMoney(129.45 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-18T12:30:14.102033",
+    datetime: "2023-02-18T12:30:14.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -5029,7 +5029,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "57c8e459-3ae0-40e3-84c7-aeb3497fdeaa",
     amount: createMoney(170.94 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-21T14:47:08.102033",
+    datetime: "2022-06-21T14:47:08.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -5040,7 +5040,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "bb4e0168-9a7d-4805-a622-eea07c61ce12",
     amount: createMoney(355.75 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-04T16:56:32.102033",
+    datetime: "2024-06-04T16:56:32.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -5051,7 +5051,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "89880142-946d-4544-9ea0-a86f8e9b99e8",
     amount: createMoney(479.65 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-27T13:11:47.102033",
+    datetime: "2022-01-27T13:11:47.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -5062,7 +5062,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5f9bc3c2-e32b-4648-95df-ace2373b3f6f",
     amount: createMoney(231.33 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-13T08:22:32.102033",
+    datetime: "2022-05-13T08:22:32.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -5073,7 +5073,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "89780e68-baa7-4293-a257-c7420bcf13c5",
     amount: createMoney(37.65 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-25T16:44:01.102033",
+    datetime: "2023-01-25T16:44:01.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -5084,7 +5084,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1df460ab-1f50-46f5-baee-1d14f23aa265",
     amount: createMoney(273.57 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-25T14:56:20.102033",
+    datetime: "2022-05-25T14:56:20.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -5095,7 +5095,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8f7d7d67-7576-47c6-ad1d-b03db6aeb5d5",
     amount: createMoney(836.75 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-19T11:39:15.102033",
+    datetime: "2022-01-19T11:39:15.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -5106,7 +5106,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f2264a99-c542-4d78-a6ee-f4b92c5223bd",
     amount: createMoney(825.26 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-12T00:53:37.102033",
+    datetime: "2022-10-12T00:53:37.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -5117,7 +5117,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b29b4294-7f9b-4d5a-b351-9be3209245ce",
     amount: createMoney(174.16 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-24T14:50:11.102033",
+    datetime: "2023-06-24T14:50:11.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -5128,7 +5128,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fc6dbccd-5c0c-4a27-9082-204989f3239a",
     amount: createMoney(939.23 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-25T23:17:47.102033",
+    datetime: "2021-12-25T23:17:47.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -5139,7 +5139,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3285bfc0-5f8c-4b0d-8b1f-181ec133c00a",
     amount: createMoney(153.46 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-02T05:59:26.102033",
+    datetime: "2022-10-02T05:59:26.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -5150,7 +5150,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "381d6042-b477-4903-8c32-02fd8b8063a3",
     amount: createMoney(146.03 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-18T03:42:12.102033",
+    datetime: "2022-07-18T03:42:12.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -5161,7 +5161,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "47c7b1a2-6b55-480f-a2db-43e30765f62d",
     amount: createMoney(154.75 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-20T15:38:02.102033",
+    datetime: "2021-11-20T15:38:02.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -5172,7 +5172,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4b326649-b9f2-4e97-920d-4859d0dfb6c4",
     amount: createMoney(791.36 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-17T00:50:47.102033",
+    datetime: "2024-03-17T00:50:47.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -5183,7 +5183,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b8354fc9-b93a-47d7-a7c2-44236ee3a56c",
     amount: createMoney(777.14 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-16T00:42:29.102033",
+    datetime: "2023-02-16T00:42:29.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -5194,7 +5194,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "17c56129-cdac-4c87-aa5e-99e8f5cfecb7",
     amount: createMoney(377.17 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-01T12:43:03.102033",
+    datetime: "2022-08-01T12:43:03.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -5205,7 +5205,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "21113236-5cee-46c9-98d5-dc9604876499",
     amount: createMoney(123.99 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-03T22:34:16.102033",
+    datetime: "2023-10-03T22:34:16.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -5216,7 +5216,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "115a021d-ce09-4723-bbb9-6556fea4b01a",
     amount: createMoney(613.04 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-16T11:48:15.102033",
+    datetime: "2024-03-16T11:48:15.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -5227,7 +5227,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3f393825-6a3f-4852-8787-16edcd7f04eb",
     amount: createMoney(649.29 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-15T09:26:15.102033",
+    datetime: "2022-03-15T09:26:15.102033Z",
     type: "credit",
     categoryID: "6",
     accountID: "1",
@@ -5238,7 +5238,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "09699f6b-3c07-40a2-851c-0bcfefc89b05",
     amount: createMoney(612.48 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-30T18:06:38.102033",
+    datetime: "2022-06-30T18:06:38.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -5249,7 +5249,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "306e8e4d-aea7-4725-8d0c-06f5e00c1ce2",
     amount: createMoney(181.16 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-06T18:00:25.102033",
+    datetime: "2022-07-06T18:00:25.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -5260,7 +5260,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "68faefc0-8e0f-47ef-bd45-93de7094b537",
     amount: createMoney(212.84 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-07T05:00:40.102033",
+    datetime: "2022-04-07T05:00:40.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -5271,7 +5271,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c2783a94-fb28-46f9-9ec5-29ebc24c56e4",
     amount: createMoney(893.4 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-31T16:12:58.102033",
+    datetime: "2023-10-31T16:12:58.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -5282,7 +5282,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "43ae336f-753b-4bb1-bee8-d4c03ece8574",
     amount: createMoney(24.59 * 100, CURRENCIES.NGN),
-    datetime: "2021-10-21T06:55:33.102033",
+    datetime: "2021-10-21T06:55:33.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -5293,7 +5293,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "faad5dd5-5251-4a5d-a34c-a14aa090e3e9",
     amount: createMoney(38.06 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-01T08:16:41.102033",
+    datetime: "2023-09-01T08:16:41.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -5304,7 +5304,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a422b44c-1958-4396-88cb-a9c5201e5d9c",
     amount: createMoney(208.36 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-04T11:01:02.102033",
+    datetime: "2022-08-04T11:01:02.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -5315,7 +5315,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "bf693b2f-bf54-4c68-a511-7e7c1be9d31f",
     amount: createMoney(498.21 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-16T07:16:58.102033",
+    datetime: "2022-10-16T07:16:58.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -5326,7 +5326,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "151404d2-ea4e-4ec9-a38d-bb1ded5a55b4",
     amount: createMoney(897.05 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-26T01:50:21.102033",
+    datetime: "2023-07-26T01:50:21.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -5337,7 +5337,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4e6f4cb8-45f5-4ebe-a1db-2254ee8fab47",
     amount: createMoney(820.79 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-28T21:53:57.102033",
+    datetime: "2022-11-28T21:53:57.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -5348,7 +5348,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "83a9a996-976e-45a5-ab91-0939b989d77d",
     amount: createMoney(865.8 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-27T23:30:31.102033",
+    datetime: "2022-10-27T23:30:31.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -5359,7 +5359,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7d36914f-30c8-406f-97e9-d43f7d38782f",
     amount: createMoney(560.36 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-15T11:28:27.102033",
+    datetime: "2022-12-15T11:28:27.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -5370,7 +5370,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5b6e83b7-c1fb-4930-94f8-7586fb0561d5",
     amount: createMoney(775.0 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-29T19:26:16.102033",
+    datetime: "2023-01-29T19:26:16.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -5381,7 +5381,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "61a8ec30-e57a-4b64-a26a-43043e98dc48",
     amount: createMoney(875.95 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-14T16:25:08.102033",
+    datetime: "2022-12-14T16:25:08.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -5392,7 +5392,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e2e03210-167f-4191-ae79-061633955e16",
     amount: createMoney(719.04 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-30T15:43:29.102033",
+    datetime: "2022-06-30T15:43:29.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -5403,7 +5403,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "91c62135-6c49-44ff-ba63-40a86f50fac0",
     amount: createMoney(390.11 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-30T21:36:15.102033",
+    datetime: "2024-06-30T21:36:15.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -5414,7 +5414,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a7bca749-df79-4134-b23d-ef3b0b9a9cf3",
     amount: createMoney(704.01 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-12T06:11:29.102033",
+    datetime: "2022-01-12T06:11:29.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -5425,7 +5425,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3c69e21a-da01-48e0-b286-75e3e549d5ab",
     amount: createMoney(266.53 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-11T15:54:11.102033",
+    datetime: "2023-06-11T15:54:11.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -5436,7 +5436,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9036827b-c6e0-43c3-a7fd-21995c911eff",
     amount: createMoney(117.51 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-06T02:49:12.102033",
+    datetime: "2022-09-06T02:49:12.102033Z",
     type: "credit",
     categoryID: "18",
     accountID: "1",
@@ -5447,7 +5447,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b1dfedd6-3fc0-4220-a711-5707970a1829",
     amount: createMoney(168.52 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-01T16:54:28.102033",
+    datetime: "2023-04-01T16:54:28.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -5458,7 +5458,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b60bc0f1-9367-42c7-bd46-e0a7785a3fe9",
     amount: createMoney(344.06 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-20T06:11:50.102033",
+    datetime: "2024-04-20T06:11:50.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -5469,7 +5469,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "07270be9-2a8b-4f53-bbca-982433788d82",
     amount: createMoney(113.92 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-07T18:22:11.102033",
+    datetime: "2022-05-07T18:22:11.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -5480,7 +5480,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "876069c3-0cd6-4549-bc79-9437c464730f",
     amount: createMoney(34.48 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-25T17:58:02.102033",
+    datetime: "2023-08-25T17:58:02.102033Z",
     type: "credit",
     categoryID: "11",
     accountID: "1",
@@ -5491,7 +5491,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5669e40c-d3f3-4bbd-a910-6b1ec3fa541a",
     amount: createMoney(434.35 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-24T03:51:03.102033",
+    datetime: "2024-08-24T03:51:03.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -5502,7 +5502,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "848ccd1a-f9fd-4b01-9b28-2387788ae712",
     amount: createMoney(109.91 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-07T22:04:09.102033",
+    datetime: "2021-12-07T22:04:09.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -5513,7 +5513,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "eabf663e-e465-4bce-819d-9afdb4b09712",
     amount: createMoney(953.26 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-25T00:47:45.102033",
+    datetime: "2024-08-25T00:47:45.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -5524,7 +5524,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6cf7b5e4-3b35-4033-8b07-56fb5e0eb35d",
     amount: createMoney(33.85 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-30T01:04:45.102033",
+    datetime: "2022-09-30T01:04:45.102033Z",
     type: "credit",
     categoryID: "11",
     accountID: "1",
@@ -5535,7 +5535,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "59db74bc-262e-4092-b28e-3c62cf2fa726",
     amount: createMoney(513.0 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-14T06:52:53.102033",
+    datetime: "2021-12-14T06:52:53.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -5546,7 +5546,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ec746f6b-e287-4b21-bc04-aadff6f8024c",
     amount: createMoney(841.74 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-09T11:41:33.102033",
+    datetime: "2024-05-09T11:41:33.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -5557,7 +5557,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2320d24e-e155-456d-8f40-f75981b5f145",
     amount: createMoney(551.82 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-17T07:11:08.102033",
+    datetime: "2022-05-17T07:11:08.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -5568,7 +5568,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "94f886c9-2cfd-4fb0-867c-d93a180030f7",
     amount: createMoney(344.06 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-05T23:14:12.102033",
+    datetime: "2022-11-05T23:14:12.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -5579,7 +5579,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9e840a17-f25e-489a-a623-972124061f8f",
     amount: createMoney(957.72 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-22T01:15:02.102033",
+    datetime: "2023-04-22T01:15:02.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -5590,7 +5590,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "41a4056c-9728-457b-9950-057c84e08ef9",
     amount: createMoney(259.59 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-18T21:25:20.102033",
+    datetime: "2022-11-18T21:25:20.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -5601,7 +5601,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "04cfee52-d756-4a86-9f0e-862f639a33c2",
     amount: createMoney(666.01 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-05T07:36:23.102033",
+    datetime: "2024-06-05T07:36:23.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -5612,7 +5612,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7dd04ed1-8079-4f1f-9bda-a91729c9e69a",
     amount: createMoney(7.58 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-23T23:55:04.102033",
+    datetime: "2022-08-23T23:55:04.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -5623,7 +5623,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2867cd36-a892-4aea-adb3-600d988c3169",
     amount: createMoney(277.84 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-17T01:24:06.102033",
+    datetime: "2022-05-17T01:24:06.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -5634,7 +5634,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1ed79988-0c26-4d82-9799-6e33bdc3ead2",
     amount: createMoney(467.78 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-17T15:07:28.102033",
+    datetime: "2024-04-17T15:07:28.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -5645,7 +5645,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f1ea6bd9-14c4-4e3d-b5eb-f4efa05ae17f",
     amount: createMoney(693.42 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-08T11:59:20.102033",
+    datetime: "2023-04-08T11:59:20.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -5656,7 +5656,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7957e338-ae6a-4a02-944f-42e85ed6e805",
     amount: createMoney(528.46 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-10T02:48:56.102033",
+    datetime: "2021-11-10T02:48:56.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -5667,7 +5667,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "deb53603-be82-4cae-8d69-d8579b3e3e6f",
     amount: createMoney(262.08 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-07T14:03:50.102033",
+    datetime: "2021-12-07T14:03:50.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -5678,7 +5678,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fd540b49-b85e-424b-8f3a-7d2578a46f11",
     amount: createMoney(243.95 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-10T18:03:51.102033",
+    datetime: "2023-04-10T18:03:51.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -5689,7 +5689,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "680a8087-736e-4039-b282-5f04305478e7",
     amount: createMoney(948.37 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-06T01:48:10.102033",
+    datetime: "2022-06-06T01:48:10.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -5700,7 +5700,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5258d0c8-8092-4426-944c-41c757b8e104",
     amount: createMoney(111.32 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-25T16:56:31.102033",
+    datetime: "2022-05-25T16:56:31.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -5711,7 +5711,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6d53950b-f92f-4042-8b3e-106487af224f",
     amount: createMoney(884.59 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-27T20:18:10.102033",
+    datetime: "2024-06-27T20:18:10.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -5722,7 +5722,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d3cb6347-f8fd-4938-97a3-36086b040458",
     amount: createMoney(392.44 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-30T07:57:41.102033",
+    datetime: "2024-06-30T07:57:41.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -5733,7 +5733,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5d7df605-3404-40be-a673-57ff8a177b13",
     amount: createMoney(728.58 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-31T16:47:36.102033",
+    datetime: "2022-10-31T16:47:36.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -5744,7 +5744,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9b33485b-b1ce-473f-ac4c-6d82f6e1b831",
     amount: createMoney(887.78 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-01T19:29:36.102033",
+    datetime: "2022-12-01T19:29:36.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -5755,7 +5755,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6509a89d-5984-42dd-a458-2e46b1d8009c",
     amount: createMoney(882.0 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-16T16:31:13.102033",
+    datetime: "2021-12-16T16:31:13.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -5766,7 +5766,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "df22068e-c869-4382-8c4d-b56f5887268d",
     amount: createMoney(204.43 * 100, CURRENCIES.NGN),
-    datetime: "2024-02-25T11:25:41.102033",
+    datetime: "2024-02-25T11:25:41.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -5777,7 +5777,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f61ab848-8ec1-43c8-869a-a40a39ad9b45",
     amount: createMoney(590.6 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-07T19:46:03.102033",
+    datetime: "2024-06-07T19:46:03.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -5788,7 +5788,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "cf99c885-163f-4050-9364-d4881c862a72",
     amount: createMoney(994.22 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-03T07:26:02.102033",
+    datetime: "2022-09-03T07:26:02.102033Z",
     type: "credit",
     categoryID: "5",
     accountID: "1",
@@ -5799,7 +5799,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1b836eb4-818f-404a-812a-7998bb9a9672",
     amount: createMoney(320.47 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-01T09:54:36.102033",
+    datetime: "2024-01-01T09:54:36.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -5810,7 +5810,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "066c8c86-6cb8-4334-beb5-d8240026d897",
     amount: createMoney(449.85 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-21T06:59:33.102033",
+    datetime: "2022-01-21T06:59:33.102033Z",
     type: "credit",
     categoryID: "5",
     accountID: "1",
@@ -5821,7 +5821,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "55ef73c8-ca9c-4c20-9490-801e4d47e800",
     amount: createMoney(351.61 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-08T10:54:47.102033",
+    datetime: "2023-06-08T10:54:47.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -5832,7 +5832,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "49de1023-c1d6-4fc3-9e8d-8d1b9532133c",
     amount: createMoney(530.2 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-04T05:39:27.102033",
+    datetime: "2023-07-04T05:39:27.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -5843,7 +5843,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "73a5ba66-2225-45c4-987a-1f5bc6cbcb0f",
     amount: createMoney(500.47 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-14T00:40:31.102033",
+    datetime: "2024-08-14T00:40:31.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -5854,7 +5854,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "98c26eff-d9c4-4a83-b814-22659f80b5b3",
     amount: createMoney(953.34 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-22T21:21:39.102033",
+    datetime: "2023-03-22T21:21:39.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -5865,7 +5865,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7cb9c2f3-f738-41dd-bb0e-165b96b4d6b3",
     amount: createMoney(203.83 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-11T16:44:27.102033",
+    datetime: "2023-09-11T16:44:27.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -5876,7 +5876,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "eb2dfed7-8b6e-4c31-9719-690425968393",
     amount: createMoney(321.94 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-03T10:49:42.102033",
+    datetime: "2023-06-03T10:49:42.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -5887,7 +5887,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2108a6b1-63d2-462c-ae9a-ef49dd82162f",
     amount: createMoney(415.72 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-05T08:33:17.102033",
+    datetime: "2024-08-05T08:33:17.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -5898,7 +5898,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "25d76f7a-1704-46a3-9594-12c84785d4b1",
     amount: createMoney(526.05 * 100, CURRENCIES.NGN),
-    datetime: "2024-10-02T00:04:42.102033",
+    datetime: "2024-10-02T00:04:42.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -5909,7 +5909,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c2015248-4533-49bd-9358-098f8a8b207b",
     amount: createMoney(938.08 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-02T02:38:22.102033",
+    datetime: "2021-11-02T02:38:22.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -5920,7 +5920,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1ebc71dd-2915-4f3f-83f3-8342324a4b06",
     amount: createMoney(337.11 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-03T01:47:42.102033",
+    datetime: "2022-07-03T01:47:42.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -5931,7 +5931,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "481de18e-21e4-4937-9ed0-ac1a0f596ea7",
     amount: createMoney(136.86 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-23T15:05:49.102033",
+    datetime: "2022-07-23T15:05:49.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -5942,7 +5942,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9cafa42a-48e1-4305-a50d-e5041f2534e7",
     amount: createMoney(344.59 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-30T07:41:16.102033",
+    datetime: "2023-07-30T07:41:16.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -5953,7 +5953,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "37d49ff1-36a8-4078-8200-fc834480aa09",
     amount: createMoney(241.71 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-19T09:39:23.102033",
+    datetime: "2023-10-19T09:39:23.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -5964,7 +5964,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b7d6c3e3-dfe6-4428-b945-7390c38894e1",
     amount: createMoney(435.18 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-29T00:46:25.102033",
+    datetime: "2023-06-29T00:46:25.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -5975,7 +5975,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "164809b4-7a30-4e33-9059-9913c3b91c91",
     amount: createMoney(779.12 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-14T15:11:38.102033",
+    datetime: "2022-04-14T15:11:38.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -5986,7 +5986,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "84c965e1-aa69-4327-8509-5b128b89205c",
     amount: createMoney(511.65 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-29T10:00:11.102033",
+    datetime: "2023-12-29T10:00:11.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -5997,7 +5997,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6b33a968-027f-4837-b5e5-35a0245546c5",
     amount: createMoney(493.01 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-16T11:31:40.102033",
+    datetime: "2021-11-16T11:31:40.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -6008,7 +6008,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e0e8979f-43b7-4d3a-b0e7-48ae43e80f67",
     amount: createMoney(355.69 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-21T10:44:33.102033",
+    datetime: "2024-05-21T10:44:33.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -6019,7 +6019,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b508129e-fc9f-4f63-9210-0ded5dd15892",
     amount: createMoney(835.76 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-11T23:04:34.102033",
+    datetime: "2023-07-11T23:04:34.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -6030,7 +6030,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c65089bc-32d2-4c9a-ac6b-58c666d70405",
     amount: createMoney(648.57 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-01T13:16:00.102033",
+    datetime: "2023-01-01T13:16:00.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -6041,7 +6041,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fb36bc77-110b-4ef0-9fa9-ddd0fb35c180",
     amount: createMoney(66.13 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-19T01:32:44.102033",
+    datetime: "2023-10-19T01:32:44.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -6052,7 +6052,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4a2d9c53-7215-4ec4-83c2-dc0896913471",
     amount: createMoney(735.04 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-28T06:32:51.102033",
+    datetime: "2023-03-28T06:32:51.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -6063,7 +6063,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f3d665f3-49c0-4918-ad56-327a319b3762",
     amount: createMoney(496.88 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-06T00:39:42.102033",
+    datetime: "2024-05-06T00:39:42.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -6074,7 +6074,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a6ba98a4-7d61-4cbc-837a-432b6a523032",
     amount: createMoney(784.13 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-28T02:00:53.102033",
+    datetime: "2023-03-28T02:00:53.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -6085,7 +6085,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "33c50ae5-358e-4279-b388-0cad0b9ec938",
     amount: createMoney(390.93 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-12T20:00:16.102033",
+    datetime: "2023-02-12T20:00:16.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -6096,7 +6096,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1d7a939c-c843-41ac-a171-695757d83a63",
     amount: createMoney(785.43 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-24T09:37:36.102033",
+    datetime: "2024-01-24T09:37:36.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -6107,7 +6107,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0f0ff3fa-0b6c-4c51-bee5-fe7afd9bc2f7",
     amount: createMoney(859.03 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-26T07:27:21.102033",
+    datetime: "2023-09-26T07:27:21.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -6118,7 +6118,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "61ac0603-677b-47b5-91eb-0ea645060c0d",
     amount: createMoney(941.62 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-28T04:49:19.102033",
+    datetime: "2022-08-28T04:49:19.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -6129,7 +6129,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "83bd5b28-6cf0-49f0-ab4c-b14830eac3c4",
     amount: createMoney(522.94 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-01T00:36:33.102033",
+    datetime: "2022-10-01T00:36:33.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -6140,7 +6140,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0a4aeeef-25de-4ab3-9caa-ccf96ecd5c9e",
     amount: createMoney(331.05 * 100, CURRENCIES.NGN),
-    datetime: "2023-05-22T23:21:30.102033",
+    datetime: "2023-05-22T23:21:30.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -6151,7 +6151,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0a202c5f-0422-4a62-867b-00ed72334bfc",
     amount: createMoney(397.94 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-19T16:31:14.102033",
+    datetime: "2022-03-19T16:31:14.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -6162,7 +6162,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "43ce43c9-3f16-4358-8949-6ea5a28eb46e",
     amount: createMoney(792.5 * 100, CURRENCIES.NGN),
-    datetime: "2021-10-25T07:35:48.102033",
+    datetime: "2021-10-25T07:35:48.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -6173,7 +6173,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "99f3076e-2830-4676-897a-5bdc39dfabcb",
     amount: createMoney(167.63 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-20T23:16:45.102033",
+    datetime: "2023-03-20T23:16:45.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -6184,7 +6184,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2912dbf3-2084-4ea6-b1c2-8b8ca033ded7",
     amount: createMoney(862.31 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-02T22:28:52.102033",
+    datetime: "2022-01-02T22:28:52.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -6195,7 +6195,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6be7eb18-58b5-4d44-9b1a-9b847ce6afbd",
     amount: createMoney(112.11 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-05T00:10:42.102033",
+    datetime: "2023-03-05T00:10:42.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -6206,7 +6206,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7932efa5-ff34-44be-8cf9-54e620a798dc",
     amount: createMoney(607.26 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-08T17:22:13.102033",
+    datetime: "2024-06-08T17:22:13.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -6217,7 +6217,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e7d0871d-b052-4e35-854e-6ebdec20a04c",
     amount: createMoney(528.49 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-09T11:02:14.102033",
+    datetime: "2021-11-09T11:02:14.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -6228,7 +6228,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d183e116-5563-45ac-afeb-f167ad8b24e4",
     amount: createMoney(21.45 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-19T08:32:58.102033",
+    datetime: "2024-04-19T08:32:58.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -6239,7 +6239,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "eb6596ad-9cb7-4866-8184-1351f4ddbbaa",
     amount: createMoney(453.42 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-14T06:40:15.102033",
+    datetime: "2022-07-14T06:40:15.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -6250,7 +6250,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "67a4294f-ba29-46a3-a836-346d3e8ac7cb",
     amount: createMoney(196.39 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-21T05:14:16.102033",
+    datetime: "2024-04-21T05:14:16.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -6261,7 +6261,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f1bede15-e0de-4a9b-b30c-fd2a9876e92f",
     amount: createMoney(194.33 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-03T11:30:11.102033",
+    datetime: "2024-01-03T11:30:11.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -6272,7 +6272,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "dbf4ad57-ff90-4835-96d9-79bef796a726",
     amount: createMoney(270.51 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-12T01:31:19.102033",
+    datetime: "2022-10-12T01:31:19.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -6283,7 +6283,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "94b44a22-85ee-4b67-8877-b1ad56925970",
     amount: createMoney(504.94 * 100, CURRENCIES.NGN),
-    datetime: "2021-10-25T13:51:27.102033",
+    datetime: "2021-10-25T13:51:27.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -6294,7 +6294,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2d303754-1ba4-406d-adef-c30d7fbe9b9f",
     amount: createMoney(765.96 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-19T10:37:43.102033",
+    datetime: "2024-05-19T10:37:43.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -6305,7 +6305,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f6eba1d5-ecba-415e-b7b5-c665755e4668",
     amount: createMoney(767.17 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-11T20:48:32.102033",
+    datetime: "2023-12-11T20:48:32.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -6316,7 +6316,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3fb05a94-112b-4683-a6a2-c3a0540668eb",
     amount: createMoney(183.29 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-26T06:09:00.102033",
+    datetime: "2023-12-26T06:09:00.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -6327,7 +6327,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4dfd7f89-eb26-4b01-b5f0-2eeffcb28227",
     amount: createMoney(866.35 * 100, CURRENCIES.NGN),
-    datetime: "2023-05-24T09:28:55.102033",
+    datetime: "2023-05-24T09:28:55.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -6338,7 +6338,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ec7abc1e-8637-4c95-99df-9bef37e7042b",
     amount: createMoney(179.77 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-15T23:22:26.102033",
+    datetime: "2023-01-15T23:22:26.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -6349,7 +6349,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6f6e14fa-6d95-40df-8b67-cf9055dc93a3",
     amount: createMoney(765.87 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-23T15:09:54.102033",
+    datetime: "2022-06-23T15:09:54.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -6360,7 +6360,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "76202e9f-0723-450a-bb04-426837009717",
     amount: createMoney(487.73 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-18T13:29:10.102033",
+    datetime: "2022-06-18T13:29:10.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -6371,7 +6371,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a5a1bf9e-b55d-4df5-9f7f-38c9693034cf",
     amount: createMoney(517.13 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-10T03:38:50.102033",
+    datetime: "2023-01-10T03:38:50.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -6382,7 +6382,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9942198f-6a28-4194-9d98-369f7be4ec5a",
     amount: createMoney(482.99 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-04T04:33:46.102033",
+    datetime: "2023-04-04T04:33:46.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -6393,7 +6393,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9a605a4a-6f66-426e-af08-d6ed6ce30dac",
     amount: createMoney(587.78 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-29T06:31:19.102033",
+    datetime: "2022-10-29T06:31:19.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -6404,7 +6404,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "24b30b0f-a664-4668-adc4-42c3357b75b6",
     amount: createMoney(557.73 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-12T02:58:37.102033",
+    datetime: "2022-08-12T02:58:37.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -6415,7 +6415,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6e3eaacc-6906-4324-8d8b-9548ee2a0189",
     amount: createMoney(778.63 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-10T08:18:49.102033",
+    datetime: "2024-05-10T08:18:49.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -6426,7 +6426,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "58efa385-4a3a-459c-a8ab-1775f56dafc5",
     amount: createMoney(307.71 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-27T05:05:16.102033",
+    datetime: "2022-02-27T05:05:16.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -6437,7 +6437,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9f620843-dc8e-4014-abeb-b201d45210a2",
     amount: createMoney(443.26 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-28T19:53:34.102033",
+    datetime: "2022-02-28T19:53:34.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -6448,7 +6448,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2c0f09c4-9d94-4eb0-a00d-7273d86c9e42",
     amount: createMoney(421.87 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-23T06:53:36.102033",
+    datetime: "2022-11-23T06:53:36.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -6459,7 +6459,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d02fa3e1-ed99-4a5a-b3da-b0811cafbba4",
     amount: createMoney(394.1 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-19T22:34:41.102033",
+    datetime: "2023-10-19T22:34:41.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -6470,7 +6470,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9d0310d5-870b-4f60-903e-cf6e45c22b1a",
     amount: createMoney(940.29 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-21T04:40:41.102033",
+    datetime: "2022-07-21T04:40:41.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -6481,7 +6481,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0e4b95e0-e085-4916-911a-22ad1d0c3f3b",
     amount: createMoney(436.93 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-06T11:51:34.102033",
+    datetime: "2024-09-06T11:51:34.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -6492,7 +6492,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "12e1a577-b204-4f48-95a3-81b529e1c603",
     amount: createMoney(461.93 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-07T23:14:15.102033",
+    datetime: "2022-05-07T23:14:15.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -6503,7 +6503,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "55da2f13-af3c-4be5-b091-649cbadb48ba",
     amount: createMoney(982.28 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-18T15:48:44.102033",
+    datetime: "2022-06-18T15:48:44.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -6514,7 +6514,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "396fb81e-3b8f-4ae2-ab6a-7cc475c1b1e2",
     amount: createMoney(16.91 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-15T12:54:40.102033",
+    datetime: "2024-07-15T12:54:40.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -6525,7 +6525,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9180d130-f6ce-43da-a50b-8607b1f129eb",
     amount: createMoney(742.57 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-07T23:20:50.102033",
+    datetime: "2023-08-07T23:20:50.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -6536,7 +6536,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a7329b78-bbc0-49bd-823e-3b8d77d0cba4",
     amount: createMoney(116.45 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-07T03:48:04.102033",
+    datetime: "2022-07-07T03:48:04.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -6547,7 +6547,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7055e77a-b653-41f9-b2a1-feab5288803c",
     amount: createMoney(980.63 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-12T06:18:49.102033",
+    datetime: "2023-07-12T06:18:49.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -6558,7 +6558,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7c14dc8e-c0c2-42cd-8136-15ad8b9e076f",
     amount: createMoney(56.44 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-03T09:51:12.102033",
+    datetime: "2022-08-03T09:51:12.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -6569,7 +6569,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "67ab7758-9c00-4d6f-9f2f-6029d76cdb72",
     amount: createMoney(102.68 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-13T18:43:37.102033",
+    datetime: "2023-04-13T18:43:37.102033Z",
     type: "credit",
     categoryID: "5",
     accountID: "1",
@@ -6580,7 +6580,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "63a72c18-cf1c-4c1b-8bfd-d3c65d561bde",
     amount: createMoney(791.23 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-09T19:17:22.102033",
+    datetime: "2022-06-09T19:17:22.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -6591,7 +6591,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6f5a9b57-d55e-41be-970f-12edbab98329",
     amount: createMoney(298.85 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-05T20:04:50.102033",
+    datetime: "2023-11-05T20:04:50.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -6602,7 +6602,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5f2c9e7b-5e1a-48ec-bf51-3c9c525eb36e",
     amount: createMoney(255.92 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-10T23:20:06.102033",
+    datetime: "2022-06-10T23:20:06.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -6613,7 +6613,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "37754350-e62a-4615-a242-53c4c938073d",
     amount: createMoney(834.95 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-22T10:32:50.102033",
+    datetime: "2023-09-22T10:32:50.102033Z",
     type: "credit",
     categoryID: "11",
     accountID: "1",
@@ -6624,7 +6624,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "35928efc-0ce5-4be2-a82b-ae779025e37c",
     amount: createMoney(404.48 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-06T17:48:36.102033",
+    datetime: "2023-08-06T17:48:36.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -6635,7 +6635,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ba36604d-4882-4dbb-aff9-5a0d55d05afc",
     amount: createMoney(804.85 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-19T13:24:31.102033",
+    datetime: "2023-04-19T13:24:31.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -6646,7 +6646,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9d512afb-6ad8-45fb-a597-473e66695b25",
     amount: createMoney(218.06 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-12T15:49:28.102033",
+    datetime: "2024-09-12T15:49:28.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -6657,7 +6657,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "30ddfbc4-71b2-45ae-b719-0e99cbab315d",
     amount: createMoney(395.39 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-14T04:56:47.102033",
+    datetime: "2022-09-14T04:56:47.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -6668,7 +6668,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "364490a7-56f2-42e5-9d98-b120f66a0d01",
     amount: createMoney(370.68 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-29T13:11:11.102033",
+    datetime: "2022-01-29T13:11:11.102033Z",
     type: "credit",
     categoryID: "11",
     accountID: "1",
@@ -6679,7 +6679,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fcfb2666-b91d-46d9-84e0-8d0efa8cfaca",
     amount: createMoney(629.0 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-18T19:22:49.102033",
+    datetime: "2024-04-18T19:22:49.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -6690,7 +6690,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3aff6ddd-6ce3-4c7d-be6a-44e026a2087a",
     amount: createMoney(334.91 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-04T17:41:04.102033",
+    datetime: "2023-11-04T17:41:04.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -6701,7 +6701,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "28e2bba5-44ed-4c11-ab62-278eed15fcd8",
     amount: createMoney(686.64 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-15T17:41:27.102033",
+    datetime: "2024-09-15T17:41:27.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -6712,7 +6712,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d005ea59-3f77-4180-ba1b-c703157081e5",
     amount: createMoney(12.16 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-10T05:52:46.102033",
+    datetime: "2022-02-10T05:52:46.102033Z",
     type: "credit",
     categoryID: "5",
     accountID: "1",
@@ -6723,7 +6723,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "60d55b1f-b1dc-4c26-8136-fec4d76c50bf",
     amount: createMoney(782.16 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-23T16:31:06.102033",
+    datetime: "2024-01-23T16:31:06.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -6734,7 +6734,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "418a7be5-adcd-4bda-bca6-f1c47a9bc8b0",
     amount: createMoney(864.66 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-27T02:02:30.102033",
+    datetime: "2024-06-27T02:02:30.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -6745,7 +6745,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1933183e-cc8d-4c20-b5b9-56bf8d4ae625",
     amount: createMoney(106.61 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-09T03:02:41.102033",
+    datetime: "2023-12-09T03:02:41.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -6756,7 +6756,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f267ff4f-7e3e-49d7-89ee-5ff701b3b3c5",
     amount: createMoney(844.38 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-15T07:14:50.102033",
+    datetime: "2022-07-15T07:14:50.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -6767,7 +6767,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b1c45446-bd38-4208-8aa8-e45e6ddf9e93",
     amount: createMoney(674.55 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-12T07:37:13.102033",
+    datetime: "2024-08-12T07:37:13.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -6778,7 +6778,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f26df201-2ac7-4a0d-8b43-cd531714695b",
     amount: createMoney(240.26 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-05T03:59:54.102033",
+    datetime: "2023-12-05T03:59:54.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -6789,7 +6789,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3be61400-ed1f-4e6a-b875-a5e713317c40",
     amount: createMoney(587.61 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-14T04:59:37.102033",
+    datetime: "2022-04-14T04:59:37.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -6800,7 +6800,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "684cf28d-68bc-4833-bc72-4cf25bb76e52",
     amount: createMoney(364.64 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-05T04:37:27.102033",
+    datetime: "2024-06-05T04:37:27.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -6811,7 +6811,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "58ae7241-5b71-44e7-a00f-75cc0254874e",
     amount: createMoney(706.65 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-01T16:02:56.102033",
+    datetime: "2023-01-01T16:02:56.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -6822,7 +6822,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7a4a5474-5452-4c52-8265-d4f3a0e551f6",
     amount: createMoney(691.57 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-09T01:03:00.102033",
+    datetime: "2023-02-09T01:03:00.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -6833,7 +6833,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3044c7a4-f630-47e6-bbcc-db0283dd2127",
     amount: createMoney(740.16 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-03T18:25:15.102033",
+    datetime: "2024-01-03T18:25:15.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -6844,7 +6844,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5f37fcc7-3aef-4a15-8af1-07252fcb0ae4",
     amount: createMoney(768.55 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-26T14:05:41.102033",
+    datetime: "2022-09-26T14:05:41.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -6855,7 +6855,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f6c579db-1f63-4128-ae87-22f8c9b4f54c",
     amount: createMoney(142.9 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-26T02:41:55.102033",
+    datetime: "2022-11-26T02:41:55.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -6866,7 +6866,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "53e569c0-2553-47c3-b916-2efd096dc2ba",
     amount: createMoney(11.47 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-29T19:40:31.102033",
+    datetime: "2024-01-29T19:40:31.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -6877,7 +6877,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4a02fb01-2676-4994-9b80-11831a83a78c",
     amount: createMoney(639.29 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-27T07:23:59.102033",
+    datetime: "2024-05-27T07:23:59.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -6888,7 +6888,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0ccd8b16-cf8a-4b14-a195-bcf739ae5e90",
     amount: createMoney(210.72 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-14T23:18:18.102033",
+    datetime: "2023-03-14T23:18:18.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -6899,7 +6899,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "27407a9b-7a2e-4744-ac96-24d4ec13514c",
     amount: createMoney(438.66 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-20T09:40:37.102033",
+    datetime: "2022-07-20T09:40:37.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -6910,7 +6910,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3904d1f1-83c8-41bd-8d40-74f2b98f7cd4",
     amount: createMoney(443.04 * 100, CURRENCIES.NGN),
-    datetime: "2023-05-16T21:06:25.102033",
+    datetime: "2023-05-16T21:06:25.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -6921,7 +6921,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "bfc53d14-de67-452a-bbb0-1e0be1fcce1f",
     amount: createMoney(19.31 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-22T18:02:50.102033",
+    datetime: "2021-12-22T18:02:50.102033Z",
     type: "credit",
     categoryID: "11",
     accountID: "1",
@@ -6932,7 +6932,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "92009f9b-a81f-4766-aa83-300dee002f11",
     amount: createMoney(694.03 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-02T22:37:23.102033",
+    datetime: "2023-08-02T22:37:23.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -6943,7 +6943,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c27248d6-6a08-4790-8ed0-e4b97b9aa214",
     amount: createMoney(441.49 * 100, CURRENCIES.NGN),
-    datetime: "2024-02-29T11:09:31.102033",
+    datetime: "2024-02-29T11:09:31.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -6954,7 +6954,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "69208a48-d3ca-46ab-8fde-fc72f3e2817d",
     amount: createMoney(544.74 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-10T11:12:55.102033",
+    datetime: "2024-07-10T11:12:55.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -6965,7 +6965,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "355681ff-cd64-4d02-9d36-254b5daab40b",
     amount: createMoney(198.73 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-01T04:19:06.102033",
+    datetime: "2024-09-01T04:19:06.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -6976,7 +6976,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "98a35206-639e-4e71-b2ec-ea25f4c81ecf",
     amount: createMoney(438.26 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-21T15:13:36.102033",
+    datetime: "2024-07-21T15:13:36.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -6987,7 +6987,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f27f28c0-6a9b-4e03-8a2f-07b258f0a293",
     amount: createMoney(711.76 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-21T23:50:27.102033",
+    datetime: "2022-11-21T23:50:27.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -6998,7 +6998,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6f50d198-cfbc-431f-881f-7a7334b0776c",
     amount: createMoney(426.49 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-17T06:53:32.102033",
+    datetime: "2022-06-17T06:53:32.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -7009,7 +7009,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "cfff890a-7057-4dfb-914b-95c697377ef1",
     amount: createMoney(773.1 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-18T21:35:47.102033",
+    datetime: "2023-09-18T21:35:47.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -7020,7 +7020,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ff09fb28-1709-40e7-a55b-fad0403b3a6a",
     amount: createMoney(728.69 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-27T04:17:53.102033",
+    datetime: "2023-03-27T04:17:53.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -7031,7 +7031,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "be6dab8a-3d01-4029-bd1f-02b608878a51",
     amount: createMoney(359.6 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-28T11:02:53.102033",
+    datetime: "2023-06-28T11:02:53.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -7042,7 +7042,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ff889498-6602-4216-9f34-5d846c747d62",
     amount: createMoney(792.47 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-28T09:51:54.102033",
+    datetime: "2023-04-28T09:51:54.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -7053,7 +7053,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4e849820-448d-4c3b-a5be-ea47ef8fd635",
     amount: createMoney(559.57 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-26T22:47:15.102033",
+    datetime: "2024-05-26T22:47:15.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -7064,7 +7064,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e4d69b6e-29cc-4977-bec8-c4f3e7467974",
     amount: createMoney(928.37 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-10T09:13:15.102033",
+    datetime: "2023-04-10T09:13:15.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -7075,7 +7075,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f4d8e33f-a70f-4ed6-861b-05948b915c09",
     amount: createMoney(261.97 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-06T17:41:56.102033",
+    datetime: "2024-07-06T17:41:56.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -7086,7 +7086,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6cdf97f6-e244-4fdf-bb6a-1e24e65c5d17",
     amount: createMoney(963.94 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-31T05:19:26.102033",
+    datetime: "2022-12-31T05:19:26.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -7097,7 +7097,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c5915193-5419-4f55-b5ba-e3c0050d59bc",
     amount: createMoney(202.32 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-24T23:17:24.102033",
+    datetime: "2023-11-24T23:17:24.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -7108,7 +7108,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f4f71324-c402-4493-a48e-bd74e789c299",
     amount: createMoney(891.13 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-29T06:04:57.102033",
+    datetime: "2022-01-29T06:04:57.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -7119,7 +7119,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "28af71aa-2429-48fd-8f38-4b55121e14cd",
     amount: createMoney(898.64 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-19T19:59:47.102033",
+    datetime: "2022-03-19T19:59:47.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -7130,7 +7130,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7e372248-ef92-4323-84e7-829b4336fbca",
     amount: createMoney(823.61 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-04T16:07:13.102033",
+    datetime: "2022-05-04T16:07:13.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -7141,7 +7141,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0f1d8a1c-0dc5-4d9b-a703-57b78b41bf10",
     amount: createMoney(850.02 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-21T10:50:06.102033",
+    datetime: "2022-11-21T10:50:06.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -7152,7 +7152,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a378e3af-3cac-4a4a-ad60-5d977d96513c",
     amount: createMoney(720.5 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-24T07:19:40.102033",
+    datetime: "2022-12-24T07:19:40.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -7163,7 +7163,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3911f069-2693-4105-9b35-9775820a13f3",
     amount: createMoney(264.91 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-10T08:11:40.102033",
+    datetime: "2022-03-10T08:11:40.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -7174,7 +7174,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c8c52d63-3e79-4170-8211-7bf8f50d2772",
     amount: createMoney(686.25 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-09T06:28:39.102033",
+    datetime: "2024-05-09T06:28:39.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -7185,7 +7185,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e684a73d-f3d4-43f0-983d-bc5e78eab64d",
     amount: createMoney(505.79 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-07T06:04:59.102033",
+    datetime: "2021-11-07T06:04:59.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -7196,7 +7196,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ccd9b795-dfcb-4beb-b3f5-40a4697df9ae",
     amount: createMoney(534.38 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-31T13:47:38.102033",
+    datetime: "2023-08-31T13:47:38.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -7207,7 +7207,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0579385c-48ea-45f4-b108-4062086d8802",
     amount: createMoney(322.71 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-23T23:46:46.102033",
+    datetime: "2021-11-23T23:46:46.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -7218,7 +7218,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e9bdb4de-3362-465f-9e5c-960b4ada5858",
     amount: createMoney(149.67 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-08T23:22:44.102033",
+    datetime: "2023-07-08T23:22:44.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -7229,7 +7229,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "20dcd565-5c55-490a-8b41-d3e4427c84b1",
     amount: createMoney(886.25 * 100, CURRENCIES.NGN),
-    datetime: "2023-05-13T06:45:45.102033",
+    datetime: "2023-05-13T06:45:45.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -7240,7 +7240,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6d7a91c7-d38a-432e-a167-43c72c45434f",
     amount: createMoney(828.67 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-08T08:45:01.102033",
+    datetime: "2024-03-08T08:45:01.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -7251,7 +7251,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d2591068-fbf7-447e-a652-227e7cb96f5a",
     amount: createMoney(691.58 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-04T14:19:59.102033",
+    datetime: "2022-02-04T14:19:59.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -7262,7 +7262,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "dac84289-f582-4a3d-9c5c-99886fe8654a",
     amount: createMoney(545.22 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-08T21:32:30.102033",
+    datetime: "2023-03-08T21:32:30.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -7273,7 +7273,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "88035029-2a2d-4b5d-a5bf-a330efc8728c",
     amount: createMoney(266.37 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-28T22:16:14.102033",
+    datetime: "2023-08-28T22:16:14.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -7284,7 +7284,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7e80f15b-0eae-4a70-8485-e09b77cd8d5a",
     amount: createMoney(893.32 * 100, CURRENCIES.NGN),
-    datetime: "2021-10-18T16:15:28.102033",
+    datetime: "2021-10-18T16:15:28.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -7295,7 +7295,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b97aa3d8-e99d-4827-9e9b-da3363ea19b1",
     amount: createMoney(883.42 * 100, CURRENCIES.NGN),
-    datetime: "2023-05-06T12:25:29.102033",
+    datetime: "2023-05-06T12:25:29.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -7306,7 +7306,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "05be5016-fe76-42cd-8fd3-49d6c19025d1",
     amount: createMoney(729.65 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-12T03:10:27.102033",
+    datetime: "2022-12-12T03:10:27.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -7317,7 +7317,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "cad83db8-07a7-44cf-9ffa-695bf7a88b61",
     amount: createMoney(898.55 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-18T16:02:15.102033",
+    datetime: "2023-08-18T16:02:15.102033Z",
     type: "credit",
     categoryID: "11",
     accountID: "1",
@@ -7328,7 +7328,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "219786af-1581-4b68-a3d6-fd42610363cc",
     amount: createMoney(619.04 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-18T12:08:04.102033",
+    datetime: "2024-08-18T12:08:04.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -7339,7 +7339,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f42e697d-be67-4ba9-a4fa-85657475b495",
     amount: createMoney(991.3 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-23T02:31:09.102033",
+    datetime: "2022-09-23T02:31:09.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -7350,7 +7350,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ba3c1e7e-7788-499e-93ac-f60e50ec0493",
     amount: createMoney(311.15 * 100, CURRENCIES.NGN),
-    datetime: "2023-05-31T07:49:22.102033",
+    datetime: "2023-05-31T07:49:22.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -7361,7 +7361,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "093be754-4874-4ce2-b83e-71d2723a685a",
     amount: createMoney(107.86 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-14T03:59:59.102033",
+    datetime: "2022-12-14T03:59:59.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -7372,7 +7372,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "eb10f27f-d0f6-4650-bda1-5ac6036760d5",
     amount: createMoney(413.48 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-17T14:13:45.102033",
+    datetime: "2022-11-17T14:13:45.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -7383,7 +7383,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2f164d4a-588a-44b9-8ede-2bb1a6681ef8",
     amount: createMoney(724.48 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-26T02:51:59.102033",
+    datetime: "2022-07-26T02:51:59.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -7394,7 +7394,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7da93035-5f63-49cb-a8a0-aa21b8946ad5",
     amount: createMoney(669.66 * 100, CURRENCIES.NGN),
-    datetime: "2021-10-18T22:54:12.102033",
+    datetime: "2021-10-18T22:54:12.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -7405,7 +7405,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f3a4ea88-afb8-4e3e-aaa9-03455cecf81c",
     amount: createMoney(399.52 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-30T20:10:43.102033",
+    datetime: "2023-07-30T20:10:43.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -7416,7 +7416,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e1069660-afcc-43d9-9359-528723425959",
     amount: createMoney(15.46 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-25T22:03:44.102033",
+    datetime: "2022-08-25T22:03:44.102033Z",
     type: "credit",
     categoryID: "5",
     accountID: "1",
@@ -7427,7 +7427,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "025d9c7a-6abf-48d3-b833-6b4966fb13b2",
     amount: createMoney(145.43 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-21T01:55:38.102033",
+    datetime: "2022-08-21T01:55:38.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -7438,7 +7438,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "65bd3963-d699-4cc5-b99f-8d1bac739772",
     amount: createMoney(17.13 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-01T02:41:50.102033",
+    datetime: "2023-09-01T02:41:50.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -7449,7 +7449,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f4220840-d4d3-47d5-bfae-8723d7a336ed",
     amount: createMoney(273.06 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-01T20:53:24.102033",
+    datetime: "2022-12-01T20:53:24.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -7460,7 +7460,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6fd0d787-ded4-4154-9550-4071b44c5d43",
     amount: createMoney(297.19 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-29T06:21:22.102033",
+    datetime: "2023-07-29T06:21:22.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -7471,7 +7471,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "faaee5ff-06f1-448f-ab69-7f6d4648b8fa",
     amount: createMoney(111.98 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-10T01:31:34.102033",
+    datetime: "2023-10-10T01:31:34.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -7482,7 +7482,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "bc17b1b0-21b4-448d-879f-a23859ac62cb",
     amount: createMoney(507.08 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-21T21:35:03.102033",
+    datetime: "2023-11-21T21:35:03.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -7493,7 +7493,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e6eaf585-201d-4503-89d1-ea99cd7329b1",
     amount: createMoney(116.72 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-12T16:23:38.102033",
+    datetime: "2022-05-12T16:23:38.102033Z",
     type: "credit",
     categoryID: "18",
     accountID: "1",
@@ -7504,7 +7504,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "bca963fc-d6a7-4689-a374-472711445624",
     amount: createMoney(381.29 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-24T01:06:47.102033",
+    datetime: "2022-01-24T01:06:47.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -7515,7 +7515,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c2907170-1ccb-4fb4-9747-6bc0dbe7d07b",
     amount: createMoney(846.07 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-05T20:00:33.102033",
+    datetime: "2024-04-05T20:00:33.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -7526,7 +7526,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "90bdd6ca-d9d5-4283-ae7b-84dfe9ab1ff9",
     amount: createMoney(989.8 * 100, CURRENCIES.NGN),
-    datetime: "2024-10-09T15:35:38.102033",
+    datetime: "2024-10-09T15:35:38.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -7537,7 +7537,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f2727b5a-e4a8-48ee-868b-a00aab3de595",
     amount: createMoney(86.49 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-22T03:02:47.102033",
+    datetime: "2024-06-22T03:02:47.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -7548,7 +7548,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7c490d4c-35c3-489a-8990-561f2359cd92",
     amount: createMoney(961.42 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-18T11:03:18.102033",
+    datetime: "2024-08-18T11:03:18.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -7559,7 +7559,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0e65b335-1318-401a-bdb0-b9decd102f64",
     amount: createMoney(874.67 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-19T22:43:29.102033",
+    datetime: "2022-06-19T22:43:29.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -7570,7 +7570,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1f00d037-a681-4d60-8eeb-3388aa3c0d1d",
     amount: createMoney(109.04 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-07T13:30:33.102033",
+    datetime: "2021-12-07T13:30:33.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -7581,7 +7581,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "191ed1e3-a3af-45ef-a248-c82fc98167ef",
     amount: createMoney(316.24 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-31T21:57:35.102033",
+    datetime: "2023-12-31T21:57:35.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -7592,7 +7592,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "33975f7c-0c4c-488e-8362-7334eb0dc74c",
     amount: createMoney(961.82 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-18T16:20:45.102033",
+    datetime: "2024-08-18T16:20:45.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -7603,7 +7603,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a1c3789e-b803-4ad3-ad3f-706a1f908033",
     amount: createMoney(998.69 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-22T02:51:50.102033",
+    datetime: "2024-08-22T02:51:50.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -7614,7 +7614,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "174ca840-e57a-4927-bdd7-d0f30db96d88",
     amount: createMoney(114.59 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-02T01:24:14.102033",
+    datetime: "2024-07-02T01:24:14.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -7625,7 +7625,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "be8794d4-b7a1-4be3-9809-0b2759635941",
     amount: createMoney(685.15 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-01T03:14:31.102033",
+    datetime: "2023-04-01T03:14:31.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -7636,7 +7636,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d721bf50-65a5-46c1-92e5-12a76f6dd2b2",
     amount: createMoney(785.01 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-08T07:13:21.102033",
+    datetime: "2022-04-08T07:13:21.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -7647,7 +7647,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "dd4e402c-677f-46f3-a4db-c4e2a6934b1f",
     amount: createMoney(798.5 * 100, CURRENCIES.NGN),
-    datetime: "2023-05-16T18:13:21.102033",
+    datetime: "2023-05-16T18:13:21.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -7658,7 +7658,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c9b2dd49-bbed-4b32-b86f-00b27b3963cf",
     amount: createMoney(804.89 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-18T15:16:05.102033",
+    datetime: "2023-07-18T15:16:05.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -7669,7 +7669,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "369b96fc-d5b7-48d6-84a8-4878831ad247",
     amount: createMoney(359.34 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-07T19:58:18.102033",
+    datetime: "2022-09-07T19:58:18.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -7680,7 +7680,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "196f8ddd-4325-41e3-8b2e-ea7280c777a8",
     amount: createMoney(63.64 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-14T13:59:03.102033",
+    datetime: "2024-08-14T13:59:03.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -7691,7 +7691,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d39b4512-7618-485a-a7b2-65f62d432d90",
     amount: createMoney(835.43 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-18T17:35:10.102033",
+    datetime: "2022-07-18T17:35:10.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -7702,7 +7702,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4ef91b41-6f37-4b34-bede-95b248a7f296",
     amount: createMoney(602.28 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-18T11:59:28.102033",
+    datetime: "2022-10-18T11:59:28.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -7713,7 +7713,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e9c259d4-d217-419d-b825-24250bc55190",
     amount: createMoney(110.06 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-13T08:15:56.102033",
+    datetime: "2021-12-13T08:15:56.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -7724,7 +7724,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "adf53eac-e3c2-4607-b055-7e04d4310377",
     amount: createMoney(711.77 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-26T01:55:24.102033",
+    datetime: "2024-04-26T01:55:24.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -7735,7 +7735,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1012359e-74a6-4e00-9975-1e6e110be962",
     amount: createMoney(935.2 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-20T06:56:12.102033",
+    datetime: "2023-07-20T06:56:12.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -7746,7 +7746,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "defe4639-4b65-435c-8ac5-c9bebd08d4b0",
     amount: createMoney(873.0 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-30T08:41:03.102033",
+    datetime: "2023-07-30T08:41:03.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -7757,7 +7757,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e7db8931-7aea-4b62-a6f2-79aa2c57d5d8",
     amount: createMoney(92.51 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-04T01:32:15.102033",
+    datetime: "2022-02-04T01:32:15.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -7768,7 +7768,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "15ccba6b-87a3-4dde-ad09-fbb9bd261455",
     amount: createMoney(262.45 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-25T04:23:00.102033",
+    datetime: "2024-08-25T04:23:00.102033Z",
     type: "credit",
     categoryID: "18",
     accountID: "1",
@@ -7779,7 +7779,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b659e6db-1c02-4717-a68e-06ed4a8f4d39",
     amount: createMoney(502.28 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-08T18:03:44.102033",
+    datetime: "2023-01-08T18:03:44.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -7790,7 +7790,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "94793f28-1373-43ac-baf0-73323bce6d6c",
     amount: createMoney(694.67 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-15T16:00:49.102033",
+    datetime: "2023-04-15T16:00:49.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -7801,7 +7801,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ee89d737-cf71-411f-9d96-2f91e8c9d336",
     amount: createMoney(82.04 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-25T09:28:58.102033",
+    datetime: "2024-07-25T09:28:58.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -7812,7 +7812,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a112864d-0e0e-4166-90a4-67e3c2d6f79d",
     amount: createMoney(337.62 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-31T04:56:34.102033",
+    datetime: "2024-07-31T04:56:34.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -7823,7 +7823,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "753fd6bc-c53a-4dba-80c2-d76a610116b6",
     amount: createMoney(220.8 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-16T00:05:09.102033",
+    datetime: "2023-09-16T00:05:09.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -7834,7 +7834,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "82adf73d-de9e-4c78-b156-d359c81db1f0",
     amount: createMoney(415.11 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-22T01:15:42.102033",
+    datetime: "2022-12-22T01:15:42.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -7845,7 +7845,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e8ce8c67-103d-4b69-81bb-9e4a92a3d201",
     amount: createMoney(610.53 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-26T15:30:07.102033",
+    datetime: "2022-08-26T15:30:07.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -7856,7 +7856,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d474fa1f-7ed3-4c0e-a2fa-82d71a3a7166",
     amount: createMoney(337.78 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-31T06:10:44.102033",
+    datetime: "2024-05-31T06:10:44.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -7867,7 +7867,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b9e7bcf4-7bcf-4c40-bfae-f0d704be415d",
     amount: createMoney(37.35 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-03T20:13:10.102033",
+    datetime: "2022-02-03T20:13:10.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -7878,7 +7878,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2a87a352-14d1-4442-af98-0854335fa6ba",
     amount: createMoney(451.37 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-27T00:57:36.102033",
+    datetime: "2023-01-27T00:57:36.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -7889,7 +7889,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "356c1610-7b68-4776-aaec-b3f791717c9f",
     amount: createMoney(877.18 * 100, CURRENCIES.NGN),
-    datetime: "2024-10-15T11:42:23.102033",
+    datetime: "2024-10-15T11:42:23.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -7900,7 +7900,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a7832978-d031-4b47-b7ef-19f33110431c",
     amount: createMoney(299.12 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-07T05:38:37.102033",
+    datetime: "2022-05-07T05:38:37.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -7911,7 +7911,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "97ac01b3-d067-4843-bf4d-be7c178fc8bd",
     amount: createMoney(502.87 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-21T02:56:55.102033",
+    datetime: "2024-05-21T02:56:55.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -7922,7 +7922,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b064070d-9492-4cdc-bc5a-70c32fabfd62",
     amount: createMoney(291.83 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-06T05:35:38.102033",
+    datetime: "2024-03-06T05:35:38.102033Z",
     type: "credit",
     categoryID: "5",
     accountID: "1",
@@ -7933,7 +7933,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "836bc6cb-0d84-4501-8e86-7208f19f048a",
     amount: createMoney(192.03 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-14T20:17:18.102033",
+    datetime: "2024-01-14T20:17:18.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -7944,7 +7944,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4ab82e13-c21b-4081-a4b3-e8ba543e7914",
     amount: createMoney(814.9 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-03T18:49:54.102033",
+    datetime: "2022-12-03T18:49:54.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -7955,7 +7955,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "87e49d5e-e926-4fe0-925f-ca2555a6daae",
     amount: createMoney(174.69 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-06T15:41:00.102033",
+    datetime: "2024-08-06T15:41:00.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -7966,7 +7966,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "471bc86c-44a3-4f75-bc47-05a0eb30d8ea",
     amount: createMoney(56.55 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-04T19:01:27.102033",
+    datetime: "2022-04-04T19:01:27.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -7977,7 +7977,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "efe50fa6-c17d-48bb-9ddf-20544246910a",
     amount: createMoney(569.71 * 100, CURRENCIES.NGN),
-    datetime: "2023-05-24T05:40:17.102033",
+    datetime: "2023-05-24T05:40:17.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -7988,7 +7988,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c330c453-7ff8-4d89-9ace-bbcc2aa6b74f",
     amount: createMoney(20.04 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-12T04:14:20.102033",
+    datetime: "2024-03-12T04:14:20.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -7999,7 +7999,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c095e74b-8f1a-41b7-afd4-d9fe22a21af5",
     amount: createMoney(648.1 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-17T13:41:56.102033",
+    datetime: "2023-03-17T13:41:56.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -8010,7 +8010,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fc06795e-014e-4d98-857b-d8174298f037",
     amount: createMoney(770.37 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-25T08:52:19.102033",
+    datetime: "2022-12-25T08:52:19.102033Z",
     type: "credit",
     categoryID: "11",
     accountID: "1",
@@ -8021,7 +8021,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "eb48f1b3-e843-4003-a29e-4c5d6e73a2ce",
     amount: createMoney(94.87 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-09T12:18:17.102033",
+    datetime: "2022-03-09T12:18:17.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -8032,7 +8032,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d8e04e39-dd7a-40ba-9295-5086826ed93d",
     amount: createMoney(968.57 * 100, CURRENCIES.NGN),
-    datetime: "2024-10-05T17:41:02.102033",
+    datetime: "2024-10-05T17:41:02.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -8043,7 +8043,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "76025853-7904-4240-b1b6-37178f93d7ef",
     amount: createMoney(386.53 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-18T00:29:24.102033",
+    datetime: "2023-04-18T00:29:24.102033Z",
     type: "credit",
     categoryID: "6",
     accountID: "1",
@@ -8054,7 +8054,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b407a7f4-e4d7-48f9-b566-bce052e6d188",
     amount: createMoney(373.05 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-06T16:07:07.102033",
+    datetime: "2024-01-06T16:07:07.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -8065,7 +8065,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "36b9509b-471b-4e13-bfbc-1260ae3c52ad",
     amount: createMoney(504.01 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-03T13:43:52.102033",
+    datetime: "2023-09-03T13:43:52.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -8076,7 +8076,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d54001d2-a17e-4a76-ab9e-e8464040ac00",
     amount: createMoney(704.98 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-16T17:30:51.102033",
+    datetime: "2022-01-16T17:30:51.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -8087,7 +8087,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0bc2722f-4675-4f50-b8de-9043170a010e",
     amount: createMoney(399.22 * 100, CURRENCIES.NGN),
-    datetime: "2023-05-25T20:25:09.102033",
+    datetime: "2023-05-25T20:25:09.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -8098,7 +8098,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0fb8b791-bfe8-4a46-b1a4-177da3b82209",
     amount: createMoney(690.89 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-16T02:23:42.102033",
+    datetime: "2022-03-16T02:23:42.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -8109,7 +8109,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9c159ea8-327e-4db5-b507-41ad3e87ea24",
     amount: createMoney(313.15 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-01T21:40:47.102033",
+    datetime: "2022-07-01T21:40:47.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -8120,7 +8120,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3fbb8674-bb02-4929-8f66-35d36267966b",
     amount: createMoney(148.05 * 100, CURRENCIES.NGN),
-    datetime: "2021-10-17T16:21:36.102033",
+    datetime: "2021-10-17T16:21:36.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -8131,7 +8131,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "27e61cf2-75bb-46c1-ab05-0a4160b61516",
     amount: createMoney(632.13 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-03T23:11:57.102033",
+    datetime: "2024-06-03T23:11:57.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -8142,7 +8142,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f3580772-4ffc-4ecc-ad30-9f3489030d30",
     amount: createMoney(130.38 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-23T08:26:18.102033",
+    datetime: "2023-02-23T08:26:18.102033Z",
     type: "credit",
     categoryID: "5",
     accountID: "1",
@@ -8153,7 +8153,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8419ab06-8aa7-4433-8fb9-8a27e5f773ff",
     amount: createMoney(688.91 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-07T21:32:29.102033",
+    datetime: "2024-01-07T21:32:29.102033Z",
     type: "credit",
     categoryID: "6",
     accountID: "1",
@@ -8164,7 +8164,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a03505b7-331c-45a3-897b-be6d61b52a10",
     amount: createMoney(577.66 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-06T16:57:16.102033",
+    datetime: "2023-07-06T16:57:16.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -8175,7 +8175,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9bed5c21-b019-4644-bb84-76573f17418d",
     amount: createMoney(731.38 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-19T11:17:16.102033",
+    datetime: "2024-09-19T11:17:16.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -8186,7 +8186,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3a7d88c1-bebd-481a-b1a6-db3ca6ad833f",
     amount: createMoney(470.72 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-10T13:06:10.102033",
+    datetime: "2023-08-10T13:06:10.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -8197,7 +8197,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7c5c6a37-aca8-4cd8-8d9e-aef9eb276bb3",
     amount: createMoney(352.98 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-29T06:01:40.102033",
+    datetime: "2022-07-29T06:01:40.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -8208,7 +8208,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "76c9028f-86a4-4eeb-8a86-4fccad86ccda",
     amount: createMoney(928.65 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-30T04:39:51.102033",
+    datetime: "2022-11-30T04:39:51.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -8219,7 +8219,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c0e62964-e349-4e15-9dae-36ff26a8a6eb",
     amount: createMoney(754.45 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-28T14:19:33.102033",
+    datetime: "2023-10-28T14:19:33.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -8230,7 +8230,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ef6ce303-67e8-4d2d-9989-263454f249a8",
     amount: createMoney(935.59 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-30T09:37:19.102033",
+    datetime: "2022-11-30T09:37:19.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -8241,7 +8241,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "08d22df1-c0ad-4a7b-94f9-5029ca86e6f6",
     amount: createMoney(913.82 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-21T08:33:22.102033",
+    datetime: "2024-05-21T08:33:22.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -8252,7 +8252,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7241fcf3-27f2-40ba-b2f7-a356b314587e",
     amount: createMoney(991.36 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-17T11:02:25.102033",
+    datetime: "2024-08-17T11:02:25.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -8263,7 +8263,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "344a0736-9593-4290-838a-ec423e06efb9",
     amount: createMoney(298.33 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-14T05:45:46.102033",
+    datetime: "2022-01-14T05:45:46.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -8274,7 +8274,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "960a8df6-b119-4e8b-88da-a3dee32e10e4",
     amount: createMoney(240.85 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-20T13:56:04.102033",
+    datetime: "2024-06-20T13:56:04.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -8285,7 +8285,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8c809392-02ef-4f65-900b-dffc217babba",
     amount: createMoney(362.67 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-25T11:21:03.102033",
+    datetime: "2022-08-25T11:21:03.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -8296,7 +8296,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e5fd9598-a33a-42b9-9221-a1599e95cec6",
     amount: createMoney(407.25 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-24T11:57:21.102033",
+    datetime: "2022-08-24T11:57:21.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -8307,7 +8307,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a53b57c5-80cb-455e-b87b-bfcbfa0b3091",
     amount: createMoney(244.39 * 100, CURRENCIES.NGN),
-    datetime: "2021-10-28T14:40:00.102033",
+    datetime: "2021-10-28T14:40:00.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -8318,7 +8318,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f5393918-bb9a-40ac-857e-c41a1e3ca2dd",
     amount: createMoney(589.04 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-25T12:33:42.102033",
+    datetime: "2024-06-25T12:33:42.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -8329,7 +8329,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2c460517-4fee-4e10-9a89-7c9f42c9aae6",
     amount: createMoney(870.48 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-03T19:11:04.102033",
+    datetime: "2023-06-03T19:11:04.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -8340,7 +8340,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d4180537-8849-4121-b85e-62da3c9e3931",
     amount: createMoney(989.19 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-01T00:25:47.102033",
+    datetime: "2022-05-01T00:25:47.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -8351,7 +8351,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8bfec6ba-c3ff-4278-baea-868274db5408",
     amount: createMoney(150.43 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-27T22:54:41.102033",
+    datetime: "2022-04-27T22:54:41.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -8362,7 +8362,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "12413890-9f93-4ead-b353-6da06d4a567d",
     amount: createMoney(859.96 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-19T18:33:10.102033",
+    datetime: "2023-11-19T18:33:10.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -8373,7 +8373,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "601c6952-ef53-4d35-9df8-02dd2fb86d03",
     amount: createMoney(113.05 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-15T06:08:45.102033",
+    datetime: "2024-01-15T06:08:45.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -8384,7 +8384,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7c960153-d648-43a8-865f-019dddf16396",
     amount: createMoney(99.99 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-16T07:29:34.102033",
+    datetime: "2022-07-16T07:29:34.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -8395,7 +8395,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a9ff9a7d-68ab-4736-8eff-ef05d8a47d42",
     amount: createMoney(93.15 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-13T23:53:15.102033",
+    datetime: "2023-09-13T23:53:15.102033Z",
     type: "credit",
     categoryID: "6",
     accountID: "1",
@@ -8406,7 +8406,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8f79250e-8420-4a6d-adb8-b840ec798adf",
     amount: createMoney(369.79 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-13T06:55:14.102033",
+    datetime: "2023-02-13T06:55:14.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -8417,7 +8417,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "41083c24-1343-4c8d-b162-94e8c505ad12",
     amount: createMoney(799.53 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-30T22:10:25.102033",
+    datetime: "2022-07-30T22:10:25.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -8428,7 +8428,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ec1405ea-ed7c-4b45-9ec2-3669945f573b",
     amount: createMoney(967.95 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-13T20:33:32.102033",
+    datetime: "2024-07-13T20:33:32.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -8439,7 +8439,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fc1aa49a-be8c-4df9-98b2-2c174a4ec625",
     amount: createMoney(766.37 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-15T19:46:02.102033",
+    datetime: "2022-10-15T19:46:02.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -8450,7 +8450,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7d145f4c-91f0-4b31-8739-efc091d89264",
     amount: createMoney(461.48 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-04T11:08:35.102033",
+    datetime: "2022-02-04T11:08:35.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -8461,7 +8461,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "656b4a4f-c1ca-4a5d-bc92-dc931d6d3f0b",
     amount: createMoney(475.27 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-27T23:02:43.102033",
+    datetime: "2022-05-27T23:02:43.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -8472,7 +8472,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "95bb52ea-85d9-44bd-8ce8-74d1393195e7",
     amount: createMoney(530.2 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-27T23:59:08.102033",
+    datetime: "2023-01-27T23:59:08.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -8483,7 +8483,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "eca8a77e-52d8-46fc-847d-e034e2258d23",
     amount: createMoney(750.99 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-19T08:28:00.102033",
+    datetime: "2023-12-19T08:28:00.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -8494,7 +8494,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "91df78ad-6cb8-40ee-bc5c-ab3c2e2820bc",
     amount: createMoney(754.47 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-08T18:23:27.102033",
+    datetime: "2022-07-08T18:23:27.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -8505,7 +8505,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "de0bbd37-28e0-47b0-b612-cedcdccdb43f",
     amount: createMoney(805.62 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-14T17:20:55.102033",
+    datetime: "2021-11-14T17:20:55.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -8516,7 +8516,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "30f4bfe2-83b6-470f-8eec-7658c1228f6f",
     amount: createMoney(705.3 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-14T19:14:38.102033",
+    datetime: "2022-01-14T19:14:38.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -8527,7 +8527,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6e841efc-e9a2-4df4-bd14-b3be89b38998",
     amount: createMoney(550.71 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-02T01:24:41.102033",
+    datetime: "2024-09-02T01:24:41.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -8538,7 +8538,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "38b091f7-2a77-43f3-b941-6705196304cc",
     amount: createMoney(648.61 * 100, CURRENCIES.NGN),
-    datetime: "2023-05-05T17:42:18.102033",
+    datetime: "2023-05-05T17:42:18.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -8549,7 +8549,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "abf8527d-c607-40eb-bdbb-05eecd7a06f5",
     amount: createMoney(755.41 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-08T13:21:35.102033",
+    datetime: "2022-10-08T13:21:35.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -8560,7 +8560,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b157e548-153a-44ca-9893-7d75cb14f427",
     amount: createMoney(254.5 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-20T17:43:39.102033",
+    datetime: "2023-09-20T17:43:39.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -8571,7 +8571,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6d6cc3ac-bfa7-41a9-a13b-66a8ab931ced",
     amount: createMoney(380.26 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-11T13:29:27.102033",
+    datetime: "2022-02-11T13:29:27.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -8582,7 +8582,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d71bcfcf-fdb8-43a3-a3e3-80bbe53ccef2",
     amount: createMoney(337.04 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-29T13:37:39.102033",
+    datetime: "2024-04-29T13:37:39.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -8593,7 +8593,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1b408bd0-7558-4748-964f-7c757d5e6544",
     amount: createMoney(148.52 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-14T19:26:14.102033",
+    datetime: "2021-11-14T19:26:14.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -8604,7 +8604,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3d2bf1c4-7b1a-40db-918c-e51ff37bab78",
     amount: createMoney(934.35 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-28T09:12:41.102033",
+    datetime: "2022-08-28T09:12:41.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -8615,7 +8615,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fd0b3dc5-950e-4ac9-8b74-a1fcd389e46d",
     amount: createMoney(835.26 * 100, CURRENCIES.NGN),
-    datetime: "2024-02-27T12:07:23.102033",
+    datetime: "2024-02-27T12:07:23.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -8626,7 +8626,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ee5a4001-b78c-49fc-93e8-62fe46c0e0e5",
     amount: createMoney(252.41 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-24T09:45:28.102033",
+    datetime: "2023-12-24T09:45:28.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -8637,7 +8637,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a9307a83-c80a-4594-8026-511365ea3ac1",
     amount: createMoney(124.74 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-10T07:14:45.102033",
+    datetime: "2024-07-10T07:14:45.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -8648,7 +8648,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6d8ceaee-578d-45a8-9dee-b79c0b91e3ca",
     amount: createMoney(810.27 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-05T18:24:44.102033",
+    datetime: "2024-08-05T18:24:44.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -8659,7 +8659,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ff926966-74d1-4849-9f8b-16db4be0840b",
     amount: createMoney(602.88 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-09T21:53:50.102033",
+    datetime: "2023-03-09T21:53:50.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -8670,7 +8670,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b730d3b7-4038-4f02-a9f7-10cd3a78064e",
     amount: createMoney(779.35 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-27T03:15:18.102033",
+    datetime: "2023-12-27T03:15:18.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -8681,7 +8681,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6626636b-04ca-4559-83d9-8e667a7bd4ef",
     amount: createMoney(720.79 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-04T18:59:21.102033",
+    datetime: "2023-10-04T18:59:21.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -8692,7 +8692,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d18ed44e-b1ae-4e21-a142-0fb6f25ef1e3",
     amount: createMoney(906.73 * 100, CURRENCIES.NGN),
-    datetime: "2024-02-25T16:18:26.102033",
+    datetime: "2024-02-25T16:18:26.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -8703,7 +8703,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "654b1505-ac5d-4779-9060-bc8c4b1d97b1",
     amount: createMoney(332.57 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-09T00:20:44.102033",
+    datetime: "2022-01-09T00:20:44.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -8714,7 +8714,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "69850762-b295-4ba2-8466-2db69a5d83b8",
     amount: createMoney(339.69 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-08T22:31:47.102033",
+    datetime: "2022-03-08T22:31:47.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -8725,7 +8725,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "67f7408f-a0e2-4a76-8c0f-3fa7e4e3c88d",
     amount: createMoney(548.29 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-26T21:30:03.102033",
+    datetime: "2023-08-26T21:30:03.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -8736,7 +8736,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "aa4a78a3-a628-4453-9816-a2e6b4d4834f",
     amount: createMoney(870.53 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-10T10:41:32.102033",
+    datetime: "2023-10-10T10:41:32.102033Z",
     type: "credit",
     categoryID: "6",
     accountID: "1",
@@ -8747,7 +8747,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4128a646-a45a-431e-b810-cf4efb471856",
     amount: createMoney(398.23 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-22T03:58:27.102033",
+    datetime: "2022-12-22T03:58:27.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -8758,7 +8758,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1a4a4558-3b94-4d4d-bcb0-fe12ac422f0b",
     amount: createMoney(907.94 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-26T03:26:19.102033",
+    datetime: "2024-04-26T03:26:19.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -8769,7 +8769,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e9223ca1-3d85-47f6-ad22-026b732e44e6",
     amount: createMoney(827.19 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-27T03:17:42.102033",
+    datetime: "2024-08-27T03:17:42.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -8780,7 +8780,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e4b121a5-e6e0-45c3-94c8-baa7e9f6544c",
     amount: createMoney(916.17 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-16T07:47:57.102033",
+    datetime: "2023-11-16T07:47:57.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -8791,7 +8791,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ca322a66-9915-4850-9737-7ae3cc437703",
     amount: createMoney(5.1 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-22T14:26:21.102033",
+    datetime: "2023-02-22T14:26:21.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -8802,7 +8802,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "38d2198f-4dcd-4728-8715-7ddebe2fd3f6",
     amount: createMoney(304.42 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-06T20:55:22.102033",
+    datetime: "2022-06-06T20:55:22.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -8813,7 +8813,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "af6e915e-83ef-415b-be99-a52d921704f5",
     amount: createMoney(266.9 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-16T05:47:37.102033",
+    datetime: "2023-12-16T05:47:37.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -8824,7 +8824,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5240ece3-0a61-455d-bae0-baa8f4aeb782",
     amount: createMoney(281.46 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-05T12:34:51.102033",
+    datetime: "2022-06-05T12:34:51.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -8835,7 +8835,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "dd501611-7c0d-4983-b65a-9eef8ab8f027",
     amount: createMoney(766.16 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-13T21:07:19.102033",
+    datetime: "2024-08-13T21:07:19.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -8846,7 +8846,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b4d89919-8cd5-42ba-8170-2d6f61f95a42",
     amount: createMoney(191.96 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-01T11:21:16.102033",
+    datetime: "2024-07-01T11:21:16.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -8857,7 +8857,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fa7e64f0-31fc-45f5-b2bf-9ac46f463c15",
     amount: createMoney(463.66 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-13T17:27:57.102033",
+    datetime: "2023-07-13T17:27:57.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -8868,7 +8868,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6800feef-3872-49ac-9898-c79ac85fec80",
     amount: createMoney(909.54 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-26T04:18:41.102033",
+    datetime: "2023-03-26T04:18:41.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -8879,7 +8879,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "36560780-29c9-420b-87b4-120b0c6d5a5e",
     amount: createMoney(579.97 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-23T01:27:32.102033",
+    datetime: "2022-04-23T01:27:32.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -8890,7 +8890,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c1a0d177-3b3f-4266-b53b-89577952757e",
     amount: createMoney(558.9 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-05T07:25:46.102033",
+    datetime: "2022-01-05T07:25:46.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -8901,7 +8901,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "71e98bfd-a48d-40ec-abf2-9ce98535237e",
     amount: createMoney(652.28 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-07T21:44:10.102033",
+    datetime: "2023-10-07T21:44:10.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -8912,7 +8912,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "baad4e70-a956-4c78-ad30-d8a2c62ed192",
     amount: createMoney(266.19 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-23T00:27:26.102033",
+    datetime: "2024-03-23T00:27:26.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -8923,7 +8923,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f6124db1-a945-42fd-b111-ee248b5879df",
     amount: createMoney(512.8 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-05T02:40:41.102033",
+    datetime: "2022-10-05T02:40:41.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -8934,7 +8934,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d9f29b84-63f3-4880-b5dc-c4c64b8640bb",
     amount: createMoney(996.42 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-29T01:26:19.102033",
+    datetime: "2024-06-29T01:26:19.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -8945,7 +8945,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e5d42c9d-d9b3-4fb9-b329-443b9d6283b9",
     amount: createMoney(244.95 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-27T21:58:33.102033",
+    datetime: "2022-06-27T21:58:33.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -8956,7 +8956,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d1f79579-ec4d-480a-a4a5-2b97d3a0790c",
     amount: createMoney(352.62 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-29T04:46:23.102033",
+    datetime: "2023-11-29T04:46:23.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -8967,7 +8967,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c94fde2a-d4c6-4eaa-a1db-516dce85954c",
     amount: createMoney(592.52 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-05T21:14:09.102033",
+    datetime: "2022-04-05T21:14:09.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -8978,7 +8978,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1b53089a-c332-4d28-9052-7c3ebcd05d74",
     amount: createMoney(366.89 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-11T23:13:02.102033",
+    datetime: "2022-01-11T23:13:02.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -8989,7 +8989,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8ca9f1c6-ef55-470e-8f3e-a7bee5aeabdf",
     amount: createMoney(965.26 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-20T16:15:28.102033",
+    datetime: "2023-01-20T16:15:28.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -9000,7 +9000,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7120188d-e3ad-47c2-98fa-dc0734e0f95e",
     amount: createMoney(998.62 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-10T23:21:05.102033",
+    datetime: "2022-07-10T23:21:05.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -9011,7 +9011,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6510f134-6173-4bec-9aea-f2cf16660160",
     amount: createMoney(633.75 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-07T03:06:56.102033",
+    datetime: "2022-03-07T03:06:56.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -9022,7 +9022,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2c07afb1-bf8c-4e4e-92d1-41c496e43976",
     amount: createMoney(240.05 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-28T13:16:37.102033",
+    datetime: "2023-06-28T13:16:37.102033Z",
     type: "credit",
     categoryID: "18",
     accountID: "1",
@@ -9033,7 +9033,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d438b576-be21-49b0-9910-25503d7589d5",
     amount: createMoney(710.38 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-08T07:15:47.102033",
+    datetime: "2022-08-08T07:15:47.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -9044,7 +9044,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ea2d32e3-9027-4fbb-b249-f58926bedcd3",
     amount: createMoney(796.9 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-03T01:50:48.102033",
+    datetime: "2023-06-03T01:50:48.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -9055,7 +9055,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e9bbed7f-7cb9-47da-afda-d8ce26077782",
     amount: createMoney(513.79 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-15T11:32:20.102033",
+    datetime: "2023-07-15T11:32:20.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -9066,7 +9066,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c3c8fad4-e889-44d1-ba9d-5e5493815263",
     amount: createMoney(441.0 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-23T23:59:20.102033",
+    datetime: "2022-08-23T23:59:20.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -9077,7 +9077,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "808462ee-9255-4ac4-85a2-57c9d81d58bc",
     amount: createMoney(112.2 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-02T23:41:52.102033",
+    datetime: "2022-03-02T23:41:52.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -9088,7 +9088,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fc2c5fdd-fc7b-4de9-8e5b-1e1636cb9841",
     amount: createMoney(147.72 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-12T09:40:31.102033",
+    datetime: "2022-12-12T09:40:31.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -9099,7 +9099,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "69dece5b-9915-4e82-a950-20bfafdfc6b1",
     amount: createMoney(114.89 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-20T09:09:55.102033",
+    datetime: "2023-03-20T09:09:55.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -9110,7 +9110,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "063b5fbc-43eb-47ef-860f-63ac50f43fd2",
     amount: createMoney(674.38 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-12T04:43:19.102033",
+    datetime: "2024-04-12T04:43:19.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -9121,7 +9121,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1c66e0cf-7dfa-4ef6-8d52-9e65456f19b7",
     amount: createMoney(240.02 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-04T05:02:52.102033",
+    datetime: "2021-12-04T05:02:52.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -9132,7 +9132,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4080f225-dff0-4e92-bf45-e28d9b9b25dd",
     amount: createMoney(52.02 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-02T20:51:16.102033",
+    datetime: "2023-01-02T20:51:16.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -9143,7 +9143,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0ec679c5-c4fd-4e9d-81ed-7a6fcac0f10e",
     amount: createMoney(285.86 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-11T01:16:30.102033",
+    datetime: "2022-05-11T01:16:30.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -9154,7 +9154,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1357ac8e-a7dd-44f0-b13b-2449497ad578",
     amount: createMoney(227.62 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-14T03:20:55.102033",
+    datetime: "2023-04-14T03:20:55.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -9165,7 +9165,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7bdb0065-ac6a-471d-94b4-82b2cbb2a7c6",
     amount: createMoney(180.65 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-10T02:18:53.102033",
+    datetime: "2022-06-10T02:18:53.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -9176,7 +9176,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8920104f-0cfc-49d7-956c-1777411da9c2",
     amount: createMoney(5.4 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-30T19:51:48.102033",
+    datetime: "2022-08-30T19:51:48.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -9187,7 +9187,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1d93c54d-6f4a-423e-8611-bb43548305aa",
     amount: createMoney(960.15 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-28T18:21:50.102033",
+    datetime: "2023-10-28T18:21:50.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -9198,7 +9198,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ce1d8bf9-333e-4196-822f-3a3507e9a7b0",
     amount: createMoney(999.93 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-07T04:47:24.102033",
+    datetime: "2023-12-07T04:47:24.102033Z",
     type: "credit",
     categoryID: "11",
     accountID: "1",
@@ -9209,7 +9209,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4de4c8b0-cc41-48c1-8a79-f917def619fa",
     amount: createMoney(733.03 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-30T20:50:06.102033",
+    datetime: "2022-09-30T20:50:06.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -9220,7 +9220,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3da6d725-ccd6-4c86-9b22-92303c22d1bc",
     amount: createMoney(811.08 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-11T04:07:28.102033",
+    datetime: "2023-06-11T04:07:28.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -9231,7 +9231,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "03f7971e-8d6d-44e9-8a82-5cf806210f7e",
     amount: createMoney(847.81 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-04T21:29:42.102033",
+    datetime: "2022-05-04T21:29:42.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -9242,7 +9242,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c08a6f81-534c-4ba3-a486-b8815652b7ea",
     amount: createMoney(218.07 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-31T02:49:04.102033",
+    datetime: "2022-10-31T02:49:04.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -9253,7 +9253,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "23927d00-6e42-4fc7-aca6-c882d5257cfc",
     amount: createMoney(356.32 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-17T07:45:10.102033",
+    datetime: "2022-04-17T07:45:10.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -9264,7 +9264,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e697b840-910d-48fc-b2c5-5e0f54d3a8e3",
     amount: createMoney(192.62 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-12T12:51:28.102033",
+    datetime: "2024-03-12T12:51:28.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -9275,7 +9275,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9884190e-e357-4596-b765-01b5a3992efc",
     amount: createMoney(586.28 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-16T22:04:03.102033",
+    datetime: "2022-07-16T22:04:03.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -9286,7 +9286,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f1cac658-f282-4f0e-9a34-7c58bcf2c4d7",
     amount: createMoney(191.65 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-19T23:15:22.102033",
+    datetime: "2024-06-19T23:15:22.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -9297,7 +9297,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a04432a1-27b6-4bc4-9e97-04ba0a8ddc96",
     amount: createMoney(976.38 * 100, CURRENCIES.NGN),
-    datetime: "2023-05-16T16:29:19.102033",
+    datetime: "2023-05-16T16:29:19.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -9308,7 +9308,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "336e96dd-1d36-4d73-b250-8700e7568067",
     amount: createMoney(443.83 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-14T23:56:00.102033",
+    datetime: "2022-07-14T23:56:00.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -9319,7 +9319,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "10dd1114-045f-409a-b326-ae985e920f04",
     amount: createMoney(904.26 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-28T15:27:28.102033",
+    datetime: "2023-04-28T15:27:28.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -9330,7 +9330,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a422af6a-335f-4dbd-a16c-73b1d16cefde",
     amount: createMoney(424.49 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-09T12:25:30.102033",
+    datetime: "2023-09-09T12:25:30.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -9341,7 +9341,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "90355a9c-e2c8-4341-b6c9-7f7dfb438d69",
     amount: createMoney(242.07 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-05T17:37:31.102033",
+    datetime: "2024-04-05T17:37:31.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -9352,7 +9352,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5927330c-75de-4c44-b511-5c76c2e7d4d5",
     amount: createMoney(555.24 * 100, CURRENCIES.NGN),
-    datetime: "2023-05-29T23:09:06.102033",
+    datetime: "2023-05-29T23:09:06.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -9363,7 +9363,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3357ce05-8732-4053-b286-86bc42c518cd",
     amount: createMoney(948.54 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-02T06:58:48.102033",
+    datetime: "2022-03-02T06:58:48.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -9374,7 +9374,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ccaedfd7-9341-40b4-8574-163cea82994a",
     amount: createMoney(135.52 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-17T04:13:59.102033",
+    datetime: "2024-06-17T04:13:59.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -9385,7 +9385,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f2294aea-a713-4b7b-b76e-da95ba9e4c52",
     amount: createMoney(436.63 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-04T13:50:09.102033",
+    datetime: "2022-03-04T13:50:09.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -9396,7 +9396,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0db85439-40fe-464a-828a-6ea3966f0e8c",
     amount: createMoney(393.42 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-11T23:56:27.102033",
+    datetime: "2021-12-11T23:56:27.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -9407,7 +9407,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "13062493-21c6-4c75-8c17-60693a5bb749",
     amount: createMoney(527.91 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-01T22:59:01.102033",
+    datetime: "2022-11-01T22:59:01.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -9418,7 +9418,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ca981a37-16ca-4919-86cd-f52ef95a97aa",
     amount: createMoney(993.53 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-21T15:48:22.102033",
+    datetime: "2024-03-21T15:48:22.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -9429,7 +9429,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "96e33e4a-8503-47a3-8003-74448bab9f08",
     amount: createMoney(923.26 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-17T03:32:25.102033",
+    datetime: "2021-12-17T03:32:25.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -9440,7 +9440,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ec935461-9e04-4c74-9511-6e09db69d20f",
     amount: createMoney(655.28 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-12T21:18:21.102033",
+    datetime: "2024-08-12T21:18:21.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -9451,7 +9451,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "93460a31-2c48-4b0a-bc80-6c0c3a1dbdd0",
     amount: createMoney(197.34 * 100, CURRENCIES.NGN),
-    datetime: "2022-03-24T02:05:29.102033",
+    datetime: "2022-03-24T02:05:29.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -9462,7 +9462,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4673d63c-00c8-416f-89ec-e0588bce7a89",
     amount: createMoney(247.11 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-26T15:28:17.102033",
+    datetime: "2023-09-26T15:28:17.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -9473,7 +9473,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6affbe49-260c-47d9-9e67-9ff99a67d356",
     amount: createMoney(239.98 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-22T05:02:06.102033",
+    datetime: "2022-02-22T05:02:06.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -9484,7 +9484,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f8337ceb-261e-4a37-b783-b6d46413d83e",
     amount: createMoney(625.56 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-14T02:42:27.102033",
+    datetime: "2022-08-14T02:42:27.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -9495,7 +9495,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2f2fdc0f-1a1e-4c2a-bcb0-bac15c9b6805",
     amount: createMoney(226.1 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-23T09:34:27.102033",
+    datetime: "2023-04-23T09:34:27.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -9506,7 +9506,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f47cf330-2b44-428b-b902-89c7fc16b7f9",
     amount: createMoney(865.5 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-24T07:00:31.102033",
+    datetime: "2023-06-24T07:00:31.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -9517,7 +9517,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f6366f03-cf06-4d82-9e08-ab35d5ff2457",
     amount: createMoney(409.7 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-10T21:36:30.102033",
+    datetime: "2023-03-10T21:36:30.102033Z",
     type: "credit",
     categoryID: "18",
     accountID: "1",
@@ -9528,7 +9528,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "90c7381d-97fa-4866-ae55-1073d89e6e0c",
     amount: createMoney(45.71 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-09T14:50:25.102033",
+    datetime: "2022-04-09T14:50:25.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -9539,7 +9539,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "70e6e30c-3d05-4f3d-b973-998c438569fa",
     amount: createMoney(387.34 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-11T19:12:44.102033",
+    datetime: "2022-02-11T19:12:44.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -9550,7 +9550,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "966b92e6-6729-4018-a480-0d50f1f294c4",
     amount: createMoney(218.51 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-26T13:02:54.102033",
+    datetime: "2022-07-26T13:02:54.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -9561,7 +9561,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "acb9db5d-f38f-406b-b73a-eca661d8ae1e",
     amount: createMoney(407.87 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-08T11:41:21.102033",
+    datetime: "2023-06-08T11:41:21.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -9572,7 +9572,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a0374c4f-aa0b-4117-8a1d-1c7018f217ca",
     amount: createMoney(434.46 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-14T15:07:05.102033",
+    datetime: "2024-09-14T15:07:05.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -9583,7 +9583,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d36d8712-aceb-4750-b9be-a7b51c32be51",
     amount: createMoney(188.88 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-23T08:58:37.102033",
+    datetime: "2022-02-23T08:58:37.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -9594,7 +9594,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "74d952cc-b132-4a7b-a673-f630deec1940",
     amount: createMoney(938.77 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-04T03:51:43.102033",
+    datetime: "2021-11-04T03:51:43.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -9605,7 +9605,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "14ffb18b-1343-4bf9-aab6-a80bc06cd78b",
     amount: createMoney(116.12 * 100, CURRENCIES.NGN),
-    datetime: "2024-10-01T05:24:47.102033",
+    datetime: "2024-10-01T05:24:47.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -9616,7 +9616,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0f015fb2-855b-4e37-b021-326d2b236919",
     amount: createMoney(651.25 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-14T01:04:25.102033",
+    datetime: "2024-05-14T01:04:25.102033Z",
     type: "credit",
     categoryID: "11",
     accountID: "1",
@@ -9627,7 +9627,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c05fca9e-9f50-4d38-9791-3fce73c1b0bf",
     amount: createMoney(361.51 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-14T20:33:26.102033",
+    datetime: "2024-07-14T20:33:26.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -9638,7 +9638,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "30937d1a-def2-49a9-837c-57fc520d459c",
     amount: createMoney(427.94 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-02T14:31:15.102033",
+    datetime: "2023-08-02T14:31:15.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -9649,7 +9649,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "768bd34d-c2a2-4e63-a873-9d35b6a40d10",
     amount: createMoney(495.19 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-19T15:56:58.102033",
+    datetime: "2023-09-19T15:56:58.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -9660,7 +9660,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6aed2082-965c-4763-a8b6-c05933b1adb1",
     amount: createMoney(889.59 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-19T19:12:16.102033",
+    datetime: "2023-03-19T19:12:16.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -9671,7 +9671,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "07955c08-3e50-4004-bf9c-948513cf382c",
     amount: createMoney(712.95 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-05T17:38:57.102033",
+    datetime: "2023-06-05T17:38:57.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -9682,7 +9682,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c5f4f4a9-e57d-4b6b-82bc-107557ff4732",
     amount: createMoney(508.7 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-18T19:51:57.102033",
+    datetime: "2022-02-18T19:51:57.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -9693,7 +9693,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1bed3fec-54cd-4c48-a72a-820ef0795d7d",
     amount: createMoney(538.47 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-30T01:51:35.102033",
+    datetime: "2023-06-30T01:51:35.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -9704,7 +9704,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "00118a38-d339-498a-be4e-7dce6a46a84f",
     amount: createMoney(146.78 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-10T03:39:33.102033",
+    datetime: "2022-12-10T03:39:33.102033Z",
     type: "credit",
     categoryID: "8",
     accountID: "1",
@@ -9715,7 +9715,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "260dc0ef-b29c-43e5-81dc-6ee62a1c0813",
     amount: createMoney(319.37 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-28T01:56:49.102033",
+    datetime: "2022-06-28T01:56:49.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -9726,7 +9726,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "81323c5c-1cb1-401b-bb08-4de02f9ec951",
     amount: createMoney(570.24 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-11T17:58:03.102033",
+    datetime: "2022-01-11T17:58:03.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -9737,7 +9737,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1efa6abe-641a-4489-99e4-e0fcf6819b72",
     amount: createMoney(536.07 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-17T00:30:16.102033",
+    datetime: "2024-08-17T00:30:16.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -9748,7 +9748,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4d5d6ed0-67c0-43e3-835d-36bd2573a8c0",
     amount: createMoney(336.65 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-15T04:34:13.102033",
+    datetime: "2024-03-15T04:34:13.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -9759,7 +9759,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9c0300dd-fe75-435a-a8ce-42c9032d29a2",
     amount: createMoney(308.71 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-09T03:26:38.102033",
+    datetime: "2021-12-09T03:26:38.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -9770,7 +9770,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "de473a26-cb80-4993-bdb1-ea616496af74",
     amount: createMoney(45.91 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-25T09:31:04.102033",
+    datetime: "2022-09-25T09:31:04.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -9781,7 +9781,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9ea6b798-cabb-4d2a-9cdb-29d9aecfc181",
     amount: createMoney(43.57 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-19T06:25:53.102033",
+    datetime: "2022-04-19T06:25:53.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -9792,7 +9792,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "cca7493b-2390-4bd6-a4c8-181733c9ccd7",
     amount: createMoney(99.47 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-28T01:35:15.102033",
+    datetime: "2022-12-28T01:35:15.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -9803,7 +9803,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "45f61f99-93ba-4d21-97a8-538f27734add",
     amount: createMoney(265.92 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-24T21:41:00.102033",
+    datetime: "2021-11-24T21:41:00.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -9814,7 +9814,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9f64acd2-e7c2-4991-ae7a-18ea1cb65884",
     amount: createMoney(614.53 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-27T19:01:33.102033",
+    datetime: "2022-04-27T19:01:33.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -9825,7 +9825,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "dab1505a-bae6-46d4-bd42-1693a02958c9",
     amount: createMoney(582.28 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-26T19:53:15.102033",
+    datetime: "2022-11-26T19:53:15.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -9836,7 +9836,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "97fe3651-5095-44a9-a1ef-32d9cd628b1f",
     amount: createMoney(699.25 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-09T04:22:21.102033",
+    datetime: "2021-12-09T04:22:21.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -9847,7 +9847,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "605f9493-5663-482f-a872-e7bea32a8b99",
     amount: createMoney(959.59 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-19T21:05:29.102033",
+    datetime: "2023-12-19T21:05:29.102033Z",
     type: "credit",
     categoryID: "18",
     accountID: "1",
@@ -9858,7 +9858,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7897d568-f0bf-442e-bfa5-9ac587d02d06",
     amount: createMoney(100.3 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-03T20:52:18.102033",
+    datetime: "2023-11-03T20:52:18.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -9869,7 +9869,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f7b0246b-dafd-4862-9fc6-b263ec64e1a7",
     amount: createMoney(360.37 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-03T11:22:03.102033",
+    datetime: "2022-04-03T11:22:03.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -9880,7 +9880,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d7f2f618-d461-4e42-a743-a8dbf85f1bc6",
     amount: createMoney(985.4 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-11T09:36:05.102033",
+    datetime: "2023-11-11T09:36:05.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -9891,7 +9891,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a71b1fbf-5a6b-4a32-a763-48361230513f",
     amount: createMoney(170.11 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-01T07:02:52.102033",
+    datetime: "2022-02-01T07:02:52.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -9902,7 +9902,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a85ac76b-90f7-499c-86f3-9c3787c4f294",
     amount: createMoney(583.15 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-25T10:39:52.102033",
+    datetime: "2022-10-25T10:39:52.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -9913,7 +9913,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b4740f11-9e79-493a-96cb-20357fd89a00",
     amount: createMoney(318.87 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-31T16:16:22.102033",
+    datetime: "2024-07-31T16:16:22.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -9924,7 +9924,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "56323730-0836-4c1c-8b32-d3401ef0af7b",
     amount: createMoney(552.04 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-10T14:57:42.102033",
+    datetime: "2021-11-10T14:57:42.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -9935,7 +9935,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f2119f47-e693-43ac-afb8-82e912e23857",
     amount: createMoney(664.59 * 100, CURRENCIES.NGN),
-    datetime: "2024-02-16T07:59:44.102033",
+    datetime: "2024-02-16T07:59:44.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -9946,7 +9946,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "26270650-8ef8-47e6-b938-ffc18576e36e",
     amount: createMoney(153.22 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-02T03:59:12.102033",
+    datetime: "2021-12-02T03:59:12.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -9957,7 +9957,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "602cebec-8caa-4b83-b643-dcbcf0518f6e",
     amount: createMoney(168.72 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-15T20:11:00.102033",
+    datetime: "2024-01-15T20:11:00.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -9968,7 +9968,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f4b4582d-d9e0-4530-9453-37ae72149dcb",
     amount: createMoney(42.77 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-01T15:29:03.102033",
+    datetime: "2023-01-01T15:29:03.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -9979,7 +9979,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4b06f80d-808b-4a84-a2b2-42b9b445601b",
     amount: createMoney(56.81 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-24T12:35:29.102033",
+    datetime: "2024-01-24T12:35:29.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -9990,7 +9990,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "60676ff1-510e-4c4d-8bc7-41994ad5c7f6",
     amount: createMoney(179.65 * 100, CURRENCIES.NGN),
-    datetime: "2022-12-09T14:35:36.102033",
+    datetime: "2022-12-09T14:35:36.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -10001,7 +10001,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e67f2f7c-afe4-47d2-94dc-6bf45840ef38",
     amount: createMoney(494.73 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-25T03:27:45.102033",
+    datetime: "2022-07-25T03:27:45.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -10012,7 +10012,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9779b09b-9ae3-4ccd-a1de-b9dc8ecc35fb",
     amount: createMoney(186.01 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-13T19:05:32.102033",
+    datetime: "2023-01-13T19:05:32.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -10023,7 +10023,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8f95a4f5-be5a-418d-97c9-dd4ccfa801dd",
     amount: createMoney(21.51 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-20T14:58:02.102033",
+    datetime: "2023-04-20T14:58:02.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -10034,7 +10034,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ee9e08b3-3fac-4264-8546-6c11e8db3479",
     amount: createMoney(973.5 * 100, CURRENCIES.NGN),
-    datetime: "2024-02-27T02:44:11.102033",
+    datetime: "2024-02-27T02:44:11.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -10045,7 +10045,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fd3a5ee6-a52b-4ba3-a3d6-46fe17aad757",
     amount: createMoney(67.76 * 100, CURRENCIES.NGN),
-    datetime: "2023-10-10T07:53:23.102033",
+    datetime: "2023-10-10T07:53:23.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -10056,7 +10056,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "008a3efb-c283-4f63-9e6f-dda88572d1c4",
     amount: createMoney(518.61 * 100, CURRENCIES.NGN),
-    datetime: "2023-06-13T02:51:30.102033",
+    datetime: "2023-06-13T02:51:30.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -10067,7 +10067,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e5d6bd60-8bc7-4c1f-9e88-b736f3f77a5b",
     amount: createMoney(572.02 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-22T16:46:29.102033",
+    datetime: "2023-04-22T16:46:29.102033Z",
     type: "credit",
     categoryID: "6",
     accountID: "1",
@@ -10078,7 +10078,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d7483ab5-7122-4294-a146-f7354a58475d",
     amount: createMoney(370.65 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-22T15:03:49.102033",
+    datetime: "2022-07-22T15:03:49.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -10089,7 +10089,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8df7b71a-c8bd-4d0b-9f6d-2df6703251c3",
     amount: createMoney(110.3 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-08T06:28:41.102033",
+    datetime: "2022-02-08T06:28:41.102033Z",
     type: "debit",
     categoryID: "1",
     accountID: "1",
@@ -10100,7 +10100,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "33466658-83fc-4e12-b5d3-25db3ad150cd",
     amount: createMoney(480.57 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-29T15:50:00.102033",
+    datetime: "2022-11-29T15:50:00.102033Z",
     type: "credit",
     categoryID: "18",
     accountID: "1",
@@ -10111,7 +10111,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "94a91f5c-486f-4ac3-ad9e-3b05c8e737e5",
     amount: createMoney(145.88 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-24T15:35:50.102033",
+    datetime: "2023-01-24T15:35:50.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -10122,7 +10122,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ea4c2bd6-eb37-410c-a4d8-04e3cbf1d43f",
     amount: createMoney(740.64 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-01T02:00:52.102033",
+    datetime: "2022-07-01T02:00:52.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -10133,7 +10133,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8da528d0-9725-4e1d-a069-d5fd2781630f",
     amount: createMoney(185.24 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-29T14:06:25.102033",
+    datetime: "2023-03-29T14:06:25.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -10144,7 +10144,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0723e32e-58bf-4a04-83b3-e49a59bb5ca8",
     amount: createMoney(888.02 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-28T12:37:44.102033",
+    datetime: "2024-04-28T12:37:44.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -10155,7 +10155,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0991fec3-8100-48be-85ff-f163091764f3",
     amount: createMoney(872.46 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-11T13:11:14.102033",
+    datetime: "2024-07-11T13:11:14.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -10166,7 +10166,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4a1e1367-6b46-4267-8804-f932bba68def",
     amount: createMoney(541.88 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-27T04:36:46.102033",
+    datetime: "2024-01-27T04:36:46.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -10177,7 +10177,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0613bf76-ebf2-4312-afbf-ec04e327dc7b",
     amount: createMoney(157.85 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-16T11:43:40.102033",
+    datetime: "2022-01-16T11:43:40.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -10188,7 +10188,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2ec1938e-546c-415e-bc40-e52fe47f8878",
     amount: createMoney(995.95 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-06T06:46:20.102033",
+    datetime: "2024-06-06T06:46:20.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -10199,7 +10199,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "005b3c80-e58f-4895-b037-fb2426802528",
     amount: createMoney(372.44 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-10T21:57:09.102033",
+    datetime: "2023-08-10T21:57:09.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -10210,7 +10210,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d2c245e1-2107-4350-b69b-f74de40b296e",
     amount: createMoney(198.19 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-26T23:09:29.102033",
+    datetime: "2023-03-26T23:09:29.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -10221,7 +10221,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "88db5811-9098-406f-b5dd-e6bbb935241c",
     amount: createMoney(906.79 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-09T11:52:01.102033",
+    datetime: "2022-05-09T11:52:01.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -10232,7 +10232,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5c250292-af61-447c-8aef-da38a6abb33c",
     amount: createMoney(839.03 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-19T17:05:11.102033",
+    datetime: "2022-05-19T17:05:11.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -10243,7 +10243,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b6f866d9-6bd7-441a-9b90-f99a81ab3d79",
     amount: createMoney(848.24 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-14T19:36:10.102033",
+    datetime: "2023-07-14T19:36:10.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -10254,7 +10254,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8fd797df-52db-4fd4-b93c-c8a54085e06b",
     amount: createMoney(213.15 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-05T02:01:52.102033",
+    datetime: "2024-06-05T02:01:52.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -10265,7 +10265,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d45a6e14-ba2e-4bef-97f1-29637c15329f",
     amount: createMoney(591.06 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-17T04:06:34.102033",
+    datetime: "2022-02-17T04:06:34.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -10276,7 +10276,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "81e362cf-e399-41b5-a7bc-d7e585bc6253",
     amount: createMoney(523.73 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-01T04:56:53.102033",
+    datetime: "2022-04-01T04:56:53.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -10287,7 +10287,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "1ebb2a98-156c-46e3-ae17-e28f55b0e5da",
     amount: createMoney(663.98 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-21T15:42:16.102033",
+    datetime: "2024-03-21T15:42:16.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -10298,7 +10298,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8486ce0f-ed58-466d-b017-ebce711fb569",
     amount: createMoney(518.29 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-20T04:36:15.102033",
+    datetime: "2024-06-20T04:36:15.102033Z",
     type: "debit",
     categoryID: "19",
     accountID: "1",
@@ -10309,7 +10309,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a506b827-e819-406c-9e67-3af9db9e94df",
     amount: createMoney(677.07 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-05T05:35:22.102033",
+    datetime: "2024-03-05T05:35:22.102033Z",
     type: "debit",
     categoryID: "7",
     accountID: "1",
@@ -10320,7 +10320,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "93cbbd23-0184-4070-8570-87e63fe5c03f",
     amount: createMoney(839.61 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-15T04:09:10.102033",
+    datetime: "2022-07-15T04:09:10.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -10331,7 +10331,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "299422ed-18c1-4f87-9ee4-579ecc05d608",
     amount: createMoney(787.04 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-19T04:24:37.102033",
+    datetime: "2023-08-19T04:24:37.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -10342,7 +10342,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5e268998-f8fc-497a-a95d-340a6abaad1c",
     amount: createMoney(876.03 * 100, CURRENCIES.NGN),
-    datetime: "2021-11-01T01:20:01.102033",
+    datetime: "2021-11-01T01:20:01.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -10353,7 +10353,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e67be65a-2f33-4dd5-a1c3-e3dc1e0945c0",
     amount: createMoney(418.09 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-23T17:43:00.102033",
+    datetime: "2024-05-23T17:43:00.102033Z",
     type: "credit",
     categoryID: "18",
     accountID: "1",
@@ -10364,7 +10364,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "00b50eb5-91a3-4639-a197-95fbd7d3e46f",
     amount: createMoney(463.5 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-22T05:12:06.102033",
+    datetime: "2022-06-22T05:12:06.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -10375,7 +10375,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "44be5471-9a81-42c8-80f1-f190344e7e6a",
     amount: createMoney(200.06 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-28T15:15:02.102033",
+    datetime: "2023-01-28T15:15:02.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -10386,7 +10386,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8d32b49e-47a4-4a55-9c87-2003b09c00de",
     amount: createMoney(836.33 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-14T19:32:24.102033",
+    datetime: "2023-02-14T19:32:24.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -10397,7 +10397,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "96f8e0ed-bb53-4682-8ca8-8cca341ecb46",
     amount: createMoney(233.29 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-14T04:41:03.102033",
+    datetime: "2023-09-14T04:41:03.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -10408,7 +10408,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b2be4cce-6989-46d9-a129-34790fe02cc2",
     amount: createMoney(969.07 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-12T17:27:16.102033",
+    datetime: "2024-01-12T17:27:16.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -10419,7 +10419,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "942c894f-f939-4ad4-8bc9-0bef265d4427",
     amount: createMoney(601.25 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-02T23:02:14.102033",
+    datetime: "2024-03-02T23:02:14.102033Z",
     type: "credit",
     categoryID: "2",
     accountID: "1",
@@ -10430,7 +10430,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "41df2eb5-b79e-45bd-98be-decf7c9544a5",
     amount: createMoney(431.52 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-17T02:31:29.102033",
+    datetime: "2024-01-17T02:31:29.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -10441,7 +10441,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d2cd9650-b6d3-4649-8605-bc7230563b9a",
     amount: createMoney(358.3 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-20T08:59:14.102033",
+    datetime: "2021-12-20T08:59:14.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -10452,7 +10452,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "33e0ef74-9a3d-4ae6-91c7-bfd6f88f21c8",
     amount: createMoney(11.59 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-07T11:34:01.102033",
+    datetime: "2022-02-07T11:34:01.102033Z",
     type: "credit",
     categoryID: "18",
     accountID: "1",
@@ -10463,7 +10463,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8724d912-8c4a-42f5-b7e4-60d879484624",
     amount: createMoney(579.73 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-28T09:43:29.102033",
+    datetime: "2024-09-28T09:43:29.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -10474,7 +10474,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "648f04c7-34b1-46e3-8e49-0de910a5a843",
     amount: createMoney(825.97 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-14T16:13:13.102033",
+    datetime: "2023-04-14T16:13:13.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -10485,7 +10485,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "88bf558c-09ae-4aef-b9d2-dbd4911ee0c7",
     amount: createMoney(933.17 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-05T09:08:07.102033",
+    datetime: "2022-04-05T09:08:07.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -10496,7 +10496,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "cf891d07-a64f-4ff4-b044-c02d58547eb2",
     amount: createMoney(710.83 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-25T02:23:57.102033",
+    datetime: "2023-11-25T02:23:57.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -10507,7 +10507,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f8cf8e93-df21-4afe-8795-92173f0ab9a0",
     amount: createMoney(138.2 * 100, CURRENCIES.NGN),
-    datetime: "2022-04-20T00:54:40.102033",
+    datetime: "2022-04-20T00:54:40.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -10518,7 +10518,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c3a6034d-1bb0-4677-a181-aed818431c31",
     amount: createMoney(933.16 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-17T17:16:39.102033",
+    datetime: "2022-01-17T17:16:39.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -10529,7 +10529,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a1968722-4fa7-4c42-8c02-014c2c40d8ab",
     amount: createMoney(318.93 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-03T10:02:06.102033",
+    datetime: "2024-05-03T10:02:06.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -10540,7 +10540,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4bdfec6c-5287-4d8e-bbae-a1a9c616ff97",
     amount: createMoney(756.5 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-26T04:23:52.102033",
+    datetime: "2022-11-26T04:23:52.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -10551,7 +10551,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ac20adcd-7f2e-4c11-a3bf-68c5dc09a992",
     amount: createMoney(594.09 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-10T09:14:22.102033",
+    datetime: "2023-01-10T09:14:22.102033Z",
     type: "credit",
     categoryID: "12",
     accountID: "1",
@@ -10562,7 +10562,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "74633921-0d62-4f56-87dc-21aa8dc9d172",
     amount: createMoney(161.88 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-25T16:51:37.102033",
+    datetime: "2023-01-25T16:51:37.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -10573,7 +10573,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f229d426-27f5-4cd2-b4b8-fc828b227371",
     amount: createMoney(559.47 * 100, CURRENCIES.NGN),
-    datetime: "2024-05-08T21:31:31.102033",
+    datetime: "2024-05-08T21:31:31.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -10584,7 +10584,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "fb7aed47-3984-496f-ba6f-9746d160ec77",
     amount: createMoney(748.31 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-11T10:32:44.102033",
+    datetime: "2022-01-11T10:32:44.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -10595,7 +10595,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9790d264-7f60-403c-a89d-94c08c9f19f5",
     amount: createMoney(321.51 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-29T19:30:22.102033",
+    datetime: "2022-01-29T19:30:22.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -10606,7 +10606,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5899febb-72f8-4619-8f34-6fe93b8831fa",
     amount: createMoney(626.0 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-29T12:35:43.102033",
+    datetime: "2023-03-29T12:35:43.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -10617,7 +10617,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b27f1f0f-ded1-4ded-932d-3028531edd23",
     amount: createMoney(818.72 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-28T16:27:23.102033",
+    datetime: "2024-01-28T16:27:23.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -10628,7 +10628,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "aafe5a7c-f88b-43ff-be89-256354051199",
     amount: createMoney(979.63 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-05T08:57:15.102033",
+    datetime: "2024-09-05T08:57:15.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -10639,7 +10639,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f503d790-2ad2-4455-9c8c-dd28704b21c2",
     amount: createMoney(208.71 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-24T21:41:38.102033",
+    datetime: "2024-03-24T21:41:38.102033Z",
     type: "credit",
     categoryID: "4",
     accountID: "1",
@@ -10650,7 +10650,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "67fd4bbd-aa6d-4c8d-af37-1aac6b9a01fd",
     amount: createMoney(615.74 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-09T03:17:26.102033",
+    datetime: "2023-08-09T03:17:26.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -10661,7 +10661,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f78f1903-4961-4866-aa06-162c776f42af",
     amount: createMoney(460.29 * 100, CURRENCIES.NGN),
-    datetime: "2024-02-14T19:06:03.102033",
+    datetime: "2024-02-14T19:06:03.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -10672,7 +10672,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "e0a9c8ac-f80a-445e-9c27-72e285115f81",
     amount: createMoney(976.18 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-30T23:23:09.102033",
+    datetime: "2023-08-30T23:23:09.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -10683,7 +10683,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c5b45b66-328f-4e1a-827f-454d91801a61",
     amount: createMoney(295.96 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-21T23:19:41.102033",
+    datetime: "2023-12-21T23:19:41.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -10694,7 +10694,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "2fc823b7-4310-43f1-8548-134c6112bc7a",
     amount: createMoney(599.86 * 100, CURRENCIES.NGN),
-    datetime: "2024-08-13T11:49:19.102033",
+    datetime: "2024-08-13T11:49:19.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -10705,7 +10705,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "efbbf03f-08c5-45ca-b3b4-446703466e93",
     amount: createMoney(193.87 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-19T20:56:58.102033",
+    datetime: "2022-01-19T20:56:58.102033Z",
     type: "credit",
     categoryID: "11",
     accountID: "1",
@@ -10716,7 +10716,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "95484192-916f-4a7e-9de6-805de3351ee4",
     amount: createMoney(826.15 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-13T02:43:08.102033",
+    datetime: "2023-07-13T02:43:08.102033Z",
     type: "debit",
     categoryID: "14",
     accountID: "1",
@@ -10727,7 +10727,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0bb7c60e-381c-425d-97e0-9d8c1b56b348",
     amount: createMoney(890.79 * 100, CURRENCIES.NGN),
-    datetime: "2023-04-16T13:06:16.102033",
+    datetime: "2023-04-16T13:06:16.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -10738,7 +10738,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "53d5e835-933a-4963-8286-7734b094086d",
     amount: createMoney(959.68 * 100, CURRENCIES.NGN),
-    datetime: "2022-10-31T20:56:16.102033",
+    datetime: "2022-10-31T20:56:16.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -10749,7 +10749,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "55aa0f2b-40b4-437e-b6e5-d03719e9df92",
     amount: createMoney(497.41 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-04T16:11:20.102033",
+    datetime: "2022-01-04T16:11:20.102033Z",
     type: "debit",
     categoryID: "18",
     accountID: "1",
@@ -10760,7 +10760,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a1118cac-0e70-4143-a57b-0b87b81106cb",
     amount: createMoney(838.09 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-04T13:13:35.102033",
+    datetime: "2022-09-04T13:13:35.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -10771,7 +10771,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3e758ea1-0fae-4d3a-b013-c294a3b21b0b",
     amount: createMoney(694.53 * 100, CURRENCIES.NGN),
-    datetime: "2024-06-10T15:58:49.102033",
+    datetime: "2024-06-10T15:58:49.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
@@ -10782,7 +10782,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "4e78234e-dfdc-4639-8e44-9b357c6d0ff7",
     amount: createMoney(821.6 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-05T06:11:06.102033",
+    datetime: "2022-05-05T06:11:06.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -10793,7 +10793,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0e911642-ec25-4e06-838e-2eebf33b60df",
     amount: createMoney(937.64 * 100, CURRENCIES.NGN),
-    datetime: "2024-01-01T15:35:27.102033",
+    datetime: "2024-01-01T15:35:27.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -10804,7 +10804,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "34445783-0e4a-4805-beb3-04343e8e7040",
     amount: createMoney(250.13 * 100, CURRENCIES.NGN),
-    datetime: "2022-02-07T17:34:08.102033",
+    datetime: "2022-02-07T17:34:08.102033Z",
     type: "credit",
     categoryID: "1",
     accountID: "1",
@@ -10815,7 +10815,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b9f32eb9-75ff-4a13-9cf0-aae2b934e6c6",
     amount: createMoney(378.1 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-13T12:18:20.102033",
+    datetime: "2022-08-13T12:18:20.102033Z",
     type: "debit",
     categoryID: "20",
     accountID: "1",
@@ -10826,7 +10826,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "0f9511fb-0465-46c2-a859-e26b7a5e0f47",
     amount: createMoney(582.42 * 100, CURRENCIES.NGN),
-    datetime: "2024-02-23T13:20:27.102033",
+    datetime: "2024-02-23T13:20:27.102033Z",
     type: "debit",
     categoryID: "10",
     accountID: "1",
@@ -10837,7 +10837,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "90667e18-2812-4092-b33e-6d3e5ee5e570",
     amount: createMoney(315.27 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-14T06:14:51.102033",
+    datetime: "2024-09-14T06:14:51.102033Z",
     type: "debit",
     categoryID: "3",
     accountID: "1",
@@ -10848,7 +10848,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c8904dd0-8140-4f0e-8871-2c00d5d53656",
     amount: createMoney(122.77 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-30T09:52:16.102033",
+    datetime: "2022-06-30T09:52:16.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -10859,7 +10859,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a332bdff-35ad-4dcc-9444-1c61e2c9f871",
     amount: createMoney(947.05 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-04T09:55:57.102033",
+    datetime: "2022-09-04T09:55:57.102033Z",
     type: "debit",
     categoryID: "16",
     accountID: "1",
@@ -10870,7 +10870,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "bac8a4d5-33e8-480b-b579-b8d5c178bff2",
     amount: createMoney(486.67 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-17T12:17:15.102033",
+    datetime: "2024-04-17T12:17:15.102033Z",
     type: "debit",
     categoryID: "5",
     accountID: "1",
@@ -10881,7 +10881,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "d1cc397a-f529-48e4-9ad4-a3c87b99ea69",
     amount: createMoney(739.06 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-10T08:10:29.102033",
+    datetime: "2024-07-10T08:10:29.102033Z",
     type: "credit",
     categoryID: "19",
     accountID: "1",
@@ -10892,7 +10892,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b0c6e32d-9f47-42d1-ad71-0f1bf4a1ff53",
     amount: createMoney(538.29 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-22T15:18:59.102033",
+    datetime: "2022-07-22T15:18:59.102033Z",
     type: "debit",
     categoryID: "17",
     accountID: "1",
@@ -10903,7 +10903,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "8c14bdda-7b8a-4217-9b20-c96a23a44c19",
     amount: createMoney(817.79 * 100, CURRENCIES.NGN),
-    datetime: "2022-05-21T10:51:30.102033",
+    datetime: "2022-05-21T10:51:30.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -10914,7 +10914,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f26143c7-bfe3-4c6b-bdc7-34818e40c312",
     amount: createMoney(600.29 * 100, CURRENCIES.NGN),
-    datetime: "2023-07-28T06:57:00.102033",
+    datetime: "2023-07-28T06:57:00.102033Z",
     type: "debit",
     categoryID: "15",
     accountID: "1",
@@ -10925,7 +10925,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "40b9582a-5f9c-4b34-8bdf-f4be37b11abc",
     amount: createMoney(39.9 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-20T02:46:42.102033",
+    datetime: "2023-01-20T02:46:42.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -10936,7 +10936,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "38ee2779-a7c7-4404-b0a7-bd071eec203a",
     amount: createMoney(115.36 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-28T18:42:00.102033",
+    datetime: "2023-03-28T18:42:00.102033Z",
     type: "credit",
     categoryID: "16",
     accountID: "1",
@@ -10947,7 +10947,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f5f7152b-4f62-4dc5-9cd8-d38e7d0e5474",
     amount: createMoney(74.87 * 100, CURRENCIES.NGN),
-    datetime: "2022-09-02T18:13:47.102033",
+    datetime: "2022-09-02T18:13:47.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -10958,7 +10958,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "5f666523-e505-46a9-ad26-60e653fde2a7",
     amount: createMoney(153.39 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-30T13:14:32.102033",
+    datetime: "2022-07-30T13:14:32.102033Z",
     type: "credit",
     categoryID: "14",
     accountID: "1",
@@ -10969,7 +10969,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "ec88eaf2-549e-4291-8a8c-99d77988de63",
     amount: createMoney(908.57 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-11T19:26:11.102033",
+    datetime: "2023-08-11T19:26:11.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -10980,7 +10980,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f923c96d-a4af-42ae-a2cf-bb316f3dd238",
     amount: createMoney(272.2 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-15T09:04:21.102033",
+    datetime: "2023-01-15T09:04:21.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -10991,7 +10991,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b29a9d73-4bf0-471e-b01f-b18a95eaa6d9",
     amount: createMoney(374.37 * 100, CURRENCIES.NGN),
-    datetime: "2024-09-02T11:37:17.102033",
+    datetime: "2024-09-02T11:37:17.102033Z",
     type: "debit",
     categoryID: "4",
     accountID: "1",
@@ -11002,7 +11002,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a82abff8-1438-4a93-a8ae-1add5bcbf975",
     amount: createMoney(837.33 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-07T15:33:57.102033",
+    datetime: "2024-04-07T15:33:57.102033Z",
     type: "credit",
     categoryID: "6",
     accountID: "1",
@@ -11013,7 +11013,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "bd676516-c143-426c-aab5-2db8860968fa",
     amount: createMoney(553.57 * 100, CURRENCIES.NGN),
-    datetime: "2023-12-02T13:08:54.102033",
+    datetime: "2023-12-02T13:08:54.102033Z",
     type: "debit",
     categoryID: "13",
     accountID: "1",
@@ -11024,7 +11024,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "cd08588e-8b93-40d2-88f4-d3d7911d4dea",
     amount: createMoney(982.37 * 100, CURRENCIES.NGN),
-    datetime: "2023-11-04T06:13:21.102033",
+    datetime: "2023-11-04T06:13:21.102033Z",
     type: "debit",
     categoryID: "11",
     accountID: "1",
@@ -11035,7 +11035,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9c424e5d-1816-4555-ac4c-b4152ba813a1",
     amount: createMoney(242.97 * 100, CURRENCIES.NGN),
-    datetime: "2023-05-15T01:10:52.102033",
+    datetime: "2023-05-15T01:10:52.102033Z",
     type: "credit",
     categoryID: "9",
     accountID: "1",
@@ -11046,7 +11046,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "9ee582ae-9268-4449-af25-d225f9be989e",
     amount: createMoney(98.14 * 100, CURRENCIES.NGN),
-    datetime: "2023-08-24T18:16:54.102033",
+    datetime: "2023-08-24T18:16:54.102033Z",
     type: "credit",
     categoryID: "20",
     accountID: "1",
@@ -11057,7 +11057,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "b0a85217-c993-41f1-b82d-bf47f2013ed4",
     amount: createMoney(790.09 * 100, CURRENCIES.NGN),
-    datetime: "2021-12-05T07:40:24.102033",
+    datetime: "2021-12-05T07:40:24.102033Z",
     type: "credit",
     categoryID: "5",
     accountID: "1",
@@ -11068,7 +11068,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "66742c53-25b2-4298-a179-508746ba030b",
     amount: createMoney(802.94 * 100, CURRENCIES.NGN),
-    datetime: "2023-03-10T00:46:39.102033",
+    datetime: "2023-03-10T00:46:39.102033Z",
     type: "debit",
     categoryID: "9",
     accountID: "1",
@@ -11079,7 +11079,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3c9df058-9f26-4c0a-950d-e08c9cdb1aaf",
     amount: createMoney(171.33 * 100, CURRENCIES.NGN),
-    datetime: "2024-04-19T20:40:08.102033",
+    datetime: "2024-04-19T20:40:08.102033Z",
     type: "debit",
     categoryID: "2",
     accountID: "1",
@@ -11090,7 +11090,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "88096ee7-74ad-437f-a66b-e10733479c74",
     amount: createMoney(424.46 * 100, CURRENCIES.NGN),
-    datetime: "2022-06-10T19:54:28.102033",
+    datetime: "2022-06-10T19:54:28.102033Z",
     type: "credit",
     categoryID: "3",
     accountID: "1",
@@ -11101,7 +11101,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "c7b2abab-83af-4f62-9f9e-9d2bd6458ec6",
     amount: createMoney(367.19 * 100, CURRENCIES.NGN),
-    datetime: "2023-01-19T14:03:59.102033",
+    datetime: "2023-01-19T14:03:59.102033Z",
     type: "credit",
     categoryID: "10",
     accountID: "1",
@@ -11112,7 +11112,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "227630a7-eb04-49ad-8433-679f21701e6f",
     amount: createMoney(603.32 * 100, CURRENCIES.NGN),
-    datetime: "2024-03-10T20:19:33.102033",
+    datetime: "2024-03-10T20:19:33.102033Z",
     type: "credit",
     categoryID: "17",
     accountID: "1",
@@ -11123,7 +11123,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "909cdb8f-f178-4ed9-bad7-61cf24f2db5e",
     amount: createMoney(258.98 * 100, CURRENCIES.NGN),
-    datetime: "2023-02-23T20:29:26.102033",
+    datetime: "2023-02-23T20:29:26.102033Z",
     type: "debit",
     categoryID: "6",
     accountID: "1",
@@ -11134,7 +11134,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "3216f664-bbf1-4720-9df0-051527268def",
     amount: createMoney(190.74 * 100, CURRENCIES.NGN),
-    datetime: "2022-08-26T17:22:45.102033",
+    datetime: "2022-08-26T17:22:45.102033Z",
     type: "credit",
     categoryID: "15",
     accountID: "1",
@@ -11145,7 +11145,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a44a04d9-9035-41d9-9c66-2c87e92e794f",
     amount: createMoney(477.78 * 100, CURRENCIES.NGN),
-    datetime: "2023-09-23T16:18:24.102033",
+    datetime: "2023-09-23T16:18:24.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -11156,7 +11156,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "7f805639-8782-4ccf-8b7f-fc12ea429f57",
     amount: createMoney(972.1 * 100, CURRENCIES.NGN),
-    datetime: "2022-11-15T19:01:13.102033",
+    datetime: "2022-11-15T19:01:13.102033Z",
     type: "debit",
     categoryID: "8",
     accountID: "1",
@@ -11167,7 +11167,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "6be01ea4-b5e9-40c9-b401-8d115d46d8fa",
     amount: createMoney(128.78 * 100, CURRENCIES.NGN),
-    datetime: "2024-07-10T23:46:53.102033",
+    datetime: "2024-07-10T23:46:53.102033Z",
     type: "credit",
     categoryID: "7",
     accountID: "1",
@@ -11178,7 +11178,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "a2e833c1-0a8c-4b1f-8502-7f4913987d25",
     amount: createMoney(530.01 * 100, CURRENCIES.NGN),
-    datetime: "2022-01-26T18:18:23.102033",
+    datetime: "2022-01-26T18:18:23.102033Z",
     type: "debit",
     categoryID: "12",
     accountID: "1",
@@ -11189,7 +11189,7 @@ export const testTransactions: Array<Transaction> = [
   {
     id: "f773972a-3157-4db6-9274-97ef7af3f43f",
     amount: createMoney(10.54 * 100, CURRENCIES.NGN),
-    datetime: "2022-07-26T00:30:23.102033",
+    datetime: "2022-07-26T00:30:23.102033Z",
     type: "credit",
     categoryID: "13",
     accountID: "1",
