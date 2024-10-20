@@ -2,19 +2,21 @@ import AddButton from "@/components/add-button";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
 import TransactionCard from "@/components/transaction-card";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { FilterIcon } from "@/lib/icons/Filter";
 import { SearchIcon } from "@/lib/icons/Search";
 import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
 import {
+  cn,
   dateToKey,
   groupTransactionsByMonth,
   groupTransactionsByWeek,
   groupTransactionsByYear,
 } from "@/lib/utils";
 import dayjs from "dayjs";
+import { Link } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
@@ -46,20 +48,22 @@ const Transactions = () => {
         <View className="flex-row items-center gap-4">
           <Button
             onPress={() => {}}
-            className="rounded-full p-0 active:bg-accent -ml-2 items-center justify-center"
+            className="rounded-full p-0 -ml-2 items-center justify-center"
             variant="ghost"
             size="icon"
           >
             <FilterIcon className="text-foreground" size={20} />
           </Button>
-          <Button
-            onPress={() => {}}
-            className="rounded-full p-0 active:bg-accent -ml-2 items-center justify-center"
-            variant="ghost"
-            size="icon"
-          >
-            <SearchIcon className="text-foreground" size={20} />
-          </Button>
+          <Link href="/search" asChild>
+            <Button
+              onPress={() => {}}
+              className="rounded-full p-0 active:bg-accent -ml-2 items-center justify-center"
+              variant="ghost"
+              size="icon"
+            >
+              <SearchIcon className="text-foreground" size={20} />
+            </Button>
+          </Link>
         </View>
       </View>
 
