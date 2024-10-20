@@ -9,6 +9,7 @@ import { immer } from "zustand/middleware/immer";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { arrayToRecord } from "./utils";
 import { categories } from "./data";
+import { Platform } from "react-native";
 
 setAutoFreeze(false);
 
@@ -135,7 +136,7 @@ export const useAppStore = create<AppState & AppStateActions>()(
     })),
     {
       name: "app-storage",
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: createJSONStorage(() => (Platform.OS === "web" ? localStorage : AsyncStorage)),
       onRehydrateStorage: (state) => {
         return () => state.updateState("_hasHydrated", true);
       },
