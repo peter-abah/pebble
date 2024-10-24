@@ -1,12 +1,12 @@
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Text } from "@/components/ui/text";
 
-const Settings = () => {
+const More = () => {
   return (
     <ScreenWrapper>
-      <Text>Settings</Text>
+      <Text>More</Text>
     </ScreenWrapper>
   );
 };
 
-export default Settings;
+export default More;
