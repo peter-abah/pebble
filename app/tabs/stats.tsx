@@ -39,7 +39,7 @@ const Stats = () => {
 
   const currentTransactions = groupedTransactions[currentTimePeriod.period][
     dateToKey(currentTimePeriod)
-  ].filter(({ type }) => type === transactionType);
+  ]?.filter(({ type }) => type === transactionType);
 
   const chartData = currentTransactions ? createChartData(currentTransactions) : null;
 
@@ -52,60 +52,60 @@ const Stats = () => {
       <ScrollView className="flex-1 px-4">
         <TimePeriodPicker timePeriod={currentTimePeriod} onValueChange={setCurrentTimePeriod} />
         {chartData && (
-          <View className="justify-center flex-row my-4">
-            <PieChart data={chartData} donut />
-          </View>
-        )}
-        <View className="flex-row mb-4 bg-muted rounded-2xl">
-          <Pressable
-            className={cn(
-              "flex-1 px-3 py-2 rounded-2xl",
-              transactionType === "debit" && "bg-primary"
-            )}
-            onPress={() => setTransactionType("debit")}
-          >
-            <Text
-              className={cn(
-                "text-center",
-                transactionType === "debit" && "text-primary-foreground"
-              )}
-            >
-              Expenses
-            </Text>
-          </Pressable>
-          <Pressable
-            className={cn(
-              "flex-1 px-3 py-2 rounded-2xl",
-              transactionType === "credit" && "bg-primary"
-            )}
-            onPress={() => setTransactionType("credit")}
-          >
-            <Text
-              className={cn(
-                "text-center",
-                transactionType === "credit" && "text-primary-foreground"
-              )}
-            >
-              Income
-            </Text>
-          </Pressable>
-        </View>
-
-        {chartData && (
-          <View className="gap-3">
-            {chartData.map(({ categoryID, color, value }) => (
-              <View key={categoryID} className="flex-row items-center">
-                <View
-                  className="w-10 h-10 rounded-full bg-[var(--bg)] mr-2"
-                  style={vars({ "--bg": color! })}
-                />
-                <Text className="text-lg font-medium">{categories[categoryID].name}</Text>
-                <Text className="ml-auto text-xl">
-                  {formatMoney({ valueInMinorUnits: value, currency })}
+          <>
+            <View className="justify-center flex-row my-4">
+              <PieChart data={chartData} donut />
+            </View>
+            <View className="flex-row mb-4 bg-muted rounded-2xl">
+              <Pressable
+                className={cn(
+                  "flex-1 px-3 py-2 rounded-2xl",
+                  transactionType === "debit" && "bg-primary"
+                )}
+                onPress={() => setTransactionType("debit")}
+              >
+                <Text
+                  className={cn(
+                    "text-center",
+                    transactionType === "debit" && "text-primary-foreground"
+                  )}
+                >
+                  Expenses
                 </Text>
-              </View>
-            ))}
-          </View>
+              </Pressable>
+              <Pressable
+                className={cn(
+                  "flex-1 px-3 py-2 rounded-2xl",
+                  transactionType === "credit" && "bg-primary"
+                )}
+                onPress={() => setTransactionType("credit")}
+              >
+                <Text
+                  className={cn(
+                    "text-center",
+                    transactionType === "credit" && "text-primary-foreground"
+                  )}
+                >
+                  Income
+                </Text>
+              </Pressable>
+            </View>
+
+            <View className="gap-3">
+              {chartData.map(({ categoryID, color, value }) => (
+                <View key={categoryID} className="flex-row items-center">
+                  <View
+                    className="w-10 h-10 rounded-full bg-[var(--bg)] mr-2"
+                    style={vars({ "--bg": color! })}
+                  />
+                  <Text className="text-lg font-medium">{categories[categoryID].name}</Text>
+                  <Text className="ml-auto text-xl">
+                    {formatMoney({ valueInMinorUnits: value, currency })}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          </>
         )}
       </ScrollView>
     </ScreenWrapper>
@@ -113,7 +113,7 @@ const Stats = () => {
 };
 
 const createChartData = memoize((transactions: Transaction[]) => {
-  const chartData = transactions.reduce((result, transaction) => {
+  const chartDataMap = transactions.reduce((result, transaction) => {
     const dataItem = result[transaction.categoryID];
     if (dataItem) {
       result[transaction.categoryID] = {
@@ -128,15 +128,15 @@ const createChartData = memoize((transactions: Transaction[]) => {
     }
     return result;
   }, {} as Record<string, PieDataItemCustom>);
+  const chartData = Object.values(chartDataMap);
 
   // add distinct colors to each data item
-  const dataKeys = Object.keys(chartData);
   const colors = useAppStore.getState().chartColors;
-  for (let i = 0; i < dataKeys.length; i++) {
-    chartData[dataKeys[i]] = { ...chartData[dataKeys[i]], color: colors[i] };
+  for (let i = 0; i < chartData.length; i++) {
+    chartData[i].color = colors[i];
   }
 
-  return Object.values(chartData).sort((a, b) => a.value - b.value);
+  return chartData;
 });
 
 export default Stats;
