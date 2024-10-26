@@ -1,33 +1,33 @@
+import { Text } from "@/components/ui/text";
 import { formatMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
 import dayjs from "dayjs";
 import { Link } from "expo-router";
 import { vars } from "nativewind";
-import { View } from "react-native";
-import { Text } from "@/components/ui/text";
+import { Pressable, View } from "react-native";
 
 interface TransactionCardProps {
   transaction: Transaction;
 }
 const TransactionCard = ({ transaction }: TransactionCardProps) => {
   const category = useAppStore((state) => state.categories[transaction.categoryID]);
-  const icon = category.icon.type === "emoji" ? category.icon.emoji : category.name[0];
+  const icon = category?.icon.type === "emoji" ? category.icon.emoji : category?.name[0];
   return (
     <Link href={`/transactions/${transaction.id}/edit`} asChild>
-      <View className="w-full flex-row items-center active:bg-background/50 px-2 py-1 rounded-lg mb-4">
+      <Pressable className="w-full flex-row items-center active:bg-background/50 px-2 py-1 rounded-lg mb-4">
         <View
           className="w-12 h-12 rounded-full bg-[var(--color)] items-center justify-center mr-2"
-          style={vars({ "--color": category.color })}
+          style={vars({ "--color": category?.color || "gray" })}
         >
           <Text className="text-2xl font-bold">{icon}</Text>
         </View>
 
         <View>
           <Text className="text-lg font-semibold leading-none" numberOfLines={1}>
-            {transaction.title || category.name}
+            {transaction.title || category?.name}
           </Text>
-          {transaction.title && <Text className="font-medium  leading-none">{category.name}</Text>}
+          {transaction.title && <Text className="font-medium  leading-none">{category?.name}</Text>}
         </View>
 
         <View className="ml-auto items-end">
@@ -37,7 +37,7 @@ const TransactionCard = ({ transaction }: TransactionCardProps) => {
           </Text>
           <Text>{renderDate(transaction.datetime)}</Text>
         </View>
-      </View>
+      </Pressable>
     </Link>
   );
 };

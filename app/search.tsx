@@ -27,7 +27,7 @@ const filterTransactions = memoizeWithArgs((transactions: Array<Transaction>, se
 const Search = () => {
   const [search, setSearch] = useState("");
   const [filtered, setFiltered] = useState<Array<Transaction>>([]);
-  const transactions = useAppStore(getSortedTransactionsByDate);
+  const transactions = useAppStore(getSortedTransactionsByDate) as Array<Transaction>;
 
   const onSearch = () => {
     setFiltered(filterTransactions(transactions, search));

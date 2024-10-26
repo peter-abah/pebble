@@ -10,8 +10,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 type Key = string | number | symbol;
-export function arrayToRecord<T extends {}>(items: Array<T>, keyName: keyof T) {
-  const res: Record<Key, T> = {};
+export function arrayToMap<T extends {}>(items: Array<T>, keyName: keyof T) {
+  const res: Partial<Record<Key, T>> = {};
   for (let item of items) {
     const key = item[keyName] as Key;
     res[key] = item;
@@ -70,36 +70,36 @@ export const groupTransactionsByMonth = memoize((transactions: Array<Transaction
   transactions.reduce((result, transaction) => {
     const monthAndYear = transaction.datetime.slice(0, 7); // e.g 2024-10
     if (result[monthAndYear]) {
-      result[monthAndYear].push(transaction);
+      result[monthAndYear]!.push(transaction);
     } else {
       result[monthAndYear] = [transaction];
     }
     return result;
-  }, {} as Record<string, Array<Transaction>>)
+  }, {} as Partial<Record<string, Array<Transaction>>>)
 );
 
 export const groupTransactionsByWeek = memoize((transactions: Array<Transaction>) =>
   transactions.reduce((result, transaction) => {
     const firstDayOfWeek = dayjs(transaction.datetime).day(0).toISOString().slice(0, 10); // first day of week e.g 2024-10-20
     if (result[firstDayOfWeek]) {
-      result[firstDayOfWeek].push(transaction);
+      result[firstDayOfWeek]!.push(transaction);
     } else {
       result[firstDayOfWeek] = [transaction];
     }
     return result;
-  }, {} as Record<string, Array<Transaction>>)
+  }, {} as Partial<Record<string, Array<Transaction>>>)
 );
 
 export const groupTransactionsByYear = memoize((transactions: Array<Transaction>) =>
   transactions.reduce((result, transaction) => {
     const year = transaction.datetime.slice(0, 4); // e.g 2024
     if (result[year]) {
-      result[year].push(transaction);
+      result[year]!.push(transaction);
     } else {
       result[year] = [transaction];
     }
     return result;
-  }, {} as Record<string, Array<Transaction>>)
+  }, {} as Partial<Record<string, Array<Transaction>>>)
 );
 
 // used to index transactions grouped by date functions above

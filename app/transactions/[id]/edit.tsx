@@ -4,18 +4,22 @@ import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { TrashIcon } from "@/lib/icons/Trash";
-import { createMoney, getMoneyValueInMajorUnits } from "@/lib/money";
+import { CURRENCIES, createMoney, getMoneyValueInMajorUnits } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 
-const CreateTransaction = () => {
+const EditTransaction = () => {
   const { id } = useLocalSearchParams() as { id: string };
   const updateTransaction = useAppStore((state) => state.upsertTransaction);
   const deleteTransaction = useAppStore((state) => state.deleteTransaction);
   const transaction = useAppStore((state) => state.transactions[id]);
   const mainAccount = useAppStore((state) => state.accounts[state.defaultAccountID]);
-  const currency = mainAccount.currency;
+  const currency = mainAccount?.currency || CURRENCIES.NGN;
+
+  if (!transaction) {
+    return null;
+  }
 
   const onSubmit = ({ amount, title, note, type, categoryID, datetime }: FormSchema) => {
     updateTransaction({
@@ -37,8 +41,8 @@ const CreateTransaction = () => {
   };
 
   return (
-    <ScreenWrapper className="!p-6">
-      <View className="flex-row gap-4 items-center my-4">
+    <ScreenWrapper className="!pb-6">
+      <View className="flex-row gap-4 items-center px-6 py-4">
         <Button
           onPress={() => router.back()}
           className="rounded-full p-0 active:bg-accent -ml-2 items-center justify-center"
@@ -73,4 +77,4 @@ const CreateTransaction = () => {
   );
 };
 
-export default CreateTransaction;
+export default EditTransaction;

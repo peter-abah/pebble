@@ -1,7 +1,7 @@
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
 import { Text } from "@/components/ui/text";
-import { formatMoney } from "@/lib/money";
+import { CURRENCIES, formatMoney } from "@/lib/money";
 import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
 import { Transaction, TransactionCategory } from "@/lib/types";
 import {
@@ -30,8 +30,12 @@ const Stats = () => {
 
   const transactionsRecord = useAppStore(getSortedTransactionsByDate);
   const categories = useAppStore((state) => state.categories);
-  const currency = useAppStore((state) => state.accounts[state.defaultAccountID].currency);
-  const groupedTransactions: Record<TimePeriod["period"], Record<string, Transaction[]>> = {
+  const currency =
+    useAppStore((state) => state.accounts[state.defaultAccountID]?.currency) || CURRENCIES.NGN;
+  const groupedTransactions: Record<
+    TimePeriod["period"],
+    Partial<Record<string, Transaction[]>>
+  > = {
     monthly: groupTransactionsByMonth(transactionsRecord),
     annually: groupTransactionsByYear(transactionsRecord),
     weekly: groupTransactionsByWeek(transactionsRecord),
@@ -98,7 +102,9 @@ const Stats = () => {
                     className="w-10 h-10 rounded-full bg-[var(--bg)] mr-2"
                     style={vars({ "--bg": color! })}
                   />
-                  <Text className="text-lg font-medium">{categories[categoryID].name}</Text>
+                  <Text className="text-lg font-medium">
+                    {categories[categoryID]?.name || "Unknown"}
+                  </Text>
                   <Text className="ml-auto text-xl">
                     {formatMoney({ valueInMinorUnits: value, currency })}
                   </Text>
@@ -127,8 +133,8 @@ const createChartData = memoize((transactions: Transaction[]) => {
       };
     }
     return result;
-  }, {} as Record<string, PieDataItemCustom>);
-  const chartData = Object.values(chartDataMap);
+  }, {} as Partial<Record<string, PieDataItemCustom>>);
+  const chartData = Object.values(chartDataMap) as Array<PieDataItemCustom>;
 
   // add distinct colors to each data item
   const colors = useAppStore.getState().chartColors;

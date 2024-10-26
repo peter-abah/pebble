@@ -12,9 +12,10 @@ import {
 } from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
 import { Textarea } from "@/components/ui/textarea";
+import { CURRENCIES } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
-import { Currency, TRANSACTION_TYPES } from "@/lib/types";
-import { isStringNumeric, roundNumber, titleCase } from "@/lib/utils";
+import { Account, TRANSACTION_TYPES, TransactionCategory } from "@/lib/types";
+import { isStringNumeric, titleCase } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { TextInput, View } from "react-native";
@@ -22,33 +23,34 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
 
-const createFormSchema = (currency: Currency) =>
-  z.object({
-    amount: z.union([
-      z
-        .string()
-        .refine(isStringNumeric, { message: "Enter a number" })
-        .transform((n) => roundNumber(Number(n), currency.minorUnit))
-        .refine((v) => v > 0, { message: "Enter amount greater than zero" }),
-      z.number().positive({ message: "Enter amount greater than zero" }),
-    ]),
-    datetime: z.date(),
-    title: z.string().optional(),
-    categoryID: z.string().min(1, { message: "Select category" }),
-    note: z.string().optional(),
-    type: z.enum(TRANSACTION_TYPES),
-  });
+const formSchema = z.object({
+  amount: z.union([
+    z
+      .string()
+      .refine(isStringNumeric, { message: "Enter a number" })
+      .transform(Number)
+      .refine((v) => v > 0, { message: "Enter amount greater than zero" }),
+    z.number().positive({ message: "Enter amount greater than zero" }),
+  ]),
+  datetime: z.date(),
+  title: z.string().optional(),
+  categoryID: z.string().min(1, { message: "Select category" }),
+  accountID: z.string().min(1, { message: "Select account" }),
+  note: z.string().optional(),
+  type: z.enum(TRANSACTION_TYPES),
+});
 
-export type FormSchema = z.infer<ReturnType<typeof createFormSchema>>;
-
+export type FormSchema = z.infer<typeof formSchema>;
+// TODO: zod is slow, probably due to handlimg large immutable data, research on it and fix
 interface TransactionFormProps {
   defaultValues: Partial<FormSchema>;
   onSubmit: (values: FormSchema) => void;
 }
 const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
   const categories = useAppStore((state) => state.categories);
-  const mainAccount = useAppStore((state) => state.accounts[state.defaultAccountID]);
-  const currency = mainAccount.currency;
+  const accountsMap = useAppStore((state) => state.accounts);
+  const accounts = Object.values(accountsMap) as Array<Account>;
+
   const {
     control,
     handleSubmit,
@@ -57,10 +59,16 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
     watch,
   } = useForm<FormSchema>({
     defaultValues,
-    resolver: zodResolver(createFormSchema(currency)),
+    resolver: zodResolver(formSchema),
   });
+
+  const account = accountsMap[watch("accountID")];
+  // TODO: wrong behavior, also currency should be from transaction (edit) before checking account, for new
+  const currency = account?.currency || CURRENCIES.NGN;
   const type = watch("type");
-  const categoriesList = Object.values(categories).filter((c) => c.type === type || !c.type);
+  const categoriesList = (Object.values(categories) as Array<TransactionCategory>).filter(
+    (c) => c.type === type || !c.type
+  );
 
   const insets = useSafeAreaInsets();
   const contentInsets = {
@@ -70,9 +78,10 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
     right: 12,
   };
 
+  // TODO: go to next input after finishing  input
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView contentContainerClassName="py-4 gap-4" style={{ flex: 1 }}>
+      <ScrollView contentContainerClassName="py-4 gap-4" className="flex-1 px-6">
         <View className="flex-row gap-1 items-center mb-6">
           <Text className="text-3xl font-semibold leading-none mt-1.5">{currency.symbol}</Text>
           <Controller
@@ -125,6 +134,36 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
           />
         </View>
 
+        <View className="gap-2">
+          <Label nativeID="accountID" className="text-lg">
+            Account
+          </Label>
+          <Controller
+            control={control}
+            render={({ field: { value, onChange, onBlur } }) => (
+              <Select
+                value={{ value, label: value && (accountsMap[value]?.name || "Unknown") }}
+                onValueChange={(option) => onChange(option?.value)}
+              >
+                <SelectTrigger className="w-full" aria-aria-labelledby="type">
+                  <SelectValue
+                    className="text-foreground text-sm native:text-lg"
+                    placeholder="Select Account"
+                  />
+                </SelectTrigger>
+                <SelectContent insets={contentInsets} className="w-full">
+                  <SelectGroup>
+                    {accounts.map((account) => (
+                      <SelectItem key={account.id} label={account.name} value={account.id} />
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            )}
+            name="accountID"
+          />
+        </View>
+
         <View className="gap-2 relative">
           <Label nativeID="category" className="text-lg">
             Category
@@ -133,7 +172,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
               <Select
-                value={{ value, label: categories[value]?.name }}
+                value={{ value, label: value && (categories[value]?.name || "Unknown") }}
                 onValueChange={(option) => onChange(option?.value)}
               >
                 <SelectTrigger className="w-full" aria-aria-labelledby="type">
@@ -210,7 +249,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
         </View>
       </ScrollView>
 
-      <Button onPress={handleSubmit(onSubmit)}>
+      <Button onPress={handleSubmit(onSubmit)} className="mx-6">
         <Text className="text-lg">Save</Text>
       </Button>
     </View>

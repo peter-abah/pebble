@@ -1,8 +1,6 @@
 export const TRANSACTION_TYPES = ["debit", "credit", "transfer"] as const;
 export type TransactionType = (typeof TRANSACTION_TYPES)[number];
 
-export type AccountType = "cash" | "card" | "general";
-
 export interface Currency {
   isoCode: string;
   symbol: string;
@@ -36,7 +34,6 @@ export interface Account {
   name: string;
   id: string;
   balance: Money;
-  type: AccountType;
   currency: Currency;
 }
 

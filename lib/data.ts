@@ -6,7 +6,6 @@ export const accounts: Array<Account> = [
   {
     name: "Account",
     id: "1",
-    type: "general",
     balance: createMoney(0, CURRENCIES.NGN),
     currency: CURRENCIES.NGN,
   },

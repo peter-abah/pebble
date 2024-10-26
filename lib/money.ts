@@ -1,7 +1,7 @@
 import { Currency, Money } from "@/lib/types";
 import { roundNumber } from "@/lib/utils";
 
-export const CURRENCIES: Record<"NGN" | "USD" | string, Currency> = {
+export const CURRENCIES: Record<"NGN" | "USD", Currency> & Partial<Record<string, Currency>> = {
   NGN: {
     symbol: "₦",
     isoCode: "NGN",
@@ -9,9 +9,9 @@ export const CURRENCIES: Record<"NGN" | "USD" | string, Currency> = {
     minorUnit: 2,
   },
   USD: {
-    symbol: "₦",
-    isoCode: "NGN",
-    name: "Naira",
+    symbol: "$",
+    isoCode: "USD",
+    name: "Dollar",
     minorUnit: 2,
   },
 };
@@ -57,4 +57,11 @@ export const formatMoney = ({ valueInMinorUnits, currency }: Money) => {
 
 export const getMoneyValueInMajorUnits = ({ valueInMinorUnits, currency }: Money) => {
   return valueInMinorUnits / 10 ** currency.minorUnit;
+};
+
+export const renderCurrencyLabel = (isoCode: Currency["isoCode"]) => {
+  const currency = CURRENCIES[isoCode];
+  if (!currency) return "";
+
+  return `${currency.name} (${currency.isoCode})`;
 };

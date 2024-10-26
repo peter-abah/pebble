@@ -1,15 +1,14 @@
-import AddButton from "@/components/add-button";
+import FloatingAddButton from "@/components/floating-add-button";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
 import TransactionCard from "@/components/transaction-card";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { FilterIcon } from "@/lib/icons/Filter";
 import { SearchIcon } from "@/lib/icons/Search";
 import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
 import {
-  cn,
   dateToKey,
   groupTransactionsByMonth,
   groupTransactionsByWeek,
@@ -21,12 +20,12 @@ import { useState } from "react";
 import { View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
-const periods = ["monthly", "weekly", "annually"] as const;
-type Period = (typeof periods)[number];
-
 const Transactions = () => {
   const transactions = useAppStore(getSortedTransactionsByDate);
-  const groupedTransactions: Record<Period, Record<string, Transaction[]>> = {
+  const groupedTransactions: Record<
+    TimePeriod["period"],
+    Partial<Record<string, Transaction[]>>
+  > = {
     monthly: groupTransactionsByMonth(transactions),
     annually: groupTransactionsByYear(transactions),
     weekly: groupTransactionsByWeek(transactions),
@@ -78,7 +77,9 @@ const Transactions = () => {
         className="flex-1 px-4"
       />
 
-      <AddButton />
+      <Link href="/transactions/create" asChild>
+        <FloatingAddButton />
+      </Link>
     </ScreenWrapper>
   );
 };

@@ -3,20 +3,20 @@ import { Account, Currency, Transaction, TransactionCategory } from "@/lib/types
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setAutoFreeze } from "immer";
 import { memoize } from "proxy-memoize";
-import "react-native-get-random-values";
-import { create, createStore, useStore } from "zustand";
-import { immer } from "zustand/middleware/immer";
-import { createJSONStorage, persist } from "zustand/middleware";
-import { arrayToRecord, generateColors, shuffle } from "./utils";
-import { categories } from "./data";
 import { Platform } from "react-native";
+import "react-native-get-random-values";
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
+import { categories } from "./data";
+import { arrayToMap, generateColors, shuffle } from "./utils";
 
 setAutoFreeze(false);
 
 export interface AppState {
-  transactions: Record<Transaction["id"], Transaction>;
-  accounts: Record<Account["id"], Account>;
-  categories: Record<TransactionCategory["id"], TransactionCategory>;
+  transactions: Partial<Record<Transaction["id"], Transaction>>;
+  accounts: Partial<Record<Account["id"], Account>>;
+  categories: Partial<Record<TransactionCategory["id"], TransactionCategory>>;
   currency: Currency;
   defaultAccountID: Account["id"];
   chartColors: Array<string>;
@@ -41,16 +41,15 @@ shuffle(chartColors);
 const DEFAULT_STATE: AppState = {
   accounts: {
     "1": {
-      name: "Account",
+      name: "Main",
       id: "1",
-      type: "general",
       balance: createMoney(0, CURRENCIES.NGN),
       currency: CURRENCIES.NGN,
     },
   },
   currency: CURRENCIES.NGN,
   transactions: {},
-  categories: arrayToRecord(categories, "id"),
+  categories: arrayToMap(categories, "id"),
   chartColors,
   defaultAccountID: "1",
   _isFirstOpen: true,
@@ -69,19 +68,22 @@ export const useAppStore = create<AppState & AppStateActions>()(
             // TODO: transfers will cause bug
             // revert previous transaction from balance
             const { type, accountID, amount } = prevTransaction;
-            state.accounts[accountID].balance =
-              type === "credit"
-                ? subtractMoney(state.accounts[accountID].balance, amount)
-                : addMoney(state.accounts[accountID].balance, amount);
+            if (state.accounts[accountID]) {
+              state.accounts[accountID]!.balance =
+                type === "credit"
+                  ? subtractMoney(state.accounts[accountID]!.balance, amount)
+                  : addMoney(state.accounts[accountID]!.balance, amount);
+            }
           }
 
           // update transaction balance
           const { type, accountID, amount } = transaction;
-          state.accounts[accountID].balance =
-            type === "credit"
-              ? addMoney(state.accounts[accountID].balance, amount)
-              : subtractMoney(state.accounts[accountID].balance, amount);
-
+          if (state.accounts[accountID]) {
+            state.accounts[accountID]!.balance =
+              type === "credit"
+                ? addMoney(state.accounts[accountID]!.balance, amount)
+                : subtractMoney(state.accounts[accountID]!.balance, amount);
+          }
           // Add or update transaction
           state.transactions[transaction.id] = transaction;
         });
@@ -95,10 +97,12 @@ export const useAppStore = create<AppState & AppStateActions>()(
             // TODO: transfers will cause bug
             // revert  transaction from balance
             const { type, accountID, amount } = transaction;
-            state.accounts[accountID].balance =
-              type === "credit"
-                ? subtractMoney(state.accounts[accountID].balance, amount)
-                : addMoney(state.accounts[accountID].balance, amount);
+            if (state.accounts[accountID]) {
+              state.accounts[accountID]!.balance =
+                type === "credit"
+                  ? subtractMoney(state.accounts[accountID]!.balance, amount)
+                  : addMoney(state.accounts[accountID]!.balance, amount);
+            }
 
             // delete
             delete state.transactions[transactionID];
@@ -124,6 +128,7 @@ export const useAppStore = create<AppState & AppStateActions>()(
         });
       },
 
+      // TODO: delete associated transactions or mark them
       deleteAccount: (accountID) => {
         set((state) => {
           delete state.accounts[accountID];
@@ -150,7 +155,7 @@ export const useAppStore = create<AppState & AppStateActions>()(
 );
 
 export const getSortedTransactionsByDate = memoize((state: AppState) => {
-  const transactions = Object.values(state.transactions);
+  const transactions = Object.values(state.transactions) as Array<Transaction>;
   transactions.sort((a, b) => b.datetime.localeCompare(a.datetime));
   return transactions;
 });
