@@ -17,11 +17,12 @@ const EditAccount = () => {
 
   if (!account) return null; // TODO: not found 404
 
-  const onSubmit = ({ name, currency: currencyISO }: FormSchema) => {
+  const onSubmit = ({ name, currency: currencyISO, color }: FormSchema) => {
     const currency = CURRENCIES[currencyISO] || CURRENCIES.NGN;
     updateAccount({
       ...account,
       name,
+      color,
       currency,
     });
     router.back();

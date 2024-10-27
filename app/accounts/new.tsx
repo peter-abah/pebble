@@ -17,13 +17,14 @@ const CreateAccount = () => {
   // TODO: bad behavior
   const mainCurrency = mainAccount?.currency || CURRENCIES.NGN;
 
-  const onSubmit = ({ name, currency: currencyID, balance }: FormSchema) => {
+  const onSubmit = ({ name, currency: currencyID, balance, color }: FormSchema) => {
     const currency = CURRENCIES[currencyID] || mainCurrency;
     addAccount({
       id: nanoid(),
       name,
-      balance: createMoney(balance, currency),
+      balance: createMoney(0, currency),
       currency,
+      color,
     });
     router.back();
   };

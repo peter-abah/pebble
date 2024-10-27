@@ -1,6 +1,7 @@
 import { CURRENCIES, createMoney } from "@/lib/money";
 import "react-native-get-random-values";
 import { Account, Transaction, TransactionCategory } from "./types";
+import { NAME_TO_GROUP_COLOR } from "./constants";
 
 export const accounts: Array<Account> = [
   {
@@ -8,6 +9,7 @@ export const accounts: Array<Account> = [
     id: "1",
     balance: createMoney(0, CURRENCIES.NGN),
     currency: CURRENCIES.NGN,
+    color: NAME_TO_GROUP_COLOR["blue-dark"].color,
   },
 ];
 

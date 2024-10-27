@@ -8,13 +8,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
+import { GROUP_COLORS, HEX_TO_GROUP_COLOR } from "@/lib/constants";
 import { CURRENCIES, renderCurrencyLabel } from "@/lib/money";
-import { useAppStore } from "@/lib/store";
 import { Currency } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { vars } from "nativewind";
 import { Controller, useForm } from "react-hook-form";
-import { TextInput, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { Dimensions, TextInput, View } from "react-native";
+import { FlatList, ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
 
@@ -22,6 +24,7 @@ const currencies = Object.values(CURRENCIES) as Array<Currency>;
 const formSchema = z.object({
   name: z.string(),
   currency: z.string(),
+  color: z.string(),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
@@ -103,6 +106,63 @@ const EditAccountForm = ({ defaultValues, onSubmit }: EditAccountFormProps) => {
               </Select>
             )}
             name="currency"
+          />
+        </View>
+
+        <View className="gap-2 relative">
+          <Label nativeID="color" className="text-lg">
+            Color
+          </Label>
+          <Controller
+            control={control}
+            render={({ field: { value, onChange, onBlur } }) => (
+              <Select
+                value={{
+                  value,
+                  label: (value && HEX_TO_GROUP_COLOR[value]?.name) || "",
+                }}
+                onValueChange={(option) => onChange(option?.value)}
+                className="w-1/2"
+              >
+                <SelectTrigger className="w-full" aria-aria-labelledby="type">
+                  <SelectValue
+                    className={cn(
+                      "text-white text-sm native:text-lg bg-[var(--bg)] px-4 py-2 rounded-lg",
+                      !value && "text-foreground"
+                    )}
+                    style={vars({ "--bg": value || "transparent" })}
+                    placeholder="Select Color"
+                  />
+                </SelectTrigger>
+                <SelectContent
+                  insets={{
+                    ...contentInsets,
+                    left: 24,
+                    right: (Dimensions.get("screen").width - contentInsets.left * 2) / 2,
+                  }} // TODO: spaghetti code
+                  className="w-full"
+                >
+                  <FlatList
+                    data={GROUP_COLORS}
+                    renderItem={({ item: color }) => (
+                      <SelectItem
+                        label={""}
+                        value={color.color}
+                        className="text-white h-auto py-2 px-4 rounded-lg active:bg-[--bg]/10 bg-[--bg]"
+                        style={vars({ "--bg": color.color || "#333" })}
+                      />
+                    )}
+                    keyExtractor={(item, index) => item.color}
+                    className="max-h-40"
+                    contentContainerClassName="gap-4"
+                    onStartShouldSetResponder={() => true}
+                  />
+
+                  {/* </ScrollView> */}
+                </SelectContent>
+              </Select>
+            )}
+            name="color"
           />
         </View>
       </ScrollView>

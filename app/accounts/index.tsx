@@ -36,12 +36,13 @@ const Accounts = () => {
           <Link href={`/accounts/${item.id}`} asChild>
             <Pressable
               className={cn(
-                "p-4 flex-row items-center justify-between border-border",
+                "p-4 flex-row items-center border-border",
                 index < accounts.length - 1 && "border-b"
               )}
             >
+              <View className="h-5 w-5 rounded-full mr-4" style={{ backgroundColor: item.color }} />
               <Text className="text-xl">{item.name}</Text>
-              <Text className="text-lg">{formatMoney(item.balance)}</Text>
+              <Text className="ml-auto text-lg">{formatMoney(item.balance)}</Text>
             </Pressable>
           </Link>
         )}

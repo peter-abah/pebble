@@ -4,6 +4,7 @@ import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { NAME_TO_GROUP_COLOR } from "@/lib/constants";
 import { testTransactions } from "@/lib/data";
 import { MaterialIcons } from "@/lib/icons/MaterialIcons";
 import { formatMoney } from "@/lib/money";
@@ -30,7 +31,6 @@ export default function Home() {
     await loadInitData();
     updateState("_isFirstOpen", false);
   };
-
   return (
     <ScreenWrapper className="h-full">
       <ScrollView contentContainerStyle={{ padding: 24 }}>
@@ -39,7 +39,12 @@ export default function Home() {
           <View className="gap-2 flex-row">
             {accounts.slice(0, 2).map((account) => (
               <Link href={`/accounts/${account.id}`} asChild key={account.id}>
-                <Button className="h-auto p-4 flex-1 items-start justify-start gap-1">
+                <Button
+                  className="h-auto p-4 flex-1 items-start justify-start gap-1 rounded-xl"
+                  style={{
+                    backgroundColor: account.color || NAME_TO_GROUP_COLOR["lightBlue-dark"].color,
+                  }}
+                >
                   <Text className="text-primary-foreground font-medium">{account.name}</Text>
                   <Text className="font-bold text-2xl text-primary-foreground" numberOfLines={1}>
                     {formatMoney(account.balance)}
@@ -50,7 +55,7 @@ export default function Home() {
           </View>
           <Link href="/accounts" asChild>
             <Pressable className="px-2 py-1 mt-1 ml-auto -mx-2 rounded-sm active:bg-muted flex-row gap-1 items-center">
-              <Text>view all</Text>
+              <Text>view accounts</Text>
               <MaterialIcons name="arrow-right-alt" className="text-foreground" size={16} />
             </Pressable>
           </Link>

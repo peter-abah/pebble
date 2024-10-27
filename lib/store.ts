@@ -8,7 +8,7 @@ import "react-native-get-random-values";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { categories } from "./data";
+import { accounts, categories } from "./data";
 import { arrayToMap, generateColors, shuffle } from "./utils";
 
 setAutoFreeze(false);
@@ -39,14 +39,7 @@ const chartColors = generateColors(categories.length);
 shuffle(chartColors);
 
 const DEFAULT_STATE: AppState = {
-  accounts: {
-    "1": {
-      name: "Main",
-      id: "1",
-      balance: createMoney(0, CURRENCIES.NGN),
-      currency: CURRENCIES.NGN,
-    },
-  },
+  accounts: arrayToMap(accounts, 'id'),
   currency: CURRENCIES.NGN,
   transactions: {},
   categories: arrayToMap(categories, "id"),
