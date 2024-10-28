@@ -1,6 +1,8 @@
 import tailwindColors from "tailwindcss/colors";
 import { DefaultColors } from "tailwindcss/types/generated/colors";
 import { PartialRecord } from "./types";
+
+// TODO: cleanup, fix tailwind warning
 export const NAV_THEME = {
   light: {
     background: "hsl(0 0% 99%)", // background

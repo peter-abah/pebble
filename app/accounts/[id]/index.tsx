@@ -31,7 +31,7 @@ import { FlatList, View } from "react-native";
 const AccountScreen = () => {
   const { id } = useLocalSearchParams() as { id: string };
   const account = useAppStore((state) => state.accounts[id]);
-  const deleteAccount = useAppStore((state) => state.deleteAccount);
+  const { deleteAccount } = useAppStore((state) => state.actions);
   if (!account) return null; // todo: 404 not found
 
   const [currentTimePeriod, setCurrentTimePeriod] = useState<TimePeriod>(() => ({

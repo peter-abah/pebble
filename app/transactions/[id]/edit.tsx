@@ -11,8 +11,7 @@ import { View } from "react-native";
 
 const EditTransaction = () => {
   const { id } = useLocalSearchParams() as { id: string };
-  const updateTransaction = useAppStore((state) => state.upsertTransaction);
-  const deleteTransaction = useAppStore((state) => state.deleteTransaction);
+  const { updateTransaction, deleteTransaction } = useAppStore((state) => state.actions);
   const transaction = useAppStore((state) => state.transactions[id]);
   const mainAccount = useAppStore((state) => state.accounts[state.defaultAccountID]);
   const currency = mainAccount?.currency || CURRENCIES.NGN;
@@ -69,6 +68,7 @@ const EditTransaction = () => {
           note: transaction.note,
           categoryID: transaction.categoryID,
           type: transaction.type,
+          accountID: transaction.accountID,
           amount: getMoneyValueInMajorUnits(transaction.amount),
         }}
         onSubmit={onSubmit}

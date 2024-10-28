@@ -18,7 +18,7 @@ import { FlatList } from "react-native-gesture-handler";
 // todo: add eslint
 const Catgories = () => {
   const categoriesMap = useAppStore((state) => state.categories);
-  const deleteCategory = useAppStore((state) => state.deleteCategory);
+  const { deleteCategory } = useAppStore((state) => state.actions);
   const categories = useMemo(
     () => Object.values(categoriesMap) as Array<TransactionCategory>,
     [categoriesMap]

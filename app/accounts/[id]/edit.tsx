@@ -8,11 +8,9 @@ import { useAppStore } from "@/lib/store";
 import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 
-// TODO: add timestamps to all object types in store
-
 const EditAccount = () => {
   const { id } = useLocalSearchParams() as { id: string };
-  const updateAccount = useAppStore((state) => state.updateAccount);
+  const { updateAccount } = useAppStore((state) => state.actions);
   const account = useAppStore((state) => state.accounts[id]);
 
   if (!account) return null; // TODO: not found 404

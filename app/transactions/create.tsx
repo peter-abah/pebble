@@ -10,7 +10,7 @@ import { nanoid } from "nanoid";
 import { View } from "react-native";
 
 const CreateTransaction = () => {
-  const createTransaction = useAppStore((state) => state.upsertTransaction);
+  const { addTransaction } = useAppStore((state) => state.actions);
   const defaultAccountID = useAppStore((state) => state.defaultAccountID);
   const accountsMap = useAppStore((state) => state.accounts);
   const { accountID: paramsAccountID } = useLocalSearchParams<{ accountID?: string }>();
@@ -18,8 +18,7 @@ const CreateTransaction = () => {
   const onSubmit = ({ amount, title, note, accountID, type, categoryID, datetime }: FormSchema) => {
     // TODO: you know
     const currency = accountsMap[accountID]?.currency || CURRENCIES.NGN;
-    createTransaction({
-      id: nanoid(),
+    addTransaction({
       amount: createMoney(amount, currency),
       type,
       categoryID,

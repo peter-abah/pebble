@@ -7,11 +7,9 @@ import { useAppStore } from "@/lib/store";
 import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 
-// TODO: add timestamps to all object types in store
-
 const CreateCategory = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const updateCategory = useAppStore((state) => state.updateCategory);
+  const { updateCategory } = useAppStore((state) => state.actions);
   const categoriesMap = useAppStore((state) => state.categories);
   const category = categoriesMap[id];
 

@@ -8,15 +8,13 @@ import { useAppStore } from "@/lib/store";
 import { randomElement } from "@/lib/utils";
 import { router } from "expo-router";
 import { nanoid } from "nanoid";
-import { Alert, View } from "react-native";
-
-// TODO: add timestamps to all object types in store
+import { View } from "react-native";
 
 const CreateCategory = () => {
-  const addCategory = useAppStore((state) => state.addCategory);
+  const { addCategory } = useAppStore((state) => state.actions);
+
   const onSubmit = ({ name, icon, color, iconType, type, parentID }: FormSchema) => {
     addCategory({
-      id: nanoid(),
       name,
       icon: iconType === "emoji" ? { type: iconType, emoji: icon } : { type: iconType, name: icon },
       parentID,

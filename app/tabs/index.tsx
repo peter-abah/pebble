@@ -1,18 +1,14 @@
-import AddDataModal from "@/components/add-data-modal";
 import FloatingAddButton from "@/components/floating-add-button";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { NAME_TO_GROUP_COLOR } from "@/lib/constants";
-import { testTransactions } from "@/lib/data";
 import { MaterialIcons } from "@/lib/icons/MaterialIcons";
 import { formatMoney } from "@/lib/money";
 import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
 import { Account } from "@/lib/types";
-import { arrayToMap } from "@/lib/utils";
 import { Link } from "expo-router";
-import { useState } from "react";
 import { Pressable, ScrollView, View } from "react-native";
 
 // TODO: record initial balance in records but use special type to indicate
@@ -21,16 +17,8 @@ export default function Home() {
   // TODO: support multiple accounts with different currencies
   const accountsMap = useAppStore((state) => state.accounts);
   const accounts = Object.values(accountsMap) as Array<Account>;
-  const isFirstInstall = useAppStore((state) => state._isFirstOpen);
-  const updateState = useAppStore((state) => state.updateState);
 
-  const [isModalOpen, setIsModalOpen] = useState(isFirstInstall);
 
-  const handleLoadData = async () => {
-    setIsModalOpen(false);
-    await loadInitData();
-    updateState("_isFirstOpen", false);
-  };
   return (
     <ScreenWrapper className="h-full">
       <ScrollView contentContainerStyle={{ padding: 24 }}>
@@ -80,32 +68,32 @@ export default function Home() {
       <Link href="/transactions/create" asChild>
         <FloatingAddButton />
       </Link>
-      <AddDataModal open={isModalOpen} setOpen={setIsModalOpen} onYes={handleLoadData} />
     </ScreenWrapper>
   );
 }
+// TODO: delete add data modal component
 
 // TODO: bad code, use onboarding, remove in release / beta
-const loadInitData = async () => {
-  const state = useAppStore.getState();
-  state.reset();
-  testTransactions.sort((a, b) => b.datetime.localeCompare(a.datetime));
-  const balanceFromTransactions = testTransactions.reduce(
-    (acc, curr) =>
-      curr.type === "credit"
-        ? acc + curr.amount.valueInMinorUnits
-        : acc - curr.amount.valueInMinorUnits,
-    0
-  );
-  useAppStore.setState((state) => {
-    const defaultAccount = state.accounts[state.defaultAccountID];
-    if (defaultAccount) {
-      defaultAccount.balance = {
-        valueInMinorUnits: balanceFromTransactions,
-        currency: defaultAccount.currency,
-      };
-    }
-  });
-  state.updateState("transactions", arrayToMap(testTransactions, "id"));
-  state.updateState("_isFirstOpen", false);
-};
+// const loadInitData = async () => {
+//   const state = useAppStore.getState();
+//   state.reset();
+//   testTransactions.sort((a, b) => b.datetime.localeCompare(a.datetime));
+//   const balanceFromTransactions = testTransactions.reduce(
+//     (acc, curr) =>
+//       curr.type === "credit"
+//         ? acc + curr.amount.valueInMinorUnits
+//         : acc - curr.amount.valueInMinorUnits,
+//     0
+//   );
+//   useAppStore.setState((state) => {
+//     const defaultAccount = state.accounts[state.defaultAccountID];
+//     if (defaultAccount) {
+//       defaultAccount.balance = {
+//         valueInMinorUnits: balanceFromTransactions,
+//         currency: defaultAccount.currency,
+//       };
+//     }
+//   });
+//   state.updateState("transactions", arrayToMap(testTransactions, "id"));
+//   state.updateState("_isFirstOpen", false);
+// };

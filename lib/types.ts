@@ -1,8 +1,14 @@
 // todo: move gen types to separate file
 export type PartialRecord<K extends string | number | symbol, T> = Partial<Record<K, T>>;
+export type AtLeast<T, K extends keyof T> = Partial<T> & Pick<T, K>
 
 export const TRANSACTION_TYPES = ["debit", "credit", "transfer"] as const;
 export type TransactionType = (typeof TRANSACTION_TYPES)[number];
+
+export interface WithTimestamps {
+  createdAt: string; // iso date time
+  updatedAt: string; // iso date time
+}
 
 export interface Currency {
   isoCode: string;
@@ -27,7 +33,7 @@ export type Icon =
       type: "emoji";
     };
 
-export interface TransactionCategory {
+export interface TransactionCategory extends WithTimestamps {
   name: string;
   id: string; // unique
   parentID?: string | null;
@@ -36,7 +42,7 @@ export interface TransactionCategory {
   type?: TransactionType; // if undefined, then applies to all types
 }
 
-export interface Account {
+export interface Account extends WithTimestamps {
   name: string;
   id: string;
   balance: Money;
@@ -44,7 +50,7 @@ export interface Account {
   currency: Currency;
 }
 
-export interface Transaction {
+export interface Transaction extends WithTimestamps {
   id: string; // unique
   amount: Money;
   datetime: string;

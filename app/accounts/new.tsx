@@ -6,13 +6,10 @@ import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { CURRENCIES, createMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { router } from "expo-router";
-import { nanoid } from "nanoid";
 import { View } from "react-native";
 
-// TODO: add timestamps to all object types in store
-
 const CreateAccount = () => {
-  const addAccount = useAppStore((state) => state.addAccount);
+  const { addAccount } = useAppStore((state) => state.actions);
   const mainAccount = useAppStore((state) => state.accounts[state.defaultAccountID]);
   // TODO: bad behavior
   const mainCurrency = mainAccount?.currency || CURRENCIES.NGN;
@@ -20,7 +17,6 @@ const CreateAccount = () => {
   const onSubmit = ({ name, currency: currencyID, balance, color }: FormSchema) => {
     const currency = CURRENCIES[currencyID] || mainCurrency;
     addAccount({
-      id: nanoid(),
       name,
       balance: createMoney(0, currency),
       currency,
