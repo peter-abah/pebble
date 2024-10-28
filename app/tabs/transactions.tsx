@@ -40,19 +40,11 @@ const Transactions = () => {
     groupedTransactions[currentTimePeriod.period][dateToKey(currentTimePeriod)];
 
   return (
-    <ScreenWrapper className="!pb-6 !pt-6">
-      <View className="flex-row gap-4 items-center mb-4 px-4 justify-between">
+    <ScreenWrapper className="!pb-6">
+      <View className="flex-row gap-4 items-center py-4 px-6 justify-between">
         <Text className="font-semibold text-2xl">Transactions</Text>
 
         <View className="flex-row items-center gap-4">
-          <Button
-            onPress={() => {}}
-            className="rounded-full p-0 -ml-2 items-center justify-center"
-            variant="ghost"
-            size="icon"
-          >
-            <FilterIcon className="text-foreground" size={20} />
-          </Button>
           <Link href="/search" asChild>
             <Button
               onPress={() => {}}
@@ -66,7 +58,7 @@ const Transactions = () => {
         </View>
       </View>
 
-      <View className="px-4 mb-4">
+      <View className="px-6 py-2">
         <TimePeriodPicker timePeriod={currentTimePeriod} onValueChange={setCurrentTimePeriod} />
       </View>
 
@@ -74,7 +66,7 @@ const Transactions = () => {
         data={currentTransactions}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <TransactionCard transaction={item} />}
-        className="flex-1 px-4"
+        className="flex-1 px-6 py-2"
       />
 
       <Link href="/transactions/create" asChild>

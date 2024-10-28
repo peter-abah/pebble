@@ -94,7 +94,7 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView contentContainerClassName="py-4 gap-4" style={{ flex: 1 }}>
+      <ScrollView contentContainerClassName="py-4 px-6 gap-4" style={{ flex: 1 }}>
         <View className="gap-2">
           <Label nativeID="name" className="text-lg">
             Name
@@ -344,7 +344,7 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
         </View>
       </ScrollView>
 
-      <Button onPress={handleSubmit(onSubmit)}>
+      <Button onPress={handleSubmit(onSubmit)} className="mx-6">
         <Text className="text-lg">Save</Text>
       </Button>
     </View>

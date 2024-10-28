@@ -63,7 +63,7 @@ const NewAccountForm = ({ defaultValues, onSubmit, excludedFields }: NewAccountF
 
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView contentContainerClassName="py-4 gap-4" style={{ flex: 1 }}>
+      <ScrollView contentContainerClassName="px-6 py-4 gap-4" style={{ flex: 1 }}>
         <View className="gap-2">
           <Label nativeID="name" className="text-lg">
             Name
@@ -196,7 +196,7 @@ const NewAccountForm = ({ defaultValues, onSubmit, excludedFields }: NewAccountF
         </View>
       </ScrollView>
 
-      <Button onPress={handleSubmit(onSubmit)}>
+      <Button onPress={handleSubmit(onSubmit)} className="mx-6">
         <Text className="text-lg">Save</Text>
       </Button>
     </View>

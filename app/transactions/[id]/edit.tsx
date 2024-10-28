@@ -59,16 +59,16 @@ const EditTransaction = () => {
           variant="ghost"
           size="icon"
         >
-          <ChevronLeftIcon className="text-foreground" size={28} />
+          <ChevronLeftIcon className="text-foreground" size={24} />
         </Button>
-        <Text className="font-bold text-3xl">Edit transaction</Text>
+        <Text className="font-bold text-2xl">Edit transaction</Text>
         <Button
           onPress={openModal}
           className="ml-auto rounded-full p-0 active:bg-accent -mr-2 items-center justify-center"
           variant="ghost"
           size="icon"
         >
-          <TrashIcon className="text-foreground" size={28} />
+          <TrashIcon className="text-foreground" size={24} />
         </Button>
       </View>
 

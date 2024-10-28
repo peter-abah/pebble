@@ -86,14 +86,5 @@ const ActionButton = forwardRef<View, ActionButtonProps>(({ title, icon, ...rest
     </Button>
   );
 });
-/* 
-accounts
-categories
-goals
-loans
-budgets
-settings
-reccurent
-tags
-*/
+
 export default More;

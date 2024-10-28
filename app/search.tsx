@@ -34,20 +34,20 @@ const Search = () => {
   };
 
   return (
-    <ScreenWrapper>
-      <View className="flex-row gap-4 items-center my-4 mx-4">
+    <ScreenWrapper className="!pb-6">
+      <View className="flex-row gap-4 items-center py-4 px-6">
         <Button
           onPress={() => router.back()}
           className="rounded-full p-0 -ml-2 items-center justify-center"
           variant="ghost"
           size="icon"
         >
-          <ChevronLeftIcon className="text-foreground" size={28} />
+          <ChevronLeftIcon className="text-foreground" size={24} />
         </Button>
         <Text className="font-bold text-2xl">Search</Text>
       </View>
 
-      <View className="px-4 mb-4 flex-row gap-2 items-center">
+      <View className="px-6 mb-4 flex-row gap-2 items-center">
         <Input
           className="border border-border px-3 py-2 flex-1"
           placeholder="Search transactions"
@@ -63,7 +63,7 @@ const Search = () => {
         data={filtered}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <TransactionCard transaction={item} />}
-        className="flex-1 px-4"
+        className="flex-1 px-6"
       />
     </ScreenWrapper>
   );

@@ -26,17 +26,17 @@ const CreateAccount = () => {
   };
 
   return (
-    <ScreenWrapper className="!p-6">
-      <View className="flex-row gap-4 items-center my-4">
+    <ScreenWrapper className="!pb-6">
+      <View className="flex-row gap-4 items-center py-4 px-6">
         <Button
           onPress={() => router.back()}
           className="rounded-full p-0 active:bg-accent -ml-2 items-center justify-center"
           variant="ghost"
           size="icon"
         >
-          <ChevronLeftIcon className="text-foreground" size={28} />
+          <ChevronLeftIcon className="text-foreground" size={24} />
         </Button>
-        <Text className="font-bold text-3xl">New Account</Text>
+        <Text className="font-bold text-2xl">New Account</Text>
       </View>
 
       <AccountForm

@@ -48,12 +48,12 @@ const Stats = () => {
   const chartData = currentTransactions ? createChartData(currentTransactions) : null;
 
   return (
-    <ScreenWrapper className="!pb-6 !pt-6">
-      <View className="flex-row gap-4 items-center mb-4 px-4 justify-between">
+    <ScreenWrapper className="!pb-6">
+      <View className="flex-row gap-4 items-center py-4 px-6 justify-between">
         <Text className="font-semibold text-2xl">Stats</Text>
       </View>
 
-      <ScrollView className="flex-1 px-4">
+      <ScrollView className="flex-1" contentContainerClassName="px-6">
         <TimePeriodPicker timePeriod={currentTimePeriod} onValueChange={setCurrentTimePeriod} />
         {chartData && (
           <>
