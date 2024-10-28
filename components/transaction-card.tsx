@@ -1,4 +1,5 @@
 import { Text } from "@/components/ui/text";
+import { CATEGORY_ICONS, CategoryIconName } from "@/lib/icons/category-icons";
 import { formatMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
@@ -12,15 +13,21 @@ interface TransactionCardProps {
 }
 const TransactionCard = ({ transaction }: TransactionCardProps) => {
   const category = useAppStore((state) => state.categories[transaction.categoryID]);
-  const icon = category?.icon.type === "emoji" ? category.icon.emoji : category?.name[0];
   return (
     <Link href={`/transactions/${transaction.id}/edit`} asChild>
       <Pressable className="w-full flex-row items-center active:bg-background/50 px-2 py-1 rounded-lg mb-4">
         <View
-          className="w-12 h-12 rounded-full bg-[var(--color)] items-center justify-center mr-2"
-          style={vars({ "--color": category?.color || "gray" })}
+          className="w-12 h-12 rounded-full items-center justify-center mr-2"
+          style={{ backgroundColor: category?.color }}
         >
-          <Text className="text-2xl font-bold">{icon}</Text>
+          <Text className="text-2xl font-bold">
+            {category?.icon.type === "emoji"
+              ? category?.icon.emoji
+              : CATEGORY_ICONS[category?.icon.name as CategoryIconName]?.({
+                  size: 24,
+                  color: "white",
+                })}
+          </Text>
         </View>
 
         <View>

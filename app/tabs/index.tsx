@@ -72,7 +72,7 @@ export default function Home() {
             </Link>
           </View>
 
-          {transactions.slice(0, 5).map((transaction) => (
+          {transactions.slice(0, 10).map((transaction) => (
             <TransactionCard transaction={transaction} key={transaction.id} />
           ))}
         </View>

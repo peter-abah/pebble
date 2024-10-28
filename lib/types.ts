@@ -16,20 +16,23 @@ export interface Money {
   valueInMinorUnits: number; // Stored in minor unit of currency
 }
 
+export type Icon =
+  // can either be app provided icons or emojis
+  | {
+      name: string;
+      type: "icon";
+    }
+  | {
+      emoji: string;
+      type: "emoji";
+    };
+
 export interface TransactionCategory {
   name: string;
   id: string; // unique
   parentID?: string | null;
   color: string; // css color
-  icon: // can either be app provided icons or emojis
-  | {
-        name: string;
-        type: "icon";
-      }
-    | {
-        emoji: string;
-        type: "emoji";
-      };
+  icon: Icon;
   type?: TransactionType; // if undefined, then applies to all types
 }
 

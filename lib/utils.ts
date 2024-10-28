@@ -4,6 +4,7 @@ import { clsx, type ClassValue } from "clsx";
 import dayjs from "dayjs";
 import { memoize } from "proxy-memoize";
 import { twMerge } from "tailwind-merge";
+import { array } from "zod";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -64,6 +65,10 @@ export const shuffle = <T>(array: Array<T>) => {
     // And swap it with the current element.
     [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
   }
+};
+
+export const randomElement = <T>(array: Array<T>) => {
+  return array[Math.floor(Math.random() * array.length)];
 };
 
 export const groupTransactionsByMonth = memoize((transactions: Array<Transaction>) =>

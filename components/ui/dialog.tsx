@@ -21,7 +21,7 @@ const DialogOverlayWeb = React.forwardRef<
   return (
     <DialogPrimitive.Overlay
       className={cn(
-        'z-50 bg-black/80 flex justify-center items-center p-2 absolute top-0 right-0 bottom-0 left-0',
+        'z-50 bg-black/50 flex justify-center items-center p-2 absolute top-0 right-0 bottom-0 left-0',
         open ? 'web:animate-in web:fade-in-0' : 'web:animate-out web:fade-out-0',
         className
       )}
@@ -40,7 +40,7 @@ const DialogOverlayNative = React.forwardRef<
   return (
     <DialogPrimitive.Overlay
       style={StyleSheet.absoluteFill}
-      className={cn('z-50 flex bg-black/80 justify-center items-center p-2', className)}
+      className={cn('z-50 flex bg-black/50 justify-center items-center p-2', className)}
       {...props}
       ref={ref}
     >
@@ -78,16 +78,6 @@ const DialogContent = React.forwardRef<
           {...props}
         >
           {children}
-          <DialogPrimitive.Close
-            className={
-              'absolute right-4 top-4 p-0.5 web:group rounded-sm opacity-70 web:ring-offset-background web:transition-opacity web:hover:opacity-100 web:focus:outline-none web:focus:ring-2 web:focus:ring-ring web:focus:ring-offset-2 web:disabled:pointer-events-none'
-            }
-          >
-            <X
-              size={Platform.OS === 'web' ? 16 : 18}
-              className={cn('text-muted-foreground', open && 'text-accent-foreground')}
-            />
-          </DialogPrimitive.Close>
         </DialogPrimitive.Content>
       </DialogOverlay>
     </DialogPortal>

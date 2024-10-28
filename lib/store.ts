@@ -28,6 +28,8 @@ export interface AppStateActions {
   upsertTransaction: (transaction: Transaction) => void;
   deleteTransaction: (transactionID: Transaction["id"]) => void;
   addCategory: (category: TransactionCategory) => void;
+  updateCategory: (category: TransactionCategory) => void;
+  deleteCategory: (categoryID: TransactionCategory["id"]) => void;
   addAccount: (account: Account) => void;
   updateAccount: (account: Account) => void;
   deleteAccount: (accountID: Account["id"]) => void;
@@ -39,7 +41,7 @@ const chartColors = generateColors(categories.length);
 shuffle(chartColors);
 
 const DEFAULT_STATE: AppState = {
-  accounts: arrayToMap(accounts, 'id'),
+  accounts: arrayToMap(accounts, "id"),
   currency: CURRENCIES.NGN,
   transactions: {},
   categories: arrayToMap(categories, "id"),
@@ -106,6 +108,30 @@ export const useAppStore = create<AppState & AppStateActions>()(
       addCategory: (category) => {
         set((state) => {
           state.categories[category.id] = category;
+        });
+      },
+
+      updateCategory: (category) => {
+        set((state) => {
+          state.categories[category.id] = category;
+        });
+      },
+
+      deleteCategory: (categoryID) => {
+        set((state) => {
+          delete state.categories[categoryID];
+
+          // delete category transactions
+          // todo: ask user to move transactions before deleting
+          /* todo: this is very innefficient and will cause app to lag because we are loading all
+           * transactions into memory before filtering. this is probably a zustand issue, the immutability
+           * means a new array of thousands of transactions will be created for every change.
+           * switch to a database later. sqlite or other options
+           */
+          const relatedTransactions = Object.values(state.transactions).filter(
+            (t) => t?.categoryID === categoryID
+          ) as Array<Transaction>;
+          relatedTransactions.forEach((transaction) => state.deleteTransaction(transaction.id));
         });
       },
 
