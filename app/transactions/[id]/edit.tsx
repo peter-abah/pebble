@@ -1,3 +1,4 @@
+import { usePromptModal } from "@/components/prompt-modal";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionForm, { FormSchema } from "@/components/transaction-form";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,7 @@ import { useAppStore } from "@/lib/store";
 import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 
+// TODO: add toasts
 const EditTransaction = () => {
   const { id } = useLocalSearchParams() as { id: string };
   const { updateTransaction, deleteTransaction } = useAppStore((state) => state.actions);
@@ -16,11 +18,21 @@ const EditTransaction = () => {
   const mainAccount = useAppStore((state) => state.accounts[state.defaultAccountID]);
   const currency = mainAccount?.currency || CURRENCIES.NGN;
 
-  if (!transaction) {
-    return null;
-  }
+  const onDelete = () => {
+    if (!transaction) return;
+
+    deleteTransaction(transaction.id);
+    router.back();
+  };
+
+  const { Modal, openModal } = usePromptModal({
+    title: "Are you sure you want to delete this transaction?",
+    onConfirm: onDelete,
+  });
 
   const onSubmit = ({ amount, title, note, type, categoryID, datetime }: FormSchema) => {
+    if (!transaction) return;
+
     updateTransaction({
       id: transaction.id,
       amount: createMoney(amount, currency),
@@ -34,10 +46,9 @@ const EditTransaction = () => {
     router.replace("/");
   };
 
-  const onDelete = () => {
-    deleteTransaction(transaction.id);
-    router.back();
-  };
+  if (!transaction) {
+    return null;
+  }
 
   return (
     <ScreenWrapper className="!pb-6">
@@ -52,7 +63,7 @@ const EditTransaction = () => {
         </Button>
         <Text className="font-bold text-3xl">Edit transaction</Text>
         <Button
-          onPress={onDelete}
+          onPress={openModal}
           className="ml-auto rounded-full p-0 active:bg-accent -mr-2 items-center justify-center"
           variant="ghost"
           size="icon"
@@ -73,6 +84,7 @@ const EditTransaction = () => {
         }}
         onSubmit={onSubmit}
       />
+      <Modal />
     </ScreenWrapper>
   );
 };

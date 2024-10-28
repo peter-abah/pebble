@@ -1,4 +1,5 @@
 import FloatingAddButton from "@/components/floating-add-button";
+import { usePromptModal } from "@/components/prompt-modal";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,9 +17,9 @@ import { Pressable, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
 // todo: add eslint
-const Catgories = () => {
+const Categories = () => {
   const categoriesMap = useAppStore((state) => state.categories);
-  const { deleteCategory } = useAppStore((state) => state.actions);
+
   const categories = useMemo(
     () => Object.values(categoriesMap) as Array<TransactionCategory>,
     [categoriesMap]
@@ -63,42 +64,7 @@ const Catgories = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => (
           // TODO: extract to component
-          <View
-            className={cn(
-              "flex-row items-center gap-4 border-border",
-              index < categories.length - 1 && "border-b"
-            )}
-          >
-            <Link href={`/categories/${item.id}/edit`} asChild>
-              <Pressable className={cn("flex-row items-center p-4 active:bg-muted flex-1")}>
-                <View
-                  className="w-12 h-12 rounded-full items-center justify-center mr-2"
-                  style={{ backgroundColor: item.color }}
-                >
-                  <Text className="text-2xl font-bold">
-                    {item.icon.type === "emoji"
-                      ? item.icon.emoji
-                      : CATEGORY_ICONS[item.icon.name as CategoryIconName]?.({
-                          size: 24,
-                          color: "white",
-                        })}
-                  </Text>
-                </View>
-
-                {/* TODO: choose font for app */}
-
-                <Text className="text-xl font-medium">{item.name}</Text>
-              </Pressable>
-            </Link>
-            <Button
-              className="rounded-full p-0 active:bg-accent ml-auto items-center justify-center"
-              variant="ghost"
-              size="icon"
-              onPress={() => deleteCategory(item.id)}
-            >
-              <TrashIcon className="text-foreground" size={24} />
-            </Button>
-          </View>
+          <CategoryCard category={item} />
         )}
         contentContainerClassName="pb-16"
         className="flex-1 px-6"
@@ -111,4 +77,50 @@ const Catgories = () => {
   );
 };
 
-export default Catgories;
+const CategoryCard = ({ category }: { category: TransactionCategory }) => {
+  const { deleteCategory } = useAppStore((state) => state.actions);
+
+  const { Modal, openModal } = usePromptModal({
+    title: `Are you sure you want to delete '${category.name}' category?`,
+    onConfirm: () => deleteCategory(category.id),
+  });
+
+  return (
+    <>
+      <View className={cn("flex-row items-center gap-4")}>
+        <Link href={`/categories/${category.id}/edit`} asChild>
+          <Pressable className={cn("flex-row items-center p-4 active:bg-muted flex-1")}>
+            <View
+              className="w-12 h-12 rounded-full items-center justify-center mr-2"
+              style={{ backgroundColor: category.color }}
+            >
+              {category.icon.type === "emoji" ? (
+                <Text className="text-2xl font-bold">{category.icon.emoji}</Text>
+              ) : (
+                CATEGORY_ICONS[category.icon.name as CategoryIconName]?.({
+                  size: 24,
+                  color: "white",
+                })
+              )}
+            </View>
+
+            {/* TODO: choose font for app */}
+
+            <Text className="text-xl font-medium">{category.name}</Text>
+          </Pressable>
+        </Link>
+        <Button
+          className="rounded-full p-0 active:bg-accent ml-auto items-center justify-center"
+          variant="ghost"
+          size="icon"
+          onPress={openModal}
+        >
+          <TrashIcon className="text-foreground" size={24} />
+        </Button>
+      </View>
+      <Modal />
+    </>
+  );
+};
+
+export default Categories;

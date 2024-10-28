@@ -1,4 +1,5 @@
 import FloatingAddButton from "@/components/floating-add-button";
+import { usePromptModal } from "@/components/prompt-modal";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
 import TransactionCard from "@/components/transaction-card";
@@ -9,7 +10,7 @@ import { PencilIcon } from "@/lib/icons/Pencil";
 import { TrashIcon } from "@/lib/icons/Trash";
 import { TrendingDownIcon } from "@/lib/icons/TrendingDown";
 import { TrendingUpIcon } from "@/lib/icons/TrendingUp";
-import { addMoney, createMoney, formatMoney } from "@/lib/money";
+import { CURRENCIES, addMoney, createMoney, formatMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
 import {
@@ -32,7 +33,6 @@ const AccountScreen = () => {
   const { id } = useLocalSearchParams() as { id: string };
   const account = useAppStore((state) => state.accounts[id]);
   const { deleteAccount } = useAppStore((state) => state.actions);
-  if (!account) return null; // todo: 404 not found
 
   const [currentTimePeriod, setCurrentTimePeriod] = useState<TimePeriod>(() => ({
     date: dayjs(),
@@ -44,12 +44,15 @@ const AccountScreen = () => {
     () => Object.values(transactionsMap) as Array<Transaction>,
     [transactionsMap]
   );
+
   const accountTransactions = useMemo(() => {
+    if (!account) return [];
     // filter transactions by account and sort by date in descending order
     return transactions
       .filter((t) => t.accountID === account.id)
       .sort((a, b) => b.datetime.localeCompare(a.datetime));
   }, [transactions]);
+
   const groupedTransactions: Record<
     TimePeriod["period"],
     Partial<Record<string, Transaction[]>>
@@ -58,27 +61,38 @@ const AccountScreen = () => {
     annually: groupTransactionsByYear(accountTransactions),
     weekly: groupTransactionsByWeek(accountTransactions),
   };
+
   const currentTransactions =
     groupedTransactions[currentTimePeriod.period][dateToKey(currentTimePeriod)];
-  const income = useMemo(
-    () =>
-      (currentTransactions || [])
-        .filter((t) => t.type === "credit")
-        .reduce((a, b) => addMoney(a, b.amount), createMoney(0, account.currency)),
-    [currentTransactions]
-  );
-  const expenses = useMemo(
-    () =>
-      (currentTransactions || [])
-        ?.filter((t) => t.type === "debit")
-        .reduce((a, b) => addMoney(a, b.amount), createMoney(0, account.currency)),
-    [currentTransactions]
-  );
+  const income = useMemo(() => {
+    if (!account) return createMoney(0, CURRENCIES.NGN);
+
+    return (currentTransactions || [])
+      .filter((t) => t.type === "credit")
+      .reduce((a, b) => addMoney(a, b.amount), createMoney(0, account.currency));
+  }, [currentTransactions]);
+
+  const expenses = useMemo(() => {
+    if (!account) return createMoney(0, CURRENCIES.NGN);
+
+    return (currentTransactions || [])
+      ?.filter((t) => t.type === "debit")
+      .reduce((a, b) => addMoney(a, b.amount), createMoney(0, account.currency));
+  }, [currentTransactions]);
 
   const onDelete = () => {
+    if (!account) return;
+
     deleteAccount(account.id);
-    router.replace("/");
+    router.back();
   };
+
+  const { Modal: DeleteModal, openModal: openDeleteModal } = usePromptModal({
+    title: `Are you sure you want to delete ${account?.name} account`,
+    onConfirm: onDelete,
+  });
+
+  if (!account) return null; // todo: 404 not found
 
   return (
     <ScreenWrapper className="pb-6">
@@ -107,8 +121,7 @@ const AccountScreen = () => {
           <Button
             className="rounded-full p-0 active:bg-accent ml-auto items-center justify-center"
             variant="ghost"
-            // TODO: CONFIRM DELETION
-            onPress={onDelete}
+            onPress={openDeleteModal}
             size="icon"
           >
             <TrashIcon className="text-foreground" size={24} />
@@ -162,6 +175,7 @@ const AccountScreen = () => {
       <Link href={`/transactions/create?accountID=${account.id}`} asChild>
         <FloatingAddButton />
       </Link>
+      <DeleteModal />
     </ScreenWrapper>
   );
 };
