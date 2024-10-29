@@ -14,10 +14,8 @@ import { Pressable, ScrollView, View } from "react-native";
 // TODO: record initial balance in records but use special type to indicate
 export default function Home() {
   const transactions = useAppStore(getSortedTransactionsByDate);
-  // TODO: support multiple accounts with different currencies
   const accountsMap = useAppStore((state) => state.accounts);
   const accounts = Object.values(accountsMap) as Array<Account>;
-
 
   return (
     <ScreenWrapper className="h-full">
@@ -71,7 +69,6 @@ export default function Home() {
     </ScreenWrapper>
   );
 }
-// TODO: delete add data modal component
 
 // TODO: bad code, use onboarding, remove in release / beta
 // const loadInitData = async () => {

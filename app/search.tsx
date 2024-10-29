@@ -81,5 +81,4 @@ const Search = () => {
   );
 };
 
-// TODO: Add attribution to flaticons
 export default Search;

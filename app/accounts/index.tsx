@@ -48,7 +48,6 @@ const Accounts = () => {
           </Link>
         )}
         className="flex-1 px-6"
-        contentContainerClassName="flex-1"
         ListEmptyComponent={<EmptyState title="No accounts to show" />}
       />
 

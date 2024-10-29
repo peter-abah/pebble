@@ -1,12 +1,4 @@
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -16,19 +8,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
-import { GROUP_COLORS, NAME_TO_GROUP_COLOR } from "@/lib/constants";
 import { emojiPattern } from "@/lib/emoji-regex";
-import { CATEGORY_ICONS, CATEGORY_ICONS_NAMES, CategoryIconName } from "@/lib/icons/category-icons";
 import { useAppStore } from "@/lib/store";
-import { Icon, TRANSACTION_TYPES, TransactionCategory } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { TRANSACTION_TYPES, TransactionCategory } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { vars } from "nativewind";
 import { Controller, useForm } from "react-hook-form";
-import { Dimensions, TextInput, View } from "react-native";
-import { FlatList, ScrollView } from "react-native-gesture-handler";
+import { TextInput, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
+import ColorPicker from "./color-picker";
+import IconPicker from "./icon-picker";
 
 const emojiAtStartPattern = new RegExp(`^${emojiPattern}`);
 const formSchema = z
@@ -183,54 +173,7 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
             <Controller
               control={control}
               render={({ field: { value, onChange, onBlur } }) => (
-                <Select
-                  value={{
-                    value,
-                    label: value && "",
-                  }}
-                  onValueChange={(option) => onChange(option?.value)}
-                  className="w-full"
-                >
-                  <SelectTrigger
-                    className="w-full gap-1 h-10 items-center"
-                    aria-aria-labelledby="type"
-                  >
-                    <SelectValue
-                      className={cn(
-                        "px-4 py-2 flex-1 rounded-lg text-white",
-                        !value && "text-foreground"
-                      )}
-                      style={{ backgroundColor: value || "transparent" }}
-                      placeholder="Select Color"
-                    />
-                  </SelectTrigger>
-                  <SelectContent
-                    insets={{
-                      ...contentInsets,
-                      left: 24,
-                      right: (Dimensions.get("screen").width - contentInsets.left * 2) / 2,
-                    }} // TODO: spaghetti code
-                    className="w-full"
-                  >
-                    <FlatList
-                      data={GROUP_COLORS}
-                      renderItem={({ item: color }) => (
-                        <SelectItem
-                          label={""}
-                          value={color.color}
-                          className="text-white h-auto py-2 px-4 rounded-lg active:bg-[--bg]/10 bg-[--bg]"
-                          style={vars({ "--bg": color.color || "#333" })}
-                        />
-                      )}
-                      keyExtractor={(item, index) => item.color}
-                      className="max-h-40"
-                      contentContainerClassName="gap-4"
-                      onStartShouldSetResponder={() => true}
-                    />
-
-                    {/* </ScrollView> */}
-                  </SelectContent>
-                </Select>
+                <ColorPicker value={value} onChange={onChange} />
               )}
               name="color"
             />
@@ -243,100 +186,15 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
             <Controller
               control={control}
               render={({ field: { value, onChange, onBlur } }) => (
-                <Dialog className="flex-1">
-                  <DialogTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="flex-1 rounded-lg px-3 py-0 h-10 font-normal items-start justify-center"
-                    >
-                      {value ? (
-                        renderIcon(iconType, value, color)
-                      ) : (
-                        <Text className="text-sm font-medium text-muted-foreground">
-                          Select Icon
-                        </Text>
-                      )}
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent
-                    className="max-h-[600px] rounded-2xl"
-                    style={{
-                      width: Dimensions.get("screen").width - 24 * 2,
-                      height: iconType === "emoji" ? 200 : Dimensions.get("screen").height * 0.75,
-                    }}
-                  >
-                    <DialogHeader className="flex-row justify-between items-center">
-                      <DialogTitle>Pick Icon</DialogTitle>
-                      {iconType === "emoji" ? (
-                        <Button variant={"secondary"} onPress={() => setValue("iconType", "icon")}>
-                          <Text className="font-medium">Use Icon</Text>
-                        </Button>
-                      ) : (
-                        <Button variant={"secondary"} onPress={() => setValue("iconType", "emoji")}>
-                          <Text className="font-medium">Use Emoji</Text>
-                        </Button>
-                      )}
-                    </DialogHeader>
-                    {iconType === "emoji" ? (
-                      <View className="flex-row gap-4 items-center">
-                        <Label nativeID="name" className="text-lg">
-                          Enter Emoji
-                        </Label>
-                        <Controller
-                          control={control}
-                          render={({ field: { value, onChange, onBlur } }) => (
-                            <TextInput
-                              className="px-3 py-2 border border-border rounded flex-1"
-                              value={value?.match(emojiAtStartPattern)?.[0] || ""}
-                              onChangeText={(value) =>
-                                onChange(value.match(emojiAtStartPattern)?.[0] || "")
-                              }
-                              onBlur={onBlur}
-                              aria-labelledby="emoji"
-                            />
-                          )}
-                          name="icon"
-                        />
-                      </View>
-                    ) : (
-                      <FlatList
-                        data={CATEGORY_ICONS_NAMES}
-                        renderItem={({ item }) => (
-                          <Button
-                            onPress={() => {
-                              onChange(item);
-                              setValue("iconType", "icon");
-                            }}
-                            className="w-auto p-3 rounded-2xl"
-                            style={{
-                              ...(item === value && {
-                                backgroundColor: color || NAME_TO_GROUP_COLOR["purple-dark"].color,
-                              }),
-                            }}
-                            variant={"ghost"}
-                          >
-                            {CATEGORY_ICONS[item]({
-                              size: 24,
-                              className: cn(
-                                "text-muted-foreground",
-                                item === value && "text-white"
-                              ),
-                            })}
-                          </Button>
-                        )}
-                        className="flex-1 w-full"
-                        numColumns={4}
-                        contentContainerClassName="gap-6"
-                        columnWrapperClassName="justify-between gap-6"
-                      />
-                    )}
-                    <DialogClose asChild>
-                      <Button>
-                        <Text>Done</Text>
-                      </Button>
-                    </DialogClose>
-                  </DialogContent>
-                </Dialog>
+                <IconPicker
+                  iconValue={value}
+                  onIconChange={onChange}
+                  iconTypeValue={iconType}
+                  color={color}
+                  onIconTypeChange={(value) => {
+                    if (value) setValue("iconType", value);
+                  }}
+                />
               )}
               name="icon"
             />
@@ -351,20 +209,4 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
   );
 };
 
-const renderIcon = (type: Icon["type"], value: string, color: string) => {
-  switch (type) {
-    case "emoji":
-      return <Text className="text-2xl">{value}</Text>;
-    case "icon":
-      return (
-        <View>
-          {CATEGORY_ICONS[value as CategoryIconName]?.({
-            className: "text-foreground",
-            size: 24,
-            color: color ? color : undefined,
-          }) || ""}
-        </View>
-      );
-  }
-};
 export default CategoryForm;

@@ -51,7 +51,7 @@ const CreateCategory = () => {
           name: category.name,
           color: category.color,
           iconType: category.icon.type,
-          icon: category.icon.type === "emoji" ? category.icon.emoji : category.icon.type,
+          icon: category.icon.type === "emoji" ? category.icon.emoji : category.icon.name,
           parentID: category.parentID || undefined,
           type: category.type,
         }}

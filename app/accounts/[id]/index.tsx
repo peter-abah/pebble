@@ -1,6 +1,7 @@
 import EmptyState from "@/components/empty-state";
 import FloatingAddButton from "@/components/floating-add-button";
 import { usePromptModal } from "@/components/prompt-modal";
+import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
 import TransactionCard from "@/components/transaction-card";
@@ -25,7 +26,6 @@ import { Link, router, useLocalSearchParams } from "expo-router";
 import { useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
 
-// TODO: empty state for all lists
 const AccountScreen = () => {
   const { id } = useLocalSearchParams() as { id: string };
   const account = useAppStore((state) => state.accounts[id]);
@@ -89,8 +89,9 @@ const AccountScreen = () => {
     onConfirm: onDelete,
   });
 
-  if (!account) return null; // todo: 404 not found
-
+  if (!account) {
+    return <ResourceNotFound title="Account does not exist" />;
+  }
   return (
     <ScreenWrapper className="pb-6">
       <View className="flex-row gap-4 items-center px-6 py-4">
@@ -167,7 +168,6 @@ const AccountScreen = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <TransactionCard transaction={item} />}
         className="flex-1 px-6 py-2"
-        contentContainerClassName="flex-1"
         ListEmptyComponent={<EmptyState title="No transactions to show" />}
       />
 
