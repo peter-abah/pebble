@@ -66,6 +66,12 @@ export const shuffle = <T>(array: Array<T>) => {
   }
 };
 
+// generic type guard function for includes
+// use case: checking an const array in typescript contains a value
+export const isIn = <T>(values: ReadonlyArray<T>, x: any): x is T => {
+  return values.includes(x);
+};
+
 export const randomElement = <T>(array: Array<T>) => {
   return array[Math.floor(Math.random() * array.length)];
 };

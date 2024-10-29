@@ -49,6 +49,7 @@ const EditAccount = () => {
         defaultValues={{
           name: account.name,
           currency: account.currency.isoCode,
+          color: account.color,
         }}
         onSubmit={onSubmit}
       />

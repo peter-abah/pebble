@@ -3,7 +3,7 @@ import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import { NAME_TO_GROUP_COLOR } from "@/lib/constants";
+import { DEFAULT_GROUP_COLOR } from "@/lib/constants";
 import { MaterialIcons } from "@/lib/icons/MaterialIcons";
 import { formatMoney } from "@/lib/money";
 import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
@@ -28,7 +28,7 @@ export default function Home() {
                 <Button
                   className="h-auto p-4 flex-1 items-start justify-start gap-1 rounded-xl"
                   style={{
-                    backgroundColor: account.color || NAME_TO_GROUP_COLOR["lightBlue-dark"].color,
+                    backgroundColor: account.color || DEFAULT_GROUP_COLOR.color,
                   }}
                 >
                   <Text className="text-primary-foreground font-medium">{account.name}</Text>

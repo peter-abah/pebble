@@ -1,8 +1,21 @@
-import tailwindColors from "tailwindcss/colors";
-import { DefaultColors } from "tailwindcss/types/generated/colors";
+import { TailwindColors, tailwindColors } from "./tailwind-colors";
 import { PartialRecord } from "./types";
 
-// TODO: cleanup, fix tailwind warning
+export const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 export const NAV_THEME = {
   light: {
     background: "hsl(0 0% 99%)", // background
@@ -22,12 +35,10 @@ export const NAV_THEME = {
   },
 };
 
-const tailwindKeys = (Object.keys(tailwindColors) as Array<keyof DefaultColors>).filter(
-  (c) => typeof tailwindColors[c] === "object" && !c.toLocaleLowerCase().includes("gray")
-);
-
 type Color = { name: string; color: string };
-type GroupColorsMapKey = keyof typeof tailwindColors | `${keyof typeof tailwindColors}-dark`;
+type GroupColorsMapKey = keyof TailwindColors | `${keyof TailwindColors}-dark`;
+const tailwindKeys = Object.keys(tailwindColors) as Array<keyof TailwindColors>;
+
 export const HEX_TO_GROUP_COLOR = tailwindKeys
   .reduce((a, b) => {
     return [
@@ -49,18 +60,4 @@ export const NAME_TO_GROUP_COLOR = tailwindKeys
   .reduce((a, b) => ({ ...a, [b.name]: b }), {} as Record<GroupColorsMapKey, Color>);
 
 export const GROUP_COLORS = Object.values(HEX_TO_GROUP_COLOR) as Array<Color>;
-
-export const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+export const DEFAULT_GROUP_COLOR = NAME_TO_GROUP_COLOR.cyan;

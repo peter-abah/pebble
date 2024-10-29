@@ -66,7 +66,7 @@ const EditAccountForm = ({ defaultValues, onSubmit }: EditAccountFormProps) => {
             name="name"
           />
         </View>
-
+        {/* TODO: CHANGE IN ACCOUNT CURRENCY SHOULD MODIFY ALL ACCOUNT TRANSACTIONS */}
         <View className="gap-2 relative">
           <Label nativeID="currency" className="text-lg">
             Currency
