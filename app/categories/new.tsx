@@ -22,7 +22,7 @@ const CreateCategory = () => {
     });
     router.back();
   };
-// TODO: add search bar to accounts list
+
   return (
     <ScreenWrapper className="!pb-6">
       <View className="flex-row gap-4 items-center py-4 px-6">

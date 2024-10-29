@@ -1,5 +1,6 @@
 import EmptyState from "@/components/empty-state";
 import ScreenWrapper from "@/components/screen-wrapper";
+import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,19 +9,18 @@ import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { SearchIcon } from "@/lib/icons/Search";
 import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
-import { router } from "expo-router";
-import { memoizeWithArgs } from "proxy-memoize";
-import { useState } from "react";
-import { FlatList, View } from "react-native";
-import debounce from "lodash.debounce";
-import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
-import dayjs from "dayjs";
 import {
   dateToKey,
   groupTransactionsByMonth,
   groupTransactionsByWeek,
   groupTransactionsByYear,
 } from "@/lib/utils";
+import dayjs from "dayjs";
+import { router } from "expo-router";
+import debounce from "lodash.debounce";
+import { memoizeWithArgs } from "proxy-memoize";
+import { useState } from "react";
+import { FlatList, View } from "react-native";
 
 const filterTransactions = memoizeWithArgs((transactions: Array<Transaction>, search: string) => {
   return transactions.filter((transaction) => {
@@ -84,7 +84,6 @@ const Search = () => {
           onChangeText={setSearch}
           value={search}
         />
-        {/* TODO: add time period to search */}
       </View>
 
       <View className="px-6 pb-2">
