@@ -21,4 +21,6 @@ const FloatingAddButton = forwardRef<View, FloatingAddButtonProps>(
   }
 );
 
+FloatingAddButton.displayName = "FloatingAddButton";
+
 export default FloatingAddButton;

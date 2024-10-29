@@ -6,7 +6,6 @@ import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { CURRENCIES, createMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { router, useLocalSearchParams } from "expo-router";
-import { nanoid } from "nanoid";
 import { View } from "react-native";
 
 const CreateTransaction = () => {

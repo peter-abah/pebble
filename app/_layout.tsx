@@ -56,6 +56,7 @@ export default function RootLayout() {
       setIsColorSchemeLoaded(true);
     };
     loadTheme();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

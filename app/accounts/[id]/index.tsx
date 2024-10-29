@@ -24,10 +24,6 @@ import { Link, router, useLocalSearchParams } from "expo-router";
 import { useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
 
-// TODO: icons should be 24 or leess
-// TODO: all screens should have horizontal padding of 24px (px-6)
-// TODO: add timestamps to all object types in store
-// TODO: all headers should have thes same font size except home page
 // TODO: empty state for all lists
 const AccountScreen = () => {
   const { id } = useLocalSearchParams() as { id: string };
@@ -51,11 +47,11 @@ const AccountScreen = () => {
     return transactions
       .filter((t) => t.accountID === account.id)
       .sort((a, b) => b.datetime.localeCompare(a.datetime));
-  }, [transactions]);
+  }, [transactions, account]);
 
   const groupedTransactions: Record<
     TimePeriod["period"],
-    Partial<Record<string, Transaction[]>>
+    Partial<Record<string, Array<Transaction>>>
   > = {
     monthly: groupTransactionsByMonth(accountTransactions),
     annually: groupTransactionsByYear(accountTransactions),
@@ -70,7 +66,7 @@ const AccountScreen = () => {
     return (currentTransactions || [])
       .filter((t) => t.type === "credit")
       .reduce((a, b) => addMoney(a, b.amount), createMoney(0, account.currency));
-  }, [currentTransactions]);
+  }, [currentTransactions, account]);
 
   const expenses = useMemo(() => {
     if (!account) return createMoney(0, CURRENCIES.NGN);
@@ -78,7 +74,7 @@ const AccountScreen = () => {
     return (currentTransactions || [])
       ?.filter((t) => t.type === "debit")
       .reduce((a, b) => addMoney(a, b.amount), createMoney(0, account.currency));
-  }, [currentTransactions]);
+  }, [currentTransactions, account]);
 
   const onDelete = () => {
     if (!account) return;

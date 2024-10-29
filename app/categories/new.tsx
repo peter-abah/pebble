@@ -7,7 +7,6 @@ import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { useAppStore } from "@/lib/store";
 import { randomElement } from "@/lib/utils";
 import { router } from "expo-router";
-import { nanoid } from "nanoid";
 import { View } from "react-native";
 
 const CreateCategory = () => {

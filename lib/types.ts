@@ -59,5 +59,5 @@ export interface Transaction extends WithTimestamps {
   accountID: Account["id"];
   title?: string;
   note?: string;
-  tags?: string[];
+  tags?: Array<string>;
 }

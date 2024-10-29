@@ -4,7 +4,6 @@ import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import { FilterIcon } from "@/lib/icons/Filter";
 import { SearchIcon } from "@/lib/icons/Search";
 import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
@@ -24,7 +23,7 @@ const Transactions = () => {
   const transactions = useAppStore(getSortedTransactionsByDate);
   const groupedTransactions: Record<
     TimePeriod["period"],
-    Partial<Record<string, Transaction[]>>
+    Partial<Record<string, Array<Transaction>>>
   > = {
     monthly: groupTransactionsByMonth(transactions),
     annually: groupTransactionsByYear(transactions),

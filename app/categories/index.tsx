@@ -16,7 +16,6 @@ import { useMemo, useState } from "react";
 import { Pressable, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
-// todo: add eslint
 const Categories = () => {
   const categoriesMap = useAppStore((state) => state.categories);
 
@@ -63,7 +62,6 @@ const Categories = () => {
         data={filteredCategories}
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => (
-          // TODO: extract to component
           <CategoryCard category={item} />
         )}
         contentContainerClassName="pb-16"

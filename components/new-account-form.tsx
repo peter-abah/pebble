@@ -42,8 +42,6 @@ const NewAccountForm = ({ defaultValues, onSubmit, excludedFields }: NewAccountF
   const {
     control,
     handleSubmit,
-    formState: { errors },
-    reset, // TODO:
     watch,
   } = useForm<FormSchema>({
     defaultValues,

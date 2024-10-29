@@ -37,9 +37,6 @@ const EditAccountForm = ({ defaultValues, onSubmit }: EditAccountFormProps) => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
-    reset,
-    watch,
   } = useForm<FormSchema>({
     defaultValues,
     resolver: zodResolver(formSchema),

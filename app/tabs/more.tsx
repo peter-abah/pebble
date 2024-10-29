@@ -87,4 +87,5 @@ const ActionButton = forwardRef<View, ActionButtonProps>(({ title, icon, ...rest
   );
 });
 
+ActionButton.displayName = "ActionButton";
 export default More;

@@ -15,7 +15,7 @@ export const accounts: Array<Account> = [
   },
 ];
 
-export const categories: TransactionCategory[] = [
+export const categories: Array<TransactionCategory> = [
   {
     name: "Groceries",
     id: "1",

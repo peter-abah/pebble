@@ -34,7 +34,7 @@ const Stats = () => {
     useAppStore((state) => state.accounts[state.defaultAccountID]?.currency) || CURRENCIES.NGN;
   const groupedTransactions: Record<
     TimePeriod["period"],
-    Partial<Record<string, Transaction[]>>
+    Partial<Record<string, Array<Transaction>>>
   > = {
     monthly: groupTransactionsByMonth(transactionsRecord),
     annually: groupTransactionsByYear(transactionsRecord),
@@ -118,7 +118,7 @@ const Stats = () => {
   );
 };
 
-const createChartData = memoize((transactions: Transaction[]) => {
+const createChartData = memoize((transactions: Array<Transaction>) => {
   const chartDataMap = transactions.reduce((result, transaction) => {
     const dataItem = result[transaction.categoryID];
     if (dataItem) {

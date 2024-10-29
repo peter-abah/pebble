@@ -5,7 +5,6 @@ import { useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
 import dayjs from "dayjs";
 import { Link } from "expo-router";
-import { vars } from "nativewind";
 import { Pressable, View } from "react-native";
 
 interface TransactionCardProps {

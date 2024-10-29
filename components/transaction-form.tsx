@@ -54,8 +54,6 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
-    reset,
     watch,
   } = useForm<FormSchema>({
     defaultValues,

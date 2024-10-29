@@ -25,7 +25,7 @@ import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { vars } from "nativewind";
 import { Controller, useForm } from "react-hook-form";
-import { Alert, Dimensions, TextInput, View } from "react-native";
+import { Dimensions, TextInput, View } from "react-native";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
@@ -66,11 +66,11 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
-    reset, // TODO:
+
     watch,
     setValue,
   } = useForm<FormSchema>({
+    // TODO: RESET STATE WHEN APPLICABLE
     defaultValues,
     resolver: zodResolver(formSchema),
   });
@@ -150,7 +150,7 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
             render={({ field: { value, onChange, onBlur } }) => (
               <Select
                 value={
-                  value == undefined
+                  value === undefined
                     ? value
                     : { value, label: value && (categoryMap[value]?.name || "Unknown") }
                 }
