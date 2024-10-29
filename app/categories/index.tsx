@@ -63,7 +63,7 @@ const Categories = () => {
         data={filteredCategories}
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => <CategoryCard category={item} />}
-        contentContainerClassName="pb-16 flex-1"
+        contentContainerClassName="pb-16"
         className="flex-1 px-6"
         ListEmptyComponent={<EmptyState title="No categories to show" />}
       />

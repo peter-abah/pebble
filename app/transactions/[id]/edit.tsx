@@ -1,4 +1,5 @@
 import { usePromptModal } from "@/components/prompt-modal";
+import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionForm, { FormSchema } from "@/components/transaction-form";
 import { Button } from "@/components/ui/button";
@@ -47,7 +48,7 @@ const EditTransaction = () => {
   };
 
   if (!transaction) {
-    return null;
+    return <ResourceNotFound title="Transaction does not exist" />;
   }
 
   return (

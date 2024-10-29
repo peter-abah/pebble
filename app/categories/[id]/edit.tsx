@@ -1,4 +1,5 @@
 import CategoryForm, { FormSchema } from "@/components/category-form";
+import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
@@ -27,7 +28,9 @@ const CreateCategory = () => {
     router.back();
   };
 
-  if (!category) return null; // TODO: not found page;
+  if (!category) {
+    return <ResourceNotFound title="Category does not exist" />;
+  }
 
   return (
     <ScreenWrapper className="!pb-6">

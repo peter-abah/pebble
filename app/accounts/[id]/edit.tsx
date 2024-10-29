@@ -1,4 +1,5 @@
 import EditAccountForm, { FormSchema } from "@/components/edit-account-form";
+import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
@@ -13,9 +14,9 @@ const EditAccount = () => {
   const { updateAccount } = useAppStore((state) => state.actions);
   const account = useAppStore((state) => state.accounts[id]);
 
-  if (!account) return null; // TODO: not found 404
-
   const onSubmit = ({ name, currency: currencyISO, color }: FormSchema) => {
+    if (!account) return;
+
     const currency = CURRENCIES[currencyISO] || CURRENCIES.NGN;
     updateAccount({
       ...account,
@@ -25,6 +26,10 @@ const EditAccount = () => {
     });
     router.back();
   };
+
+  if (!account) {
+    return <ResourceNotFound title="Account does not exist" />;
+  }
 
   return (
     <ScreenWrapper className="!pb-6">

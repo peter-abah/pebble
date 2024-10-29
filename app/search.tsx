@@ -66,7 +66,6 @@ const Search = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <TransactionCard transaction={item} />}
         className="flex-1 px-6"
-        contentContainerClassName="flex-1"
         ListEmptyComponent={
           search === "" ? (
             <EmptyState

@@ -54,7 +54,7 @@ const Stats = () => {
         <Text className="font-semibold text-2xl">Stats</Text>
       </View>
 
-      <ScrollView className="flex-1" contentContainerClassName="px-6 flex-1">
+      <ScrollView className="flex-1" contentContainerClassName="px-6">
         <TimePeriodPicker timePeriod={currentTimePeriod} onValueChange={setCurrentTimePeriod} />
         {chartData ? (
           <>

@@ -67,7 +67,6 @@ const Transactions = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <TransactionCard transaction={item} />}
         className="flex-1 px-6 py-2"
-        contentContainerClassName="flex-1"
         ListEmptyComponent={<EmptyState title="No transactions to show" />}
       />
 
