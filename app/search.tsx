@@ -1,3 +1,4 @@
+import EmptyState from "@/components/empty-state";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,7 @@ import { router } from "expo-router";
 import { memoizeWithArgs } from "proxy-memoize";
 import { useState } from "react";
 import { FlatList, View } from "react-native";
+import debounce from "lodash.debounce";
 
 const filterTransactions = memoizeWithArgs((transactions: Array<Transaction>, search: string) => {
   return transactions.filter((transaction) => {
@@ -24,14 +26,16 @@ const filterTransactions = memoizeWithArgs((transactions: Array<Transaction>, se
   });
 });
 
+const debouncedFilterTransactions = debounce(filterTransactions, 200, {
+  leading: true,
+  trailing: true,
+});
+
 const Search = () => {
   const [search, setSearch] = useState("");
-  const [filtered, setFiltered] = useState<Array<Transaction>>([]);
   const transactions = useAppStore(getSortedTransactionsByDate) as Array<Transaction>;
 
-  const onSearch = () => {
-    setFiltered(filterTransactions(transactions, search));
-  };
+  const filtered = debouncedFilterTransactions(transactions, search);
 
   return (
     <ScreenWrapper className="!pb-6">
@@ -54,9 +58,7 @@ const Search = () => {
           onChangeText={setSearch}
           value={search}
         />
-        <Button size="icon" onPress={onSearch}>
-          <SearchIcon size={20} className="text-primary-foreground" />
-        </Button>
+        {/* TODO: add time period to search */}
       </View>
 
       <FlatList
@@ -64,9 +66,21 @@ const Search = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <TransactionCard transaction={item} />}
         className="flex-1 px-6"
+        contentContainerClassName="flex-1"
+        ListEmptyComponent={
+          search === "" ? (
+            <EmptyState
+              title="Search transactions"
+              icon={<SearchIcon size={100} className="text-muted-foreground" />}
+            />
+          ) : (
+            <EmptyState title="No transactions to show" />
+          )
+        }
       />
     </ScreenWrapper>
   );
 };
 
+// TODO: Add attribution to flaticons
 export default Search;

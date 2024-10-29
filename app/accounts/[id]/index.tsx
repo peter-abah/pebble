@@ -1,3 +1,4 @@
+import EmptyState from "@/components/empty-state";
 import FloatingAddButton from "@/components/floating-add-button";
 import { usePromptModal } from "@/components/prompt-modal";
 import ScreenWrapper from "@/components/screen-wrapper";
@@ -166,6 +167,8 @@ const AccountScreen = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <TransactionCard transaction={item} />}
         className="flex-1 px-6 py-2"
+        contentContainerClassName="flex-1"
+        ListEmptyComponent={<EmptyState title="No transactions to show" />}
       />
 
       <Link href={`/transactions/create?accountID=${account.id}`} asChild>

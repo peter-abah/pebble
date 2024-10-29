@@ -1,3 +1,4 @@
+import EmptyState from "@/components/empty-state";
 import FloatingAddButton from "@/components/floating-add-button";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
@@ -66,6 +67,8 @@ const Transactions = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <TransactionCard transaction={item} />}
         className="flex-1 px-6 py-2"
+        contentContainerClassName="flex-1"
+        ListEmptyComponent={<EmptyState title="No transactions to show" />}
       />
 
       <Link href="/transactions/create" asChild>

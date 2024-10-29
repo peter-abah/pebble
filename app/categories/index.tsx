@@ -1,3 +1,4 @@
+import EmptyState from "@/components/empty-state";
 import FloatingAddButton from "@/components/floating-add-button";
 import { usePromptModal } from "@/components/prompt-modal";
 import ScreenWrapper from "@/components/screen-wrapper";
@@ -61,11 +62,10 @@ const Categories = () => {
       <FlatList
         data={filteredCategories}
         keyExtractor={(item) => item.id}
-        renderItem={({ item, index }) => (
-          <CategoryCard category={item} />
-        )}
-        contentContainerClassName="pb-16"
+        renderItem={({ item, index }) => <CategoryCard category={item} />}
+        contentContainerClassName="pb-16 flex-1"
         className="flex-1 px-6"
+        ListEmptyComponent={<EmptyState title="No categories to show" />}
       />
 
       <Link href={"/categories/new"} asChild>

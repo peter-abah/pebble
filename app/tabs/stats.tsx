@@ -1,3 +1,4 @@
+import EmptyState from "@/components/empty-state";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
 import { Text } from "@/components/ui/text";
@@ -53,9 +54,9 @@ const Stats = () => {
         <Text className="font-semibold text-2xl">Stats</Text>
       </View>
 
-      <ScrollView className="flex-1" contentContainerClassName="px-6">
+      <ScrollView className="flex-1" contentContainerClassName="px-6 flex-1">
         <TimePeriodPicker timePeriod={currentTimePeriod} onValueChange={setCurrentTimePeriod} />
-        {chartData && (
+        {chartData ? (
           <>
             <View className="justify-center flex-row my-4">
               <PieChart data={chartData} donut />
@@ -112,6 +113,8 @@ const Stats = () => {
               ))}
             </View>
           </>
+        ) : (
+          <EmptyState title="No data to show" />
         )}
       </ScrollView>
     </ScreenWrapper>

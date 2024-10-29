@@ -1,3 +1,4 @@
+import EmptyState from "@/components/empty-state";
 import FloatingAddButton from "@/components/floating-add-button";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
@@ -47,6 +48,8 @@ const Accounts = () => {
           </Link>
         )}
         className="flex-1 px-6"
+        contentContainerClassName="flex-1"
+        ListEmptyComponent={<EmptyState title="No accounts to show" />}
       />
 
       <Link href={"/accounts/new"} asChild>
