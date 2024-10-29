@@ -13,6 +13,14 @@ import { memoizeWithArgs } from "proxy-memoize";
 import { useState } from "react";
 import { FlatList, View } from "react-native";
 import debounce from "lodash.debounce";
+import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
+import dayjs from "dayjs";
+import {
+  dateToKey,
+  groupTransactionsByMonth,
+  groupTransactionsByWeek,
+  groupTransactionsByYear,
+} from "@/lib/utils";
 
 const filterTransactions = memoizeWithArgs((transactions: Array<Transaction>, search: string) => {
   return transactions.filter((transaction) => {
@@ -34,8 +42,26 @@ const debouncedFilterTransactions = debounce(filterTransactions, 200, {
 const Search = () => {
   const [search, setSearch] = useState("");
   const transactions = useAppStore(getSortedTransactionsByDate) as Array<Transaction>;
+  const groupedTransactions: Record<
+    TimePeriod["period"],
+    Partial<Record<string, Array<Transaction>>>
+  > = {
+    monthly: groupTransactionsByMonth(transactions),
+    annually: groupTransactionsByYear(transactions),
+    weekly: groupTransactionsByWeek(transactions),
+  };
 
-  const filtered = debouncedFilterTransactions(transactions, search);
+  const [currentTimePeriod, setCurrentTimePeriod] = useState<TimePeriod>(() => ({
+    date: dayjs(),
+    period: "monthly",
+  }));
+
+  const transactionsForPeriod =
+    groupedTransactions[currentTimePeriod.period][dateToKey(currentTimePeriod)];
+
+  const filtered = transactionsForPeriod
+    ? debouncedFilterTransactions(transactionsForPeriod, search)
+    : [];
 
   return (
     <ScreenWrapper className="!pb-6">
@@ -59,6 +85,10 @@ const Search = () => {
           value={search}
         />
         {/* TODO: add time period to search */}
+      </View>
+
+      <View className="px-6 pb-2">
+        <TimePeriodPicker timePeriod={currentTimePeriod} onValueChange={setCurrentTimePeriod} />
       </View>
 
       <FlatList
