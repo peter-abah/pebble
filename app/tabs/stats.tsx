@@ -5,13 +5,7 @@ import { Text } from "@/components/ui/text";
 import { CURRENCIES, formatMoney } from "@/lib/money";
 import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
 import { Transaction, TransactionCategory } from "@/lib/types";
-import {
-  cn,
-  dateToKey,
-  groupTransactionsByMonth,
-  groupTransactionsByWeek,
-  groupTransactionsByYear,
-} from "@/lib/utils";
+import { cn, dateToKey, groupTransactionsByPeriod } from "@/lib/utils";
 import dayjs from "dayjs";
 import { vars } from "nativewind";
 import { memoize } from "proxy-memoize";
@@ -23,7 +17,7 @@ interface PieDataItemCustom extends pieDataItem {
 }
 
 const Stats = () => {
-  const [transactionType, setTransactionType] = useState<Transaction["type"]>("debit");
+  const [transactionType, setTransactionType] = useState<Transaction["type"]>("expense");
   const [currentTimePeriod, setCurrentTimePeriod] = useState<TimePeriod>(() => ({
     date: dayjs(),
     period: "monthly",
@@ -33,18 +27,10 @@ const Stats = () => {
   const categories = useAppStore((state) => state.categories);
   const currency =
     useAppStore((state) => state.accounts[state.defaultAccountID]?.currency) || CURRENCIES.NGN;
-  const groupedTransactions: Record<
-    TimePeriod["period"],
-    Partial<Record<string, Array<Transaction>>>
-  > = {
-    monthly: groupTransactionsByMonth(transactionsRecord),
-    annually: groupTransactionsByYear(transactionsRecord),
-    weekly: groupTransactionsByWeek(transactionsRecord),
-  };
 
-  const currentTransactions = groupedTransactions[currentTimePeriod.period][
-    dateToKey(currentTimePeriod)
-  ]?.filter(({ type }) => type === transactionType);
+  const currentTransactions = groupTransactionsByPeriod[currentTimePeriod.period](
+    transactionsRecord
+  )[dateToKey(currentTimePeriod)]?.filter(({ type }) => type === transactionType);
 
   const chartData = currentTransactions ? createChartData(currentTransactions) : null;
 
@@ -65,14 +51,14 @@ const Stats = () => {
               <Pressable
                 className={cn(
                   "flex-1 px-3 py-2 rounded-2xl",
-                  transactionType === "debit" && "bg-primary"
+                  transactionType === "expense" && "bg-primary"
                 )}
-                onPress={() => setTransactionType("debit")}
+                onPress={() => setTransactionType("expense")}
               >
                 <Text
                   className={cn(
                     "text-center",
-                    transactionType === "debit" && "text-primary-foreground"
+                    transactionType === "expense" && "text-primary-foreground"
                   )}
                 >
                   Expenses
@@ -81,14 +67,14 @@ const Stats = () => {
               <Pressable
                 className={cn(
                   "flex-1 px-3 py-2 rounded-2xl",
-                  transactionType === "credit" && "bg-primary"
+                  transactionType === "income" && "bg-primary"
                 )}
-                onPress={() => setTransactionType("credit")}
+                onPress={() => setTransactionType("income")}
               >
                 <Text
                   className={cn(
                     "text-center",
-                    transactionType === "credit" && "text-primary-foreground"
+                    transactionType === "income" && "text-primary-foreground"
                   )}
                 >
                   Income

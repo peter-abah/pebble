@@ -1,4 +1,5 @@
 import EmptyState from "@/components/empty-state";
+import FiltersModal, { Filters } from "@/components/filters-modal";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
 import TransactionCard from "@/components/transaction-card";
@@ -9,12 +10,7 @@ import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { SearchIcon } from "@/lib/icons/Search";
 import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
-import {
-  dateToKey,
-  groupTransactionsByMonth,
-  groupTransactionsByWeek,
-  groupTransactionsByYear,
-} from "@/lib/utils";
+import { dateToKey, groupTransactionsByPeriod } from "@/lib/utils";
 import dayjs from "dayjs";
 import { router } from "expo-router";
 import debounce from "lodash.debounce";
@@ -22,46 +18,23 @@ import { memoizeWithArgs } from "proxy-memoize";
 import { useState } from "react";
 import { FlatList, View } from "react-native";
 
-const filterTransactions = memoizeWithArgs((transactions: Array<Transaction>, search: string) => {
-  return transactions.filter((transaction) => {
-    if (search.trim().length === 0) return false;
-    const matchesTitle =
-      transaction.title && transaction.title.toLowerCase().includes(search.trim().toLowerCase());
-    const matchesNote =
-      transaction.note && transaction.note.toLowerCase().includes(search.trim().toLowerCase());
-
-    return matchesTitle || matchesNote;
-  });
-});
-
-const debouncedFilterTransactions = debounce(filterTransactions, 200, {
-  leading: true,
-  trailing: true,
-});
-
 const Search = () => {
   const [search, setSearch] = useState("");
   const transactions = useAppStore(getSortedTransactionsByDate) as Array<Transaction>;
-  const groupedTransactions: Record<
-    TimePeriod["period"],
-    Partial<Record<string, Array<Transaction>>>
-  > = {
-    monthly: groupTransactionsByMonth(transactions),
-    annually: groupTransactionsByYear(transactions),
-    weekly: groupTransactionsByWeek(transactions),
-  };
+  const categoriesMap = useAppStore((state) => state.categories);
+  const accountsMap = useAppStore((state) => state.accounts);
 
   const [currentTimePeriod, setCurrentTimePeriod] = useState<TimePeriod>(() => ({
     date: dayjs(),
     period: "monthly",
   }));
+  const [filters, setFilters] = useState<Filters>({ categories: [], accounts: [], types: [] });
 
-  const transactionsForPeriod =
-    groupedTransactions[currentTimePeriod.period][dateToKey(currentTimePeriod)];
-
-  const filtered = transactionsForPeriod
-    ? debouncedFilterTransactions(transactionsForPeriod, search)
-    : [];
+  const filtered = filterTransactions(transactions, {
+    search,
+    period: currentTimePeriod,
+    filters: filters,
+  });
 
   return (
     <ScreenWrapper className="!pb-6">
@@ -84,10 +57,62 @@ const Search = () => {
           onChangeText={setSearch}
           value={search}
         />
+        <FiltersModal filters={filters} onFiltersChange={setFilters} />
       </View>
 
       <View className="px-6 pb-2">
         <TimePeriodPicker timePeriod={currentTimePeriod} onValueChange={setCurrentTimePeriod} />
+      </View>
+
+      <View className="px-6 py-2 gap-2">
+        {filters.categories.length > 0 ? (
+          <View className="flex flex-row gap-2 items-center">
+            <Text className="text-sm font-medium">Categories:</Text>
+            <FlatList
+              data={filters.categories}
+              horizontal
+              keyExtractor={(item) => item}
+              renderItem={({ item }) => (
+                <View className="flex-row gap-1 border border-border rounded-xl px-3 py-1.5">
+                  <Text className="text-sm">{categoriesMap[item]?.name}</Text>
+                </View>
+              )}
+              contentContainerClassName="gap-4"
+            />
+          </View>
+        ) : null}
+        {filters.accounts.length > 0 ? (
+          <View className="flex flex-row gap-2 items-center">
+            <Text className="text-sm font-medium">Accounts:</Text>
+            <FlatList
+              data={filters.accounts}
+              horizontal
+              keyExtractor={(item) => item}
+              renderItem={({ item }) => (
+                <View className="flex-row gap-1 border border-border rounded-xl px-3 py-1.5">
+                  <Text className="text-sm">{accountsMap[item]?.name}</Text>
+                </View>
+              )}
+              contentContainerClassName="gap-4"
+            />
+          </View>
+        ) : null}
+        {filters.types.length > 0 ? (
+          <View className="flex flex-row gap-2 items-center">
+            <Text className="text-sm font-medium">Transaction type:</Text>
+            <FlatList
+              data={filters.types}
+              horizontal
+              keyExtractor={(item) => item}
+              renderItem={({ item }) => (
+                <View className="flex-row gap-1 border border-border rounded-xl px-3 py-1.5">
+                  <Text className="text-sm capitalize">{item}</Text>
+                </View>
+              )}
+              contentContainerClassName="gap-4"
+            />
+          </View>
+        ) : null}
       </View>
 
       <FlatList
@@ -109,5 +134,42 @@ const Search = () => {
     </ScreenWrapper>
   );
 };
+
+const searchTransactions = memoizeWithArgs((transactions: Array<Transaction>, search: string) => {
+  return transactions.filter((transaction) => {
+    const matchesTitle =
+      transaction.title && transaction.title.toLowerCase().includes(search.trim().toLowerCase());
+    const matchesNote =
+      transaction.note && transaction.note.toLowerCase().includes(search.trim().toLowerCase());
+
+    return matchesTitle || matchesNote;
+  });
+});
+
+const debouncedSearchTransactions = debounce(searchTransactions, 200, {
+  leading: true,
+  trailing: true,
+});
+
+const filterTransactions = memoizeWithArgs(
+  (
+    transactions: Array<Transaction>,
+    { search, filters, period }: { search: string; filters: Filters; period: TimePeriod }
+  ) => {
+    const transactionsForPeriod =
+      groupTransactionsByPeriod[period.period](transactions)[dateToKey(period)] || [];
+
+    const transactionsForSearch = debouncedSearchTransactions(transactionsForPeriod, search);
+
+    const transactionsForFilters = transactionsForSearch.filter(
+      (transaction) =>
+        (filters.accounts.length === 0 || filters.accounts.includes(transaction.accountID)) &&
+        (filters.categories.length === 0 || filters.categories.includes(transaction.categoryID)) &&
+        (filters.types.length === 0 || filters.types.includes(transaction.type))
+    );
+
+    return transactionsForFilters;
+  }
+);
 
 export default Search;

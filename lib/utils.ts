@@ -112,6 +112,15 @@ export const groupTransactionsByYear = memoize((transactions: Array<Transaction>
   }, {} as Partial<Record<string, Array<Transaction>>>)
 );
 
+export const groupTransactionsByPeriod = {
+  monthly: groupTransactionsByMonth,
+  annually: groupTransactionsByYear,
+  weekly: groupTransactionsByWeek,
+  // using a proxy so any string key returns the transaction array
+  "all time": (transactions: Array<Transaction>) =>
+    new Proxy<Record<string, Array<Transaction>>>({}, { get: () => transactions }),
+} satisfies Record<TimePeriod["period"], unknown>;
+
 // used to index transactions grouped by date functions above
 export const dateToKey = ({ period, date }: TimePeriod) => {
   switch (period) {

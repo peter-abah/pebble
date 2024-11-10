@@ -1,8 +1,8 @@
 // todo: move gen types to separate file
 export type PartialRecord<K extends string | number | symbol, T> = Partial<Record<K, T>>;
-export type AtLeast<T, K extends keyof T> = Partial<T> & Pick<T, K>
+export type AtLeast<T, K extends keyof T> = Partial<T> & Pick<T, K>;
 
-export const TRANSACTION_TYPES = ["debit", "credit", "transfer"] as const;
+export const TRANSACTION_TYPES = ["expense", "income", "transfer"] as const;
 export type TransactionType = (typeof TRANSACTION_TYPES)[number];
 
 export interface WithTimestamps {

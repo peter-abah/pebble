@@ -17,9 +17,7 @@ import { useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
 import {
   dateToKey,
-  groupTransactionsByMonth,
-  groupTransactionsByWeek,
-  groupTransactionsByYear,
+  groupTransactionsByPeriod
 } from "@/lib/utils";
 import dayjs from "dayjs";
 import { Link, router, useLocalSearchParams } from "expo-router";
@@ -50,22 +48,15 @@ const AccountScreen = () => {
       .sort((a, b) => b.datetime.localeCompare(a.datetime));
   }, [transactions, account]);
 
-  const groupedTransactions: Record<
-    TimePeriod["period"],
-    Partial<Record<string, Array<Transaction>>>
-  > = {
-    monthly: groupTransactionsByMonth(accountTransactions),
-    annually: groupTransactionsByYear(accountTransactions),
-    weekly: groupTransactionsByWeek(accountTransactions),
-  };
-
   const currentTransactions =
-    groupedTransactions[currentTimePeriod.period][dateToKey(currentTimePeriod)];
+    groupTransactionsByPeriod[currentTimePeriod.period](accountTransactions)[
+      dateToKey(currentTimePeriod)
+    ];
   const income = useMemo(() => {
     if (!account) return createMoney(0, CURRENCIES.NGN);
 
     return (currentTransactions || [])
-      .filter((t) => t.type === "credit")
+      .filter((t) => t.type === "income")
       .reduce((a, b) => addMoney(a, b.amount), createMoney(0, account.currency));
   }, [currentTransactions, account]);
 
@@ -73,7 +64,7 @@ const AccountScreen = () => {
     if (!account) return createMoney(0, CURRENCIES.NGN);
 
     return (currentTransactions || [])
-      ?.filter((t) => t.type === "debit")
+      ?.filter((t) => t.type === "expense")
       .reduce((a, b) => addMoney(a, b.amount), createMoney(0, account.currency));
   }, [currentTransactions, account]);
 

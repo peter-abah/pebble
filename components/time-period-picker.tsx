@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
@@ -16,7 +16,7 @@ import { Dayjs } from "dayjs";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export const periods = ["monthly", "weekly", "annually"] as const;
+export const periods = ["monthly", "weekly", "annually", "all time"] as const;
 export interface TimePeriod {
   period: (typeof periods)[number];
   date: Dayjs;
@@ -69,16 +69,18 @@ function TimePeriodPicker({ timePeriod, onValueChange }: TimePeriodPickerProps) 
   };
   return (
     <View className="flex-row items-center justify-between">
-      <View className="flex-row gap-1 items-center">
-        <Button variant={"ghost"} size="icon" onPress={decrementDate} className="-ml-2">
-          <ChevronLeftIcon className="text-foreground" size={20} />
-        </Button>
-        <Text className="font-semibold">{renderDate(timePeriod)}</Text>
-        <Button variant={"ghost"} size="icon" onPress={incrementDate}>
-          <ChevronRightIcon className="text-foreground" size={20} />
-        </Button>
-      </View>
-      <View className="flex-row gap-2 items-center">
+      {timePeriod.period !== "all time" ? (
+        <View className="flex-row gap-1 items-center">
+          <Button variant={"ghost"} size="icon" onPress={decrementDate} className="-ml-2">
+            <ChevronLeftIcon className="text-foreground" size={20} />
+          </Button>
+          <Text className="font-semibold">{renderDate(timePeriod)}</Text>
+          <Button variant={"ghost"} size="icon" onPress={incrementDate}>
+            <ChevronRightIcon className="text-foreground" size={20} />
+          </Button>
+        </View>
+      ) : null}
+      <View className="flex-row gap-2 items-center ml-auto">
         <Select
           value={{ value: timePeriod.period, label: titleCase(timePeriod.period) }}
           onValueChange={handlePeriodChange}

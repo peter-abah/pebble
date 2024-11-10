@@ -19,6 +19,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
 import ColorPicker from "./color-picker";
 import IconPicker from "./icon-picker";
+import { titleCase } from "@/lib/utils";
 
 const emojiAtStartPattern = new RegExp(`^${emojiPattern}`);
 const formSchema = z
@@ -112,7 +113,7 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
               <Select
-                value={{ value, label: value && (value === "debit" ? "Expenses" : "Income") }}
+                value={value && { value, label: titleCase(value) }}
                 onValueChange={(option) => onChange(option?.value)}
               >
                 <SelectTrigger className="w-full" aria-aria-labelledby="type">
@@ -165,7 +166,6 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
           />
         </View>
         <View className="flex-row gap-4">
-          {/* TODO: extract to component, color picker */}
           <View className="gap-2 relative flex-1">
             <Label nativeID="color" className="text-lg">
               Color

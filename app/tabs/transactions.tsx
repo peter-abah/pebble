@@ -7,12 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { SearchIcon } from "@/lib/icons/Search";
 import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
-import { Transaction } from "@/lib/types";
 import {
   dateToKey,
-  groupTransactionsByMonth,
-  groupTransactionsByWeek,
-  groupTransactionsByYear,
+  groupTransactionsByPeriod
 } from "@/lib/utils";
 import dayjs from "dayjs";
 import { Link } from "expo-router";
@@ -22,14 +19,6 @@ import { FlatList } from "react-native-gesture-handler";
 
 const Transactions = () => {
   const transactions = useAppStore(getSortedTransactionsByDate);
-  const groupedTransactions: Record<
-    TimePeriod["period"],
-    Partial<Record<string, Array<Transaction>>>
-  > = {
-    monthly: groupTransactionsByMonth(transactions),
-    annually: groupTransactionsByYear(transactions),
-    weekly: groupTransactionsByWeek(transactions),
-  };
 
   const [currentTimePeriod, setCurrentTimePeriod] = useState<TimePeriod>(() => ({
     date: dayjs(),
@@ -37,7 +26,7 @@ const Transactions = () => {
   }));
 
   const currentTransactions =
-    groupedTransactions[currentTimePeriod.period][dateToKey(currentTimePeriod)];
+    groupTransactionsByPeriod[currentTimePeriod.period](transactions)[dateToKey(currentTimePeriod)];
 
   return (
     <ScreenWrapper className="!pb-6">

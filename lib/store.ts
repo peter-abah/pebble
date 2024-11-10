@@ -58,7 +58,7 @@ const DEFAULT_STATE: AppStateProperties = {
   transactions: {},
   categories: arrayToMap(categories, "id"),
   chartColors,
-  defaultAccountID: "1",
+  defaultAccountID: accounts[0].id,
   _hasHydrated: false,
 };
 
@@ -74,10 +74,10 @@ export const useAppStore = create<AppState>()(
             const account = state.accounts[accountID];
             if (account) {
               switch (type) {
-                case "debit":
+                case "expense":
                   account.balance = subtractMoney(account.balance, amount);
                   break;
-                case "credit":
+                case "income":
                   account.balance = addMoney(account.balance, amount);
                   break;
                 case "transfer":
@@ -111,10 +111,10 @@ export const useAppStore = create<AppState>()(
             if (prevAccount) {
               // TODO: encapsulate in a function
               switch (prevTransaction.type) {
-                case "debit":
+                case "expense":
                   prevAccount.balance = addMoney(prevAccount.balance, prevTransaction.amount);
                   break;
-                case "credit":
+                case "income":
                   prevAccount.balance = subtractMoney(prevAccount.balance, prevTransaction.amount);
                   break;
                 case "transfer":
@@ -135,10 +135,10 @@ export const useAppStore = create<AppState>()(
             const account = state.accounts[updatedTransaction.accountID];
             if (account) {
               switch (updatedTransaction.type) {
-                case "debit":
+                case "expense":
                   account.balance = subtractMoney(account.balance, updatedTransaction.amount);
                   break;
-                case "credit":
+                case "income":
                   account.balance = addMoney(account.balance, updatedTransaction.amount);
                   break;
                 case "transfer":
@@ -164,10 +164,10 @@ export const useAppStore = create<AppState>()(
             if (account) {
               // TODO: encapsulate in a function
               switch (type) {
-                case "debit":
+                case "expense":
                   account.balance = addMoney(account.balance, amount);
                   break;
-                case "credit":
+                case "income":
                   account.balance = subtractMoney(account.balance, amount);
                   break;
                 case "transfer":
@@ -262,7 +262,7 @@ export const useAppStore = create<AppState>()(
     })),
     {
       name: "app-storage",
-      version: 0,
+      version: 2, // TODO: change back to 0
       storage: createJSONStorage(() => (Platform.OS === "web" ? localStorage : AsyncStorage)),
       onRehydrateStorage: (state) => {
         return () => state.actions.updateState("_hasHydrated", true);

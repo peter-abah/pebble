@@ -48,7 +48,7 @@ const CreateTransaction = () => {
           title: "",
           datetime: new Date(),
           note: "",
-          type: "debit",
+          type: "expense",
           accountID: paramsAccountID || defaultAccountID,
         }}
         onSubmit={onSubmit}

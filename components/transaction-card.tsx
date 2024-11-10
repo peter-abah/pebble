@@ -38,7 +38,7 @@ const TransactionCard = ({ transaction }: TransactionCardProps) => {
 
         <View className="ml-auto items-end">
           <Text className="font-bold text-lg">
-            {transaction.type === "debit" && "-"}
+            {transaction.type === "expense" && "-"}
             {formatMoney(transaction.amount)}
           </Text>
           <Text>{renderDate(transaction.datetime)}</Text>

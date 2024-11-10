@@ -5,7 +5,7 @@ import { Account, TransactionCategory } from "./types";
 
 export const accounts: Array<Account> = [
   {
-    name: "Account",
+    name: "Main",
     id: "1",
     balance: createMoney(0, CURRENCIES.NGN),
     currency: CURRENCIES.NGN,
@@ -19,7 +19,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Groceries",
     id: "1",
-    type: "debit",
+    type: "expense",
     color: "#33cc33", // hsla(120 60% 50%)
     icon: { emoji: "🛒", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -28,7 +28,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Rent",
     id: "2",
-    type: "debit",
+    type: "expense",
     color: "#3333cc", // hsla(240 60% 50%)
     icon: { emoji: "🏠", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -37,7 +37,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Utilities",
     id: "3",
-    type: "debit",
+    type: "expense",
     color: "#cccc33", // hsla(60 60% 50%)
     icon: { emoji: "💡", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -46,7 +46,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Transportation",
     id: "4",
-    type: "debit",
+    type: "expense",
     color: "#cc6633", // hsla(30 60% 50%)
     icon: { emoji: "🚗", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -55,7 +55,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Dining",
     id: "5",
-    type: "debit",
+    type: "expense",
     color: "#cc33cc", // hsla(300 60% 50%)
     icon: { emoji: "🍽️", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -64,7 +64,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Entertainment",
     id: "6",
-    type: "debit",
+    type: "expense",
     color: "#3399cc", // hsla(210 60% 50%)
     icon: { emoji: "🎬", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -73,7 +73,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Health",
     id: "7",
-    type: "debit",
+    type: "expense",
     color: "#66cc33", // hsla(90 60% 50%)
     icon: { emoji: "💊", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -82,7 +82,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Fitness",
     id: "8",
-    type: "debit",
+    type: "expense",
     color: "#cc3399", // hsla(330 60% 50%)
     icon: { emoji: "🏋️", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -91,7 +91,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Clothing",
     id: "9",
-    type: "debit",
+    type: "expense",
     color: "#9933cc", // hsla(270 60% 50%)
     icon: { emoji: "👗", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -100,7 +100,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Subscriptions",
     id: "10",
-    type: "debit",
+    type: "expense",
     color: "#33cccc", // hsla(180 60% 50%)
     icon: { emoji: "📺", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -109,7 +109,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Insurance",
     id: "11",
-    type: "debit",
+    type: "expense",
     color: "#33cc66", // hsla(150 60% 50%)
     icon: { emoji: "🛡️", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -118,7 +118,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Travel",
     id: "12",
-    type: "debit",
+    type: "expense",
     color: "#3366cc", // hsla(240 60% 45%) - slight tweak to make it unique
     icon: { emoji: "✈️", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -127,7 +127,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Gifts",
     id: "13",
-    type: "debit",
+    type: "expense",
     color: "#cc3399", // hsla(330 60% 55%) - already used
     icon: { emoji: "🎁", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -136,7 +136,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Education",
     id: "14",
-    type: "debit",
+    type: "expense",
     color: "#cccc66", // hsla(60 60% 55%) - slight tweak
     icon: { emoji: "🎓", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -145,7 +145,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Home Improvement",
     id: "15",
-    type: "debit",
+    type: "expense",
     color: "#33cc33", // hsla(120 60% 55%)
     icon: { emoji: "🔨", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -154,7 +154,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Pets",
     id: "16",
-    type: "debit",
+    type: "expense",
     color: "#33cccc", // hsla(180 60% 45%) - adjusted saturation
     icon: { emoji: "🐕", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -163,7 +163,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Investments",
     id: "17",
-    type: "credit",
+    type: "income",
     color: "#9933cc", // hsla(270 60% 45%)
     icon: { emoji: "📈", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -172,7 +172,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Charity",
     id: "18",
-    type: "debit",
+    type: "expense",
     color: "#3399cc", // hsla(210 60% 55%)
     icon: { emoji: "❤️", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -181,7 +181,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Taxes",
     id: "19",
-    type: "debit",
+    type: "expense",
     color: "#66cc66", // hsla(90 60% 45%) - slight tweak
     icon: { emoji: "💰", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -190,7 +190,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Miscellaneous",
     id: "20",
-    type: "debit",
+    type: "expense",
     color: "#cc6633", // hsla(30 60% 55%) - slight tweak
     icon: { emoji: "📦", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -199,7 +199,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Salary",
     id: "21",
-    type: "credit",
+    type: "income",
     color: "#3399cc", // hsla(200 60% 55%)
     icon: { emoji: "💼", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -208,7 +208,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Freelance Income",
     id: "22",
-    type: "credit",
+    type: "income",
     color: "#6644cc", // hsla(250 60% 45%)
     icon: { emoji: "🖥️", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -217,7 +217,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Bonus",
     id: "23",
-    type: "credit",
+    type: "income",
     color: "#33cc66", // hsla(160 60% 55%)
     icon: { emoji: "💸", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -226,7 +226,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Interest",
     id: "24",
-    type: "credit",
+    type: "income",
     color: "#66cc33", // hsla(100 60% 55%)
     icon: { emoji: "🏦", type: "emoji" },
     createdAt: new Date().toISOString(),
@@ -235,7 +235,7 @@ export const categories: Array<TransactionCategory> = [
   {
     name: "Rental Income",
     id: "25",
-    type: "credit",
+    type: "income",
     color: "#3366cc", // hsla(220 60% 45%) - slight tweak
     icon: { emoji: "🏢", type: "emoji" },
     createdAt: new Date().toISOString(),
