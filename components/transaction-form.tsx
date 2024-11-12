@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import * as LabelPrimitive from "@rn-primitives/label";
 import { Text } from "@/components/ui/text";
 import { Textarea } from "@/components/ui/textarea";
 import { CURRENCIES } from "@/lib/money";
@@ -23,7 +24,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
 
-const formSchema = z.object({
+const baseTransactionFormSchema = z.object({
   amount: z.union([
     z
       .string()
@@ -34,14 +35,52 @@ const formSchema = z.object({
   ]),
   datetime: z.date(),
   title: z.string().optional(),
-  categoryID: z.string().min(1, { message: "Select category" }),
-  accountID: z.string().min(1, { message: "Select account" }),
   note: z.string().optional(),
-  type: z.enum(TRANSACTION_TYPES),
 });
 
+const transferTransactionFormSchema = z
+  .object({
+    from: z.string().min(1, { message: "Select sending account" }),
+    to: z.string().min(1, { message: "Select receiving account" }),
+    exchangeRate: z.union([
+      z
+        .string()
+        .refine(isStringNumeric, { message: "Enter a number" })
+        .transform(Number)
+        .refine((v) => v > 0, { message: "Exchange rate must be greater than zero." }),
+      z
+        .number({ message: "Exchange rate is required" })
+        .gt(0, { message: "Exchange rate must be greater than zero." }),
+    ]),
+    type: z.literal("transfer"),
+  })
+  .merge(baseTransactionFormSchema);
+
+const normalTransactionFormSchema = z
+  .object({
+    categoryID: z.string().min(1, { message: "Select category" }),
+    accountID: z.string().min(1, { message: "Select account" }),
+    type: z.enum(["expense", "income"]),
+  })
+  .merge(baseTransactionFormSchema);
+
+const formSchema = z
+  .discriminatedUnion("type", [transferTransactionFormSchema, normalTransactionFormSchema])
+  .refine(
+    (data) => {
+      if (data.type !== "transfer") return true;
+      return data.from !== data.to;
+    },
+    {
+      message: "Receiving account cannot be same Sending account",
+      path: ["to"],
+    }
+  );
+
 export type FormSchema = z.infer<typeof formSchema>;
+
 // TODO: zod is slow, probably due to handlimg large immutable data, research on it and fix
+// THAT IS PROBABLY A ZUSTAND PROBLEM RATHER THAN ZOD, STILL TIME IT
 interface TransactionFormProps {
   defaultValues: Partial<FormSchema>;
   onSubmit: (values: FormSchema) => void;
@@ -51,19 +90,18 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
   const accountsMap = useAppStore((state) => state.accounts);
   const accounts = Object.values(accountsMap) as Array<Account>;
 
-  const {
-    control,
-    handleSubmit,
-    watch,
-  } = useForm<FormSchema>({
+  const { control, handleSubmit, watch } = useForm<FormSchema>({
     defaultValues,
     resolver: zodResolver(formSchema),
   });
 
-  const account = accountsMap[watch("accountID")];
-  // TODO: wrong behavior, also currency should be from transaction (edit) before checking account, for new
-  const currency = account?.currency || CURRENCIES.NGN;
   const type = watch("type");
+  const account = accountsMap[watch("accountID")];
+  const fromAccount = accountsMap[watch("from")];
+  const toAccount = accountsMap[watch("to")];
+  // TODO: wrong behavior, also currency should be from transaction (edit) before checking account, for new
+  const currency =
+    (type === "transfer" ? fromAccount?.currency : account?.currency) || CURRENCIES.NGN;
   const categoriesList = (Object.values(categories) as Array<TransactionCategory>).filter(
     (c) => c.type === type || !c.type
   );
@@ -132,67 +170,162 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
           />
         </View>
 
-        <View className="gap-2">
-          <Label nativeID="accountID" className="text-lg">
-            Account
-          </Label>
-          <Controller
-            control={control}
-            render={({ field: { value, onChange, onBlur } }) => (
-              <Select
-                value={{ value, label: value && (accountsMap[value]?.name || "Unknown") }}
-                onValueChange={(option) => onChange(option?.value)}
-              >
-                <SelectTrigger className="w-full" aria-aria-labelledby="type">
-                  <SelectValue
-                    className="text-foreground text-sm native:text-lg"
-                    placeholder="Select Account"
-                  />
-                </SelectTrigger>
-                <SelectContent insets={contentInsets} className="w-full">
-                  <SelectGroup>
-                    {accounts.map((account) => (
-                      <SelectItem key={account.id} label={account.name} value={account.id} />
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            )}
-            name="accountID"
-          />
-        </View>
+        {type === "transfer" ? (
+          <>
+            <View className="gap-2">
+              <Label nativeID="from" className="text-lg">
+                From
+              </Label>
+              <Controller
+                control={control}
+                render={({ field: { value, onChange, onBlur } }) => (
+                  <Select
+                    value={{ value, label: value && (accountsMap[value]?.name || "Unknown") }}
+                    onValueChange={(option) => onChange(option?.value)}
+                  >
+                    <SelectTrigger className="w-full" aria-labelledby="to">
+                      <SelectValue
+                        className="text-foreground text-sm native:text-lg"
+                        placeholder="Select Sending Account"
+                      />
+                    </SelectTrigger>
+                    <SelectContent insets={contentInsets} className="w-full">
+                      <SelectGroup>
+                        {accounts.map((account) => (
+                          <SelectItem key={account.id} label={account.name} value={account.id} />
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                )}
+                name="from"
+              />
+            </View>
 
-        <View className="gap-2 relative">
-          <Label nativeID="category" className="text-lg">
-            Category
-          </Label>
-          <Controller
-            control={control}
-            render={({ field: { value, onChange, onBlur } }) => (
-              <Select
-                value={{ value, label: value && (categories[value]?.name || "Unknown") }}
-                onValueChange={(option) => onChange(option?.value)}
+            <View className="gap-2">
+              <Label nativeID="to" className="text-lg">
+                To
+              </Label>
+              <Controller
+                control={control}
+                render={({ field: { value, onChange, onBlur } }) => (
+                  <Select
+                    value={{ value, label: value && (accountsMap[value]?.name || "Unknown") }}
+                    onValueChange={(option) => onChange(option?.value)}
+                  >
+                    <SelectTrigger className="w-full" aria-labelledby="to">
+                      <SelectValue
+                        className="text-foreground text-sm native:text-lg"
+                        placeholder="Select Receiving Account"
+                      />
+                    </SelectTrigger>
+                    <SelectContent insets={contentInsets} className="w-full">
+                      <SelectGroup>
+                        {accounts.map((account) => (
+                          <SelectItem key={account.id} label={account.name} value={account.id} />
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                )}
+                name="to"
+              />
+            </View>
+
+            <View className="gap-2">
+              <LabelPrimitive.Root
+                nativeID="exchangeRate"
+                className="text-lg flex-row gap-1 items-center"
               >
-                <SelectTrigger className="w-full" aria-aria-labelledby="type">
-                  <SelectValue
-                    className="text-foreground text-sm native:text-lg"
-                    placeholder="Select Category"
+                <Text>Exchange rate</Text>
+                {fromAccount && toAccount ? (
+                  <Text className="text-xs">
+                    ({fromAccount.currency.isoCode} to {toAccount.currency.isoCode})
+                  </Text>
+                ) : null}
+              </LabelPrimitive.Root>
+              <Controller
+                control={control}
+                render={({ field: { value, onChange, onBlur } }) => (
+                  <TextInput
+                    className="px-3 py-2 border border-border rounded"
+                    value={value === undefined ? "" : value.toString()}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    aria-labelledby="exchangeRate"
+                    inputMode="numeric"
+                    placeholder="Enter exchange rate"
                   />
-                </SelectTrigger>
-                <SelectContent insets={contentInsets} className="w-full">
-                  <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
-                    {categoriesList.map((category) => (
-                      <SelectItem key={category.id} label={category.name} value={category.id}>
-                        {category.name}
-                      </SelectItem>
-                    ))}
-                  </ScrollView>
-                </SelectContent>
-              </Select>
-            )}
-            name="categoryID"
-          />
-        </View>
+                )}
+                name="exchangeRate"
+              />
+            </View>
+          </>
+        ) : (
+          <>
+            <View className="gap-2">
+              <Label nativeID="accountID" className="text-lg">
+                Account
+              </Label>
+              <Controller
+                control={control}
+                render={({ field: { value, onChange, onBlur } }) => (
+                  <Select
+                    value={{ value, label: value && (accountsMap[value]?.name || "Unknown") }}
+                    onValueChange={(option) => onChange(option?.value)}
+                  >
+                    <SelectTrigger className="w-full" aria-aria-labelledby="type">
+                      <SelectValue
+                        className="text-foreground text-sm native:text-lg"
+                        placeholder="Select Account"
+                      />
+                    </SelectTrigger>
+                    <SelectContent insets={contentInsets} className="w-full">
+                      <SelectGroup>
+                        {accounts.map((account) => (
+                          <SelectItem key={account.id} label={account.name} value={account.id} />
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                )}
+                name="accountID"
+              />
+            </View>
+
+            <View className="gap-2 relative">
+              <Label nativeID="category" className="text-lg">
+                Category
+              </Label>
+              <Controller
+                control={control}
+                render={({ field: { value, onChange, onBlur } }) => (
+                  <Select
+                    value={{ value, label: value && (categories[value]?.name || "Unknown") }}
+                    onValueChange={(option) => onChange(option?.value)}
+                  >
+                    <SelectTrigger className="w-full" aria-aria-labelledby="type">
+                      <SelectValue
+                        className="text-foreground text-sm native:text-lg"
+                        placeholder="Select Category"
+                      />
+                    </SelectTrigger>
+                    <SelectContent insets={contentInsets} className="w-full">
+                      <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
+                        {categoriesList.map((category) => (
+                          <SelectItem key={category.id} label={category.name} value={category.id}>
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                      </ScrollView>
+                    </SelectContent>
+                  </Select>
+                )}
+                name="categoryID"
+              />
+            </View>
+          </>
+        )}
 
         <View className="gap-2">
           <Label nativeID="date" className="text-lg">

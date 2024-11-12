@@ -1,6 +1,8 @@
 // todo: move gen types to separate file
 export type PartialRecord<K extends string | number | symbol, T> = Partial<Record<K, T>>;
 export type AtLeast<T, K extends keyof T> = Partial<T> & Pick<T, K>;
+export type DistributiveOmit<T, K extends keyof any> = T extends any ? Omit<T, K> : never;
+export type DistributivePartial<T> = T extends any ? Partial<T> : never;
 
 export const TRANSACTION_TYPES = ["expense", "income", "transfer"] as const;
 export type TransactionType = (typeof TRANSACTION_TYPES)[number];
@@ -50,14 +52,33 @@ export interface Account extends WithTimestamps {
   currency: Currency;
 }
 
-export interface Transaction extends WithTimestamps {
+export interface ExchangeRate {
+  from: Currency;
+  to: Currency;
+  rate: number;
+}
+
+interface BaseTransaction extends WithTimestamps {
   id: string; // unique
   amount: Money;
   datetime: string;
-  type: TransactionType;
-  categoryID: TransactionCategory["id"];
-  accountID: Account["id"];
   title?: string;
   note?: string;
   tags?: Array<string>;
 }
+
+interface NormalTransaction extends BaseTransaction {
+  type: "expense" | "income";
+  categoryID: TransactionCategory["id"];
+  accountID: Account["id"];
+}
+
+interface TransferTransaction extends BaseTransaction {
+  type: "transfer";
+  from: Account["id"];
+  to: Account["id"];
+  // categoryID?: undefined;
+  exchangeRate: ExchangeRate;
+}
+
+export type Transaction = NormalTransaction | TransferTransaction;

@@ -6,18 +6,16 @@ import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { TrashIcon } from "@/lib/icons/Trash";
-import { CURRENCIES, createMoney, getMoneyValueInMajorUnits } from "@/lib/money";
+import { createMoney, getMoneyValueInMajorUnits } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { router, useLocalSearchParams } from "expo-router";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 
-// TODO: add toasts
 const EditTransaction = () => {
   const { id } = useLocalSearchParams() as { id: string };
   const { updateTransaction, deleteTransaction } = useAppStore((state) => state.actions);
   const transaction = useAppStore((state) => state.transactions[id]);
-  const mainAccount = useAppStore((state) => state.accounts[state.defaultAccountID]);
-  const currency = mainAccount?.currency || CURRENCIES.NGN;
+  const accountsMap = useAppStore((state) => state.accounts);
 
   const onDelete = () => {
     if (!transaction) return;
@@ -31,20 +29,57 @@ const EditTransaction = () => {
     onConfirm: onDelete,
   });
 
-  const onSubmit = ({ amount, title, note, type, categoryID, datetime }: FormSchema) => {
+  const onSubmit = (data: FormSchema) => {
     if (!transaction) return;
 
-    updateTransaction({
-      id: transaction.id,
-      amount: createMoney(amount, currency),
-      type,
-      categoryID,
-      title,
-      note,
-      accountID: transaction.accountID,
-      datetime: datetime.toISOString(),
-    });
-    router.replace("/");
+    const { amount, title, note, type, datetime } = data;
+    if (type === "transfer") {
+      const { from, to, exchangeRate } = data;
+
+      const fromCurrency = accountsMap[from]?.currency;
+      const toCurrency = accountsMap[to]?.currency;
+      if (!fromCurrency) {
+        Alert.alert("Sending account does not have a currency");
+        return;
+      }
+      if (!toCurrency) {
+        Alert.alert("Receiving account does not have a currency");
+        return;
+      }
+
+      updateTransaction({
+        ...transaction,
+        amount: createMoney(amount, fromCurrency),
+        type,
+        from,
+        to,
+        title,
+        note,
+        exchangeRate: { from: fromCurrency, to: toCurrency, rate: exchangeRate },
+        datetime: datetime.toISOString(),
+      });
+    } else {
+      const { accountID, categoryID } = data;
+
+      const currency = accountsMap[accountID]?.currency;
+      if (!currency) {
+        Alert.alert("Account does not have a currency");
+        return;
+      }
+
+      updateTransaction({
+        ...transaction,
+        amount: createMoney(amount, currency),
+        type,
+        categoryID,
+        title,
+        note,
+        accountID,
+        datetime: datetime.toISOString(),
+      });
+    }
+
+    router.back();
   };
 
   if (!transaction) {
@@ -78,10 +113,15 @@ const EditTransaction = () => {
           title: transaction.title,
           datetime: new Date(transaction.datetime),
           note: transaction.note,
-          categoryID: transaction.categoryID,
           type: transaction.type,
-          accountID: transaction.accountID,
           amount: getMoneyValueInMajorUnits(transaction.amount),
+          ...(transaction.type === "transfer"
+            ? {
+                from: transaction.from,
+                to: transaction.to,
+                exchangeRate: transaction.exchangeRate.rate,
+              }
+            : { categoryID: transaction.categoryID, accountID: transaction.accountID }),
         }}
         onSubmit={onSubmit}
       />

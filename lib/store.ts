@@ -1,8 +1,9 @@
-import { CURRENCIES, addMoney, subtractMoney } from "@/lib/money";
+import { CURRENCIES, addMoney, convertMoney, subtractMoney } from "@/lib/money";
 import {
   Account,
   AtLeast,
   Currency,
+  DistributiveOmit,
   Transaction,
   TransactionCategory,
   WithTimestamps,
@@ -32,8 +33,8 @@ export interface AppStateProperties {
 }
 
 export interface AppStateActions {
-  addTransaction: (transaction: Omit<Transaction, "id" | keyof WithTimestamps>) => void;
-  updateTransaction: (transaction: AtLeast<Transaction, "id">) => void;
+  addTransaction: (transaction: DistributiveOmit<Transaction, "id" | keyof WithTimestamps>) => void;
+  updateTransaction: (transaction: Transaction) => void;
   deleteTransaction: (transactionID: Transaction["id"]) => void;
   addCategory: (category: Omit<TransactionCategory, "id" | keyof WithTimestamps>) => void;
   updateCategory: (category: AtLeast<TransactionCategory, "id">) => void;
@@ -43,6 +44,10 @@ export interface AppStateActions {
   deleteAccount: (accountID: Account["id"]) => void;
   updateState: <K extends keyof AppStateProperties>(key: K, value: AppStateProperties[K]) => void;
   reset: () => void;
+  _updateAccountBalanceForNewTransaction: (
+    transaction: DistributiveOmit<Transaction, "id" | keyof WithTimestamps>
+  ) => void;
+  _updateAccountBalanceForRemovedTransaction: (transaction: Transaction) => void;
 }
 
 export interface AppState extends AppStateProperties {
@@ -64,30 +69,97 @@ const DEFAULT_STATE: AppStateProperties = {
 
 export const useAppStore = create<AppState>()(
   persist(
-    immer((set) => ({
+    immer((set, get) => ({
       ...DEFAULT_STATE,
 
       actions: {
-        addTransaction: (transaction) => {
+        _updateAccountBalanceForNewTransaction: (transaction) => {
           set((state) => {
-            const { type, accountID, amount } = transaction;
-            const account = state.accounts[accountID];
-            if (account) {
-              switch (type) {
-                case "expense":
-                  account.balance = subtractMoney(account.balance, amount);
-                  break;
-                case "income":
-                  account.balance = addMoney(account.balance, amount);
-                  break;
-                case "transfer":
-                // TODO: implements transfers, move amount from one account to other
-                // do nothing
-                default:
-                // do nothing
+            switch (transaction.type) {
+              case "expense": {
+                const account = state.accounts[transaction.accountID];
+                if (!account) {
+                  throw new Error(
+                    `Account with id ${transaction.accountID} does not exist. Transaction not created`
+                  );
+                }
+                account.balance = subtractMoney(account.balance, transaction.amount);
+
+                break;
+              }
+              case "income": {
+                const account = state.accounts[transaction.accountID];
+                if (!account) {
+                  throw new Error(
+                    `Account with id ${transaction.accountID} does not exist. Transaction not created`
+                  );
+                }
+                account.balance = addMoney(account.balance, transaction.amount);
+                break;
+              }
+              case "transfer": {
+                const fromAccount = state.accounts[transaction.from];
+                const toAccount = state.accounts[transaction.to];
+                if (!fromAccount || !toAccount) {
+                  throw new Error(
+                    `Accounts for transfer transaction does not exist. Transaction not created`
+                  );
+                }
+                fromAccount.balance = subtractMoney(fromAccount.balance, transaction.amount);
+                const convertedAmount = convertMoney(transaction.amount, transaction.exchangeRate);
+                toAccount.balance = addMoney(toAccount.balance, convertedAmount);
               }
             }
-
+          });
+        },
+        _updateAccountBalanceForRemovedTransaction: (transaction) => {
+          set((state) => {
+            switch (transaction.type) {
+              case "expense": {
+                const account = state.accounts[transaction.accountID];
+                if (!account) {
+                  // TODO: maybe throw an and handle in the app error?
+                  console.warn(
+                    `Account with id ${transaction.accountID} does not exist. Transaction not updated`
+                  );
+                  return;
+                }
+                account.balance = addMoney(account.balance, transaction.amount);
+                break;
+              }
+              case "income": {
+                const account = state.accounts[transaction.accountID];
+                if (!account) {
+                  // TODO: maybe throw an and handle in the app error?
+                  console.warn(
+                    `Account with id ${transaction.accountID} does not exist. Transaction not updated`
+                  );
+                  return;
+                }
+                account.balance = subtractMoney(account.balance, transaction.amount);
+                break;
+              }
+              case "transfer": {
+                const fromAccount = state.accounts[transaction.from];
+                const toAccount = state.accounts[transaction.to];
+                if (!fromAccount || !toAccount) {
+                  // TODO: maybe throw an and handle in the app error?
+                  console.warn(
+                    `Accounts for transfer transaction does not exist. Transaction not updated`
+                  );
+                  return;
+                }
+                fromAccount.balance = addMoney(fromAccount.balance, transaction.amount);
+                const convertedAmount = convertMoney(transaction.amount, transaction.exchangeRate);
+                toAccount.balance = subtractMoney(toAccount.balance, convertedAmount);
+              }
+            }
+          });
+        },
+        addTransaction: (transaction) => {
+          // update balance
+          get().actions._updateAccountBalanceForNewTransaction(transaction);
+          set((state) => {
             const id = nanoid();
             const timeStamp = new Date().toISOString();
             state.transactions[id] = {
@@ -99,87 +171,36 @@ export const useAppStore = create<AppState>()(
           });
         },
         updateTransaction: (transaction) => {
+          const state = get();
+          const prevTransaction = state.transactions[transaction.id];
+          if (!prevTransaction) {
+            // TODO: maybe throw error
+            console.warn("Cannot update transaction as it does not exist");
+            return;
+          }
+
+          // ? reverse previous change in account balance
+          state.actions._updateAccountBalanceForRemovedTransaction(prevTransaction);
+          // ? update balance
+          state.actions._updateAccountBalanceForNewTransaction(transaction);
+
           set((state) => {
-            const prevTransaction = state.transactions[transaction.id];
-            if (!prevTransaction) {
-              console.warn("Cannot update transaction as it does not update");
-              return;
-            }
-
-            // ?reverse previous change in account balance
-            const prevAccount = state.accounts[prevTransaction.accountID];
-            if (prevAccount) {
-              // TODO: encapsulate in a function
-              switch (prevTransaction.type) {
-                case "expense":
-                  prevAccount.balance = addMoney(prevAccount.balance, prevTransaction.amount);
-                  break;
-                case "income":
-                  prevAccount.balance = subtractMoney(prevAccount.balance, prevTransaction.amount);
-                  break;
-                case "transfer":
-                // do nothing for now
-                // TODO: implements transfers, move amount from one account to other
-                default:
-                // do nothing
-              }
-            }
-
-            const timestamp = new Date().toISOString();
-            const updatedTransaction: Transaction = {
-              ...prevTransaction,
+            state.transactions[transaction.id] = {
               ...transaction,
-              updatedAt: timestamp,
+              updatedAt: new Date().toISOString(),
             };
-
-            const account = state.accounts[updatedTransaction.accountID];
-            if (account) {
-              switch (updatedTransaction.type) {
-                case "expense":
-                  account.balance = subtractMoney(account.balance, updatedTransaction.amount);
-                  break;
-                case "income":
-                  account.balance = addMoney(account.balance, updatedTransaction.amount);
-                  break;
-                case "transfer":
-                // TODO: implements transfers, move amount from one account to other
-                // do nothing
-                default:
-                // do nothing
-              }
-            }
-
-            state.transactions[updatedTransaction.id] = updatedTransaction;
           });
         },
 
         deleteTransaction: (transactionID) => {
+          const state = get();
+          const transaction = state.transactions[transactionID];
+          if (!transaction) return;
+          //? revert transaction from balance
+          state.actions._updateAccountBalanceForRemovedTransaction(transaction);
+
           set((state) => {
-            const transaction = state.transactions[transactionID];
-            if (!transaction) return;
-
-            // revert  transaction from balance
-            const { type, accountID, amount } = transaction;
-            const account = state.accounts[accountID];
-            if (account) {
-              // TODO: encapsulate in a function
-              switch (type) {
-                case "expense":
-                  account.balance = addMoney(account.balance, amount);
-                  break;
-                case "income":
-                  account.balance = subtractMoney(account.balance, amount);
-                  break;
-                case "transfer":
-                // do nothing for now
-                // TODO: implements transfers, move amount from one account to other
-                default:
-                // do nothing
-              }
-
-              // delete
-              delete state.transactions[transactionID];
-            }
+            delete state.transactions[transactionID];
           });
         },
 
@@ -214,8 +235,8 @@ export const useAppStore = create<AppState>()(
              * means a new array of thousands of transactions will be created for every change.
              * switch to a database later. sqlite or other options
              */
-            const relatedTransactions = Object.values(state.transactions).filter(
-              (t) => t?.categoryID === categoryID
+            const relatedTransactions = Object.values(state.transactions).filter((t) =>
+              t?.type === "transfer" ? false : t?.categoryID === categoryID
             ) as Array<Transaction>;
             relatedTransactions.forEach((transaction) =>
               state.actions.deleteTransaction(transaction.id)

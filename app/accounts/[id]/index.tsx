@@ -12,13 +12,10 @@ import { PencilIcon } from "@/lib/icons/Pencil";
 import { TrashIcon } from "@/lib/icons/Trash";
 import { TrendingDownIcon } from "@/lib/icons/TrendingDown";
 import { TrendingUpIcon } from "@/lib/icons/TrendingUp";
-import { CURRENCIES, addMoney, createMoney, formatMoney } from "@/lib/money";
+import { CURRENCIES, addMoney, convertMoney, createMoney, formatMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
-import {
-  dateToKey,
-  groupTransactionsByPeriod
-} from "@/lib/utils";
+import { dateToKey, groupTransactionsByPeriod } from "@/lib/utils";
 import dayjs from "dayjs";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { useMemo, useState } from "react";
@@ -44,7 +41,11 @@ const AccountScreen = () => {
     if (!account) return [];
     // filter transactions by account and sort by date in descending order
     return transactions
-      .filter((t) => t.accountID === account.id)
+      .filter((t) =>
+        t.type === "transfer"
+          ? t.to === account.id || t.from === account.id
+          : t.accountID === account.id
+      )
       .sort((a, b) => b.datetime.localeCompare(a.datetime));
   }, [transactions, account]);
 
@@ -56,15 +57,30 @@ const AccountScreen = () => {
     if (!account) return createMoney(0, CURRENCIES.NGN);
 
     return (currentTransactions || [])
-      .filter((t) => t.type === "income")
-      .reduce((a, b) => addMoney(a, b.amount), createMoney(0, account.currency));
+      .filter((t) => {
+        if (t.type === "transfer") {
+          return t.to === account.id;
+        }
+        return t.type === "income";
+      })
+      .reduce((acc, curr) => {
+        if (curr.type === "transfer") {
+          return addMoney(acc, convertMoney(curr.amount, curr.exchangeRate));
+        }
+        return addMoney(acc, curr.amount);
+      }, createMoney(0, account.currency));
   }, [currentTransactions, account]);
 
   const expenses = useMemo(() => {
     if (!account) return createMoney(0, CURRENCIES.NGN);
 
     return (currentTransactions || [])
-      ?.filter((t) => t.type === "expense")
+      ?.filter((t) => {
+        if (t.type === "transfer") {
+          return t.from === account.id;
+        }
+        return t.type === "expense";
+      })
       .reduce((a, b) => addMoney(a, b.amount), createMoney(0, account.currency));
   }, [currentTransactions, account]);
 

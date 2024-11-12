@@ -29,6 +29,11 @@ export const titleCase = (value: string) => {
   return value[0].toLocaleUpperCase() + value.slice(1);
 };
 
+export const roundToZeros = (num: number, zeros: number): number => {
+  const factor = Math.pow(10, zeros);
+  return Math.round(num / factor) * factor;
+};
+
 export const roundNumber = (num: number, dec: number) => {
   return Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
 };

@@ -10,7 +10,7 @@ import { WalletCardsIcon } from "@/lib/icons/WalletCards";
 import { CURRENCIES, createMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { Transaction, TransactionCategory } from "@/lib/types";
-import { randomElement } from "@/lib/utils";
+import { randomElement, roundToZeros } from "@/lib/utils";
 import dayjs, { Dayjs } from "dayjs";
 import { Link } from "expo-router";
 import { nanoid } from "nanoid";
@@ -19,8 +19,6 @@ import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 const More = () => {
-
-
   return (
     <ScreenWrapper>
       <View className="flex-row gap-4 items-center pt-8 px-6 py-4 justify-between">
@@ -231,8 +229,8 @@ const loadData = () => {
 
   function generateTransaction() {
     const appState = useAppStore.getState();
-    const today = dayjs();
-    const threeYearsAgo = today.subtract(3, "year");
+    const endDate = dayjs();
+    const startDate = endDate.subtract(2, "year");
     const type = randomElement(["expense", "income"] as const);
     const categoryID = randomElement(
       (Object.values(appState.categories) as Array<TransactionCategory>).filter(
@@ -240,12 +238,15 @@ const loadData = () => {
       )
     ).id;
     const title = randomElement(titles[categoryID]);
-    const amount = Math.round(Math.random() * (500_000 - 500) + 500);
+    const amount =
+      type === "expense"
+        ? roundToZeros(Math.random() * (500_000 - 500) + 500, 3)
+        : roundToZeros(Math.random() * (1_000_000 - 50_000) + 50_000, 3);
 
     return {
       id: nanoid(),
       amount: createMoney(amount, CURRENCIES.NGN),
-      datetime: randomDate(today, threeYearsAgo).toISOString(),
+      datetime: randomDate(startDate, endDate).toISOString(),
       type,
       categoryID,
       accountID: appState.defaultAccountID,
@@ -255,7 +256,7 @@ const loadData = () => {
 
   const appState = useAppStore.getState();
   appState.actions.reset();
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < 50; i++) {
     appState.actions.addTransaction(generateTransaction());
   }
 };

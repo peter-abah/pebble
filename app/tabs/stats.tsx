@@ -109,6 +109,10 @@ const Stats = () => {
 
 const createChartData = memoize((transactions: Array<Transaction>) => {
   const chartDataMap = transactions.reduce((result, transaction) => {
+    if (transaction.type === "transfer") {
+      return result;
+    }
+
     const dataItem = result[transaction.categoryID];
     if (dataItem) {
       result[transaction.categoryID] = {

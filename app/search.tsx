@@ -163,8 +163,15 @@ const filterTransactions = memoizeWithArgs(
 
     const transactionsForFilters = transactionsForSearch.filter(
       (transaction) =>
-        (filters.accounts.length === 0 || filters.accounts.includes(transaction.accountID)) &&
-        (filters.categories.length === 0 || filters.categories.includes(transaction.categoryID)) &&
+        (filters.accounts.length === 0 ||
+          (transaction.type === "transfer"
+            ? filters.accounts.includes(transaction.to) ||
+              filters.accounts.includes(transaction.from)
+            : filters.accounts.includes(transaction.accountID))) &&
+        (filters.categories.length === 0 ||
+          filters.categories.includes(
+            transaction.type === "transfer" ? "" : transaction.categoryID
+          )) &&
         (filters.types.length === 0 || filters.types.includes(transaction.type))
     );
 

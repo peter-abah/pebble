@@ -1,4 +1,4 @@
-import { Currency, Money } from "@/lib/types";
+import { Currency, ExchangeRate, Money } from "@/lib/types";
 import { roundNumber } from "@/lib/utils";
 
 export const CURRENCIES: Record<"NGN" | "USD", Currency> & Partial<Record<string, Currency>> = {
@@ -21,9 +21,23 @@ export const createMoney = (amountInMajorUnits: number, currency: Currency): Mon
   currency,
 });
 
+export const convertMoney = (amount: Money, exchangeRate: ExchangeRate): Money => {
+  if (exchangeRate.from.isoCode !== amount.currency.isoCode) {
+    throw new Error(
+      `Wrong exchange rate. ${amount.currency.name} does not match ${exchangeRate.from.name}`
+    );
+  }
+  return {
+    valueInMinorUnits: amount.valueInMinorUnits * exchangeRate.rate,
+    currency: exchangeRate.to,
+  };
+};
+
 export const addMoney = (a: Money, b: Money): Money => {
   if (a.currency.isoCode !== b.currency.isoCode) {
-    throw new Error("Money objects must match before they can be added");
+    throw new Error(
+      `Money objects must match before they can be added a:${a.currency.isoCode} b:${b.currency.isoCode}`
+    );
   }
   return {
     valueInMinorUnits: a.valueInMinorUnits + b.valueInMinorUnits,
