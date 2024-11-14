@@ -46,19 +46,19 @@ const TransactionCard = ({ transaction }: TransactionCardProps) => {
         <View>
           {transaction.type === "transfer" ? (
             <View className="flex flex-row gap-2 items-center">
-              <Text className="text-lg leading-none">{accounts[transaction.from]?.name}</Text>
+              <Text className="font-semibold leading-none">{accounts[transaction.from]?.name}</Text>
               <MaterialIcons name="arrow-right-alt" size={24} className="text-foreground" />
-              <Text className="text-lg leading-none">{accounts[transaction.to]?.name}</Text>
+              <Text className="font-semibold leading-none">{accounts[transaction.to]?.name}</Text>
             </View>
           ) : (
-            transaction.title && (
-              <Text className="text-lg font-semibold leading-none" numberOfLines={1}>
-                {category?.name}
-              </Text>
-            )
+            <Text className="font-semibold leading-none" numberOfLines={1}>
+              {transaction.title || category?.name}
+            </Text>
           )}
-          {transaction.type !== "transfer" && transaction.title && (
-            <Text className="font-medium  leading-none">{category?.name}</Text>
+          {transaction.title && (
+            <Text className="leading-none">
+              {transaction.type === "transfer" ? transaction.title : category?.name}
+            </Text>
           )}
         </View>
 
