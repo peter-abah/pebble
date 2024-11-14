@@ -26,7 +26,7 @@ export default function Home() {
             {accounts.slice(0, 2).map((account) => (
               <Link href={`/accounts/${account.id}`} asChild key={account.id}>
                 <Button
-                  className="h-auto p-4 flex-1 items-start justify-start gap-1 rounded-xl"
+                  className="h-auto p-4 flex-1 items-start justify-start gap-1 rounded-xl shrink-0"
                   style={{
                     backgroundColor: account.color || DEFAULT_GROUP_COLOR.color,
                   }}

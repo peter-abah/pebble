@@ -16,10 +16,10 @@ import * as LabelPrimitive from "@rn-primitives/label";
 
 import { useAppStore } from "@/lib/store";
 import { Account, TRANSACTION_TYPES, TransactionCategory } from "@/lib/types";
-import { isStringNumeric, titleCase } from "@/lib/utils";
+import { cn, isStringNumeric, titleCase } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import { TextInput, View } from "react-native";
+import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
@@ -89,8 +89,9 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
   const categories = useAppStore((state) => state.categories);
   const accountsMap = useAppStore((state) => state.accounts);
   const accounts = Object.values(accountsMap) as Array<Account>;
+  const exchangeRates = useAppStore((state) => state.exchangeRates);
 
-  const { control, handleSubmit, watch } = useForm<FormSchema>({
+  const { control, handleSubmit, watch, setValue } = useForm<FormSchema>({
     defaultValues,
     resolver: zodResolver(formSchema),
   });
@@ -117,7 +118,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
   return (
     <View style={{ flex: 1 }}>
       <ScrollView contentContainerClassName="py-4 gap-4" className="flex-1 px-6">
-        <View className="flex-row gap-1 items-center mb-6">
+        <View className="flex-row gap-1 items-center">
           <Text className="text-3xl font-semibold leading-none mt-1.5">{currency?.symbol}</Text>
           <Controller
             control={control}
@@ -171,162 +172,193 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
           />
         </View>
 
-        {type === "transfer" ? (
-          <>
-            <View className="gap-2">
-              <Label nativeID="from" className="text-lg">
-                From
-              </Label>
-              <Controller
-                control={control}
-                render={({ field: { value, onChange, onBlur } }) => (
-                  <Select
-                    value={{ value, label: value && (accountsMap[value]?.name || "Unknown") }}
-                    onValueChange={(option) => onChange(option?.value)}
-                  >
-                    <SelectTrigger className="w-full" aria-labelledby="to">
-                      <SelectValue
-                        className="text-foreground text-sm native:text-lg"
-                        placeholder="Select Sending Account"
-                      />
-                    </SelectTrigger>
-                    <SelectContent insets={contentInsets} className="w-full">
-                      <SelectGroup>
-                        {accounts.map((account) => (
-                          <SelectItem key={account.id} label={account.name} value={account.id} />
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                )}
-                name="from"
-              />
-            </View>
+        <View className={cn("gap-4", type !== "transfer" && "hidden")}>
+          <View className="gap-2">
+            <Label nativeID="from" className="text-lg">
+              From
+            </Label>
+            <Controller
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <Select
+                  value={
+                    value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
+                  }
+                  onValueChange={(option) => {
+                    onChange(option?.value);
+                    if (!option?.value) return;
 
-            <View className="gap-2">
-              <Label nativeID="to" className="text-lg">
-                To
-              </Label>
-              <Controller
-                control={control}
-                render={({ field: { value, onChange, onBlur } }) => (
-                  <Select
-                    value={{ value, label: value && (accountsMap[value]?.name || "Unknown") }}
-                    onValueChange={(option) => onChange(option?.value)}
-                  >
-                    <SelectTrigger className="w-full" aria-labelledby="to">
-                      <SelectValue
-                        className="text-foreground text-sm native:text-lg"
-                        placeholder="Select Receiving Account"
-                      />
-                    </SelectTrigger>
-                    <SelectContent insets={contentInsets} className="w-full">
-                      <SelectGroup>
-                        {accounts.map((account) => (
-                          <SelectItem key={account.id} label={account.name} value={account.id} />
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                )}
-                name="to"
-              />
-            </View>
+                    const fromCurrencyCode =
+                      accountsMap[option.value]?.currency.isoCode.toLocaleLowerCase();
+                    const toCurrencyCode = toAccount?.currency.isoCode.toLocaleLowerCase();
+                    if (!fromCurrencyCode || !toCurrencyCode) return;
 
-            <View className="gap-2">
-              <LabelPrimitive.Root
-                nativeID="exchangeRate"
-                className="text-lg flex-row gap-1 items-center"
-              >
-                <Text>Exchange rate</Text>
-                {fromAccount && toAccount ? (
-                  <Text className="text-xs">
-                    ({fromAccount.currency.isoCode} to {toAccount.currency.isoCode})
-                  </Text>
-                ) : null}
-              </LabelPrimitive.Root>
-              <Controller
-                control={control}
-                render={({ field: { value, onChange, onBlur } }) => (
-                  <TextInput
-                    className="px-3 py-2 border border-border rounded"
-                    value={value === undefined ? "" : value.toString()}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                    aria-labelledby="exchangeRate"
-                    inputMode="numeric"
-                    placeholder="Enter exchange rate"
-                  />
-                )}
-                name="exchangeRate"
-              />
-            </View>
-          </>
-        ) : (
-          <>
-            <View className="gap-2">
-              <Label nativeID="accountID" className="text-lg">
-                Account
-              </Label>
-              <Controller
-                control={control}
-                render={({ field: { value, onChange, onBlur } }) => (
-                  <Select
-                    value={{ value, label: value && (accountsMap[value]?.name || "Unknown") }}
-                    onValueChange={(option) => onChange(option?.value)}
-                  >
-                    <SelectTrigger className="w-full" aria-aria-labelledby="type">
-                      <SelectValue
-                        className="text-foreground text-sm native:text-lg"
-                        placeholder="Select Account"
-                      />
-                    </SelectTrigger>
-                    <SelectContent insets={contentInsets} className="w-full">
-                      <SelectGroup>
-                        {accounts.map((account) => (
-                          <SelectItem key={account.id} label={account.name} value={account.id} />
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                )}
-                name="accountID"
-              />
-            </View>
+                    const exchangeRate = exchangeRates[fromCurrencyCode]?.rates[toCurrencyCode];
+                    if (exchangeRate === undefined) return;
 
-            <View className="gap-2 relative">
-              <Label nativeID="category" className="text-lg">
-                Category
-              </Label>
-              <Controller
-                control={control}
-                render={({ field: { value, onChange, onBlur } }) => (
-                  <Select
-                    value={{ value, label: value && (categories[value]?.name || "Unknown") }}
-                    onValueChange={(option) => onChange(option?.value)}
-                  >
-                    <SelectTrigger className="w-full" aria-aria-labelledby="type">
-                      <SelectValue
-                        className="text-foreground text-sm native:text-lg"
-                        placeholder="Select Category"
-                      />
-                    </SelectTrigger>
-                    <SelectContent insets={contentInsets} className="w-full">
-                      <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
-                        {categoriesList.map((category) => (
-                          <SelectItem key={category.id} label={category.name} value={category.id}>
-                            {category.name}
-                          </SelectItem>
-                        ))}
-                      </ScrollView>
-                    </SelectContent>
-                  </Select>
-                )}
-                name="categoryID"
-              />
-            </View>
-          </>
-        )}
+                    setValue("exchangeRate", exchangeRate);
+                  }}
+                >
+                  <SelectTrigger className="w-full" aria-labelledby="to">
+                    <SelectValue
+                      className="text-foreground text-sm native:text-lg"
+                      placeholder="Select Sending Account"
+                    />
+                  </SelectTrigger>
+                  <SelectContent insets={contentInsets} className="w-full">
+                    <SelectGroup>
+                      {accounts.map((account) => (
+                        <SelectItem key={account.id} label={account.name} value={account.id} />
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
+              name="from"
+            />
+          </View>
+
+          <View className="gap-2">
+            <Label nativeID="to" className="text-lg">
+              To
+            </Label>
+            <Controller
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <Select
+                  value={
+                    value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
+                  }
+                  onValueChange={(option) => {
+                    onChange(option?.value);
+
+                    if (!option?.value) return;
+
+                    const fromCurrencyCode = fromAccount?.currency.isoCode.toLocaleLowerCase();
+                    const toCurrencyCode =
+                      accountsMap[option.value]?.currency.isoCode.toLocaleLowerCase();
+                    if (!fromCurrencyCode || !toCurrencyCode) return;
+
+                    const exchangeRate = exchangeRates[fromCurrencyCode]?.rates[toCurrencyCode];
+                    if (exchangeRate === undefined) return;
+
+                    setValue("exchangeRate", exchangeRate);
+                  }}
+                >
+                  <SelectTrigger className="w-full" aria-labelledby="to">
+                    <SelectValue
+                      className="text-foreground text-sm native:text-lg"
+                      placeholder="Select Receiving Account"
+                    />
+                  </SelectTrigger>
+                  <SelectContent insets={contentInsets} className="w-full">
+                    <SelectGroup>
+                      {accounts.map((account) => (
+                        <SelectItem key={account.id} label={account.name} value={account.id} />
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
+              name="to"
+            />
+          </View>
+
+          <View className="gap-2">
+            <LabelPrimitive.Root
+              nativeID="exchangeRate"
+              className="text-lg flex-row gap-1 items-center"
+            >
+              <Text>Exchange rate</Text>
+              {fromAccount && toAccount ? (
+                <Text className="text-xs">
+                  ({fromAccount.currency.isoCode} to {toAccount.currency.isoCode})
+                </Text>
+              ) : null}
+            </LabelPrimitive.Root>
+            <Controller
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <Input
+                  className="px-3 py-2 border border-border rounded"
+                  value={value === undefined ? "" : value.toString()}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  aria-labelledby="exchangeRate"
+                  inputMode="numeric"
+                  placeholder="Enter exchange rate"
+                />
+              )}
+              name="exchangeRate"
+            />
+          </View>
+        </View>
+
+        <View className={cn("gap-4", type === "transfer" && "hidden")}>
+          <View className="gap-2">
+            <Label nativeID="accountID" className="text-lg">
+              Account
+            </Label>
+            <Controller
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <Select
+                  value={
+                    value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
+                  }
+                  onValueChange={(option) => onChange(option?.value)}
+                >
+                  <SelectTrigger className="w-full" aria-aria-labelledby="type">
+                    <SelectValue
+                      className="text-foreground text-sm native:text-lg"
+                      placeholder="Select Account"
+                    />
+                  </SelectTrigger>
+                  <SelectContent insets={contentInsets} className="w-full">
+                    <SelectGroup>
+                      {accounts.map((account) => (
+                        <SelectItem key={account.id} label={account.name} value={account.id} />
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
+              name="accountID"
+            />
+          </View>
+
+          <View className="gap-2 relative">
+            <Label nativeID="category" className="text-lg">
+              Category
+            </Label>
+            <Controller
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <Select
+                  value={{ value, label: value && (categories[value]?.name || "Unknown") }}
+                  onValueChange={(option) => onChange(option?.value)}
+                >
+                  <SelectTrigger className="w-full" aria-aria-labelledby="type">
+                    <SelectValue
+                      className="text-foreground text-sm native:text-lg"
+                      placeholder="Select Category"
+                    />
+                  </SelectTrigger>
+                  <SelectContent insets={contentInsets} className="w-full">
+                    <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
+                      {categoriesList.map((category) => (
+                        <SelectItem key={category.id} label={category.name} value={category.id}>
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                    </ScrollView>
+                  </SelectContent>
+                </Select>
+              )}
+              name="categoryID"
+            />
+          </View>
+        </View>
 
         <View className="gap-2">
           <Label nativeID="date" className="text-lg">
@@ -348,7 +380,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
           <Controller
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
-              <TextInput
+              <Input
                 className="px-3 py-2 border border-border rounded"
                 value={value}
                 onChangeText={onChange}

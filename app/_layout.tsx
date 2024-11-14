@@ -1,12 +1,13 @@
 import { useAppStore } from "@/lib/store";
 import "../global.css";
 
+import { fetchExchangeRates } from "@/lib/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Theme, ThemeProvider } from "@react-navigation/native";
 import { PortalHost } from "@rn-primitives/portal";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { NAV_THEME } from "~/lib/constants";
@@ -33,6 +34,13 @@ export default function RootLayout() {
   const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = useState(false);
   const hasStoreHydrated = useAppStore((state) => state._hasHydrated);
+  const accounts = useAppStore((state) => state.accounts);
+  const exchangeRates = useAppStore((state) => state.exchangeRates);
+  const accountCurrenciesCodes = useMemo(
+    () => new Set(Object.values(accounts).map((a) => a!.currency.isoCode)),
+    [accounts]
+  );
+  const { updateExchangeRate } = useAppStore((state) => state.actions);
 
   useEffect(() => {
     const loadTheme = async () => {
@@ -56,7 +64,7 @@ export default function RootLayout() {
       setIsColorSchemeLoaded(true);
     };
     loadTheme();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -64,6 +72,22 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [hasStoreHydrated, isColorSchemeLoaded]);
+
+  // updates the exchange rate every time the app is opened or the any of the account currencies changes
+  useEffect(() => {
+    const today = new Date().toISOString().slice(0, 10); //e.g 2024-11-14
+    accountCurrenciesCodes.forEach((code) => {
+      if (exchangeRates[code.toLocaleLowerCase()]?.date === today) return;
+
+      fetchExchangeRates(code).then(({ data, error }) => {
+        if (!data) {
+          return;
+        }
+
+        updateExchangeRate(code, data);
+      });
+    });
+  }, [accountCurrenciesCodes, updateExchangeRate, exchangeRates, hasStoreHydrated]);
 
   if (!isColorSchemeLoaded) {
     return null;

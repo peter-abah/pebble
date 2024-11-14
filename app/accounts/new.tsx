@@ -11,20 +11,18 @@ import { View } from "react-native";
 
 const CreateAccount = () => {
   const { addAccount } = useAppStore((state) => state.actions);
-  const mainAccount = useAppStore((state) => state.accounts[state.defaultAccountID]);
-  if (!mainAccount) {
-    // TODO: error is too harsh maybe redirect to onboard or to create a new account
-    throw new Error("Should have a default account");
-  }
 
   const onSubmit = ({ name, currency: currencyID, balance, color }: FormSchema) => {
-    const currency = CURRENCIES_MAP[currencyID] || mainAccount.currency;
+    const currency = CURRENCIES_MAP[currencyID];
+    if (!currency) return;
+
     addAccount({
       name,
       balance: createMoney(0, currency),
       currency,
       color,
     });
+    // todo: add initial balance transaction
     router.back();
   };
 

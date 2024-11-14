@@ -3,6 +3,7 @@ import {
   Account,
   AtLeast,
   DistributiveOmit,
+  PartialRecord,
   Transaction,
   TransactionCategory,
   WithTimestamps,
@@ -27,6 +28,7 @@ export interface AppStateProperties {
   categories: Partial<Record<TransactionCategory["id"], TransactionCategory>>;
   defaultAccountID: Account["id"];
   chartColors: Array<string>;
+  exchangeRates: PartialRecord<string, { date: string; rates: PartialRecord<string, number> }>;
   _hasHydrated: boolean;
 }
 
@@ -41,6 +43,10 @@ export interface AppStateActions {
   updateAccount: (account: AtLeast<Account, "id">) => void;
   deleteAccount: (accountID: Account["id"]) => void;
   updateState: <K extends keyof AppStateProperties>(key: K, value: AppStateProperties[K]) => void;
+  updateExchangeRate: (
+    code: string,
+    data: { date: string; rates: PartialRecord<string, number> }
+  ) => void;
   reset: () => void;
   _updateAccountBalanceForNewTransaction: (
     transaction: DistributiveOmit<Transaction, "id" | keyof WithTimestamps>
@@ -62,6 +68,7 @@ const DEFAULT_STATE: AppStateProperties = {
   chartColors,
   defaultAccountID: ACCOUNTS[0].id,
   _hasHydrated: false,
+  exchangeRates: {},
 };
 
 export const useAppStore = create<AppState>()(
@@ -285,6 +292,17 @@ export const useAppStore = create<AppState>()(
             (state as AppStateProperties)[key] = value;
           });
         },
+
+        updateExchangeRate: (code, data) => {
+          set((state) => {
+            const codeLowerCase = code.toLocaleLowerCase();
+            const prevDate = state.exchangeRates[codeLowerCase]?.date;
+
+            if (prevDate && prevDate >= data.date) return;
+
+            state.exchangeRates[codeLowerCase] = data;
+          });
+        },
         reset: () => {
           set(DEFAULT_STATE);
         },
@@ -292,7 +310,7 @@ export const useAppStore = create<AppState>()(
     })),
     {
       name: "app-storage",
-      version: 2, // TODO: change back to 0
+      version: 3, // TODO: change back to 0
       storage: createJSONStorage(() => (Platform.OS === "web" ? localStorage : AsyncStorage)),
       onRehydrateStorage: (state) => {
         return () => state.actions.updateState("_hasHydrated", true);
