@@ -3,8 +3,8 @@ import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
-import { CURRENCIES } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
@@ -15,9 +15,9 @@ const EditAccount = () => {
   const account = useAppStore((state) => state.accounts[id]);
 
   const onSubmit = ({ name, currency: currencyISO, color }: FormSchema) => {
-    if (!account) return;
+    const currency = CURRENCIES_MAP[currencyISO];
+    if (!account || !currency) return;
 
-    const currency = CURRENCIES[currencyISO] || CURRENCIES.NGN;
     updateAccount({
       ...account,
       name,

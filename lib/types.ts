@@ -3,6 +3,7 @@ export type PartialRecord<K extends string | number | symbol, T> = Partial<Recor
 export type AtLeast<T, K extends keyof T> = Partial<T> & Pick<T, K>;
 export type DistributiveOmit<T, K extends keyof any> = T extends any ? Omit<T, K> : never;
 export type DistributivePartial<T> = T extends any ? Partial<T> : never;
+export type ValueOf<T> = T[keyof T];
 
 export const TRANSACTION_TYPES = ["expense", "income", "transfer"] as const;
 export type TransactionType = (typeof TRANSACTION_TYPES)[number];

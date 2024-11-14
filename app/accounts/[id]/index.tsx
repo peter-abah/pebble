@@ -12,7 +12,7 @@ import { PencilIcon } from "@/lib/icons/Pencil";
 import { TrashIcon } from "@/lib/icons/Trash";
 import { TrendingDownIcon } from "@/lib/icons/TrendingDown";
 import { TrendingUpIcon } from "@/lib/icons/TrendingUp";
-import { CURRENCIES, addMoney, convertMoney, createMoney, formatMoney } from "@/lib/money";
+import { addMoney, convertMoney, createMoney, formatMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { Transaction } from "@/lib/types";
 import { dateToKey, groupTransactionsByPeriod } from "@/lib/utils";
@@ -53,8 +53,9 @@ const AccountScreen = () => {
     groupTransactionsByPeriod[currentTimePeriod.period](accountTransactions)[
       dateToKey(currentTimePeriod)
     ];
+
   const income = useMemo(() => {
-    if (!account) return createMoney(0, CURRENCIES.NGN);
+    if (!account) return null;
 
     return (currentTransactions || [])
       .filter((t) => {
@@ -72,7 +73,7 @@ const AccountScreen = () => {
   }, [currentTransactions, account]);
 
   const expenses = useMemo(() => {
-    if (!account) return createMoney(0, CURRENCIES.NGN);
+    if (!account) return null;
 
     return (currentTransactions || [])
       ?.filter((t) => {
@@ -144,30 +145,34 @@ const AccountScreen = () => {
       </View>
 
       <View className="flex-row gap-4 py-2 px-6">
-        <Button
-          variant="outline"
-          className="justify-start flex-1 p-3 h-auto items-center flex-row gap-2"
-        >
-          <View className="bg-green-600 items-center justify-center rounded-full w-10 h-10">
-            <TrendingDownIcon className="text-white" size={24} />
-          </View>
-          <View>
-            <Text>Income</Text>
-            <Text className="font-bold">{formatMoney(income)}</Text>
-          </View>
-        </Button>
-        <Button
-          variant="outline"
-          className="justify-start flex-1 p-3 h-auto items-center flex-row gap-2"
-        >
-          <View className="bg-red-600 items-center justify-center rounded-full w-10 h-10">
-            <TrendingUpIcon className="text-white" size={24} />
-          </View>
-          <View>
-            <Text>Expenses</Text>
-            <Text className="font-bold">{formatMoney(expenses)}</Text>
-          </View>
-        </Button>
+        {income ? (
+          <Button
+            variant="outline"
+            className="justify-start flex-1 p-3 h-auto items-center flex-row gap-2"
+          >
+            <View className="bg-green-600 items-center justify-center rounded-full w-10 h-10">
+              <TrendingDownIcon className="text-white" size={24} />
+            </View>
+            <View>
+              <Text>Income</Text>
+              <Text className="font-bold">{formatMoney(income)}</Text>
+            </View>
+          </Button>
+        ) : null}
+        {expenses ? (
+          <Button
+            variant="outline"
+            className="justify-start flex-1 p-3 h-auto items-center flex-row gap-2"
+          >
+            <View className="bg-red-600 items-center justify-center rounded-full w-10 h-10">
+              <TrendingUpIcon className="text-white" size={24} />
+            </View>
+            <View>
+              <Text>Expenses</Text>
+              <Text className="font-bold">{formatMoney(expenses)}</Text>
+            </View>
+          </Button>
+        ) : null}
       </View>
 
       <FlatList

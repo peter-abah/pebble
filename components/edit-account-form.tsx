@@ -8,8 +8,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
-import { CURRENCIES, renderCurrencyLabel } from "@/lib/money";
-import { Currency } from "@/lib/types";
+import { CURRENCIES } from "@/lib/data/currencies";
+import { renderCurrencyLabel } from "@/lib/money";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { TextInput, View } from "react-native";
@@ -18,7 +18,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
 import ColorPicker from "./color-picker";
 
-const currencies = Object.values(CURRENCIES) as Array<Currency>;
 const formSchema = z.object({
   name: z.string(),
   currency: z.string(),
@@ -86,7 +85,7 @@ const EditAccountForm = ({ defaultValues, onSubmit }: EditAccountFormProps) => {
                 </SelectTrigger>
                 <SelectContent insets={contentInsets} className="w-full">
                   <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
-                    {currencies.map((currency) => (
+                    {CURRENCIES.map((currency) => (
                       <SelectItem
                         key={currency.isoCode}
                         label={renderCurrencyLabel(currency.isoCode)}

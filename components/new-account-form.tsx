@@ -8,8 +8,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
-import { CURRENCIES, renderCurrencyLabel } from "@/lib/money";
-import { Currency } from "@/lib/types";
+import { CURRENCIES, CURRENCIES_MAP } from "@/lib/data/currencies";
+import { renderCurrencyLabel } from "@/lib/money";
 import { isStringNumeric } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
@@ -19,7 +19,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
 import ColorPicker from "./color-picker";
 
-const currencies = Object.values(CURRENCIES) as Array<Currency>;
 const formSchema = z.object({
   balance: z.union([
     z.string().refine(isStringNumeric, { message: "Enter a number" }).transform(Number),
@@ -43,8 +42,7 @@ const NewAccountForm = ({ defaultValues, onSubmit, excludedFields }: NewAccountF
     resolver: zodResolver(formSchema),
   });
   const currencyISO = watch("currency");
-  // TODO: wrong app behavior
-  const currency = CURRENCIES[currencyISO] || CURRENCIES.NGN;
+  const currency = CURRENCIES_MAP[currencyISO];
 
   const insets = useSafeAreaInsets();
   const contentInsets = {
@@ -95,7 +93,7 @@ const NewAccountForm = ({ defaultValues, onSubmit, excludedFields }: NewAccountF
                 </SelectTrigger>
                 <SelectContent insets={contentInsets} className="w-full">
                   <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
-                    {currencies.map((currency) => (
+                    {CURRENCIES.map((currency) => (
                       <SelectItem
                         key={currency.isoCode}
                         label={renderCurrencyLabel(currency.isoCode)}
@@ -120,7 +118,9 @@ const NewAccountForm = ({ defaultValues, onSubmit, excludedFields }: NewAccountF
               <TextInput
                 className="px-3 py-2 border border-border rounded"
                 aria-labelledby="amount"
-                value={typeof value === "string" ? value : value?.toFixed(currency.minorUnit) || ""}
+                value={
+                  typeof value === "string" ? value : value?.toFixed(currency?.minorUnit) || ""
+                }
                 onBlur={onBlur}
                 onChangeText={onChange}
                 inputMode="numeric"

@@ -10,10 +10,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import * as LabelPrimitive from "@rn-primitives/label";
 import { Text } from "@/components/ui/text";
 import { Textarea } from "@/components/ui/textarea";
-import { CURRENCIES } from "@/lib/money";
+import * as LabelPrimitive from "@rn-primitives/label";
+
 import { useAppStore } from "@/lib/store";
 import { Account, TRANSACTION_TYPES, TransactionCategory } from "@/lib/types";
 import { isStringNumeric, titleCase } from "@/lib/utils";
@@ -99,9 +99,8 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
   const account = accountsMap[watch("accountID")];
   const fromAccount = accountsMap[watch("from")];
   const toAccount = accountsMap[watch("to")];
-  // TODO: wrong behavior, also currency should be from transaction (edit) before checking account, for new
-  const currency =
-    (type === "transfer" ? fromAccount?.currency : account?.currency) || CURRENCIES.NGN;
+
+  const currency = type === "transfer" ? fromAccount?.currency : account?.currency;
   const categoriesList = (Object.values(categories) as Array<TransactionCategory>).filter(
     (c) => c.type === type || !c.type
   );
@@ -119,7 +118,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
     <View style={{ flex: 1 }}>
       <ScrollView contentContainerClassName="py-4 gap-4" className="flex-1 px-6">
         <View className="flex-row gap-1 items-center mb-6">
-          <Text className="text-3xl font-semibold leading-none mt-1.5">{currency.symbol}</Text>
+          <Text className="text-3xl font-semibold leading-none mt-1.5">{currency?.symbol}</Text>
           <Controller
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
@@ -127,7 +126,9 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                 placeholder="Enter Amount"
                 aria-labelledby="amount"
                 autoFocus={!defaultValues.amount}
-                value={typeof value === "string" ? value : value?.toFixed(currency.minorUnit) || ""}
+                value={
+                  typeof value === "string" ? value : value?.toFixed(currency?.minorUnit) || ""
+                }
                 onBlur={onBlur}
                 onChangeText={onChange}
                 inputMode="numeric"

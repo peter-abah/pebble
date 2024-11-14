@@ -2,8 +2,9 @@ import AccountForm, { FormSchema } from "@/components/new-account-form";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
-import { CURRENCIES, createMoney } from "@/lib/money";
+import { createMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { router } from "expo-router";
 import { View } from "react-native";
@@ -11,11 +12,13 @@ import { View } from "react-native";
 const CreateAccount = () => {
   const { addAccount } = useAppStore((state) => state.actions);
   const mainAccount = useAppStore((state) => state.accounts[state.defaultAccountID]);
-  // TODO: bad behavior
-  const mainCurrency = mainAccount?.currency || CURRENCIES.NGN;
+  if (!mainAccount) {
+    // TODO: error is too harsh maybe redirect to onboard or to create a new account
+    throw new Error("Should have a default account");
+  }
 
   const onSubmit = ({ name, currency: currencyID, balance, color }: FormSchema) => {
-    const currency = CURRENCIES[currencyID] || mainCurrency;
+    const currency = CURRENCIES_MAP[currencyID] || mainAccount.currency;
     addAccount({
       name,
       balance: createMoney(0, currency),

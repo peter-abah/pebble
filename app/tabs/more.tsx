@@ -7,7 +7,7 @@ import { PiggyBankIcon } from "@/lib/icons/PiggyBank";
 import { SettingsIcon } from "@/lib/icons/Settings";
 import { ShapesIcon } from "@/lib/icons/Shapes";
 import { WalletCardsIcon } from "@/lib/icons/WalletCards";
-import { CURRENCIES, createMoney } from "@/lib/money";
+import { createMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { Transaction, TransactionCategory } from "@/lib/types";
 import { randomElement, roundToZeros } from "@/lib/utils";
@@ -245,7 +245,7 @@ const loadData = () => {
 
     return {
       id: nanoid(),
-      amount: createMoney(amount, CURRENCIES.NGN),
+      amount: createMoney(amount, appState.accounts[appState.defaultAccountID]!.currency),
       datetime: randomDate(startDate, endDate).toISOString(),
       type,
       categoryID,

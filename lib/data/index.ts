@@ -1,21 +1,21 @@
-import { CURRENCIES, createMoney } from "@/lib/money";
-import "react-native-get-random-values";
-import { NAME_TO_GROUP_COLOR } from "./constants";
-import { Account, TransactionCategory } from "./types";
+import { NAME_TO_GROUP_COLOR } from "@/lib/constants";
+import { createMoney } from "@/lib/money";
+import { Account, TransactionCategory } from "@/lib/types";
+import { CURRENCIES_MAP } from "./currencies";
 
-export const accounts: Array<Account> = [
+export const ACCOUNTS: Array<Account> = [
   {
     name: "Main",
     id: "1",
-    balance: createMoney(0, CURRENCIES.NGN),
-    currency: CURRENCIES.NGN,
+    balance: createMoney(0, CURRENCIES_MAP["NGN"]!),
+    currency: CURRENCIES_MAP["NGN"]!,
     color: NAME_TO_GROUP_COLOR["blue-dark"].color,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   },
 ];
 
-export const categories: Array<TransactionCategory> = [
+export const CATEGORIES: Array<TransactionCategory> = [
   {
     name: "Groceries",
     id: "1",

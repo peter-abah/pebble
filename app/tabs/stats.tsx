@@ -2,7 +2,7 @@ import EmptyState from "@/components/empty-state";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
 import { Text } from "@/components/ui/text";
-import { CURRENCIES, formatMoney } from "@/lib/money";
+import { formatMoney } from "@/lib/money";
 import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
 import { Transaction, TransactionCategory } from "@/lib/types";
 import { cn, dateToKey, groupTransactionsByPeriod } from "@/lib/utils";
@@ -25,13 +25,37 @@ const Stats = () => {
 
   const transactionsRecord = useAppStore(getSortedTransactionsByDate);
   const categories = useAppStore((state) => state.categories);
-  const currency =
-    useAppStore((state) => state.accounts[state.defaultAccountID]?.currency) || CURRENCIES.NGN;
+  const mainAccount = useAppStore((state) => state.accounts[state.defaultAccountID]);
+  if (!mainAccount) {
+    // TODO: error is too harsh maybe redirect to onboard or to create a new account
+    throw new Error("Should have a default account");
+  }
+  const currency = mainAccount.currency;
 
   const currentTransactions = groupTransactionsByPeriod[currentTimePeriod.period](
     transactionsRecord
   )[dateToKey(currentTimePeriod)]?.filter(({ type }) => type === transactionType);
 
+  // const income = useMemo(() => {
+  //   return (currentTransactions || [])
+  //     .filter((t) => t.type === "income")
+  //     .reduce((acc, curr) => {
+  //   addMoney(acc, curr.amount);
+  //     }, createMoney(0, account.currency));
+  // }, [currentTransactions, account]);
+
+  // const expenses = useMemo(() => {
+  //   if (!account) return createMoney(0, CURRENCIES.NGN);
+
+  //   return (currentTransactions || [])
+  //     ?.filter((t) => {
+  //       if (t.type === "transfer") {
+  //         return t.from === account.id;
+  //       }
+  //       return t.type === "expense";
+  //     })
+  //     .reduce((a, b) => addMoney(a, b.amount), createMoney(0, account.currency));
+  // }, [currentTransactions, account]);
   const chartData = currentTransactions ? createChartData(currentTransactions) : null;
 
   return (
@@ -40,46 +64,53 @@ const Stats = () => {
         <Text className="font-semibold text-2xl">Stats</Text>
       </View>
 
-      <ScrollView className="flex-1" contentContainerClassName="px-6">
+      <ScrollView className="flex-1" contentContainerClassName="px-6 gap-4">
         <TimePeriodPicker timePeriod={currentTimePeriod} onValueChange={setCurrentTimePeriod} />
-        {chartData ? (
+        <View className="flex-row bg-muted rounded-2xl">
+          <Pressable
+            className={cn(
+              "flex-1 px-3 py-2 rounded-2xl",
+              transactionType === "expense" && "bg-primary"
+            )}
+            onPress={() => setTransactionType("expense")}
+          >
+            <Text
+              className={cn(
+                "text-center",
+                transactionType === "expense" && "text-primary-foreground"
+              )}
+            >
+              Expenses
+            </Text>
+            {
+              //chartData ? (
+              // <Text className={cn("", transactionType === "expense" && "text-primary-foreground")}>
+              //   {formatMoney()}
+              // </Text>
+              //) : null
+            }
+          </Pressable>
+          <Pressable
+            className={cn(
+              "flex-1 px-3 py-2 rounded-2xl",
+              transactionType === "income" && "bg-primary"
+            )}
+            onPress={() => setTransactionType("income")}
+          >
+            <Text
+              className={cn(
+                "text-center",
+                transactionType === "income" && "text-primary-foreground"
+              )}
+            >
+              Income
+            </Text>
+          </Pressable>
+        </View>
+        {chartData && chartData.length > 0 ? (
           <>
-            <View className="justify-center flex-row my-4">
+            <View className="justify-center flex-row">
               <PieChart data={chartData} donut />
-            </View>
-            <View className="flex-row mb-4 bg-muted rounded-2xl">
-              <Pressable
-                className={cn(
-                  "flex-1 px-3 py-2 rounded-2xl",
-                  transactionType === "expense" && "bg-primary"
-                )}
-                onPress={() => setTransactionType("expense")}
-              >
-                <Text
-                  className={cn(
-                    "text-center",
-                    transactionType === "expense" && "text-primary-foreground"
-                  )}
-                >
-                  Expenses
-                </Text>
-              </Pressable>
-              <Pressable
-                className={cn(
-                  "flex-1 px-3 py-2 rounded-2xl",
-                  transactionType === "income" && "bg-primary"
-                )}
-                onPress={() => setTransactionType("income")}
-              >
-                <Text
-                  className={cn(
-                    "text-center",
-                    transactionType === "income" && "text-primary-foreground"
-                  )}
-                >
-                  Income
-                </Text>
-              </Pressable>
             </View>
 
             <View className="gap-3">
@@ -117,7 +148,7 @@ const createChartData = memoize((transactions: Array<Transaction>) => {
     if (dataItem) {
       result[transaction.categoryID] = {
         ...dataItem,
-        value: dataItem.value + transaction.amount.valueInMinorUnits,
+        value: dataItem.value + transaction.amount.valueInMinorUnits, // TODO: diff currencies
       };
     } else {
       result[transaction.categoryID] = {

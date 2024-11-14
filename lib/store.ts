@@ -1,8 +1,7 @@
-import { CURRENCIES, addMoney, convertMoney, subtractMoney } from "@/lib/money";
+import { addMoney, convertMoney, subtractMoney } from "@/lib/money";
 import {
   Account,
   AtLeast,
-  Currency,
   DistributiveOmit,
   Transaction,
   TransactionCategory,
@@ -17,7 +16,7 @@ import "react-native-get-random-values";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { accounts, categories } from "./data";
+import { ACCOUNTS, CATEGORIES } from "./data";
 import { arrayToMap, generateColors, shuffle } from "./utils";
 
 setAutoFreeze(false);
@@ -26,7 +25,6 @@ export interface AppStateProperties {
   transactions: Partial<Record<Transaction["id"], Transaction>>;
   accounts: Partial<Record<Account["id"], Account>>;
   categories: Partial<Record<TransactionCategory["id"], TransactionCategory>>;
-  currency: Currency;
   defaultAccountID: Account["id"];
   chartColors: Array<string>;
   _hasHydrated: boolean;
@@ -54,16 +52,15 @@ export interface AppState extends AppStateProperties {
   actions: AppStateActions;
 }
 
-const chartColors = generateColors(categories.length);
+const chartColors = generateColors(CATEGORIES.length);
 shuffle(chartColors);
 
 const DEFAULT_STATE: AppStateProperties = {
-  accounts: arrayToMap(accounts, "id"),
-  currency: CURRENCIES.NGN,
+  accounts: arrayToMap(ACCOUNTS, "id"),
   transactions: {},
-  categories: arrayToMap(categories, "id"),
+  categories: arrayToMap(CATEGORIES, "id"),
   chartColors,
-  defaultAccountID: accounts[0].id,
+  defaultAccountID: ACCOUNTS[0].id,
   _hasHydrated: false,
 };
 
@@ -254,6 +251,8 @@ export const useAppStore = create<AppState>()(
 
         updateAccount: (account) => {
           set((state) => {
+            // TODO: updating account currency should change transaction currency
+            // maybe a different action to update currency
             const timestamp = new Date().toISOString();
             const prevAccount = state.accounts[account.id];
             if (!prevAccount) {
@@ -267,7 +266,17 @@ export const useAppStore = create<AppState>()(
         // TODO: delete associated transactions or mark them
         deleteAccount: (accountID) => {
           set((state) => {
+            const accounts = Object.values(state.accounts) as Array<Account>;
+            if (accounts.length <= 1) {
+              // this should an error or something so the app shows a modal
+              console.warn("Cannot remove only account");
+              return;
+            }
+
             delete state.accounts[accountID];
+            if (state.defaultAccountID === accountID) {
+              state.defaultAccountID = accounts[0].id;
+            }
           });
         },
 
