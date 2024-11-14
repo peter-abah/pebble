@@ -11,9 +11,10 @@ import { Text } from "@/components/ui/text";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { ChevronRightIcon } from "@/lib/icons/ChevronRIght";
 import { titleCase } from "@/lib/utils";
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { Option } from "@rn-primitives/select";
-import { Dayjs } from "dayjs";
-import { View } from "react-native";
+import dayjs, { Dayjs } from "dayjs";
+import { Pressable, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export const periods = ["monthly", "weekly", "annually", "all time"] as const;
@@ -33,6 +34,16 @@ function TimePeriodPicker({ timePeriod, onValueChange }: TimePeriodPickerProps) 
     bottom: insets.bottom,
     left: 12,
     right: 12,
+  };
+
+  const showDatePicker = () => {
+    DateTimePickerAndroid.open({
+      value: new Date(timePeriod.date.toISOString()),
+      onChange: (event, date) => {
+        onValueChange({ ...timePeriod, date: date ? dayjs(date) : timePeriod.date });
+      },
+      mode: "date",
+    });
   };
 
   const incrementDate = () => {
@@ -74,7 +85,9 @@ function TimePeriodPicker({ timePeriod, onValueChange }: TimePeriodPickerProps) 
           <Button variant={"ghost"} size="icon" onPress={decrementDate} className="-ml-2">
             <ChevronLeftIcon className="text-foreground" size={20} />
           </Button>
-          <Text className="font-semibold">{renderDate(timePeriod)}</Text>
+          <Pressable onPress={showDatePicker}>
+            <Text className="font-semibold">{renderDate(timePeriod)}</Text>
+          </Pressable>
           <Button variant={"ghost"} size="icon" onPress={incrementDate}>
             <ChevronRightIcon className="text-foreground" size={20} />
           </Button>
