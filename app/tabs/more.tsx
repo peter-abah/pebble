@@ -61,10 +61,14 @@ const More = () => {
           title="Savings"
           icon={<PiggyBankIcon size={24} className="text-foreground mr-2" />}
         />
-        <ActionButton
-          title="Settings"
-          icon={<SettingsIcon size={24} className="text-foreground mr-2" />}
-        />
+
+        <Link href="/settings" asChild>
+          <ActionButton
+            title="Settings"
+            icon={<SettingsIcon size={24} className="text-foreground mr-2" />}
+          />
+        </Link>
+
         <ActionButton
           title="Load test data"
           onPress={loadMockData}

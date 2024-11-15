@@ -26,6 +26,7 @@
     "@rn-primitives/portal": "^1.0.5",
     "@rn-primitives/select": "^1.0.6",
     "@rn-primitives/slot": "^1.0.5",
+    "@rn-primitives/switch": "^1.1.0",
     "@rn-primitives/tabs": "^1.0.5",
     "@rn-primitives/types": "^1.0.5",
     "class-variance-authority": "^0.7.0",
