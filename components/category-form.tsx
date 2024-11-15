@@ -54,14 +54,7 @@ interface CategoryFormProps {
   onSubmit: (values: FormSchema) => void;
 }
 const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
-  const {
-    control,
-    handleSubmit,
-
-    watch,
-    setValue,
-  } = useForm<FormSchema>({
-    // TODO: RESET STATE WHEN APPLICABLE
+  const { control, handleSubmit, watch, setValue } = useForm<FormSchema>({
     defaultValues,
     resolver: zodResolver(formSchema),
   });

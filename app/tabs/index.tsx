@@ -69,28 +69,3 @@ export default function Home() {
     </ScreenWrapper>
   );
 }
-
-// TODO: bad code, use onboarding, remove in release / beta
-// const loadInitData = async () => {
-//   const state = useAppStore.getState();
-//   state.reset();
-//   testTransactions.sort((a, b) => b.datetime.localeCompare(a.datetime));
-//   const balanceFromTransactions = testTransactions.reduce(
-//     (acc, curr) =>
-//       curr.type === "credit"
-//         ? acc + curr.amount.valueInMinorUnits
-//         : acc - curr.amount.valueInMinorUnits,
-//     0
-//   );
-//   useAppStore.setState((state) => {
-//     const defaultAccount = state.accounts[state.defaultAccountID];
-//     if (defaultAccount) {
-//       defaultAccount.balance = {
-//         valueInMinorUnits: balanceFromTransactions,
-//         currency: defaultAccount.currency,
-//       };
-//     }
-//   });
-//   state.updateState("transactions", arrayToMap(testTransactions, "id"));
-//   state.updateState("_isFirstOpen", false);
-// };

@@ -1,7 +1,7 @@
 import { type TimePeriod } from "@/components/time-period-picker";
 import { type Transaction } from "@/lib/types";
 import { clsx, type ClassValue } from "clsx";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { memoize } from "proxy-memoize";
 import { twMerge } from "tailwind-merge";
 
@@ -75,6 +75,13 @@ export const shuffle = <T>(array: Array<T>) => {
 // use case: checking an const array in typescript contains a value
 export const isIn = <T>(values: ReadonlyArray<T>, x: any): x is T => {
   return values.includes(x);
+};
+
+export const randomDate = (start: Dayjs, end: Dayjs) => {
+  const startTime = start.valueOf();
+  const endTime = end.valueOf();
+  const randomTime = startTime + Math.random() * (endTime - startTime);
+  return dayjs(randomTime);
 };
 
 export const randomElement = <T>(array: Array<T>) => {

@@ -36,26 +36,6 @@ const Stats = () => {
     transactionsRecord
   )[dateToKey(currentTimePeriod)]?.filter(({ type }) => type === transactionType);
 
-  // const income = useMemo(() => {
-  //   return (currentTransactions || [])
-  //     .filter((t) => t.type === "income")
-  //     .reduce((acc, curr) => {
-  //   addMoney(acc, curr.amount);
-  //     }, createMoney(0, account.currency));
-  // }, [currentTransactions, account]);
-
-  // const expenses = useMemo(() => {
-  //   if (!account) return createMoney(0, CURRENCIES.NGN);
-
-  //   return (currentTransactions || [])
-  //     ?.filter((t) => {
-  //       if (t.type === "transfer") {
-  //         return t.from === account.id;
-  //       }
-  //       return t.type === "expense";
-  //     })
-  //     .reduce((a, b) => addMoney(a, b.amount), createMoney(0, account.currency));
-  // }, [currentTransactions, account]);
   const chartData = currentTransactions ? createChartData(currentTransactions) : null;
 
   return (
@@ -82,13 +62,6 @@ const Stats = () => {
             >
               Expenses
             </Text>
-            {
-              //chartData ? (
-              // <Text className={cn("", transactionType === "expense" && "text-primary-foreground")}>
-              //   {formatMoney()}
-              // </Text>
-              //) : null
-            }
           </Pressable>
           <Pressable
             className={cn(

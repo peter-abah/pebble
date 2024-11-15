@@ -10,15 +10,14 @@ import {
 } from "@/lib/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setAutoFreeze } from "immer";
-import { nanoid } from "nanoid";
 import { memoize } from "proxy-memoize";
 import { Platform } from "react-native";
-import "react-native-get-random-values";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { ACCOUNTS, CATEGORIES } from "./data";
 import { arrayToMap, generateColors, shuffle } from "./utils";
+import { nanoid } from "./nanoid";
 
 setAutoFreeze(false);
 
