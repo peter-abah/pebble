@@ -7,10 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { SearchIcon } from "@/lib/icons/Search";
 import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
-import {
-  dateToKey,
-  groupTransactionsByPeriod
-} from "@/lib/utils";
+import { dateToKey, groupTransactionsByPeriod } from "@/lib/utils";
 import dayjs from "dayjs";
 import { Link } from "expo-router";
 import { useState } from "react";

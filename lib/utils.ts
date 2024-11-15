@@ -83,7 +83,7 @@ export const randomElement = <T>(array: Array<T>) => {
 
 export const groupTransactionsByMonth = memoize((transactions: Array<Transaction>) =>
   transactions.reduce((result, transaction) => {
-    const monthAndYear = transaction.datetime.slice(0, 7); // e.g 2024-10
+    const monthAndYear = dayjs(transaction.datetime).format().slice(0, 7); // e.g 2024-10
     if (result[monthAndYear]) {
       result[monthAndYear]!.push(transaction);
     } else {
@@ -95,7 +95,7 @@ export const groupTransactionsByMonth = memoize((transactions: Array<Transaction
 
 export const groupTransactionsByWeek = memoize((transactions: Array<Transaction>) =>
   transactions.reduce((result, transaction) => {
-    const firstDayOfWeek = dayjs(transaction.datetime).day(0).toISOString().slice(0, 10); // first day of week e.g 2024-10-20
+    const firstDayOfWeek = dayjs(transaction.datetime).day(0).format().slice(0, 10); // first day of week e.g 2024-10-20
     if (result[firstDayOfWeek]) {
       result[firstDayOfWeek]!.push(transaction);
     } else {
@@ -107,7 +107,8 @@ export const groupTransactionsByWeek = memoize((transactions: Array<Transaction>
 
 export const groupTransactionsByYear = memoize((transactions: Array<Transaction>) =>
   transactions.reduce((result, transaction) => {
-    const year = transaction.datetime.slice(0, 4); // e.g 2024
+    // using format to convert the iso string to the iso string with time offset
+    const year = dayjs(transaction.datetime).format().slice(0, 4); // e.g 2024
     if (result[year]) {
       result[year]!.push(transaction);
     } else {
@@ -132,10 +133,10 @@ export const dateToKey = ({ period, date }: TimePeriod) => {
     case "annually":
       return date.year().toString(); // 2024
     case "monthly":
-      return date.toISOString().slice(0, 7); // 2024-10
+      return date.format().slice(0, 7); // 2024-10
     case "weekly":
-      return date.day(0).toISOString().slice(0, 10); // first day of week: 2024-10-20
+      return date.day(0).format().slice(0, 10); // first day of week: 2024-10-20
     default:
-      return date.toISOString().slice(0, 10); // date: 2024-10-21
+      return date.format().slice(0, 10); // date: 2024-10-21
   }
 };
