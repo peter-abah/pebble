@@ -27,10 +27,23 @@ const More = () => {
             icon={<WalletCardsIcon size={24} className="text-foreground mr-2" />}
           />
         </Link>
+
         <Link href={"/categories"} asChild>
           <ActionButton
             title="Categories"
             icon={<ShapesIcon size={24} className="text-foreground mr-2" />}
+          />
+        </Link>
+        <Link href={"/budgets"} asChild>
+          <ActionButton
+            title="Budgets"
+            icon={
+              <MaterialCommunityIcons
+                name="briefcase-variant"
+                size={24}
+                className="text-foreground mr-2"
+              />
+            }
           />
         </Link>
         <ActionButton

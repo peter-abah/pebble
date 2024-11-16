@@ -46,11 +46,12 @@ export function createRange(start: number, end: number) {
   return range;
 }
 
+// todo: fix colors
 export const generateColors = (n: number) => {
   let colors = [];
   for (let i = 0; i < n; i++) {
     let hue = ((i * 360) / n) % 360;
-    colors.push(`hsl(${hue}, 100%, ${Math.random() * 80 + 10}%)`); //
+    colors.push(`hsl(${hue}, 100%, ${Math.random() * 40 + 50}%)`); //
   }
   shuffle(colors);
   return colors;

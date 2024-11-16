@@ -4,6 +4,7 @@ export type AtLeast<T, K extends keyof T> = Partial<T> & Pick<T, K>;
 export type DistributiveOmit<T, K extends keyof any> = T extends any ? Omit<T, K> : never;
 export type DistributivePartial<T> = T extends any ? Partial<T> : never;
 export type ValueOf<T> = T[keyof T];
+export type NonEmptyArray<T> = [T, ...Array<T>];
 
 export const TRANSACTION_TYPES = ["expense", "income", "transfer"] as const;
 export type TransactionType = (typeof TRANSACTION_TYPES)[number];
@@ -68,18 +69,27 @@ interface BaseTransaction extends WithTimestamps {
   tags?: Array<string>;
 }
 
-interface NormalTransaction extends BaseTransaction {
+export interface NormalTransaction extends BaseTransaction {
   type: "expense" | "income";
   categoryID: TransactionCategory["id"];
   accountID: Account["id"];
 }
 
-interface TransferTransaction extends BaseTransaction {
+export interface TransferTransaction extends BaseTransaction {
   type: "transfer";
   from: Account["id"];
   to: Account["id"];
-  // categoryID?: undefined;
   exchangeRate: ExchangeRate;
 }
 
 export type Transaction = NormalTransaction | TransferTransaction;
+
+export interface Budget extends WithTimestamps {
+  id: string;
+  name: string;
+  categories: Array<TransactionCategory["id"]>;
+  accounts: Array<Account["id"]>;
+  period: "weekly" | "monthly" | "yearly";
+  amount: Money;
+  color: string;
+}

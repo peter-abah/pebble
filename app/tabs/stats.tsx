@@ -2,19 +2,16 @@ import EmptyState from "@/components/empty-state";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
 import { Text } from "@/components/ui/text";
+import { createChartData } from "@/lib/app-utils";
 import { formatMoney } from "@/lib/money";
 import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
-import { Transaction, TransactionCategory } from "@/lib/types";
+import { Transaction } from "@/lib/types";
 import { cn, dateToKey, groupTransactionsByPeriod } from "@/lib/utils";
 import dayjs from "dayjs";
 import { vars } from "nativewind";
-import { memoize } from "proxy-memoize";
 import { useState } from "react";
 import { Pressable, ScrollView, View } from "react-native";
-import { PieChart, pieDataItem } from "react-native-gifted-charts";
-interface PieDataItemCustom extends pieDataItem {
-  categoryID: TransactionCategory["id"];
-}
+import { PieChart } from "react-native-gifted-charts";
 
 const Stats = () => {
   const [transactionType, setTransactionType] = useState<Transaction["type"]>("expense");
@@ -25,18 +22,20 @@ const Stats = () => {
 
   const transactionsRecord = useAppStore(getSortedTransactionsByDate);
   const categories = useAppStore((state) => state.categories);
-  const mainAccount = useAppStore((state) => state.accounts[state.defaultAccountID]);
-  if (!mainAccount) {
-    // TODO: error is too harsh maybe redirect to onboard or to create a new account
-    throw new Error("Should have a default account");
-  }
+  const exchangeRates = useAppStore((state) => state.exchangeRates);
+  const accountsMap = useAppStore((state) => state.accounts);
+  const defaultAccountID = useAppStore((state) => state.defaultAccountID);
+
+  const mainAccount = accountsMap[defaultAccountID] || Object.values(accountsMap)[0]!;
   const currency = mainAccount.currency;
 
   const currentTransactions = groupTransactionsByPeriod[currentTimePeriod.period](
     transactionsRecord
   )[dateToKey(currentTimePeriod)]?.filter(({ type }) => type === transactionType);
 
-  const chartData = currentTransactions ? createChartData(currentTransactions) : null;
+  const chartData = currentTransactions
+    ? createChartData(currentTransactions, currency, exchangeRates)
+    : null;
 
   return (
     <ScreenWrapper className="!pb-6">
@@ -110,36 +109,5 @@ const Stats = () => {
     </ScreenWrapper>
   );
 };
-
-const createChartData = memoize((transactions: Array<Transaction>) => {
-  const chartDataMap = transactions.reduce((result, transaction) => {
-    if (transaction.type === "transfer") {
-      return result;
-    }
-
-    const dataItem = result[transaction.categoryID];
-    if (dataItem) {
-      result[transaction.categoryID] = {
-        ...dataItem,
-        value: dataItem.value + transaction.amount.valueInMinorUnits, // TODO: diff currencies
-      };
-    } else {
-      result[transaction.categoryID] = {
-        value: transaction.amount.valueInMinorUnits,
-        categoryID: transaction.categoryID,
-      };
-    }
-    return result;
-  }, {} as Partial<Record<string, PieDataItemCustom>>);
-  const chartData = Object.values(chartDataMap) as Array<PieDataItemCustom>;
-
-  // add distinct colors to each data item
-  const colors = useAppStore.getState().chartColors;
-  for (let i = 0; i < chartData.length; i++) {
-    chartData[i].color = colors[i];
-  }
-
-  return chartData;
-});
 
 export default Stats;

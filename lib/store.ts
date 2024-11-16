@@ -1,7 +1,8 @@
-import { addMoney, convertMoney, subtractMoney } from "@/lib/money";
+import { addMoney, convertMoney, createMoney, subtractMoney } from "@/lib/money";
 import {
   Account,
   AtLeast,
+  Budget,
   DistributiveOmit,
   PartialRecord,
   Transaction,
@@ -16,15 +17,18 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { ACCOUNTS, CATEGORIES } from "./data";
-import { arrayToMap, generateColors, shuffle } from "./utils";
 import { nanoid } from "./nanoid";
+import { arrayToMap, generateColors, shuffle } from "./utils";
+import { CURRENCIES_MAP } from "./data/currencies";
+import { NAME_TO_GROUP_COLOR } from "./constants";
 
 setAutoFreeze(false);
 
 export interface AppStateProperties {
-  transactions: Partial<Record<Transaction["id"], Transaction>>;
-  accounts: Partial<Record<Account["id"], Account>>;
-  categories: Partial<Record<TransactionCategory["id"], TransactionCategory>>;
+  transactions: PartialRecord<Transaction["id"], Transaction>;
+  accounts: PartialRecord<Account["id"], Account>;
+  categories: PartialRecord<TransactionCategory["id"], TransactionCategory>;
+  budgets: PartialRecord<Budget["id"], Budget>;
   defaultAccountID: Account["id"];
   chartColors: Array<string>;
   exchangeRates: PartialRecord<string, { date: string; rates: PartialRecord<string, number> }>;
@@ -35,12 +39,19 @@ export interface AppStateActions {
   addTransaction: (transaction: DistributiveOmit<Transaction, "id" | keyof WithTimestamps>) => void;
   updateTransaction: (transaction: Transaction) => void;
   deleteTransaction: (transactionID: Transaction["id"]) => void;
+
   addCategory: (category: Omit<TransactionCategory, "id" | keyof WithTimestamps>) => void;
   updateCategory: (category: AtLeast<TransactionCategory, "id">) => void;
   deleteCategory: (categoryID: TransactionCategory["id"]) => void;
+
   addAccount: (account: Omit<Account, "id" | keyof WithTimestamps>) => void;
   updateAccount: (account: AtLeast<Account, "id">) => void;
   deleteAccount: (accountID: Account["id"]) => void;
+
+  addBudget: (budget: Omit<Budget, "id" | keyof WithTimestamps>) => void;
+  updateBudget: (budget: Budget) => void;
+  deleteBudget: (budgetID: Budget["id"]) => void;
+
   updateState: <K extends keyof AppStateProperties>(key: K, value: AppStateProperties[K]) => void;
   updateExchangeRate: (
     code: string,
@@ -63,6 +74,19 @@ shuffle(chartColors);
 const DEFAULT_STATE: AppStateProperties = {
   accounts: arrayToMap(ACCOUNTS, "id"),
   transactions: {},
+  budgets: {
+    "1": {
+      id: "1",
+      name: "test",
+      amount: createMoney(50000, CURRENCIES_MAP["NGN"]!),
+      categories: ["1", "2", "3", "4"],
+      accounts: ["1"],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      color: NAME_TO_GROUP_COLOR["emerald-dark"].color,
+      period: "yearly",
+    },
+  },
   categories: arrayToMap(CATEGORIES, "id"),
   chartColors,
   defaultAccountID: ACCOUNTS[0].id,
@@ -159,6 +183,7 @@ export const useAppStore = create<AppState>()(
             }
           });
         },
+
         addTransaction: (transaction) => {
           // update balance
           get().actions._updateAccountBalanceForNewTransaction(transaction);
@@ -194,7 +219,6 @@ export const useAppStore = create<AppState>()(
             };
           });
         },
-
         deleteTransaction: (transactionID) => {
           const state = get();
           const transaction = state.transactions[transactionID];
@@ -214,7 +238,6 @@ export const useAppStore = create<AppState>()(
             state.categories[id] = { ...category, id, createdAt: timestamp, updatedAt: timestamp };
           });
         },
-
         updateCategory: (category) => {
           set((state) => {
             const timestamp = new Date().toISOString();
@@ -226,7 +249,6 @@ export const useAppStore = create<AppState>()(
             state.categories[category.id] = { ...prevCategory, ...category, updatedAt: timestamp };
           });
         },
-
         deleteCategory: (categoryID) => {
           set((state) => {
             delete state.categories[categoryID];
@@ -254,7 +276,6 @@ export const useAppStore = create<AppState>()(
             state.accounts[id] = { ...account, id, createdAt: timestamp, updatedAt: timestamp };
           });
         },
-
         updateAccount: (account) => {
           set((state) => {
             // TODO: updating account currency should change transaction currency
@@ -262,13 +283,12 @@ export const useAppStore = create<AppState>()(
             const timestamp = new Date().toISOString();
             const prevAccount = state.accounts[account.id];
             if (!prevAccount) {
-              console.warn("Cannot update category as it does not exist in state");
+              console.warn("Cannot update account as it does not exist in state");
               return;
             }
             state.accounts[account.id] = { ...prevAccount, ...account, updatedAt: timestamp };
           });
         },
-
         // TODO: delete associated transactions or mark them
         deleteAccount: (accountID) => {
           set((state) => {
@@ -283,6 +303,32 @@ export const useAppStore = create<AppState>()(
             if (state.defaultAccountID === accountID) {
               state.defaultAccountID = accounts[0].id;
             }
+          });
+        },
+
+        addBudget: (budget) => {
+          set((state) => {
+            const id = nanoid();
+            const timestamp = new Date().toISOString();
+            state.budgets[id] = { ...budget, id, createdAt: timestamp, updatedAt: timestamp };
+          });
+        },
+        updateBudget: (budget) => {
+          set((state) => {
+            const timestamp = new Date().toISOString();
+            const prevBudget = state.budgets[budget.id];
+            if (!prevBudget) {
+              // todo: throw error
+              console.warn("Cannot update budget as it does not exist in state");
+              return;
+            }
+            state.budgets[budget.id] = { ...prevBudget, ...budget, updatedAt: timestamp };
+          });
+        },
+
+        deleteBudget: (budgetID) => {
+          set((state) => {
+            delete state.budgets[budgetID];
           });
         },
 

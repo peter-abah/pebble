@@ -35,10 +35,15 @@ export default function RootLayout() {
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = useState(false);
   const hasStoreHydrated = useAppStore((state) => state._hasHydrated);
   const accounts = useAppStore((state) => state.accounts);
+  const budgets = useAppStore((state) => state.budgets);
   const exchangeRates = useAppStore((state) => state.exchangeRates);
-  const accountCurrenciesCodes = useMemo(
-    () => new Set(Object.values(accounts).map((a) => a!.currency.isoCode)),
-    [accounts]
+  const currencyCodes = useMemo(
+    () =>
+      new Set([
+        ...Object.values(accounts).map((a) => a!.currency.isoCode),
+        ...Object.values(budgets).map((b) => b!.amount.currency.isoCode),
+      ]),
+    [accounts, budgets]
   );
   const { updateExchangeRate } = useAppStore((state) => state.actions);
 
@@ -76,7 +81,7 @@ export default function RootLayout() {
   // updates the exchange rate every time the app is opened or the any of the account currencies changes
   useEffect(() => {
     const today = new Date().toISOString().slice(0, 10); //e.g 2024-11-14
-    accountCurrenciesCodes.forEach((code) => {
+    currencyCodes.forEach((code) => {
       if (exchangeRates[code.toLocaleLowerCase()]?.date === today) return;
 
       fetchExchangeRates(code).then(({ data, error }) => {
@@ -87,7 +92,7 @@ export default function RootLayout() {
         updateExchangeRate(code, data);
       });
     });
-  }, [accountCurrenciesCodes, updateExchangeRate, exchangeRates, hasStoreHydrated]);
+  }, [currencyCodes, updateExchangeRate, exchangeRates, hasStoreHydrated]);
 
   if (!isColorSchemeLoaded) {
     return null;
