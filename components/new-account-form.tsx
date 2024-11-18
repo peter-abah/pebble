@@ -85,7 +85,7 @@ const NewAccountForm = ({ defaultValues, onSubmit, excludedFields }: NewAccountF
                 value={{ value, label: value && renderCurrencyLabel(value) }}
                 onValueChange={(option) => onChange(option?.value)}
               >
-                <SelectTrigger className="w-full" aria-aria-labelledby="type">
+                <SelectTrigger className="w-full" aria-labelledby="type">
                   <SelectValue
                     className="text-foreground text-sm native:text-lg"
                     placeholder="Select Currency"
@@ -119,7 +119,11 @@ const NewAccountForm = ({ defaultValues, onSubmit, excludedFields }: NewAccountF
                 className="px-3 py-2 border border-border rounded"
                 aria-labelledby="amount"
                 value={
-                  typeof value === "string" ? value : value?.toFixed(currency?.minorUnit) || ""
+                  typeof value === "string"
+                    ? value
+                    : value?.toLocaleString(undefined, {
+                        maximumFractionDigits: currency?.minorUnit,
+                      }) || ""
                 }
                 onBlur={onBlur}
                 onChangeText={onChange}

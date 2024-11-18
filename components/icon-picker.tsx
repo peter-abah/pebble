@@ -11,17 +11,18 @@ import { Label } from "@/components/ui/label";
 import { Text } from "@/components/ui/text";
 import { NAME_TO_GROUP_COLOR } from "@/lib/constants";
 import { emojiPattern } from "@/lib/emoji-regex";
-import { CATEGORY_ICONS, CATEGORY_ICONS_NAMES, CategoryIconName } from "@/lib/icons/category-icons";
-import { Icon } from "@/lib/types";
+import { CATEGORY_ICONS, CATEGORY_ICONS_NAMES } from "@/lib/icons/category-icons";
+import { Icon as IconType } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Dimensions, TextInput, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
+import { Icon } from "./icon";
 
 interface IconPickerProps {
   iconValue?: string;
-  iconTypeValue?: Icon["type"];
+  iconTypeValue?: IconType["type"];
   onIconChange: (value?: string) => void;
-  onIconTypeChange: (value?: Icon["type"]) => void;
+  onIconTypeChange: (value?: IconType["type"]) => void;
   color?: string;
 }
 
@@ -42,7 +43,7 @@ const IconPicker = ({
           className="flex-1 rounded-lg px-3 py-0 h-10 font-normal items-start justify-center"
         >
           {iconValue ? (
-            renderIcon(iconTypeValue!, iconValue, color)
+            <Icon type={iconTypeValue!} value={iconValue} color={color} />
           ) : (
             <Text className="text-sm font-medium text-muted-foreground">Select Icon</Text>
           )}
@@ -117,23 +118,6 @@ const IconPicker = ({
       </DialogContent>
     </Dialog>
   );
-};
-
-const renderIcon = (type: Icon["type"], value: string, color?: string) => {
-  switch (type) {
-    case "emoji":
-      return <Text className="text-2xl">{value}</Text>;
-    case "icon":
-      return (
-        <View>
-          {CATEGORY_ICONS[value as CategoryIconName]?.({
-            className: "text-foreground",
-            size: 24,
-            color: color ? color : undefined,
-          }) || ""}
-        </View>
-      );
-  }
 };
 
 export default IconPicker;

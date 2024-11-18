@@ -77,7 +77,7 @@ const EditAccountForm = ({ defaultValues, onSubmit }: EditAccountFormProps) => {
                 value={{ value, label: value && renderCurrencyLabel(value) }}
                 onValueChange={(option) => onChange(option?.value)}
               >
-                <SelectTrigger className="w-full" aria-aria-labelledby="type">
+                <SelectTrigger className="w-full" aria-labelledby="type">
                   <SelectValue
                     className="text-foreground text-sm native:text-lg"
                     placeholder="Select Currency"

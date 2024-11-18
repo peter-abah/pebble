@@ -62,7 +62,7 @@ export const BudgetCard = ({ budget }: { budget: Budget }) => {
             />
           </View>
           <Text className={cn("text-sm font-medium", ratio > 1 && "text-destructive")}>
-            {(ratio * 100).toFixed(2)}%
+            {(ratio * 100).toLocaleString(undefined,{maximumFractionDigits: 2})}%
           </Text>
         </View>
       </Pressable>

@@ -108,7 +108,9 @@ const BudgetForm = ({ defaultValues, onSubmit }: BudgetFormProps) => {
                 value={
                   typeof value === "string"
                     ? value
-                    : value?.toFixed((currency || defaultCurrency)?.minorUnit) || ""
+                    : value?.toLocaleString(undefined, {
+                        maximumFractionDigits: (currency || defaultCurrency).minorUnit,
+                      }) || ""
                 }
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -130,7 +132,7 @@ const BudgetForm = ({ defaultValues, onSubmit }: BudgetFormProps) => {
                 value={{ value, label: value && renderCurrencyLabel(value) }}
                 onValueChange={(option) => onChange(option?.value)}
               >
-                <SelectTrigger className="w-full" aria-aria-labelledby="type">
+                <SelectTrigger className="w-full" aria-labelledby="type">
                   <SelectValue
                     className="text-foreground text-sm native:text-lg"
                     placeholder="Select Currency"

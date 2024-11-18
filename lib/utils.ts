@@ -1,9 +1,20 @@
 import { type TimePeriod } from "@/components/time-period-picker";
-import { type Transaction } from "@/lib/types";
+import { NonEmptyArray, type Transaction } from "@/lib/types";
 import { clsx, type ClassValue } from "clsx";
 import dayjs, { Dayjs } from "dayjs";
 import { memoize } from "proxy-memoize";
 import { twMerge } from "tailwind-merge";
+
+export const exhaustiveUnionTuple =
+  <T>() =>
+  <L extends NonEmptyArray<T>>(
+    ...x: L extends any
+      ? Exclude<T, L[number]> extends never
+        ? L
+        : Array<Exclude<T, L[number]>>
+      : never
+  ) =>
+    x;
 
 export function cn(...inputs: Array<ClassValue>) {
   return twMerge(clsx(inputs));
@@ -44,6 +55,20 @@ export function createRange(start: number, end: number) {
     range.push(i);
   }
   return range;
+}
+
+// gives a compiler error if I don't cover a case in switch of union types
+// can also be used for early return statements that are exhaustive
+export function assertUnreachable(x: never): never {
+  throw new Error("Didn't expect to get here");
+}
+
+export function humanizeString(input: string) {
+  return input
+    .replace(/[_-]/g, " ") // Replace underscores and dashes with spaces
+    .replace(/([a-z])([A-Z])/g, "$1 $2") // Add space between camelCase
+    .toLowerCase() // Convert to lowercase
+    .replace(/^\w/, (c) => c.toUpperCase()); // Capitalize the first letter
 }
 
 // todo: fix colors
@@ -136,7 +161,7 @@ export const groupTransactionsByPeriod = {
 } satisfies Record<TimePeriod["period"], unknown>;
 
 // used to index transactions grouped by date functions above
-export const dateToKey = ({ period, date }: TimePeriod) => {
+export const dateToKey = ({ period, date }: TimePeriod): string => {
   switch (period) {
     case "annually":
       return date.year().toString(); // 2024
@@ -145,6 +170,6 @@ export const dateToKey = ({ period, date }: TimePeriod) => {
     case "weekly":
       return date.day(0).format().slice(0, 10); // first day of week: 2024-10-20
     default:
-      return date.format().slice(0, 10); // date: 2024-10-21
+      return date.format("MMM DD, YYYY");
   }
 };

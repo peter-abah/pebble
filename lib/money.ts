@@ -46,11 +46,11 @@ export const formatMoney = ({ valueInMinorUnits, currency }: Money) => {
     valueInMinorUnits / 10 ** currency.minorUnit,
     currency.minorUnit
   );
-  const noFractionDigits = Number.isInteger(valueInMajorUnits) ? 0 : currency.minorUnit;
+  const noFractionDigits =  currency.minorUnit;
   const amountStr = valueInMajorUnits.toLocaleString(undefined, {
     maximumFractionDigits: noFractionDigits,
-    minimumFractionDigits: noFractionDigits,
   });
+
   const currencySymbol = currency.symbol;
   return currencySymbol + amountStr;
 };

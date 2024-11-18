@@ -37,7 +37,7 @@ const ColorPicker = ({ value, onChange }: ColorPickerProps) => {
       onValueChange={(option) => onChange(option?.value)}
       className="w-full"
     >
-      <SelectTrigger className="w-full gap-1 h-10 items-center" aria-aria-labelledby="type">
+      <SelectTrigger className="w-full gap-1 h-10 items-center" aria-labelledby="type">
         <SelectValue
           className={cn("px-4 py-2 flex-1 rounded-lg text-white", !value && "text-foreground")}
           style={{ backgroundColor: value || "transparent" }}

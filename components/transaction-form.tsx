@@ -14,15 +14,18 @@ import { Text } from "@/components/ui/text";
 import { Textarea } from "@/components/ui/textarea";
 import * as LabelPrimitive from "@rn-primitives/label";
 
+import { TRANSACTION_TYPES } from "@/lib/constants";
 import { useAppStore } from "@/lib/store";
-import { Account, TRANSACTION_TYPES, TransactionCategory } from "@/lib/types";
-import { cn, isStringNumeric, titleCase } from "@/lib/utils";
+import { Account, TransactionCategory } from "@/lib/types";
+import { cn, humanizeString, isStringNumeric } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import dayjs from "dayjs";
 import { Controller, useForm } from "react-hook-form";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
+import TransactionPicker from "./transaction-picker";
 
 const baseTransactionFormSchema = z.object({
   amount: z.union([
@@ -38,8 +41,8 @@ const baseTransactionFormSchema = z.object({
   note: z.string().optional(),
 });
 
-const transferTransactionFormSchema = z
-  .object({
+const transferTransactionFormSchema = baseTransactionFormSchema.merge(
+  z.object({
     from: z.string().min(1, { message: "Select sending account" }),
     to: z.string().min(1, { message: "Select receiving account" }),
     exchangeRate: z.union([
@@ -54,28 +57,59 @@ const transferTransactionFormSchema = z
     ]),
     type: z.literal("transfer"),
   })
-  .merge(baseTransactionFormSchema);
+);
 
-const normalTransactionFormSchema = z
-  .object({
+const normalTransactionFormSchema = baseTransactionFormSchema.merge(
+  z.object({
     categoryID: z.string().min(1, { message: "Select category" }),
     accountID: z.string().min(1, { message: "Select account" }),
     type: z.enum(["expense", "income"]),
   })
+);
+
+const loanTransactionFormSchema = baseTransactionFormSchema.merge(
+  z.object({
+    accountID: z.string().min(1, { message: "Select account" }),
+    type: z.enum(["lent", "borrowed"]),
+    dueDate: z.date().optional(),
+    title: z.string().min(1, { message: "Enter transaction title" }),
+  })
+);
+
+const loanPaymentTransactionFormSchema = z
+  .object({
+    accountID: z.string().min(1, { message: "Select account" }),
+    loanID: z.string().min(1, { message: "Select loan" }),
+    type: z.enum(["paid_loan", "collected_debt"]),
+  })
   .merge(baseTransactionFormSchema);
 
 const formSchema = z
-  .discriminatedUnion("type", [transferTransactionFormSchema, normalTransactionFormSchema])
-  .refine(
-    (data) => {
-      if (data.type !== "transfer") return true;
-      return data.from !== data.to;
-    },
-    {
-      message: "Receiving account cannot be same Sending account",
-      path: ["to"],
+  .discriminatedUnion("type", [
+    transferTransactionFormSchema,
+    normalTransactionFormSchema,
+    loanTransactionFormSchema,
+    loanPaymentTransactionFormSchema,
+  ])
+  .superRefine((data, ctx) => {
+    if (data.type === "transfer") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Receiving account cannot be same sending account.",
+        path: ["to"],
+      });
     }
-  );
+
+    if (data.type === "lent" || (data.type === "borrowed" && data.dueDate)) {
+      if (dayjs(data.dueDate).isSameOrBefore(data.datetime)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Loan due date must be after loan date.",
+          path: ["dueDate"],
+        });
+      }
+    }
+  });
 
 export type FormSchema = z.infer<typeof formSchema>;
 
@@ -119,7 +153,9 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
     <View style={{ flex: 1 }}>
       <ScrollView contentContainerClassName="py-4 gap-4" className="flex-1 px-6">
         <View className="flex-row gap-1 items-center">
-          <Text className="text-3xl font-semibold leading-none mt-1.5">{currency?.symbol}</Text>
+          <Text className="text-3xl font-semibold leading-none mt-1.5">
+            {currency?.symbol || ""}
+          </Text>
           <Controller
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
@@ -128,7 +164,11 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                 aria-labelledby="amount"
                 autoFocus={!defaultValues.amount}
                 value={
-                  typeof value === "string" ? value : value?.toFixed(currency?.minorUnit) || ""
+                  typeof value === "string"
+                    ? value
+                    : value?.toLocaleString(undefined, {
+                        maximumFractionDigits: currency?.minorUnit,
+                      }) || ""
                 }
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -141,6 +181,19 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
         </View>
 
         <View className="gap-2">
+          <Label nativeID="date" className="text-lg">
+            Date
+          </Label>
+          <Controller
+            control={control}
+            render={({ field: { value, onChange, onBlur } }) => (
+              <DateTimePicker onChange={onChange} date={value} />
+            )}
+            name="datetime"
+          />
+        </View>
+
+        <View className="gap-2">
           <Label nativeID="type" className="text-lg">
             Type
           </Label>
@@ -148,10 +201,10 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
               <Select
-                value={{ value, label: titleCase(value) }}
+                value={value ? { value, label: humanizeString(type) } : undefined}
                 onValueChange={(option) => onChange(option?.value)}
               >
-                <SelectTrigger className="w-full" aria-aria-labelledby="type">
+                <SelectTrigger className="w-full" nativeID="type">
                   <SelectValue
                     className="text-foreground text-sm native:text-lg"
                     placeholder="Select transaction type"
@@ -160,9 +213,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                 <SelectContent insets={contentInsets} className="w-full">
                   <SelectGroup>
                     {TRANSACTION_TYPES.map((type) => (
-                      <SelectItem key={type} label={titleCase(type)} value={type}>
-                        {titleCase(type)}
-                      </SelectItem>
+                      <SelectItem key={type} label={humanizeString(type)} value={type} />
                     ))}
                   </SelectGroup>
                 </SelectContent>
@@ -172,7 +223,8 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
           />
         </View>
 
-        <View className={cn("gap-4", type !== "transfer" && "hidden")}>
+        {/* TRANSFER TRANSACTION FIELDS INPUTS  */}
+        <View className={cn("gap-4 hidden", type === "transfer" && "flex")}>
           <View className="gap-2">
             <Label nativeID="from" className="text-lg">
               From
@@ -294,7 +346,8 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
           </View>
         </View>
 
-        <View className={cn("gap-4", type === "transfer" && "hidden")}>
+        {/* EXPENSE/INCOME TRANSACTION FIELDS INPUTS  */}
+        <View className={cn("gap-4 hidden", (type === "income" || type === "expense") && "flex")}>
           <View className="gap-2">
             <Label nativeID="accountID" className="text-lg">
               Account
@@ -308,7 +361,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                   }
                   onValueChange={(option) => onChange(option?.value)}
                 >
-                  <SelectTrigger className="w-full" aria-aria-labelledby="type">
+                  <SelectTrigger className="w-full" aria-labelledby="type">
                     <SelectValue
                       className="text-foreground text-sm native:text-lg"
                       placeholder="Select Account"
@@ -338,7 +391,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                   value={{ value, label: value && (categories[value]?.name || "Unknown") }}
                   onValueChange={(option) => onChange(option?.value)}
                 >
-                  <SelectTrigger className="w-full" aria-aria-labelledby="type">
+                  <SelectTrigger className="w-full" aria-labelledby="type">
                     <SelectValue
                       className="text-foreground text-sm native:text-lg"
                       placeholder="Select Category"
@@ -360,17 +413,113 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
           </View>
         </View>
 
-        <View className="gap-2">
-          <Label nativeID="date" className="text-lg">
-            Date
-          </Label>
-          <Controller
-            control={control}
-            render={({ field: { value, onChange, onBlur } }) => (
-              <DateTimePicker onChange={onChange} date={value} />
-            )}
-            name="datetime"
-          />
+        {/* LOAN TRANSACTION FIELDS INPUTS  */}
+        <View className={cn("gap-4 hidden", (type === "lent" || type === "borrowed") && "flex")}>
+          <View className="gap-2">
+            <Label nativeID="accountID" className="text-lg">
+              Account
+            </Label>
+            <Controller
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <Select
+                  value={
+                    value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
+                  }
+                  onValueChange={(option) => onChange(option?.value)}
+                >
+                  <SelectTrigger className="w-full" aria-labelledby="type">
+                    <SelectValue
+                      className="text-foreground text-sm native:text-lg"
+                      placeholder="Select Account"
+                    />
+                  </SelectTrigger>
+                  <SelectContent insets={contentInsets} className="w-full">
+                    <SelectGroup>
+                      {accounts.map((account) => (
+                        <SelectItem key={account.id} label={account.name} value={account.id} />
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
+              name="accountID"
+            />
+          </View>
+
+          <View className="gap-2">
+            <Label nativeID="dueDate" className="text-lg">
+              Due Date
+            </Label>
+            <Controller
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <DateTimePicker onChange={onChange} date={value} showClearButton />
+              )}
+              name="dueDate"
+            />
+          </View>
+        </View>
+
+        {/* LOAN PAYMENT TRANSACTION FIELDS INPUTS  */}
+        <View
+          className={cn(
+            "gap-4 hidden",
+            (type === "paid_loan" || type === "collected_debt") && "flex"
+          )}
+        >
+          <View className="gap-2">
+            <Label nativeID="accountID" className="text-lg">
+              Account
+            </Label>
+            <Controller
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <Select
+                  value={
+                    value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
+                  }
+                  onValueChange={(option) => onChange(option?.value)}
+                >
+                  <SelectTrigger className="w-full" aria-labelledby="type">
+                    <SelectValue
+                      className="text-foreground text-sm native:text-lg"
+                      placeholder="Select Account"
+                    />
+                  </SelectTrigger>
+                  <SelectContent insets={contentInsets} className="w-full">
+                    <SelectGroup>
+                      {accounts.map((account) => (
+                        <SelectItem key={account.id} label={account.name} value={account.id} />
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
+              name="accountID"
+            />
+          </View>
+
+          <View className="gap-2">
+            <Label nativeID="loanID" className="text-lg">
+              Loan Transaction
+            </Label>
+            <Controller
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <TransactionPicker
+                  value={value}
+                  onChange={onChange}
+                  filters={{
+                    types: [type === "paid_loan" ? "borrowed" : "lent"],
+                    accounts: [],
+                    categories: [],
+                  }}
+                />
+              )}
+              name="loanID"
+            />
+          </View>
         </View>
 
         <View className="gap-2">
@@ -382,7 +531,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
             render={({ field: { value, onChange, onBlur } }) => (
               <Input
                 className="px-3 py-2 border border-border rounded"
-                value={value}
+                value={value || ""}
                 onChangeText={onChange}
                 onBlur={onBlur}
                 aria-labelledby="title"
@@ -401,7 +550,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
               <Textarea
-                value={value}
+                value={value || ""}
                 aria-labelledby="note"
                 onChangeText={onChange}
                 onBlur={onBlur}

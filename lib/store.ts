@@ -16,11 +16,11 @@ import { Platform } from "react-native";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { ACCOUNTS, CATEGORIES } from "./data";
-import { nanoid } from "./nanoid";
-import { arrayToMap, generateColors, shuffle } from "./utils";
-import { CURRENCIES_MAP } from "./data/currencies";
 import { NAME_TO_GROUP_COLOR } from "./constants";
+import { ACCOUNTS, CATEGORIES } from "./data";
+import { CURRENCIES_MAP } from "./data/currencies";
+import { nanoid } from "./nanoid";
+import { arrayToMap, assertUnreachable, generateColors, shuffle } from "./utils";
 
 setAutoFreeze(false);
 
@@ -102,8 +102,11 @@ export const useAppStore = create<AppState>()(
       actions: {
         _updateAccountBalanceForNewTransaction: (transaction) => {
           set((state) => {
-            switch (transaction.type) {
-              case "expense": {
+            const type = transaction.type;
+            switch (type) {
+              case "expense":
+              case "lent":
+              case "paid_loan": {
                 const account = state.accounts[transaction.accountID];
                 if (!account) {
                   throw new Error(
@@ -114,7 +117,9 @@ export const useAppStore = create<AppState>()(
 
                 break;
               }
-              case "income": {
+              case "income":
+              case "borrowed":
+              case "collected_debt": {
                 const account = state.accounts[transaction.accountID];
                 if (!account) {
                   throw new Error(
@@ -135,14 +140,20 @@ export const useAppStore = create<AppState>()(
                 fromAccount.balance = subtractMoney(fromAccount.balance, transaction.amount);
                 const convertedAmount = convertMoney(transaction.amount, transaction.exchangeRate);
                 toAccount.balance = addMoney(toAccount.balance, convertedAmount);
+                break;
               }
+              default:
+                assertUnreachable(type);
             }
           });
         },
         _updateAccountBalanceForRemovedTransaction: (transaction) => {
           set((state) => {
-            switch (transaction.type) {
-              case "expense": {
+            const type = transaction.type
+            switch (type) {
+              case "expense":
+              case "lent":
+              case "paid_loan": {
                 const account = state.accounts[transaction.accountID];
                 if (!account) {
                   // TODO: maybe throw an and handle in the app error?
@@ -154,7 +165,9 @@ export const useAppStore = create<AppState>()(
                 account.balance = addMoney(account.balance, transaction.amount);
                 break;
               }
-              case "income": {
+              case "income":
+              case "borrowed":
+              case "collected_debt": {
                 const account = state.accounts[transaction.accountID];
                 if (!account) {
                   // TODO: maybe throw an and handle in the app error?
@@ -179,7 +192,10 @@ export const useAppStore = create<AppState>()(
                 fromAccount.balance = addMoney(fromAccount.balance, transaction.amount);
                 const convertedAmount = convertMoney(transaction.amount, transaction.exchangeRate);
                 toAccount.balance = subtractMoney(toAccount.balance, convertedAmount);
+                break;
               }
+              default:
+                assertUnreachable(type);
             }
           });
         },
@@ -261,7 +277,7 @@ export const useAppStore = create<AppState>()(
              * switch to a database later. sqlite or other options
              */
             const relatedTransactions = Object.values(state.transactions).filter((t) =>
-              t?.type === "transfer" ? false : t?.categoryID === categoryID
+              t?.type === "income" || t?.type === "expense" ? t?.categoryID === categoryID : false
             ) as Array<Transaction>;
             relatedTransactions.forEach((transaction) =>
               state.actions.deleteTransaction(transaction.id)

@@ -46,10 +46,12 @@ const More = () => {
             }
           />
         </Link>
-        <ActionButton
-          title="Debts and Loans"
-          icon={<BanknoteIcon size={24} className="text-foreground mr-2" />}
-        />
+        <Link href={"/loans"} asChild>
+          <ActionButton
+            title="Loans"
+            icon={<BanknoteIcon size={24} className="text-foreground mr-2" />}
+          />
+        </Link>
         <ActionButton
           title="Subscriptions"
           icon={

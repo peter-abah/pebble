@@ -59,11 +59,21 @@ export default function Home() {
           </View>
 
           {transactions.slice(0, 10).map((transaction) => (
-            <TransactionCard transaction={transaction} key={transaction.id} />
+            <Link
+              href={
+                transaction.type === "lent" || transaction.type === "borrowed"
+                  ? `/loans/${transaction.id}`
+                  : `/transactions/${transaction.id}/edit`
+              }
+              asChild
+              key={transaction.id}
+            >
+              <TransactionCard transaction={transaction} />
+            </Link>
           ))}
         </View>
       </ScrollView>
-      <Link href="/transactions/create" asChild>
+      <Link href="/transactions/new" asChild>
         <FloatingAddButton />
       </Link>
     </ScreenWrapper>

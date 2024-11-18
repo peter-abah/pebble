@@ -11,12 +11,12 @@ import { PencilIcon } from "@/lib/icons/Pencil";
 import { TrashIcon } from "@/lib/icons/Trash";
 import { addMoney, convertMoney, createMoney, formatMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
-import { Budget, Money, Transaction } from "@/lib/types";
+import { Budget, Money, NormalTransaction, Transaction } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Link, router, useLocalSearchParams } from "expo-router";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { FlatList, View } from "react-native";
-import { PieChart, pieDataItem } from "react-native-gifted-charts";
+import { PieChart } from "react-native-gifted-charts";
 
 const BudgetScreen = () => {
   const { id } = useLocalSearchParams() as { id: string };
@@ -32,7 +32,7 @@ const BudgetScreen = () => {
     if (!budget) return [];
 
     const transactions = Object.values(transactionsMap) as Array<Transaction>;
-    return transactions.filter((t) => isTransactionInBudget(t, budget));
+    return transactions.filter((t): t is NormalTransaction => isTransactionInBudget(t, budget));
   }, [transactionsMap, budget]);
 
   const amountSpent = useMemo(
@@ -133,7 +133,7 @@ const BudgetScreen = () => {
             />
           </View>
           <Text className={cn("font-medium", ratio > 1 && "text-destructive")}>
-            {(ratio * 100).toFixed(2)}%
+            {(ratio * 100).toLocaleString(undefined,{maximumFractionDigits: 2})}%
           </Text>
         </View>
       </View>
@@ -149,7 +149,11 @@ const BudgetScreen = () => {
         data={budgetTransactions}
         ListHeaderComponent={<Text className="text-lg font-medium">Transactions</Text>}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <TransactionCard transaction={item} />}
+        renderItem={({ item }) => (
+          <Link href={`/transactions/${item.id}/edit`} asChild>
+            <TransactionCard transaction={item} />
+          </Link>
+        )}
         className="flex-1 px-6 py-4"
         ListEmptyComponent={<EmptyState title="No transactions to show" />}
       />
@@ -163,14 +167,19 @@ const BudgetChart = ({
   budget,
   total,
 }: {
-  transactions: Array<Transaction>;
+  transactions: Array<NormalTransaction>;
   budget: Budget;
   total: Money;
 }) => {
   const categoryMap = useAppStore((state) => state.categories);
   const exchangeRates = useAppStore((state) => state.exchangeRates);
 
-  const chartData = createChartData(transactions, budget.amount.currency, exchangeRates);
+  const chartData = createChartData(
+    transactions,
+    budget.amount.currency,
+    exchangeRates,
+    (t) => t.categoryID
+  );
   if (chartData.length < 1) {
     return null;
   }
@@ -186,7 +195,7 @@ const BudgetChart = ({
       />
       <View className="flex-row items-center justify-center gap-4">
         {chartData.map((dataItem) => {
-          const category = categoryMap[dataItem.categoryID];
+          const category = categoryMap[dataItem.key];
           if (!category) return null;
 
           return (

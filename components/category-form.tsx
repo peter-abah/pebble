@@ -10,7 +10,7 @@ import {
 import { Text } from "@/components/ui/text";
 import { emojiPattern } from "@/lib/emoji-regex";
 import { useAppStore } from "@/lib/store";
-import { TRANSACTION_TYPES, TransactionCategory } from "@/lib/types";
+import { Satisfies, TransactionCategory, TransactionType } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { TextInput, View } from "react-native";
@@ -19,7 +19,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
 import ColorPicker from "./color-picker";
 import IconPicker from "./icon-picker";
-import { titleCase } from "@/lib/utils";
+import { humanizeString, titleCase } from "@/lib/utils";
 
 const emojiAtStartPattern = new RegExp(`^${emojiPattern}`);
 const formSchema = z
@@ -29,7 +29,7 @@ const formSchema = z
     parentID: z.string().optional(),
     iconType: z.enum(["emoji", "icon"]),
     icon: z.string(),
-    type: z.enum(TRANSACTION_TYPES),
+    type: z.enum(["expense", "income"]),
   })
   .transform((data, ctx) => {
     if (data.iconType === "icon") return data;
@@ -47,7 +47,13 @@ const formSchema = z
     return { ...data, icon: emoji };
   });
 
-export type FormSchema = z.infer<typeof formSchema>;
+export type FormSchema = Satisfies<
+  {
+    type: Extract<TransactionType, "income" | "expense">;
+    iconType: TransactionCategory["icon"]["type"];
+  },
+  z.infer<typeof formSchema>
+>;
 
 interface CategoryFormProps {
   defaultValues: Partial<FormSchema>;
@@ -109,15 +115,16 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
                 value={value && { value, label: titleCase(value) }}
                 onValueChange={(option) => onChange(option?.value)}
               >
-                <SelectTrigger className="w-full" aria-aria-labelledby="type">
+                <SelectTrigger className="w-full" aria-labelledby="type">
                   <SelectValue
                     className="text-foreground text-sm native:text-lg"
                     placeholder="Select type"
                   />
                 </SelectTrigger>
                 <SelectContent insets={contentInsets} className="w-full">
-                  <SelectItem label={"Expenses"} value={"debit"} />
-                  <SelectItem label={"Income"} value={"credit"} />
+                  {["expenses", "income"].map((v) => (
+                    <SelectItem label={humanizeString(v)} value={v} key={v} />
+                  ))}
                 </SelectContent>
               </Select>
             )}
@@ -140,7 +147,7 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
                 }
                 onValueChange={(option) => onChange(option?.value)}
               >
-                <SelectTrigger className="w-full" aria-aria-labelledby="type">
+                <SelectTrigger className="w-full" aria-labelledby="type">
                   <SelectValue
                     className="text-foreground text-sm native:text-lg"
                     placeholder="None"

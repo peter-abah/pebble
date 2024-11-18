@@ -8,27 +8,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Text } from "@/components/ui/text";
+import { TRANSACTION_TYPES } from "@/lib/constants";
 import { CheckIcon } from "@/lib/icons/Check";
 import { FilterIcon } from "@/lib/icons/Filter";
 import { ShapesIcon } from "@/lib/icons/Shapes";
-import { CATEGORY_ICONS, CategoryIconName } from "@/lib/icons/category-icons";
 import { useAppStore } from "@/lib/store";
-import {
-  Account,
-  Icon,
-  TRANSACTION_TYPES,
-  TransactionCategory,
-  TransactionType,
-} from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { Account, Filters, TransactionCategory, TransactionType } from "@/lib/types";
+import { cn, humanizeString } from "@/lib/utils";
 import { Dimensions, Pressable, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-
-export interface Filters {
-  categories: Array<TransactionCategory["id"]>;
-  types: Array<TransactionType>;
-  accounts: Array<Account["id"]>;
-}
+import { Icon } from "./icon";
 
 interface FiltersModalProps {
   filters: Filters;
@@ -99,7 +88,7 @@ const FiltersModal = ({ filters, onFiltersChange }: FiltersModalProps) => {
                   {filters.types.includes(item) && (
                     <CheckIcon size={16} className="text-foreground" />
                   )}
-                  <Text className="capitalize">{item}</Text>
+                  <Text>{humanizeString(item)}</Text>
                 </Button>
               )}
               contentContainerClassName="gap-4"
@@ -149,10 +138,10 @@ const FiltersModal = ({ filters, onFiltersChange }: FiltersModalProps) => {
                       backgroundColor: item.color + "55", // make hex color semitransparent
                     }}
                   >
-                    {renderIcon(
-                      item.icon.type,
-                      item.icon.type === "emoji" ? item.icon.emoji : item.icon.name
-                    )}
+                    <Icon
+                      type={item.icon.type}
+                      value={item.icon.type === "emoji" ? item.icon.emoji : item.icon.name}
+                    />
                   </View>
                   <Text className="text-xs" numberOfLines={1}>
                     {item.name}
@@ -194,23 +183,6 @@ const FiltersModal = ({ filters, onFiltersChange }: FiltersModalProps) => {
       </DialogContent>
     </Dialog>
   );
-};
-
-const renderIcon = (type: Icon["type"], value: string, color?: string) => {
-  switch (type) {
-    case "emoji":
-      return <Text className="text-2xl">{value}</Text>;
-    case "icon":
-      return (
-        <View>
-          {CATEGORY_ICONS[value as CategoryIconName]?.({
-            className: "text-foreground",
-            size: 24,
-            color: color ? color : undefined,
-          }) || ""}
-        </View>
-      );
-  }
 };
 
 export default FiltersModal;

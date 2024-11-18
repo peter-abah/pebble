@@ -10,7 +10,7 @@ import {
 import { Text } from "@/components/ui/text";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { ChevronRightIcon } from "@/lib/icons/ChevronRIght";
-import { titleCase } from "@/lib/utils";
+import { assertUnreachable, titleCase } from "@/lib/utils";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { Option } from "@rn-primitives/select";
 import dayjs, { Dayjs } from "dayjs";
@@ -57,6 +57,10 @@ function TimePeriodPicker({ timePeriod, onValueChange }: TimePeriodPickerProps) 
       case "annually":
         onValueChange({ ...timePeriod, date: timePeriod.date.add(1, "year") });
         break;
+      case "all time":
+        break;
+      default:
+        assertUnreachable(timePeriod.period);
     }
   };
 
@@ -71,6 +75,10 @@ function TimePeriodPicker({ timePeriod, onValueChange }: TimePeriodPickerProps) 
       case "annually":
         onValueChange({ ...timePeriod, date: timePeriod.date.subtract(1, "year") });
         break;
+      case "all time":
+        break;
+      default:
+        assertUnreachable(timePeriod.period);
     }
   };
 
@@ -98,7 +106,7 @@ function TimePeriodPicker({ timePeriod, onValueChange }: TimePeriodPickerProps) 
           value={{ value: timePeriod.period, label: titleCase(timePeriod.period) }}
           onValueChange={handlePeriodChange}
         >
-          <SelectTrigger className="gap-4" aria-aria-labelledby="type">
+          <SelectTrigger className="gap-4" aria-labelledby="type">
             <SelectValue className="text-foreground" placeholder="Select transaction type" />
           </SelectTrigger>
           <SelectContent insets={contentInsets}>
@@ -116,16 +124,18 @@ function TimePeriodPicker({ timePeriod, onValueChange }: TimePeriodPickerProps) 
   );
 }
 
-const renderDate = (timePeriod: TimePeriod) => {
+const renderDate = (timePeriod: TimePeriod): string => {
   switch (timePeriod.period) {
     case "annually":
-      return timePeriod.date.year();
+      return timePeriod.date.year().toString();
     case "monthly":
       return timePeriod.date.format("MMM YYYY");
     case "weekly":
       const firstDay = timePeriod.date.day(0);
       const lastDay = timePeriod.date.day(6);
       return `${firstDay.format("MMM DD")} - ${lastDay.format("MMM DD, YYYY")}`;
+    case "all time":
+      return timePeriod.date.format("MMM DD, YYYY");
   }
 };
 

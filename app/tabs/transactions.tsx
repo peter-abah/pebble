@@ -51,12 +51,23 @@ const Transactions = () => {
       <FlatList
         data={currentTransactions}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <TransactionCard transaction={item} />}
+        renderItem={({ item }) => (
+          <Link
+            href={
+              item.type === "lent" || item.type === "borrowed"
+                ? `/loans/${item.id}`
+                : `/transactions/${item.id}/edit`
+            }
+            asChild
+          >
+            <TransactionCard transaction={item} />
+          </Link>
+        )}
         className="flex-1 px-6 py-2"
         ListEmptyComponent={<EmptyState title="No transactions to show" />}
       />
 
-      <Link href="/transactions/create" asChild>
+      <Link href="/transactions/new" asChild>
         <FloatingAddButton />
       </Link>
     </ScreenWrapper>
