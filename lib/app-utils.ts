@@ -89,13 +89,16 @@ export const createChartData = memoizeWithArgs(
         };
       }
       return result;
-    }, {} as Partial<Record<string, PieDataItemCustom>>);
+    }, {} as Record<string, PieDataItemCustom>);
     const chartData = Object.values(chartDataMap) as Array<PieDataItemCustom>;
 
     // add distinct colors to each data item
     const colors = useAppStore.getState().chartColors;
     for (let i = 0; i < chartData.length; i++) {
-      chartData[i].color = colors[i];
+      const dataItem = chartData[i];
+      if (dataItem) {
+        dataItem.color = colors[i];
+      }
     }
 
     return chartData;

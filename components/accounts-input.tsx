@@ -37,7 +37,7 @@ export const AccountsInput = ({ value, onChange }: AccountsInputProps) => {
       return "Select Account";
     }
     if (value.length === 1) {
-      return accountsMap[value[0]]?.name;
+      return accountsMap[value[0] as string]?.name;
     }
     if (value.length === accounts.length) {
       return "All";

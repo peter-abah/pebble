@@ -1,6 +1,6 @@
 import { NAME_TO_GROUP_COLOR } from "@/lib/constants";
 import { createMoney } from "@/lib/money";
-import { Account, PartialRecord, TransactionCategory } from "@/lib/types";
+import { Account, TransactionCategory } from "@/lib/types";
 import { CURRENCIES_MAP } from "./currencies";
 
 export const ACCOUNTS: Array<Account> = [
@@ -254,4 +254,4 @@ export const CATEGORIES: Array<TransactionCategory> = [
 export const CATEGORIES_MAP = CATEGORIES.reduce((result, curr) => {
   result[curr.name] = curr;
   return result;
-}, {} as PartialRecord<string, TransactionCategory>);
+}, {} as Record<string, TransactionCategory>);

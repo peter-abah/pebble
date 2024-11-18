@@ -22,7 +22,7 @@ export function cn(...inputs: Array<ClassValue>) {
 
 type Key = string | number | symbol;
 export function arrayToMap<T extends {}>(items: Array<T>, keyName: keyof T) {
-  const res: Partial<Record<Key, T>> = {};
+  const res: Record<Key, T> = {};
   for (let item of items) {
     const key = item[keyName] as Key;
     res[key] = item;
@@ -37,7 +37,7 @@ export function isStringNumeric(str: string) {
 }
 
 export const titleCase = (value: string) => {
-  return value[0].toLocaleUpperCase() + value.slice(1);
+  return value[0]?.toLocaleUpperCase() + value.slice(1);
 };
 
 export const roundToZeros = (num: number, zeros: number): number => {
@@ -93,7 +93,7 @@ export const shuffle = <T>(array: Array<T>) => {
     currentIndex--;
 
     // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]] as [T, T];
   }
 };
 
@@ -111,7 +111,7 @@ export const randomDate = (start: Dayjs, end: Dayjs) => {
 };
 
 export const randomElement = <T>(array: Array<T>) => {
-  return array[Math.floor(Math.random() * array.length)];
+  return array[Math.floor(Math.random() * array.length)] as T;
 };
 
 export const groupTransactionsByMonth = memoize((transactions: Array<Transaction>) =>
@@ -123,7 +123,7 @@ export const groupTransactionsByMonth = memoize((transactions: Array<Transaction
       result[monthAndYear] = [transaction];
     }
     return result;
-  }, {} as Partial<Record<string, Array<Transaction>>>)
+  }, {} as Record<string, Array<Transaction>>)
 );
 
 export const groupTransactionsByWeek = memoize((transactions: Array<Transaction>) =>
@@ -135,7 +135,7 @@ export const groupTransactionsByWeek = memoize((transactions: Array<Transaction>
       result[firstDayOfWeek] = [transaction];
     }
     return result;
-  }, {} as Partial<Record<string, Array<Transaction>>>)
+  }, {} as Record<string, Array<Transaction>>)
 );
 
 export const groupTransactionsByYear = memoize((transactions: Array<Transaction>) =>
@@ -148,7 +148,7 @@ export const groupTransactionsByYear = memoize((transactions: Array<Transaction>
       result[year] = [transaction];
     }
     return result;
-  }, {} as Partial<Record<string, Array<Transaction>>>)
+  }, {} as Record<string, Array<Transaction>>)
 );
 
 export const groupTransactionsByPeriod = {

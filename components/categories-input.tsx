@@ -39,7 +39,7 @@ export const CategoriesInput = ({ value, onChange }: CategoriesInputProps) => {
       return "Select Category";
     }
     if (value.length === 1) {
-      return categoriesMap[value[0]]?.name;
+      return categoriesMap[value[0] as string]?.name;
     }
     if (value.length === categories.length) {
       return "All";

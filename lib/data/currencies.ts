@@ -1,4 +1,4 @@
-import { Currency, PartialRecord } from "../types";
+import { Currency } from "../types";
 import currenciesData from "./currencies.json";
 
 export const CURRENCIES: Array<Currency> = Object.values(currenciesData).map(
@@ -10,7 +10,7 @@ export const CURRENCIES: Array<Currency> = Object.values(currenciesData).map(
   })
 );
 
-export const CURRENCIES_MAP: PartialRecord<string, Currency> = CURRENCIES.reduce((result, curr) => {
+export const CURRENCIES_MAP: Record<string, Currency> = CURRENCIES.reduce((result, curr) => {
   result[curr.isoCode] = curr;
   return result;
-}, {} as PartialRecord<string, Currency>);
+}, {} as Record<string, Currency>);

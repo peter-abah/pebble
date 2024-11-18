@@ -4,7 +4,6 @@ import {
   AtLeast,
   Budget,
   DistributiveOmit,
-  PartialRecord,
   Transaction,
   TransactionCategory,
   WithTimestamps,
@@ -25,13 +24,13 @@ import { arrayToMap, assertUnreachable, generateColors, shuffle } from "./utils"
 setAutoFreeze(false);
 
 export interface AppStateProperties {
-  transactions: PartialRecord<Transaction["id"], Transaction>;
-  accounts: PartialRecord<Account["id"], Account>;
-  categories: PartialRecord<TransactionCategory["id"], TransactionCategory>;
-  budgets: PartialRecord<Budget["id"], Budget>;
+  transactions: Record<Transaction["id"], Transaction>;
+  accounts: Record<Account["id"], Account>;
+  categories: Record<TransactionCategory["id"], TransactionCategory>;
+  budgets: Record<Budget["id"], Budget>;
   defaultAccountID: Account["id"];
   chartColors: Array<string>;
-  exchangeRates: PartialRecord<string, { date: string; rates: PartialRecord<string, number> }>;
+  exchangeRates: Record<string, { date: string; rates: Record<string, number> }>;
   _hasHydrated: boolean;
 }
 
@@ -53,10 +52,7 @@ export interface AppStateActions {
   deleteBudget: (budgetID: Budget["id"]) => void;
 
   updateState: <K extends keyof AppStateProperties>(key: K, value: AppStateProperties[K]) => void;
-  updateExchangeRate: (
-    code: string,
-    data: { date: string; rates: PartialRecord<string, number> }
-  ) => void;
+  updateExchangeRate: (code: string, data: { date: string; rates: Record<string, number> }) => void;
   reset: () => void;
   _updateAccountBalanceForNewTransaction: (
     transaction: DistributiveOmit<Transaction, "id" | keyof WithTimestamps>
@@ -89,7 +85,7 @@ const DEFAULT_STATE: AppStateProperties = {
   },
   categories: arrayToMap(CATEGORIES, "id"),
   chartColors,
-  defaultAccountID: ACCOUNTS[0].id,
+  defaultAccountID: ACCOUNTS[0]?.id || "1", // TODO:
   _hasHydrated: false,
   exchangeRates: {},
 };
@@ -149,7 +145,7 @@ export const useAppStore = create<AppState>()(
         },
         _updateAccountBalanceForRemovedTransaction: (transaction) => {
           set((state) => {
-            const type = transaction.type
+            const type = transaction.type;
             switch (type) {
               case "expense":
               case "lent":
@@ -317,7 +313,7 @@ export const useAppStore = create<AppState>()(
 
             delete state.accounts[accountID];
             if (state.defaultAccountID === accountID) {
-              state.defaultAccountID = accounts[0].id;
+              state.defaultAccountID = (accounts[0] as Account).id;
             }
           });
         },

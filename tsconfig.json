@@ -3,8 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "noFallthroughCasesInSwitch": true,
-    // TODO: enable this option
-    // "noUncheckedIndexedAccess": true,
+    "noUncheckedIndexedAccess": true,
     "paths": {
       "@/*": ["./*"],
       "~/*": ["./*"]

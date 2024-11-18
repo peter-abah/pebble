@@ -1,5 +1,5 @@
 import { TailwindColors, tailwindColors } from "./tailwind-colors";
-import { PartialRecord, Satisfies, TransactionType } from "./types";
+import { Satisfies, TransactionType } from "./types";
 import { exhaustiveUnionTuple } from "./utils";
 
 export const MONTHS = [
@@ -48,7 +48,7 @@ export const HEX_TO_GROUP_COLOR = tailwindKeys
       { name: `${b}-dark`, color: tailwindColors[b][800] },
     ];
   }, [] as Array<{ name: string; color: string }>)
-  .reduce((a, b) => ({ ...a, [b.color]: b }), {} as PartialRecord<string, Color>);
+  .reduce((a, b) => ({ ...a, [b.color]: b }), {} as Record<string, Color>);
 
 export const NAME_TO_GROUP_COLOR = tailwindKeys
   .reduce((a, b) => {

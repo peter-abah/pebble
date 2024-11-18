@@ -133,7 +133,8 @@ export const generateRandomTransaction = () => {
   const category = randomElement(
     Object.values(appState.categories).filter((c) => type === c!.type)
   ) as TransactionCategory;
-  const title = randomElement(MOCK_TITLES[category.id]);
+  const titles = MOCK_TITLES[category.id];
+  const title = titles ? randomElement(titles) : "Transaction title";
   const amount =
     type === "expense"
       ? roundToZeros(Math.random() * (500_000 - 500) + 500, 3)
