@@ -35,20 +35,24 @@ export interface AppStateProperties {
 }
 
 export interface AppStateActions {
-  addTransaction: (transaction: DistributiveOmit<Transaction, "id" | keyof WithTimestamps>) => void;
-  updateTransaction: (transaction: Transaction) => void;
+  addTransaction: (
+    transaction: DistributiveOmit<Transaction, "id" | keyof WithTimestamps>
+  ) => Transaction;
+  updateTransaction: (transaction: Transaction) => Transaction;
   deleteTransaction: (transactionID: Transaction["id"]) => void;
 
-  addCategory: (category: Omit<TransactionCategory, "id" | keyof WithTimestamps>) => void;
-  updateCategory: (category: AtLeast<TransactionCategory, "id">) => void;
+  addCategory: (
+    category: Omit<TransactionCategory, "id" | keyof WithTimestamps>
+  ) => TransactionCategory;
+  updateCategory: (category: AtLeast<TransactionCategory, "id">) => TransactionCategory;
   deleteCategory: (categoryID: TransactionCategory["id"]) => void;
 
-  addAccount: (account: Omit<Account, "id" | keyof WithTimestamps>) => void;
-  updateAccount: (account: AtLeast<Account, "id">) => void;
+  addAccount: (account: Omit<Account, "id" | keyof WithTimestamps>) => Account;
+  updateAccount: (account: AtLeast<Account, "id">) => Account;
   deleteAccount: (accountID: Account["id"]) => void;
 
-  addBudget: (budget: Omit<Budget, "id" | keyof WithTimestamps>) => void;
-  updateBudget: (budget: Budget) => void;
+  addBudget: (budget: Omit<Budget, "id" | keyof WithTimestamps>) => Budget;
+  updateBudget: (budget: Budget) => Budget;
   deleteBudget: (budgetID: Budget["id"]) => void;
 
   updateState: <K extends keyof AppStateProperties>(key: K, value: AppStateProperties[K]) => void;
@@ -199,37 +203,41 @@ export const useAppStore = create<AppState>()(
         addTransaction: (transaction) => {
           // update balance
           get().actions._updateAccountBalanceForNewTransaction(transaction);
+
+          const id = nanoid();
+          const timeStamp = new Date().toISOString();
+          const newTransaction: Transaction = {
+            ...transaction,
+            id,
+            createdAt: timeStamp,
+            updatedAt: timeStamp,
+          };
           set((state) => {
-            const id = nanoid();
-            const timeStamp = new Date().toISOString();
-            state.transactions[id] = {
-              ...transaction,
-              id,
-              createdAt: timeStamp,
-              updatedAt: timeStamp,
-            };
+            state.transactions[id] = newTransaction;
           });
+
+          return newTransaction;
         },
         updateTransaction: (transaction) => {
           const state = get();
           const prevTransaction = state.transactions[transaction.id];
           if (!prevTransaction) {
-            // TODO: maybe throw error
-            console.warn("Cannot update transaction as it does not exist");
-            return;
+            // TODO: handle error upstream
+            throw new Error("Cannot update transaction as it does not exist");
           }
 
           // ? reverse previous change in account balance
           state.actions._updateAccountBalanceForRemovedTransaction(prevTransaction);
           // ? update balance
           state.actions._updateAccountBalanceForNewTransaction(transaction);
-
+          const updatedTransaction: Transaction = {
+            ...transaction,
+            updatedAt: new Date().toISOString(),
+          };
           set((state) => {
-            state.transactions[transaction.id] = {
-              ...transaction,
-              updatedAt: new Date().toISOString(),
-            };
+            state.transactions[transaction.id] = updatedTransaction;
           });
+          return updatedTransaction;
         },
         deleteTransaction: (transactionID) => {
           const state = get();
@@ -244,22 +252,27 @@ export const useAppStore = create<AppState>()(
         },
 
         addCategory: (category) => {
+          const id = nanoid();
+          const timestamp = new Date().toISOString();
+          const newCategory = { ...category, id, createdAt: timestamp, updatedAt: timestamp };
           set((state) => {
-            const id = nanoid();
-            const timestamp = new Date().toISOString();
-            state.categories[id] = { ...category, id, createdAt: timestamp, updatedAt: timestamp };
+            state.categories[id] = newCategory;
           });
+
+          return newCategory;
         },
         updateCategory: (category) => {
+          const timestamp = new Date().toISOString();
+          const prevCategory = get().categories[category.id];
+          if (!prevCategory) {
+            // TODO: handle error upstream
+            throw new Error("Cannot update category as it does not exist in state");
+          }
+          const updatedCategory = { ...prevCategory, ...category, updatedAt: timestamp };
           set((state) => {
-            const timestamp = new Date().toISOString();
-            const prevCategory = state.categories[category.id];
-            if (!prevCategory) {
-              console.warn("Cannot update category as it does not exist in state");
-              return;
-            }
-            state.categories[category.id] = { ...prevCategory, ...category, updatedAt: timestamp };
+            state.categories[category.id] = updatedCategory;
           });
+          return updatedCategory;
         },
         deleteCategory: (categoryID) => {
           set((state) => {
@@ -282,24 +295,28 @@ export const useAppStore = create<AppState>()(
         },
 
         addAccount: (account) => {
+          const id = nanoid();
+          const timestamp = new Date().toISOString();
+          const newAccount = { ...account, id, createdAt: timestamp, updatedAt: timestamp };
           set((state) => {
-            const id = nanoid();
-            const timestamp = new Date().toISOString();
-            state.accounts[id] = { ...account, id, createdAt: timestamp, updatedAt: timestamp };
+            state.accounts[id] = newAccount;
           });
+          return newAccount;
         },
         updateAccount: (account) => {
+          // TODO: updating account currency should change transaction currency
+          // maybe a different action to update currency
+          const timestamp = new Date().toISOString();
+          const prevAccount = get().accounts[account.id];
+          if (!prevAccount) {
+            // todo: handle error upstream
+            throw new Error("Cannot update account as it does not exist in state");
+          }
+          const updatedAccount = { ...prevAccount, ...account, updatedAt: timestamp };
           set((state) => {
-            // TODO: updating account currency should change transaction currency
-            // maybe a different action to update currency
-            const timestamp = new Date().toISOString();
-            const prevAccount = state.accounts[account.id];
-            if (!prevAccount) {
-              console.warn("Cannot update account as it does not exist in state");
-              return;
-            }
-            state.accounts[account.id] = { ...prevAccount, ...account, updatedAt: timestamp };
+            state.accounts[account.id] = updatedAccount;
           });
+          return updatedAccount;
         },
         // TODO: delete associated transactions or mark them
         deleteAccount: (accountID) => {
@@ -319,23 +336,26 @@ export const useAppStore = create<AppState>()(
         },
 
         addBudget: (budget) => {
+          const id = nanoid();
+          const timestamp = new Date().toISOString();
+          const newBudget = { ...budget, id, createdAt: timestamp, updatedAt: timestamp };
           set((state) => {
-            const id = nanoid();
-            const timestamp = new Date().toISOString();
-            state.budgets[id] = { ...budget, id, createdAt: timestamp, updatedAt: timestamp };
+            state.budgets[id] = newBudget;
           });
+          return newBudget;
         },
         updateBudget: (budget) => {
+          const timestamp = new Date().toISOString();
+          const prevBudget = get().budgets[budget.id];
+          if (!prevBudget) {
+            // todo: handle error upstream
+            throw new Error("Cannot update budget as it does not exist in state");
+          }
+          const updatedBudget = { ...prevBudget, ...budget, updatedAt: timestamp };
           set((state) => {
-            const timestamp = new Date().toISOString();
-            const prevBudget = state.budgets[budget.id];
-            if (!prevBudget) {
-              // todo: throw error
-              console.warn("Cannot update budget as it does not exist in state");
-              return;
-            }
-            state.budgets[budget.id] = { ...prevBudget, ...budget, updatedAt: timestamp };
+            state.budgets[budget.id] = updatedBudget;
           });
+          return updatedBudget;
         },
 
         deleteBudget: (budgetID) => {

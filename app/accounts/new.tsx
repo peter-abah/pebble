@@ -2,6 +2,7 @@ import AccountForm, { FormSchema } from "@/components/new-account-form";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { BALANCE_CREDIT_CATEGORY_ID } from "@/lib/data";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { createMoney } from "@/lib/money";
@@ -10,19 +11,29 @@ import { router } from "expo-router";
 import { View } from "react-native";
 
 const CreateAccount = () => {
-  const { addAccount } = useAppStore((state) => state.actions);
+  const { addAccount, addTransaction } = useAppStore((state) => state.actions);
 
   const onSubmit = ({ name, currency: currencyID, balance, color }: FormSchema) => {
     const currency = CURRENCIES_MAP[currencyID];
     if (!currency) return;
 
-    addAccount({
+    const account = addAccount({
       name,
       balance: createMoney(0, currency),
       currency,
       color,
     });
-    // todo: add initial balance transaction
+
+    if (balance > 0) {
+      addTransaction({
+        title: "Initial account balance",
+        categoryID: BALANCE_CREDIT_CATEGORY_ID,
+        accountID: account.id,
+        amount: createMoney(balance, account.currency),
+        type: "income",
+        datetime: new Date().toISOString(),
+      });
+    }
     router.back();
   };
 

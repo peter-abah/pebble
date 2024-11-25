@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Text } from "@/components/ui/text";
 import { filterTransactions } from "@/lib/app-utils";
+import { SPECIAL_CATEGORIES } from "@/lib/data";
 import { formatMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { Account, Transaction, TransactionCategory, TransactionType } from "@/lib/types";
@@ -125,8 +126,9 @@ const TransactionPicker = ({
 };
 
 const renderTransactionText = memoize((transaction: Transaction) => {
-  const { accounts, transactions, categories } = useAppStore.getState();
+  const { accounts, transactions, categories: userCategoryMap } = useAppStore.getState();
   const { type } = transaction;
+  const categoryMap = { ...userCategoryMap, ...SPECIAL_CATEGORIES };
 
   switch (type) {
     case "transfer":
@@ -135,7 +137,7 @@ const renderTransactionText = memoize((transaction: Transaction) => {
       return transaction.title || `${fromAccount?.name || "Unknown account"}→${toAccount?.name}`;
     case "expense":
     case "income":
-      const category = categories[transaction.categoryID];
+      const category = categoryMap[transaction.categoryID];
       return transaction.title || category?.name || "Unknown category";
     case "lent":
     case "borrowed":

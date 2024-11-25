@@ -1,3 +1,5 @@
+import { CATEGORY_ICONS_NAMES } from "./icons/category-icons";
+
 // todo: move gen types to separate file
 export type PartialRecord<K extends string | number | symbol, T> = Partial<Record<K, T>>;
 export type AtLeast<T, K extends keyof T> = Partial<T> & Pick<T, K>;
@@ -41,7 +43,7 @@ export interface Money {
 export type Icon =
   // can either be app provided icons or emojis
   | {
-      name: string;
+      name: typeof CATEGORY_ICONS_NAMES[number];
       type: "icon";
     }
   | {

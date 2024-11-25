@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { GROUP_COLORS } from "@/lib/constants";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
+import { CATEGORY_ICONS_NAMES } from "@/lib/icons/category-icons";
 import { useAppStore } from "@/lib/store";
 import { randomElement } from "@/lib/utils";
 import { router } from "expo-router";
@@ -15,7 +16,10 @@ const CreateCategory = () => {
   const onSubmit = ({ name, icon, color, iconType, type, parentID }: FormSchema) => {
     addCategory({
       name,
-      icon: iconType === "emoji" ? { type: iconType, emoji: icon } : { type: iconType, name: icon },
+      icon:
+        iconType === "emoji"
+          ? { type: iconType, emoji: icon }
+          : { type: iconType, name: icon as (typeof CATEGORY_ICONS_NAMES)[number] },
       parentID,
       type,
       color,

@@ -9,6 +9,7 @@ import {
   DEBIT_TRANSACTION_TYPES,
   DebitTransactionType,
 } from "@/lib/constants";
+import { SPECIAL_CATEGORIES } from "@/lib/data";
 import { formatMoney } from "@/lib/money";
 import { nanoid } from "@/lib/nanoid";
 import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
@@ -31,7 +32,8 @@ const Stats = () => {
   }));
 
   const transactionsRecord = useAppStore(getSortedTransactionsByDate);
-  const categories = useAppStore((state) => state.categories);
+  const userCategoryMap = useAppStore((state) => state.categories);
+  const categoryMap = { ...userCategoryMap, ...SPECIAL_CATEGORIES };
   const exchangeRates = useAppStore((state) => state.exchangeRates);
   const accountsMap = useAppStore((state) => state.accounts);
   const defaultAccountID = useAppStore((state) => state.defaultAccountID);
@@ -76,7 +78,7 @@ const Stats = () => {
       case LOAN_PAYMENT_TRANSACTIONS_CHART_ID:
         return transactionType === "plus" ? "Collected debt" : "Paid loan";
       default:
-        return categories[key]?.name || "Unknown category";
+        return categoryMap[key]?.name || "Unknown category";
     }
   };
   return (

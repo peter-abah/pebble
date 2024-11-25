@@ -28,7 +28,7 @@ const formSchema = z
     color: z.string(),
     parentID: z.string().optional(),
     iconType: z.enum(["emoji", "icon"]),
-    icon: z.string(),
+    icon: z.string(), // todo: validate icon is an enum in separate schema
     type: z.enum(["expense", "income"]),
   })
   .transform((data, ctx) => {

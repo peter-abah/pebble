@@ -2,6 +2,7 @@ import { NAME_TO_GROUP_COLOR } from "@/lib/constants";
 import { createMoney } from "@/lib/money";
 import { Account, TransactionCategory } from "@/lib/types";
 import { CURRENCIES_MAP } from "./currencies";
+import { nanoid } from "../nanoid";
 
 export const ACCOUNTS: Array<Account> = [
   {
@@ -14,6 +15,31 @@ export const ACCOUNTS: Array<Account> = [
     updatedAt: new Date().toISOString(),
   },
 ];
+
+export const BALANCE_CREDIT_CATEGORY_ID = nanoid();
+export const BALANCE_DEBIT_CATEGORY_ID = nanoid();
+
+// ? Freeze object to ensure it is not mutated anywhere else in the app
+export const SPECIAL_CATEGORIES = Object.freeze({
+  [BALANCE_CREDIT_CATEGORY_ID]: {
+    name: "Balance credit",
+    id: BALANCE_CREDIT_CATEGORY_ID,
+    type: "income",
+    color: NAME_TO_GROUP_COLOR["green"].color,
+    icon: { name: "bank", type: "icon" },
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  [BALANCE_DEBIT_CATEGORY_ID]: {
+    name: "Balance debit",
+    id: BALANCE_DEBIT_CATEGORY_ID,
+    type: "expense",
+    color: NAME_TO_GROUP_COLOR["red"].color,
+    icon: { name: "bank", type: "icon" },
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+}) satisfies Record<string, TransactionCategory>;
 
 export const CATEGORIES: Array<TransactionCategory> = [
   {

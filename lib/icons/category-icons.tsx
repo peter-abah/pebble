@@ -2,6 +2,7 @@ import { MaterialCommunityIcons } from "@/lib/icons/MaterialCommunityIcons";
 
 import { ReactNode } from "react";
 import { MaterialIcons } from "./MaterialIcons";
+import { NonEmptyArray } from "../types";
 
 interface CategoryIconProps {
   className?: string;
@@ -47,4 +48,4 @@ export const CATEGORY_ICONS = {
 } satisfies Record<string, (props: CategoryIconProps) => ReactNode>;
 
 export type CategoryIconName = keyof typeof CATEGORY_ICONS;
-export const CATEGORY_ICONS_NAMES = Object.keys(CATEGORY_ICONS) as Array<CategoryIconName>;
+export const CATEGORY_ICONS_NAMES = Object.keys(CATEGORY_ICONS) as NonEmptyArray<CategoryIconName>;

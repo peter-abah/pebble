@@ -6,6 +6,7 @@ import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { createChartData, isTransactionInBudget } from "@/lib/app-utils";
+import { SPECIAL_CATEGORIES } from "@/lib/data";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { PencilIcon } from "@/lib/icons/Pencil";
 import { TrashIcon } from "@/lib/icons/Trash";
@@ -133,7 +134,7 @@ const BudgetScreen = () => {
             />
           </View>
           <Text className={cn("font-medium", ratio > 1 && "text-destructive")}>
-            {(ratio * 100).toLocaleString(undefined,{maximumFractionDigits: 2})}%
+            {(ratio * 100).toLocaleString(undefined, { maximumFractionDigits: 2 })}%
           </Text>
         </View>
       </View>
@@ -171,7 +172,8 @@ const BudgetChart = ({
   budget: Budget;
   total: Money;
 }) => {
-  const categoryMap = useAppStore((state) => state.categories);
+  const userCategoryMap = useAppStore((state) => state.categories);
+  const categoryMap = { ...userCategoryMap, ...SPECIAL_CATEGORIES };
   const exchangeRates = useAppStore((state) => state.exchangeRates);
 
   const chartData = createChartData(

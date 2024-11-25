@@ -1,5 +1,6 @@
 import { Text } from "@/components/ui/text";
 import { renderDate } from "@/lib/app-utils";
+import { SPECIAL_CATEGORIES } from "@/lib/data";
 import { MaterialIcons } from "@/lib/icons/MaterialIcons";
 import { CATEGORY_ICONS, CategoryIconName } from "@/lib/icons/category-icons";
 import { formatMoney } from "@/lib/money";
@@ -55,11 +56,12 @@ const TransactionCard = forwardRef<View, TransactionCardProps>(
 TransactionCard.displayName = "TransactionCard";
 
 const TransactionIcon = ({ transaction }: { transaction: Transaction }) => {
-  const categories = useAppStore((state) => state.categories);
+  const userCategoryMap = useAppStore((state) => state.categories);
+  const categoryMap = { ...userCategoryMap, ...SPECIAL_CATEGORIES };
 
   const { type } = transaction;
   if (type === "income" || type === "expense") {
-    const category = categories[transaction.categoryID];
+    const category = categoryMap[transaction.categoryID];
 
     return (
       <View
@@ -124,7 +126,8 @@ const TransactionIcon = ({ transaction }: { transaction: Transaction }) => {
 
 const TransactionText = ({ transaction }: { transaction: Transaction }) => {
   const transactions = useAppStore((state) => state.transactions);
-  const categories = useAppStore((state) => state.categories);
+  const userCategoryMap = useAppStore((state) => state.categories);
+  const categoryMap = { ...userCategoryMap, ...SPECIAL_CATEGORIES };
   const accounts = useAppStore((state) => state.accounts);
 
   let topText: string | undefined;
@@ -139,7 +142,7 @@ const TransactionText = ({ transaction }: { transaction: Transaction }) => {
       break;
     case "expense":
     case "income":
-      const category = categories[transaction.categoryID];
+      const category = categoryMap[transaction.categoryID];
       topText = transaction.title;
       bottomText = category?.name || "Unknown category";
       break;

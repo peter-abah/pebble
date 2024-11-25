@@ -4,6 +4,7 @@ import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
+import { CATEGORY_ICONS_NAMES } from "@/lib/icons/category-icons";
 import { useAppStore } from "@/lib/store";
 import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
@@ -20,7 +21,10 @@ const CreateCategory = () => {
     updateCategory({
       ...category,
       name,
-      icon: iconType === "emoji" ? { type: iconType, emoji: icon } : { type: iconType, name: icon },
+      icon:
+        iconType === "emoji"
+          ? { type: iconType, emoji: icon }
+          : { type: iconType, name: icon as (typeof CATEGORY_ICONS_NAMES)[number] },
       parentID,
       type,
       color,

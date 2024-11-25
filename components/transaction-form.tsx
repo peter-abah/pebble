@@ -26,6 +26,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
 import TransactionPicker from "./transaction-picker";
+import { SPECIAL_CATEGORIES } from "@/lib/data";
 
 const baseTransactionFormSchema = z.object({
   amount: z.union([
@@ -120,7 +121,8 @@ interface TransactionFormProps {
   onSubmit: (values: FormSchema) => void;
 }
 const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
-  const categories = useAppStore((state) => state.categories);
+  const userCategoryMap = useAppStore((state) => state.categories);
+  const categoryMap = { ...userCategoryMap, ...SPECIAL_CATEGORIES };
   const accountsMap = useAppStore((state) => state.accounts);
   const accounts = Object.values(accountsMap) as Array<Account>;
   const exchangeRates = useAppStore((state) => state.exchangeRates);
@@ -136,7 +138,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
   const toAccount = accountsMap[watch("to")];
 
   const currency = type === "transfer" ? fromAccount?.currency : account?.currency;
-  const categoriesList = (Object.values(categories) as Array<TransactionCategory>).filter(
+  const categories = (Object.values(categoryMap) as Array<TransactionCategory>).filter(
     (c) => c.type === type || !c.type
   );
 
@@ -388,7 +390,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
               control={control}
               render={({ field: { value, onChange, onBlur } }) => (
                 <Select
-                  value={{ value, label: value && (categories[value]?.name || "Unknown") }}
+                  value={{ value, label: value && (categoryMap[value]?.name || "Unknown") }}
                   onValueChange={(option) => onChange(option?.value)}
                 >
                   <SelectTrigger className="w-full" aria-labelledby="type">
@@ -399,7 +401,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                   </SelectTrigger>
                   <SelectContent insets={contentInsets} className="w-full">
                     <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
-                      {categoriesList.map((category) => (
+                      {categories.map((category) => (
                         <SelectItem key={category.id} label={category.name} value={category.id}>
                           {category.name}
                         </SelectItem>
