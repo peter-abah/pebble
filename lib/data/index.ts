@@ -1,10 +1,9 @@
 import { NAME_TO_GROUP_COLOR } from "@/lib/constants";
 import { createMoney } from "@/lib/money";
-import { Account, TransactionCategory } from "@/lib/types";
+import { Account, NonEmptyArray, TransactionCategory } from "@/lib/types";
 import { CURRENCIES_MAP } from "./currencies";
-import { nanoid } from "../nanoid";
 
-export const ACCOUNTS: Array<Account> = [
+export const ACCOUNTS: NonEmptyArray<Account> = [
   {
     name: "Main",
     id: "1",
@@ -16,11 +15,11 @@ export const ACCOUNTS: Array<Account> = [
   },
 ];
 
-export const BALANCE_CREDIT_CATEGORY_ID = nanoid();
-export const BALANCE_DEBIT_CATEGORY_ID = nanoid();
+export const BALANCE_CREDIT_CATEGORY_ID = "BALANCE_CREDIT_CATEGORY_ID";
+export const BALANCE_DEBIT_CATEGORY_ID = "BALANCE_DEBIT_CATEGORY_ID";
 
 // ? Freeze object to ensure it is not mutated anywhere else in the app
-export const SPECIAL_CATEGORIES = Object.freeze({
+export const SPECIAL_CATEGORIES: Readonly<Record<string, TransactionCategory>> = Object.freeze({
   [BALANCE_CREDIT_CATEGORY_ID]: {
     name: "Balance credit",
     id: BALANCE_CREDIT_CATEGORY_ID,
@@ -39,9 +38,9 @@ export const SPECIAL_CATEGORIES = Object.freeze({
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   },
-}) satisfies Record<string, TransactionCategory>;
+});
 
-export const CATEGORIES: Array<TransactionCategory> = [
+export const CATEGORIES: NonEmptyArray<TransactionCategory> = [
   {
     name: "Groceries",
     id: "1",

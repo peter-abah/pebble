@@ -1,4 +1,4 @@
-import { addMoney, convertMoney, createMoney, subtractMoney } from "@/lib/money";
+import { addMoney, convertMoney, subtractMoney } from "@/lib/money";
 import {
   Account,
   AtLeast,
@@ -15,9 +15,7 @@ import { Platform } from "react-native";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { NAME_TO_GROUP_COLOR } from "./constants";
 import { ACCOUNTS, CATEGORIES } from "./data";
-import { CURRENCIES_MAP } from "./data/currencies";
 import { nanoid } from "./nanoid";
 import { arrayToMap, assertUnreachable, generateColors, shuffle } from "./utils";
 
@@ -74,22 +72,10 @@ shuffle(chartColors);
 const DEFAULT_STATE: AppStateProperties = {
   accounts: arrayToMap(ACCOUNTS, "id"),
   transactions: {},
-  budgets: {
-    "1": {
-      id: "1",
-      name: "test",
-      amount: createMoney(50000, CURRENCIES_MAP["NGN"]!),
-      categories: ["1", "2", "3", "4"],
-      accounts: ["1"],
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      color: NAME_TO_GROUP_COLOR["emerald-dark"].color,
-      period: "yearly",
-    },
-  },
+  budgets: {},
   categories: arrayToMap(CATEGORIES, "id"),
   chartColors,
-  defaultAccountID: ACCOUNTS[0]?.id || "1", // TODO:
+  defaultAccountID: ACCOUNTS[0].id, // todo: onboarding
   _hasHydrated: false,
   exchangeRates: {},
 };
@@ -277,21 +263,25 @@ export const useAppStore = create<AppState>()(
         deleteCategory: (categoryID) => {
           set((state) => {
             delete state.categories[categoryID];
-
-            // delete category transactions
-            // todo: ask user to move transactions before deleting
-            /* todo: this is very innefficient and will cause app to lag because we are loading all
-             * transactions into memory before filtering. this is probably a zustand issue, the immutability
-             * means a new array of thousands of transactions will be created for every change.
-             * switch to a database later. sqlite or other options
-             */
-            const relatedTransactions = Object.values(state.transactions).filter((t) =>
-              t?.type === "income" || t?.type === "expense" ? t?.categoryID === categoryID : false
-            ) as Array<Transaction>;
-            relatedTransactions.forEach((transaction) =>
-              state.actions.deleteTransaction(transaction.id)
-            );
           });
+
+          // delete category transactions
+          // todo: ask user to move transactions before deleting
+          /* todo: this is very innefficient and will cause app to lag because we are loading all
+           * transactions into memory before filtering. this is probably a zustand issue, the immutability
+           * means a new array of thousands of transactions will be created for every change.
+           * switch to a database later. sqlite or other options
+           */
+          const appState = get();
+          const relatedTransactions = Object.values(appState.transactions).filter((t) => {
+            if (t.type === "income" || t.type === "expense") {
+              return t.categoryID === categoryID;
+            }
+            return false;
+          }) as Array<Transaction>;
+          relatedTransactions.forEach((transaction) =>
+            appState.actions.deleteTransaction(transaction.id)
+          );
         },
 
         addAccount: (account) => {
@@ -318,21 +308,32 @@ export const useAppStore = create<AppState>()(
           });
           return updatedAccount;
         },
-        // TODO: delete associated transactions or mark them
+        // TODO: deleting associated transactions straight away is too destrutive
+        // info user when deleting account or allow user to decide what to do with
+        // orphan transactions
         deleteAccount: (accountID) => {
-          set((state) => {
-            const accounts = Object.values(state.accounts) as Array<Account>;
-            if (accounts.length <= 1) {
-              // this should an error or something so the app shows a modal
-              console.warn("Cannot remove only account");
-              return;
-            }
+          const state = get();
+          const accounts = Object.values(state.accounts) as Array<Account>;
+          if (accounts.length <= 1) {
+            // this should an error or something so the app shows a modal
+            console.warn("Cannot remove the only account");
+            return;
+          }
 
+          set((state) => {
             delete state.accounts[accountID];
             if (state.defaultAccountID === accountID) {
               state.defaultAccountID = (accounts[0] as Account).id;
             }
           });
+          const accountTransactions = Object.values(state.transactions).filter((t) => {
+            if (t.type === "transfer") {
+              return t.from === accountID || t.to === accountID;
+            }
+            return t.accountID === accountID;
+          });
+
+          accountTransactions.forEach((t) => state.actions.deleteTransaction(t.id));
         },
 
         addBudget: (budget) => {

@@ -12,7 +12,7 @@ import { PencilIcon } from "@/lib/icons/Pencil";
 import { TrashIcon } from "@/lib/icons/Trash";
 import { addMoney, convertMoney, createMoney, formatMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
-import { Budget, Money, NormalTransaction, Transaction } from "@/lib/types";
+import { Budget, ExpenseTransaction, Money, NormalTransaction, Transaction } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { useMemo } from "react";
@@ -33,7 +33,7 @@ const BudgetScreen = () => {
     if (!budget) return [];
 
     const transactions = Object.values(transactionsMap) as Array<Transaction>;
-    return transactions.filter((t): t is NormalTransaction => isTransactionInBudget(t, budget));
+    return transactions.filter((t): t is ExpenseTransaction => isTransactionInBudget(t, budget));
   }, [transactionsMap, budget]);
 
   const amountSpent = useMemo(
@@ -53,7 +53,6 @@ const BudgetScreen = () => {
             rate: exchangeRate,
           });
 
-          // TODO: support for income transactions maybe minus
           return addMoney(result, convertedAmount);
         }
 

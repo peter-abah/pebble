@@ -16,8 +16,8 @@ import { Alert, View } from "react-native";
 const EditTransaction = () => {
   const { id } = useLocalSearchParams() as { id: string };
   const { updateTransaction, deleteTransaction } = useAppStore((state) => state.actions);
-  const transactions = useAppStore((state) => state.transactions);
-  const transaction = transactions[id];
+  const transactionMap = useAppStore((state) => state.transactions);
+  const transaction = transactionMap[id];
   const accountsMap = useAppStore((state) => state.accounts);
 
   const onDelete = () => {
@@ -117,13 +117,21 @@ const EditTransaction = () => {
           Alert.alert("Account does not exist");
           return;
         }
-        // todo: do something regarding not found loan
+        const loanTransaction = transactionMap[loanID];
+        if (!loanTransaction) {
+          Alert.alert("Loan transaction does not exist");
+          return;
+        }
+        if (loanTransaction.type !== "borrowed" && loanTransaction.type !== "lent") {
+          Alert.alert("Loan transaction selected is not a loan");
+          return;
+        }
 
         updateTransaction({
           ...transaction,
           amount: createMoney(amount, currency),
           type,
-          loanID,
+          loanID: loanTransaction.id,
           title,
           note,
           accountID,

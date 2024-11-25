@@ -16,30 +16,32 @@ export const BudgetCard = ({ budget }: { budget: Budget }) => {
     return transactions.filter((t) => isTransactionInBudget(t, budget));
   }, [transactionsMap, budget]);
 
-  const amountSpent = budgetTransactions.reduce((result, curr) => {
-    if (result.currency.isoCode === curr.amount.currency.isoCode) {
-      return addMoney(result, curr.amount);
-    }
+  const amountSpent = useMemo(
+    // todo: similar logic in view budget screen
+    () =>
+      budgetTransactions.reduce((result, curr) => {
+        if (result.currency.isoCode === curr.amount.currency.isoCode) {
+          return addMoney(result, curr.amount);
+        }
 
-    const baseCurrencyCode = curr.amount.currency.isoCode.toLocaleLowerCase();
-    const convertedCurrencyCode = result.currency.isoCode.toLocaleLowerCase();
-    const exchangeRate = exchangeRates[baseCurrencyCode]?.rates[convertedCurrencyCode];
+        const baseCurrencyCode = curr.amount.currency.isoCode.toLocaleLowerCase();
+        const convertedCurrencyCode = result.currency.isoCode.toLocaleLowerCase();
+        const exchangeRate = exchangeRates[baseCurrencyCode]?.rates[convertedCurrencyCode];
+        if (exchangeRate) {
+          const convertedAmount = convertMoney(curr.amount, {
+            from: curr.amount.currency,
+            to: result.currency,
+            rate: exchangeRate,
+          });
 
-    if (exchangeRate) {
-      const convertedAmount = convertMoney(curr.amount, {
-        from: curr.amount.currency,
-        to: result.currency,
-        rate: exchangeRate,
-      });
+          return addMoney(result, convertedAmount);
+        }
 
-      // TODO: support for income transactions maybe minus
-      return addMoney(result, convertedAmount);
-    }
-
-    // todo: inform about skipped transaction due to no exchange rate
-    return result;
-  }, createMoney(0, budget.amount.currency));
-
+        // todo: inform about skipped transaction due to no exchange rate
+        return result;
+      }, createMoney(0, budget.amount.currency)),
+    [budget.amount.currency, budgetTransactions, exchangeRates]
+  );
   const ratio = amountSpent.valueInMinorUnits / budget.amount.valueInMinorUnits;
   return (
     <Link href={`/budgets/${budget.id}`} asChild>
@@ -62,7 +64,7 @@ export const BudgetCard = ({ budget }: { budget: Budget }) => {
             />
           </View>
           <Text className={cn("text-sm font-medium", ratio > 1 && "text-destructive")}>
-            {(ratio * 100).toLocaleString(undefined,{maximumFractionDigits: 2})}%
+            {(ratio * 100).toLocaleString(undefined, { maximumFractionDigits: 2 })}%
           </Text>
         </View>
       </Pressable>

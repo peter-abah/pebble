@@ -1,6 +1,6 @@
 import { TimePeriod } from "@/components/time-period-picker";
 import { AppStateProperties, useAppStore } from "@/lib/store";
-import { Budget, Currency, Filters, Money, Transaction } from "@/lib/types";
+import { Budget, Currency, ExpenseTransaction, Filters, Money, Transaction } from "@/lib/types";
 import { dateToKey, groupTransactionsByPeriod } from "@/lib/utils";
 import dayjs from "dayjs";
 import debounce from "lodash.debounce";
@@ -9,7 +9,10 @@ import { pieDataItem } from "react-native-gifted-charts";
 import { convertMoney } from "./money";
 import { assertUnreachable } from "./utils";
 
-export const isTransactionInBudget = (transaction: Transaction, budget: Budget) => {
+export const isTransactionInBudget = (
+  transaction: Transaction,
+  budget: Budget
+): transaction is ExpenseTransaction => {
   //? only expense transaction is in budget
   if (transaction.type !== "expense") return false;
 

@@ -71,7 +71,7 @@ export function humanizeString(input: string) {
     .replace(/^\w/, (c) => c.toUpperCase()); // Capitalize the first letter
 }
 
-// todo: fix colors
+// todo: fix colors, not random
 export const generateColors = (n: number) => {
   let colors = [];
   for (let i = 0; i < n; i++) {

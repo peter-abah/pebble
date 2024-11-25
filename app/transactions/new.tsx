@@ -15,6 +15,7 @@ const CreateTransaction = () => {
   const { addTransaction } = useAppStore((state) => state.actions);
   const defaultAccountID = useAppStore((state) => state.defaultAccountID);
   const accountsMap = useAppStore((state) => state.accounts);
+  const transactionMap = useAppStore((state) => state.transactions);
   const params = useLocalSearchParams<Params>();
 
   const onSubmit = (data: FormSchema) => {
@@ -97,11 +98,20 @@ const CreateTransaction = () => {
           Alert.alert("Account does not exist");
           return;
         }
+        const loanTransaction = transactionMap[loanID];
+        if (!loanTransaction) {
+          Alert.alert("Loan transaction does not exist");
+          return;
+        }
+        if (loanTransaction.type !== "borrowed" && loanTransaction.type !== "lent") {
+          Alert.alert("Loan transaction selected is not a loan");
+          return;
+        }
 
         addTransaction({
           amount: createMoney(amount, currency),
           type,
-          loanID,
+          loanID: loanTransaction.id,
           title,
           note,
           accountID,

@@ -43,7 +43,7 @@ export interface Money {
 export type Icon =
   // can either be app provided icons or emojis
   | {
-      name: typeof CATEGORY_ICONS_NAMES[number];
+      name: (typeof CATEGORY_ICONS_NAMES)[number];
       type: "icon";
     }
   | {
@@ -88,6 +88,14 @@ export interface NormalTransaction extends BaseTransaction {
   accountID: Account["id"];
 }
 
+export interface ExpenseTransaction extends NormalTransaction {
+  type: "expense";
+}
+
+export interface IncomeTransaction extends NormalTransaction {
+  type: "income";
+}
+
 export interface TransferTransaction extends BaseTransaction {
   type: "transfer";
   from: Account["id"];
@@ -103,17 +111,35 @@ export interface LoanTransaction extends BaseTransaction {
   // todo: support interest rates
 }
 
+export interface LentTransaction extends LoanTransaction {
+  type: "lent";
+}
+export interface BorrowedTransaction extends LoanTransaction {
+  type: "borrowed";
+}
+
 export interface LoanPaymentTransaction extends BaseTransaction {
   type: "paid_loan" | "collected_debt";
   loanID: LoanTransaction["id"];
   accountID: Account["id"];
 }
 
+export interface PaidLoanTransaction extends LoanPaymentTransaction {
+  type: "paid_loan";
+}
+
+export interface CollectedDebtTransaction extends LoanPaymentTransaction {
+  type: "collected_debt";
+}
+
 export type Transaction =
-  | NormalTransaction
+  | IncomeTransaction
+  | ExpenseTransaction
   | TransferTransaction
-  | LoanTransaction
-  | LoanPaymentTransaction;
+  | LentTransaction
+  | BorrowedTransaction
+  | PaidLoanTransaction
+  | CollectedDebtTransaction;
 
 export type TransactionType = Transaction["type"];
 

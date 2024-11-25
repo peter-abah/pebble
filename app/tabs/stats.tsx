@@ -11,7 +11,6 @@ import {
 } from "@/lib/constants";
 import { SPECIAL_CATEGORIES } from "@/lib/data";
 import { formatMoney } from "@/lib/money";
-import { nanoid } from "@/lib/nanoid";
 import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
 import { Transaction, TransferTransaction } from "@/lib/types";
 import { assertUnreachable, cn, dateToKey, groupTransactionsByPeriod } from "@/lib/utils";
@@ -21,8 +20,10 @@ import { useState } from "react";
 import { Pressable, ScrollView, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 
-const LOAN_TRANSACTIONS_CHART_ID = nanoid();
-const LOAN_PAYMENT_TRANSACTIONS_CHART_ID = nanoid();
+const LENT_TRANSACTIONS_CHART_ID = "LENT_TRANSACTIONS_CHART_ID";
+const BORROWED_TRANSACTIONS_CHART_ID = "BORROWED_TRANSACTIONS_CHART_ID";
+const PAID_LOAN_TRANSACTIONS_CHART_ID = "PAID_LOAN_TRANSACTIONS_CHART_ID";
+const COLLECTED_DEBT_TRANSACTIONS_CHART_ID = "COLLECTED_DEBT_TRANSACTIONS_CHART_ID";
 
 const Stats = () => {
   const [transactionType, setTransactionType] = useState<"minus" | "plus">("minus");
@@ -59,11 +60,13 @@ const Stats = () => {
           case "income":
             return t.categoryID;
           case "lent":
+            return LENT_TRANSACTIONS_CHART_ID;
           case "borrowed":
-            return LOAN_TRANSACTIONS_CHART_ID;
+            return BORROWED_TRANSACTIONS_CHART_ID;
           case "paid_loan":
+            return PAID_LOAN_TRANSACTIONS_CHART_ID;
           case "collected_debt":
-            return LOAN_PAYMENT_TRANSACTIONS_CHART_ID;
+            return COLLECTED_DEBT_TRANSACTIONS_CHART_ID;
           default:
             assertUnreachable(type);
         }
@@ -72,11 +75,14 @@ const Stats = () => {
 
   const getDataLabel = (key: string): string => {
     switch (key) {
-      case LOAN_TRANSACTIONS_CHART_ID:
-        // todo: each type should have an id
-        return transactionType === "plus" ? "Lent" : "Borrowed";
-      case LOAN_PAYMENT_TRANSACTIONS_CHART_ID:
-        return transactionType === "plus" ? "Collected debt" : "Paid loan";
+      case LENT_TRANSACTIONS_CHART_ID:
+        return "Lent";
+      case BORROWED_TRANSACTIONS_CHART_ID:
+        return "Borrowed";
+      case PAID_LOAN_TRANSACTIONS_CHART_ID:
+        return "Paid loan";
+      case COLLECTED_DEBT_TRANSACTIONS_CHART_ID:
+        return "Collected debt";
       default:
         return categoryMap[key]?.name || "Unknown category";
     }

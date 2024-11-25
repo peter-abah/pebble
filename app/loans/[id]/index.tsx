@@ -177,7 +177,6 @@ const LoanScreen = () => {
         ListEmptyComponent={<EmptyState title="No payments to show" />}
       />
 
-      {/* todo: links to create a payment transaction directly */}
       <Link
         href={`/transactions/new?loanID=${loan.id}&type=${
           loan.type === "borrowed" ? "paid_loan" : "collected_debt"

@@ -11,7 +11,6 @@ import { Account } from "@/lib/types";
 import { Link } from "expo-router";
 import { Pressable, ScrollView, View } from "react-native";
 
-// TODO: record initial balance in records but use special type to indicate
 export default function Home() {
   const transactions = useAppStore(getSortedTransactionsByDate);
   const accountsMap = useAppStore((state) => state.accounts);
