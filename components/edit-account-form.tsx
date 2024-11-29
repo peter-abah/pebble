@@ -31,7 +31,11 @@ interface EditAccountFormProps {
   onSubmit: (values: FormSchema) => void;
 }
 const EditAccountForm = ({ defaultValues, onSubmit }: EditAccountFormProps) => {
-  const { control, handleSubmit } = useForm<FormSchema>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormSchema>({
     defaultValues,
     resolver: zodResolver(formSchema),
   });
@@ -54,13 +58,18 @@ const EditAccountForm = ({ defaultValues, onSubmit }: EditAccountFormProps) => {
           <Controller
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
-              <TextInput
-                className="px-3 py-2 border border-border rounded"
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                aria-labelledby="name"
-              />
+              <View>
+                <TextInput
+                  className="px-3 py-2 border border-border rounded"
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  aria-labelledby="name"
+                />
+                {errors.name?.message && (
+                  <Text className="text-xs text-destructive">{errors.name.message}</Text>
+                )}
+              </View>
             )}
             name="name"
           />
@@ -73,28 +82,33 @@ const EditAccountForm = ({ defaultValues, onSubmit }: EditAccountFormProps) => {
           <Controller
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
-              <Select
-                value={{ value, label: value && renderCurrencyLabel(value) }}
-                onValueChange={(option) => onChange(option?.value)}
-              >
-                <SelectTrigger className="w-full" aria-labelledby="type">
-                  <SelectValue
-                    className="text-foreground text-sm native:text-lg"
-                    placeholder="Select Currency"
-                  />
-                </SelectTrigger>
-                <SelectContent insets={contentInsets} className="w-full">
-                  <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
-                    {CURRENCIES.map((currency) => (
-                      <SelectItem
-                        key={currency.isoCode}
-                        label={renderCurrencyLabel(currency.isoCode)}
-                        value={currency.isoCode}
-                      />
-                    ))}
-                  </ScrollView>
-                </SelectContent>
-              </Select>
+              <View>
+                <Select
+                  value={{ value, label: value && renderCurrencyLabel(value) }}
+                  onValueChange={(option) => onChange(option?.value)}
+                >
+                  <SelectTrigger className="w-full" aria-labelledby="type">
+                    <SelectValue
+                      className="text-foreground text-sm native:text-lg"
+                      placeholder="Select Currency"
+                    />
+                  </SelectTrigger>
+                  <SelectContent insets={contentInsets} className="w-full">
+                    <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
+                      {CURRENCIES.map((currency) => (
+                        <SelectItem
+                          key={currency.isoCode}
+                          label={renderCurrencyLabel(currency.isoCode)}
+                          value={currency.isoCode}
+                        />
+                      ))}
+                    </ScrollView>
+                  </SelectContent>
+                </Select>
+                {errors.currency?.message && (
+                  <Text className="text-xs text-destructive">{errors.currency.message}</Text>
+                )}
+              </View>
             )}
             name="currency"
           />
@@ -107,7 +121,12 @@ const EditAccountForm = ({ defaultValues, onSubmit }: EditAccountFormProps) => {
           <Controller
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
-              <ColorPicker value={value} onChange={onChange} />
+              <View>
+                <ColorPicker value={value} onChange={onChange} />
+                {errors.color?.message && (
+                  <Text className="text-xs text-destructive">{errors.color.message}</Text>
+                )}
+              </View>
             )}
             name="color"
           />

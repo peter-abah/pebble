@@ -24,12 +24,12 @@ import { humanizeString, titleCase } from "@/lib/utils";
 const emojiAtStartPattern = new RegExp(`^${emojiPattern}`);
 const formSchema = z
   .object({
-    name: z.string(),
-    color: z.string(),
+    name: z.string({ message: "Enter name" }).min(1, { message: "Enter name" }),
+    color: z.string({ message: "Choose color" }),
     parentID: z.string().optional(),
-    iconType: z.enum(["emoji", "icon"]),
-    icon: z.string(), // todo: validate icon is an enum in separate schema
-    type: z.enum(["expense", "income"]),
+    iconType: z.enum(["emoji", "icon"], { message: "Choose type" }),
+    icon: z.string({ message: "Choose icon" }), // todo: validate icon is an enum in separate schema
+    type: z.enum(["expense", "income"], { message: "Choose type" }),
   })
   .transform((data, ctx) => {
     if (data.iconType === "icon") return data;
@@ -60,7 +60,13 @@ interface CategoryFormProps {
   onSubmit: (values: FormSchema) => void;
 }
 const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
-  const { control, handleSubmit, watch, setValue } = useForm<FormSchema>({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<FormSchema>({
     defaultValues,
     resolver: zodResolver(formSchema),
   });
@@ -92,13 +98,18 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
           <Controller
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
-              <TextInput
-                className="px-3 py-2 border border-border rounded"
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                aria-labelledby="name"
-              />
+              <View>
+                <TextInput
+                  className="px-3 py-2 border border-border rounded"
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  aria-labelledby="name"
+                />
+                {errors.name?.message && (
+                  <Text className="text-xs text-destructive">{errors.name.message}</Text>
+                )}
+              </View>
             )}
             name="name"
           />
@@ -111,22 +122,27 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
           <Controller
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
-              <Select
-                value={value && { value, label: titleCase(value) }}
-                onValueChange={(option) => onChange(option?.value)}
-              >
-                <SelectTrigger className="w-full" aria-labelledby="type">
-                  <SelectValue
-                    className="text-foreground text-sm native:text-lg"
-                    placeholder="Select type"
-                  />
-                </SelectTrigger>
-                <SelectContent insets={contentInsets} className="w-full">
-                  {["expenses", "income"].map((v) => (
-                    <SelectItem label={humanizeString(v)} value={v} key={v} />
-                  ))}
-                </SelectContent>
-              </Select>
+              <View>
+                <Select
+                  value={value && { value, label: titleCase(value) }}
+                  onValueChange={(option) => onChange(option?.value)}
+                >
+                  <SelectTrigger className="w-full" aria-labelledby="type">
+                    <SelectValue
+                      className="text-foreground text-sm native:text-lg"
+                      placeholder="Select type"
+                    />
+                  </SelectTrigger>
+                  <SelectContent insets={contentInsets} className="w-full">
+                    {["expenses", "income"].map((v) => (
+                      <SelectItem label={humanizeString(v)} value={v} key={v} />
+                    ))}
+                  </SelectContent>
+                </Select>
+                {errors.type?.message && (
+                  <Text className="text-xs text-destructive">{errors.type.message}</Text>
+                )}
+              </View>
             )}
             name="type"
           />
@@ -139,28 +155,33 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
           <Controller
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
-              <Select
-                value={
-                  value === undefined
-                    ? value
-                    : { value, label: value && (categoryMap[value]?.name || "Unknown") }
-                }
-                onValueChange={(option) => onChange(option?.value)}
-              >
-                <SelectTrigger className="w-full" aria-labelledby="type">
-                  <SelectValue
-                    className="text-foreground text-sm native:text-lg"
-                    placeholder="None"
-                  />
-                </SelectTrigger>
-                <SelectContent insets={contentInsets} className="w-full">
-                  <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
-                    {parentCategories.map((category) => (
-                      <SelectItem key={category.id} label={category.name} value={category.id} />
-                    ))}
-                  </ScrollView>
-                </SelectContent>
-              </Select>
+              <View>
+                <Select
+                  value={
+                    value === undefined
+                      ? value
+                      : { value, label: value && (categoryMap[value]?.name || "Unknown") }
+                  }
+                  onValueChange={(option) => onChange(option?.value)}
+                >
+                  <SelectTrigger className="w-full" aria-labelledby="type">
+                    <SelectValue
+                      className="text-foreground text-sm native:text-lg"
+                      placeholder="None"
+                    />
+                  </SelectTrigger>
+                  <SelectContent insets={contentInsets} className="w-full">
+                    <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
+                      {parentCategories.map((category) => (
+                        <SelectItem key={category.id} label={category.name} value={category.id} />
+                      ))}
+                    </ScrollView>
+                  </SelectContent>
+                </Select>
+                {errors.parentID?.message && (
+                  <Text className="text-xs text-destructive">{errors.parentID.message}</Text>
+                )}
+              </View>
             )}
             name="parentID"
           />
@@ -173,7 +194,12 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
             <Controller
               control={control}
               render={({ field: { value, onChange, onBlur } }) => (
-                <ColorPicker value={value} onChange={onChange} />
+                <View>
+                  <ColorPicker value={value} onChange={onChange} />
+                  {errors.color?.message && (
+                    <Text className="text-xs text-destructive">{errors.color.message}</Text>
+                  )}
+                </View>
               )}
               name="color"
             />
@@ -186,15 +212,20 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
             <Controller
               control={control}
               render={({ field: { value, onChange, onBlur } }) => (
-                <IconPicker
-                  iconValue={value}
-                  onIconChange={onChange}
-                  iconTypeValue={iconType}
-                  color={color}
-                  onIconTypeChange={(value) => {
-                    if (value) setValue("iconType", value);
-                  }}
-                />
+                <View>
+                  <IconPicker
+                    iconValue={value}
+                    onIconChange={onChange}
+                    iconTypeValue={iconType}
+                    color={color}
+                    onIconTypeChange={(value) => {
+                      if (value) setValue("iconType", value);
+                    }}
+                  />
+                  {errors.icon?.message && (
+                    <Text className="text-xs text-destructive">{errors.icon.message}</Text>
+                  )}
+                </View>
               )}
               name="icon"
             />

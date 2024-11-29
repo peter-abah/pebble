@@ -2,11 +2,13 @@ import AccountForm, { FormSchema } from "@/components/new-account-form";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { GROUP_COLORS } from "@/lib/constants";
 import { BALANCE_CREDIT_CATEGORY_ID } from "@/lib/data";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { createMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
+import { randomElement } from "@/lib/utils";
 import { router } from "expo-router";
 import { View } from "react-native";
 
@@ -24,7 +26,7 @@ const CreateAccount = () => {
       color,
     });
 
-    if (balance > 0) {
+    if (balance && balance > 0) {
       addTransaction({
         title: "Initial account balance",
         categoryID: BALANCE_CREDIT_CATEGORY_ID,
@@ -55,6 +57,7 @@ const CreateAccount = () => {
         defaultValues={{
           name: "",
           balance: 0,
+          color: randomElement(GROUP_COLORS).color,
         }}
         onSubmit={onSubmit}
       />

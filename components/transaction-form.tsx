@@ -31,57 +31,59 @@ import { SPECIAL_CATEGORIES } from "@/lib/data";
 const baseTransactionFormSchema = z.object({
   amount: z.union([
     z
-      .string()
-      .refine(isStringNumeric, { message: "Enter a number" })
+      .string({ message: "Enter amount" })
+      .refine(isStringNumeric, { message: "Amount must be a number" })
       .transform(Number)
-      .refine((v) => v > 0, { message: "Enter amount greater than zero" }),
-    z.number().positive({ message: "Enter amount greater than zero" }),
+      .refine((v) => v > 0, { message: "Amount must greater than zero" }),
+    z.number({ message: "Enter amount" }).positive({ message: "Amount must greater than zero" }),
   ]),
-  datetime: z.date(),
+  datetime: z.date({ message: "Enter date" }),
   title: z.string().optional(),
   note: z.string().optional(),
 });
 
 const transferTransactionFormSchema = baseTransactionFormSchema.merge(
   z.object({
-    from: z.string().min(1, { message: "Select sending account" }),
-    to: z.string().min(1, { message: "Select receiving account" }),
+    from: z.string({ message: "Select sending account" }),
+    to: z.string({ message: "Select receiving account" }),
     exchangeRate: z.union([
       z
-        .string()
+        .string({ message: "Enter exchange rate" })
         .refine(isStringNumeric, { message: "Enter a number" })
         .transform(Number)
         .refine((v) => v > 0, { message: "Exchange rate must be greater than zero." }),
       z
-        .number({ message: "Exchange rate is required" })
+        .number({ message: "Enter exchange rate" })
         .gt(0, { message: "Exchange rate must be greater than zero." }),
     ]),
-    type: z.literal("transfer"),
+    type: z.literal("transfer", { message: "Select type" }),
   })
 );
 
 const normalTransactionFormSchema = baseTransactionFormSchema.merge(
   z.object({
-    categoryID: z.string().min(1, { message: "Select category" }),
-    accountID: z.string().min(1, { message: "Select account" }),
-    type: z.enum(["expense", "income"]),
+    categoryID: z.string({ message: "Select category" }),
+    accountID: z.string({ message: "Select account" }),
+    type: z.enum(["expense", "income"], { message: "Select type" }),
   })
 );
 
 const loanTransactionFormSchema = baseTransactionFormSchema.merge(
   z.object({
-    accountID: z.string().min(1, { message: "Select account" }),
-    type: z.enum(["lent", "borrowed"]),
-    dueDate: z.date().optional(),
-    title: z.string().min(1, { message: "Enter transaction title" }),
+    accountID: z.string({ message: "Select account" }),
+    type: z.enum(["lent", "borrowed"], { message: "Select type" }),
+    dueDate: z.date({ message: "Due date must be a valid date" }).optional(),
+    title: z
+      .string({ message: "Enter transaction title" })
+      .min(1, { message: "Enter transaction title" }),
   })
 );
 
 const loanPaymentTransactionFormSchema = z
   .object({
-    accountID: z.string().min(1, { message: "Select account" }),
-    loanID: z.string().min(1, { message: "Select loan" }),
-    type: z.enum(["paid_loan", "collected_debt"]),
+    accountID: z.string({ message: "Select account" }),
+    loanID: z.string({ message: "Select loan" }),
+    type: z.enum(["paid_loan", "collected_debt"], { message: "Select type" }),
   })
   .merge(baseTransactionFormSchema);
 
@@ -127,7 +129,13 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
   const accounts = Object.values(accountsMap) as Array<Account>;
   const exchangeRates = useAppStore((state) => state.exchangeRates);
 
-  const { control, handleSubmit, watch, setValue } = useForm<FormSchema>({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<FormSchema>({
     defaultValues,
     resolver: zodResolver(formSchema),
   });
@@ -154,32 +162,37 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
   return (
     <View style={{ flex: 1 }}>
       <ScrollView contentContainerClassName="py-4 gap-4" className="flex-1 px-6">
-        <View className="flex-row gap-1 items-center">
-          <Text className="text-3xl font-semibold leading-none mt-1.5">
-            {currency?.symbol || ""}
-          </Text>
-          <Controller
-            control={control}
-            render={({ field: { value, onChange, onBlur } }) => (
-              <Input
-                placeholder="Enter Amount"
-                aria-labelledby="amount"
-                autoFocus={!defaultValues.amount}
-                value={
-                  typeof value === "string"
-                    ? value
-                    : value?.toLocaleString(undefined, {
-                        maximumFractionDigits: currency?.minorUnit,
-                      }) || ""
-                }
-                onBlur={onBlur}
-                onChangeText={onChange}
-                inputMode="numeric"
-                className="text-3xl font-semibold p-0 grow"
-              />
-            )}
-            name="amount"
-          />
+        <View>
+          <View className="flex-row gap-1 items-center">
+            <Text className="text-3xl font-semibold leading-none mt-1.5">
+              {currency?.symbol || ""}
+            </Text>
+            <Controller
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <Input
+                  placeholder="Enter Amount"
+                  aria-labelledby="amount"
+                  autoFocus={!defaultValues.amount}
+                  value={
+                    typeof value === "string"
+                      ? value
+                      : value?.toLocaleString(undefined, {
+                          maximumFractionDigits: currency?.minorUnit,
+                        }) || ""
+                  }
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  inputMode="numeric"
+                  className="text-3xl font-semibold p-0 grow"
+                />
+              )}
+              name="amount"
+            />
+          </View>
+          {errors.amount?.message && (
+            <Text className="text-xs text-destructive">{errors.amount.message}</Text>
+          )}
         </View>
 
         <View className="gap-2">
@@ -189,7 +202,12 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
           <Controller
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
-              <DateTimePicker onChange={onChange} date={value} />
+              <View>
+                <DateTimePicker onChange={onChange} date={value} />
+                {errors.datetime?.message && (
+                  <Text className="text-xs text-destructive">{errors.datetime.message}</Text>
+                )}
+              </View>
             )}
             name="datetime"
           />
@@ -202,24 +220,29 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
           <Controller
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
-              <Select
-                value={value ? { value, label: humanizeString(type) } : undefined}
-                onValueChange={(option) => onChange(option?.value)}
-              >
-                <SelectTrigger className="w-full" nativeID="type">
-                  <SelectValue
-                    className="text-foreground text-sm native:text-lg"
-                    placeholder="Select transaction type"
-                  />
-                </SelectTrigger>
-                <SelectContent insets={contentInsets} className="w-full">
-                  <SelectGroup>
-                    {TRANSACTION_TYPES.map((type) => (
-                      <SelectItem key={type} label={humanizeString(type)} value={type} />
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <View>
+                <Select
+                  value={value ? { value, label: humanizeString(type) } : undefined}
+                  onValueChange={(option) => onChange(option?.value)}
+                >
+                  <SelectTrigger className="w-full" nativeID="type">
+                    <SelectValue
+                      className="text-foreground text-sm native:text-lg"
+                      placeholder="Select transaction type"
+                    />
+                  </SelectTrigger>
+                  <SelectContent insets={contentInsets} className="w-full">
+                    <SelectGroup>
+                      {TRANSACTION_TYPES.map((type) => (
+                        <SelectItem key={type} label={humanizeString(type)} value={type} />
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                {errors.type?.message && (
+                  <Text className="text-xs text-destructive">{errors.type.message}</Text>
+                )}
+              </View>
             )}
             name="type"
           />
@@ -234,39 +257,44 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
             <Controller
               control={control}
               render={({ field: { value, onChange, onBlur } }) => (
-                <Select
-                  value={
-                    value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
-                  }
-                  onValueChange={(option) => {
-                    onChange(option?.value);
-                    if (!option?.value) return;
+                <View>
+                  <Select
+                    value={
+                      value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
+                    }
+                    onValueChange={(option) => {
+                      onChange(option?.value);
+                      if (!option?.value) return;
 
-                    const fromCurrencyCode =
-                      accountsMap[option.value]?.currency.isoCode.toLocaleLowerCase();
-                    const toCurrencyCode = toAccount?.currency.isoCode.toLocaleLowerCase();
-                    if (!fromCurrencyCode || !toCurrencyCode) return;
+                      const fromCurrencyCode =
+                        accountsMap[option.value]?.currency.isoCode.toLocaleLowerCase();
+                      const toCurrencyCode = toAccount?.currency.isoCode.toLocaleLowerCase();
+                      if (!fromCurrencyCode || !toCurrencyCode) return;
 
-                    const exchangeRate = exchangeRates[fromCurrencyCode]?.rates[toCurrencyCode];
-                    if (exchangeRate === undefined) return;
+                      const exchangeRate = exchangeRates[fromCurrencyCode]?.rates[toCurrencyCode];
+                      if (exchangeRate === undefined) return;
 
-                    setValue("exchangeRate", exchangeRate);
-                  }}
-                >
-                  <SelectTrigger className="w-full" aria-labelledby="to">
-                    <SelectValue
-                      className="text-foreground text-sm native:text-lg"
-                      placeholder="Select Sending Account"
-                    />
-                  </SelectTrigger>
-                  <SelectContent insets={contentInsets} className="w-full">
-                    <SelectGroup>
-                      {accounts.map((account) => (
-                        <SelectItem key={account.id} label={account.name} value={account.id} />
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                      setValue("exchangeRate", exchangeRate);
+                    }}
+                  >
+                    <SelectTrigger className="w-full" aria-labelledby="to">
+                      <SelectValue
+                        className="text-foreground text-sm native:text-lg"
+                        placeholder="Select Sending Account"
+                      />
+                    </SelectTrigger>
+                    <SelectContent insets={contentInsets} className="w-full">
+                      <SelectGroup>
+                        {accounts.map((account) => (
+                          <SelectItem key={account.id} label={account.name} value={account.id} />
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  {"from" in errors && errors.from?.message && (
+                    <Text className="text-xs text-destructive">{errors.from.message}</Text>
+                  )}
+                </View>
               )}
               name="from"
             />
@@ -279,40 +307,46 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
             <Controller
               control={control}
               render={({ field: { value, onChange, onBlur } }) => (
-                <Select
-                  value={
-                    value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
-                  }
-                  onValueChange={(option) => {
-                    onChange(option?.value);
+                <View>
+                  <Select
+                    value={
+                      value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
+                    }
+                    onValueChange={(option) => {
+                      onChange(option?.value);
 
-                    if (!option?.value) return;
+                      if (!option?.value) return;
 
-                    const fromCurrencyCode = fromAccount?.currency.isoCode.toLocaleLowerCase();
-                    const toCurrencyCode =
-                      accountsMap[option.value]?.currency.isoCode.toLocaleLowerCase();
-                    if (!fromCurrencyCode || !toCurrencyCode) return;
+                      const fromCurrencyCode = fromAccount?.currency.isoCode.toLocaleLowerCase();
+                      const toCurrencyCode =
+                        accountsMap[option.value]?.currency.isoCode.toLocaleLowerCase();
+                      if (!fromCurrencyCode || !toCurrencyCode) return;
 
-                    const exchangeRate = exchangeRates[fromCurrencyCode]?.rates[toCurrencyCode];
-                    if (exchangeRate === undefined) return;
+                      const exchangeRate = exchangeRates[fromCurrencyCode]?.rates[toCurrencyCode];
+                      if (exchangeRate === undefined) return;
 
-                    setValue("exchangeRate", exchangeRate);
-                  }}
-                >
-                  <SelectTrigger className="w-full" aria-labelledby="to">
-                    <SelectValue
-                      className="text-foreground text-sm native:text-lg"
-                      placeholder="Select Receiving Account"
-                    />
-                  </SelectTrigger>
-                  <SelectContent insets={contentInsets} className="w-full">
-                    <SelectGroup>
-                      {accounts.map((account) => (
-                        <SelectItem key={account.id} label={account.name} value={account.id} />
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                      setValue("exchangeRate", exchangeRate);
+                    }}
+                  >
+                    <SelectTrigger className="w-full" aria-labelledby="to">
+                      <SelectValue
+                        className="text-foreground text-sm native:text-lg"
+                        placeholder="Select Receiving Account"
+                      />
+                    </SelectTrigger>
+                    <SelectContent insets={contentInsets} className="w-full">
+                      <SelectGroup>
+                        {accounts.map((account) => (
+                          <SelectItem key={account.id} label={account.name} value={account.id} />
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+
+                  {"to" in errors && errors.to?.message && (
+                    <Text className="text-xs text-destructive">{errors.to.message}</Text>
+                  )}
+                </View>
               )}
               name="to"
             />
@@ -333,15 +367,21 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
             <Controller
               control={control}
               render={({ field: { value, onChange, onBlur } }) => (
-                <Input
-                  className="px-3 py-2 border border-border rounded"
-                  value={value === undefined ? "" : value.toString()}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  aria-labelledby="exchangeRate"
-                  inputMode="numeric"
-                  placeholder="Enter exchange rate"
-                />
+                <View>
+                  <Input
+                    className="px-3 py-2 border border-border rounded"
+                    value={value === undefined ? "" : value.toString()}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    aria-labelledby="exchangeRate"
+                    inputMode="numeric"
+                    placeholder="Enter exchange rate"
+                  />
+
+                  {"exchangeRate" in errors && errors.exchangeRate?.message && (
+                    <Text className="text-xs text-destructive">{errors.exchangeRate.message}</Text>
+                  )}
+                </View>
               )}
               name="exchangeRate"
             />
@@ -389,26 +429,31 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
             <Controller
               control={control}
               render={({ field: { value, onChange, onBlur } }) => (
-                <Select
-                  value={{ value, label: value && (categoryMap[value]?.name || "Unknown") }}
-                  onValueChange={(option) => onChange(option?.value)}
-                >
-                  <SelectTrigger className="w-full" aria-labelledby="type">
-                    <SelectValue
-                      className="text-foreground text-sm native:text-lg"
-                      placeholder="Select Category"
-                    />
-                  </SelectTrigger>
-                  <SelectContent insets={contentInsets} className="w-full">
-                    <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
-                      {categories.map((category) => (
-                        <SelectItem key={category.id} label={category.name} value={category.id}>
-                          {category.name}
-                        </SelectItem>
-                      ))}
-                    </ScrollView>
-                  </SelectContent>
-                </Select>
+                <View>
+                  <Select
+                    value={{ value, label: value && (categoryMap[value]?.name || "Unknown") }}
+                    onValueChange={(option) => onChange(option?.value)}
+                  >
+                    <SelectTrigger className="w-full" aria-labelledby="type">
+                      <SelectValue
+                        className="text-foreground text-sm native:text-lg"
+                        placeholder="Select Category"
+                      />
+                    </SelectTrigger>
+                    <SelectContent insets={contentInsets} className="w-full">
+                      <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
+                        {categories.map((category) => (
+                          <SelectItem key={category.id} label={category.name} value={category.id}>
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                      </ScrollView>
+                    </SelectContent>
+                  </Select>
+                  {"categoryID" in errors && errors.categoryID?.message && (
+                    <Text className="text-xs text-destructive">{errors.categoryID.message}</Text>
+                  )}
+                </View>
               )}
               name="categoryID"
             />
@@ -424,26 +469,32 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
             <Controller
               control={control}
               render={({ field: { value, onChange, onBlur } }) => (
-                <Select
-                  value={
-                    value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
-                  }
-                  onValueChange={(option) => onChange(option?.value)}
-                >
-                  <SelectTrigger className="w-full" aria-labelledby="type">
-                    <SelectValue
-                      className="text-foreground text-sm native:text-lg"
-                      placeholder="Select Account"
-                    />
-                  </SelectTrigger>
-                  <SelectContent insets={contentInsets} className="w-full">
-                    <SelectGroup>
-                      {accounts.map((account) => (
-                        <SelectItem key={account.id} label={account.name} value={account.id} />
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                <View>
+                  <Select
+                    value={
+                      value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
+                    }
+                    onValueChange={(option) => onChange(option?.value)}
+                  >
+                    <SelectTrigger className="w-full" aria-labelledby="type">
+                      <SelectValue
+                        className="text-foreground text-sm native:text-lg"
+                        placeholder="Select Account"
+                      />
+                    </SelectTrigger>
+                    <SelectContent insets={contentInsets} className="w-full">
+                      <SelectGroup>
+                        {accounts.map((account) => (
+                          <SelectItem key={account.id} label={account.name} value={account.id} />
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+
+                  {"accountID" in errors && errors.accountID?.message && (
+                    <Text className="text-xs text-destructive">{errors.accountID.message}</Text>
+                  )}
+                </View>
               )}
               name="accountID"
             />
@@ -456,7 +507,12 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
             <Controller
               control={control}
               render={({ field: { value, onChange, onBlur } }) => (
-                <DateTimePicker onChange={onChange} date={value} showClearButton />
+                <View>
+                  <DateTimePicker onChange={onChange} date={value} showClearButton />
+                  {"dueDate" in errors && errors.dueDate?.message && (
+                    <Text className="text-xs text-destructive">{errors.dueDate.message}</Text>
+                  )}
+                </View>
               )}
               name="dueDate"
             />
@@ -477,26 +533,31 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
             <Controller
               control={control}
               render={({ field: { value, onChange, onBlur } }) => (
-                <Select
-                  value={
-                    value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
-                  }
-                  onValueChange={(option) => onChange(option?.value)}
-                >
-                  <SelectTrigger className="w-full" aria-labelledby="type">
-                    <SelectValue
-                      className="text-foreground text-sm native:text-lg"
-                      placeholder="Select Account"
-                    />
-                  </SelectTrigger>
-                  <SelectContent insets={contentInsets} className="w-full">
-                    <SelectGroup>
-                      {accounts.map((account) => (
-                        <SelectItem key={account.id} label={account.name} value={account.id} />
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                <View>
+                  <Select
+                    value={
+                      value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
+                    }
+                    onValueChange={(option) => onChange(option?.value)}
+                  >
+                    <SelectTrigger className="w-full" aria-labelledby="type">
+                      <SelectValue
+                        className="text-foreground text-sm native:text-lg"
+                        placeholder="Select Account"
+                      />
+                    </SelectTrigger>
+                    <SelectContent insets={contentInsets} className="w-full">
+                      <SelectGroup>
+                        {accounts.map((account) => (
+                          <SelectItem key={account.id} label={account.name} value={account.id} />
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  {"accountID" in errors && errors.accountID?.message && (
+                    <Text className="text-xs text-destructive">{errors.accountID.message}</Text>
+                  )}
+                </View>
               )}
               name="accountID"
             />
@@ -509,15 +570,20 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
             <Controller
               control={control}
               render={({ field: { value, onChange, onBlur } }) => (
-                <TransactionPicker
-                  value={value}
-                  onChange={onChange}
-                  filters={{
-                    types: [type === "paid_loan" ? "borrowed" : "lent"],
-                    accounts: [],
-                    categories: [],
-                  }}
-                />
+                <View>
+                  <TransactionPicker
+                    value={value}
+                    onChange={onChange}
+                    filters={{
+                      types: [type === "paid_loan" ? "borrowed" : "lent"],
+                      accounts: [],
+                      categories: [],
+                    }}
+                  />
+                  {"loanID" in errors && errors.loanID?.message && (
+                    <Text className="text-xs text-destructive">{errors.loanID.message}</Text>
+                  )}
+                </View>
               )}
               name="loanID"
             />
@@ -531,14 +597,19 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
           <Controller
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
-              <Input
-                className="px-3 py-2 border border-border rounded"
-                value={value || ""}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                aria-labelledby="title"
-                placeholder="Describe transaction"
-              />
+              <View>
+                <Input
+                  className="px-3 py-2 border border-border rounded"
+                  value={value || ""}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  aria-labelledby="title"
+                  placeholder="Describe transaction"
+                />
+                {errors.title?.message && (
+                  <Text className="text-xs text-destructive">{errors.title.message}</Text>
+                )}
+              </View>
             )}
             name="title"
           />
@@ -551,13 +622,18 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
           <Controller
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
-              <Textarea
-                value={value || ""}
-                aria-labelledby="note"
-                onChangeText={onChange}
-                onBlur={onBlur}
-                className="px-3 py-2 border border-border rounded"
-              />
+              <View>
+                <Textarea
+                  value={value || ""}
+                  aria-labelledby="note"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  className="px-3 py-2 border border-border rounded"
+                />
+                {errors.note?.message && (
+                  <Text className="text-xs text-destructive">{errors.note.message}</Text>
+                )}
+              </View>
             )}
             name="note"
           />

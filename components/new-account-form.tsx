@@ -21,12 +21,12 @@ import ColorPicker from "./color-picker";
 
 const formSchema = z.object({
   balance: z.union([
-    z.string().refine(isStringNumeric, { message: "Enter a number" }).transform(Number),
-    z.number(),
+    z.string().refine(isStringNumeric, { message: "Enter a number" }).transform(Number).optional(),
+    z.number().optional(),
   ]),
-  name: z.string(),
-  currency: z.string(),
-  color: z.string(),
+  name: z.string({ message: "Enter account name" }).min(1, { message: "Enter account name" }),
+  currency: z.string({ message: "Select currency" }),
+  color: z.string({ message: "Select color" }),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
@@ -34,10 +34,14 @@ export type FormSchema = z.infer<typeof formSchema>;
 interface NewAccountFormProps {
   defaultValues: Partial<FormSchema>;
   onSubmit: (values: FormSchema) => void;
-  excludedFields?: Array<keyof FormSchema>;
 }
-const NewAccountForm = ({ defaultValues, onSubmit, excludedFields }: NewAccountFormProps) => {
-  const { control, handleSubmit, watch } = useForm<FormSchema>({
+const NewAccountForm = ({ defaultValues, onSubmit }: NewAccountFormProps) => {
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormSchema>({
     defaultValues,
     resolver: zodResolver(formSchema),
   });
@@ -62,13 +66,18 @@ const NewAccountForm = ({ defaultValues, onSubmit, excludedFields }: NewAccountF
           <Controller
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
-              <TextInput
-                className="px-3 py-2 border border-border rounded"
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                aria-labelledby="name"
-              />
+              <View>
+                <TextInput
+                  className="px-3 py-2 border border-border rounded"
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  aria-labelledby="name"
+                />
+                {errors.name?.message && (
+                  <Text className="text-xs text-destructive">{errors.name.message}</Text>
+                )}
+              </View>
             )}
             name="name"
           />
@@ -81,28 +90,33 @@ const NewAccountForm = ({ defaultValues, onSubmit, excludedFields }: NewAccountF
           <Controller
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
-              <Select
-                value={{ value, label: value && renderCurrencyLabel(value) }}
-                onValueChange={(option) => onChange(option?.value)}
-              >
-                <SelectTrigger className="w-full" aria-labelledby="type">
-                  <SelectValue
-                    className="text-foreground text-sm native:text-lg"
-                    placeholder="Select Currency"
-                  />
-                </SelectTrigger>
-                <SelectContent insets={contentInsets} className="w-full">
-                  <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
-                    {CURRENCIES.map((currency) => (
-                      <SelectItem
-                        key={currency.isoCode}
-                        label={renderCurrencyLabel(currency.isoCode)}
-                        value={currency.isoCode}
-                      />
-                    ))}
-                  </ScrollView>
-                </SelectContent>
-              </Select>
+              <View>
+                <Select
+                  value={{ value, label: value && renderCurrencyLabel(value) }}
+                  onValueChange={(option) => onChange(option?.value)}
+                >
+                  <SelectTrigger className="w-full" aria-labelledby="type">
+                    <SelectValue
+                      className="text-foreground text-sm native:text-lg"
+                      placeholder="Select Currency"
+                    />
+                  </SelectTrigger>
+                  <SelectContent insets={contentInsets} className="w-full">
+                    <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
+                      {CURRENCIES.map((currency) => (
+                        <SelectItem
+                          key={currency.isoCode}
+                          label={renderCurrencyLabel(currency.isoCode)}
+                          value={currency.isoCode}
+                        />
+                      ))}
+                    </ScrollView>
+                  </SelectContent>
+                </Select>
+                {errors.currency?.message && (
+                  <Text className="text-xs text-destructive">{errors.currency.message}</Text>
+                )}
+              </View>
             )}
             name="currency"
           />
@@ -115,20 +129,25 @@ const NewAccountForm = ({ defaultValues, onSubmit, excludedFields }: NewAccountF
           <Controller
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
-              <TextInput
-                className="px-3 py-2 border border-border rounded"
-                aria-labelledby="amount"
-                value={
-                  typeof value === "string"
-                    ? value
-                    : value?.toLocaleString(undefined, {
-                        maximumFractionDigits: currency?.minorUnit,
-                      }) || ""
-                }
-                onBlur={onBlur}
-                onChangeText={onChange}
-                inputMode="numeric"
-              />
+              <View>
+                <TextInput
+                  className="px-3 py-2 border border-border rounded"
+                  aria-labelledby="amount"
+                  value={
+                    typeof value === "string"
+                      ? value
+                      : value?.toLocaleString(undefined, {
+                          maximumFractionDigits: currency?.minorUnit,
+                        }) || ""
+                  }
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  inputMode="numeric"
+                />
+                {errors.balance?.message && (
+                  <Text className="text-xs text-destructive">{errors.balance.message}</Text>
+                )}
+              </View>
             )}
             name="balance"
           />
@@ -141,7 +160,12 @@ const NewAccountForm = ({ defaultValues, onSubmit, excludedFields }: NewAccountF
           <Controller
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
-              <ColorPicker value={value} onChange={onChange} />
+              <View>
+                <ColorPicker value={value} onChange={onChange} />
+                {errors.color?.message && (
+                  <Text className="text-xs text-destructive">{errors.color.message}</Text>
+                )}
+              </View>
             )}
             name="color"
           />

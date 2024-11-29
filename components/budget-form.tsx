@@ -23,12 +23,11 @@ import { AccountsInput } from "./accounts-input";
 import { CategoriesInput } from "./categories-input";
 import ColorPicker from "./color-picker";
 
-// todo: form error msgs
 const PERIODS = ["weekly", "monthly", "yearly"] as const;
 const formSchema = z.object({
   amount: z.union([
     z
-      .string()
+      .string({ message: "Enter a string" })
       .refine(isStringNumeric, { message: "Enter a number" })
       .transform(Number)
       .refine((v) => v > 0, { message: "Amount must be greater than zero" }),
@@ -37,8 +36,12 @@ const formSchema = z.object({
   name: z.string().min(1, { message: "Budget name is required." }),
   currency: z.string({ message: "Currency is required" }),
   color: z.string({ message: "Color is required" }),
-  accounts: z.array(z.string()).nonempty({ message: "Select accounts" }),
-  categories: z.array(z.string()).nonempty({ message: "Select categories" }),
+  accounts: z
+    .array(z.string(), { message: "Select accounts" })
+    .nonempty({ message: "Select accounts" }),
+  categories: z
+    .array(z.string(), { message: "Select categories" })
+    .nonempty({ message: "Select categories" }),
   period: z.enum(PERIODS, { message: "Period is required" }),
 });
 
@@ -51,7 +54,12 @@ interface BudgetFormProps {
   onSubmit: (values: FormSchema) => void;
 }
 const BudgetForm = ({ defaultValues, onSubmit }: BudgetFormProps) => {
-  const { control, handleSubmit, watch } = useForm<FormSchema>({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormSchema>({
     defaultValues,
     resolver: zodResolver(formSchema),
   });
@@ -80,151 +88,186 @@ const BudgetForm = ({ defaultValues, onSubmit }: BudgetFormProps) => {
           <Label nativeID="name" className="text-lg">
             Name
           </Label>
-          <Controller
-            control={control}
-            render={({ field: { value, onChange, onBlur } }) => (
-              <TextInput
-                className="px-3 py-2 border border-border rounded"
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                aria-labelledby="name"
-              />
+          <View>
+            <Controller
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <TextInput
+                  className="px-3 py-2 border border-border rounded"
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  aria-labelledby="name"
+                />
+              )}
+              name="name"
+            />
+            {errors.name?.message && (
+              <Text className="text-xs text-destructive">{errors.name.message}</Text>
             )}
-            name="name"
-          />
+          </View>
         </View>
 
         <View className="gap-2">
           <Label nativeID="type" className="text-lg">
             Amount
           </Label>
-          <Controller
-            control={control}
-            render={({ field: { value, onChange, onBlur } }) => (
-              <TextInput
-                className="px-3 py-2 border border-border rounded"
-                aria-labelledby="amount"
-                value={
-                  typeof value === "string"
-                    ? value
-                    : value?.toLocaleString(undefined, {
-                        maximumFractionDigits: (currency || defaultCurrency).minorUnit,
-                      }) || ""
-                }
-                onBlur={onBlur}
-                onChangeText={onChange}
-                inputMode="numeric"
-              />
+          <View>
+            <Controller
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <TextInput
+                  className="px-3 py-2 border border-border rounded"
+                  aria-labelledby="amount"
+                  value={
+                    typeof value === "string"
+                      ? value
+                      : value?.toLocaleString(undefined, {
+                          maximumFractionDigits: (currency || defaultCurrency).minorUnit,
+                        }) || ""
+                  }
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  inputMode="numeric"
+                />
+              )}
+              name="amount"
+            />
+            {errors.amount?.message && (
+              <Text className="text-xs text-destructive">{errors.amount.message}</Text>
             )}
-            name="amount"
-          />
+          </View>
         </View>
 
         <View className="gap-2 relative">
           <Label nativeID="currency" className="text-lg">
             Currency
           </Label>
-          <Controller
-            control={control}
-            render={({ field: { value, onChange, onBlur } }) => (
-              <Select
-                value={{ value, label: value && renderCurrencyLabel(value) }}
-                onValueChange={(option) => onChange(option?.value)}
-              >
-                <SelectTrigger className="w-full" aria-labelledby="type">
-                  <SelectValue
-                    className="text-foreground text-sm native:text-lg"
-                    placeholder="Select Currency"
-                  />
-                </SelectTrigger>
-                <SelectContent insets={contentInsets} className="w-full">
-                  <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
-                    {SORTED_CURRENCIES.map((currency) => (
-                      <SelectItem
-                        key={currency.isoCode}
-                        label={renderCurrencyLabel(currency.isoCode)}
-                        value={currency.isoCode}
-                      />
-                    ))}
-                  </ScrollView>
-                </SelectContent>
-              </Select>
+          <View>
+            <Controller
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <Select
+                  value={{ value, label: value && renderCurrencyLabel(value) }}
+                  onValueChange={(option) => onChange(option?.value)}
+                >
+                  <SelectTrigger className="w-full" aria-labelledby="type">
+                    <SelectValue
+                      className="text-foreground text-sm native:text-lg"
+                      placeholder="Select Currency"
+                    />
+                  </SelectTrigger>
+                  <SelectContent insets={contentInsets} className="w-full">
+                    <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
+                      {SORTED_CURRENCIES.map((currency) => (
+                        <SelectItem
+                          key={currency.isoCode}
+                          label={renderCurrencyLabel(currency.isoCode)}
+                          value={currency.isoCode}
+                        />
+                      ))}
+                    </ScrollView>
+                  </SelectContent>
+                </Select>
+              )}
+              name="currency"
+            />
+            {errors.currency?.message && (
+              <Text className="text-xs text-destructive">{errors.currency.message}</Text>
             )}
-            name="currency"
-          />
+          </View>
         </View>
 
         <View className="gap-2">
           <Label nativeID="period" className="text-lg">
             Period
           </Label>
-          <Controller
-            control={control}
-            render={({ field: { value, onChange, onBlur } }) => (
-              <Select
-                value={value && { value, label: titleCase(value) }}
-                onValueChange={(option) => onChange(option?.value)}
-              >
-                <SelectTrigger className="w-full" nativeID="period">
-                  <SelectValue
-                    className="text-foreground text-sm native:text-lg"
-                    placeholder="Select Budget Period"
-                  />
-                </SelectTrigger>
-                <SelectContent insets={contentInsets} className="w-full">
-                  <SelectGroup>
-                    {PERIODS.map((type) => (
-                      <SelectItem key={type} label={titleCase(type)} value={type}>
-                        {titleCase(type)}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+          <View>
+            <Controller
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <Select
+                  value={value && { value, label: titleCase(value) }}
+                  onValueChange={(option) => onChange(option?.value)}
+                >
+                  <SelectTrigger className="w-full" nativeID="period">
+                    <SelectValue
+                      className="text-foreground text-sm native:text-lg"
+                      placeholder="Select Budget Period"
+                    />
+                  </SelectTrigger>
+                  <SelectContent insets={contentInsets} className="w-full">
+                    <SelectGroup>
+                      {PERIODS.map((type) => (
+                        <SelectItem key={type} label={titleCase(type)} value={type}>
+                          {titleCase(type)}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
+              name="period"
+            />
+            {errors.period?.message && (
+              <Text className="text-xs text-destructive">{errors.period.message}</Text>
             )}
-            name="period"
-          />
+          </View>
         </View>
 
         <View className="gap-2 relative">
           <Label nativeID="color" className="text-lg">
             Color
           </Label>
-          <Controller
-            control={control}
-            render={({ field: { value, onChange, onBlur } }) => (
-              <ColorPicker value={value} onChange={onChange} />
+          <View>
+            <Controller
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <ColorPicker value={value} onChange={onChange} />
+              )}
+              name="color"
+            />
+            {errors.color?.message && (
+              <Text className="text-xs text-destructive">{errors.color.message}</Text>
             )}
-            name="color"
-          />
+          </View>
         </View>
 
         <View className="gap-2 relative">
-          <Label nativeID="color" className="text-lg">
+          <Label nativeID="categories" className="text-lg">
             Categories
           </Label>
-          <Controller
-            control={control}
-            render={({ field: { value, onChange, onBlur } }) => (
-              <CategoriesInput value={value} onChange={onChange} />
+          <View>
+            <Controller
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <CategoriesInput value={value} onChange={onChange} />
+              )}
+              name="categories"
+            />
+            {errors.categories?.message && (
+              <Text className="text-xs text-destructive">{errors.categories.message}</Text>
             )}
-            name="categories"
-          />
+          </View>
         </View>
 
         <View className="gap-2 relative">
           <Label nativeID="color" className="text-lg">
             Accounts
           </Label>
-          <Controller
-            control={control}
-            render={({ field: { value, onChange, onBlur } }) => (
-              <AccountsInput value={value} onChange={onChange} />
-            )}
-            name="accounts"
-          />
+          <View>
+            <Controller
+              control={control}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <AccountsInput value={value} onChange={onChange} />
+              )}
+              name="accounts"
+            />
+          </View>
         </View>
+        {errors.accounts?.message && (
+          <Text className="text-xs text-destructive">{errors.accounts.message}</Text>
+        )}
       </ScrollView>
 
       <Button onPress={handleSubmit(onSubmit)} className="mx-6">
