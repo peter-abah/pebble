@@ -1,282 +1,227 @@
+import { accountsTable, categoriesTable } from "@/db/schema";
 import { NAME_TO_GROUP_COLOR } from "@/lib/constants";
-import { createMoney } from "@/lib/money";
-import { Account, NonEmptyArray, TransactionCategory } from "@/lib/types";
-import { CURRENCIES_MAP } from "./currencies";
 
-export const ACCOUNTS: NonEmptyArray<Account> = [
+export const ACCOUNTS: Array<typeof accountsTable.$inferInsert> = [
   {
     name: "Main",
-    id: "1",
-    balance: createMoney(0, CURRENCIES_MAP["NGN"]!),
-    currency: CURRENCIES_MAP["NGN"]!,
+    balance_value_in_minor_units: 0,
+    currency_code: "NGN",
     color: NAME_TO_GROUP_COLOR["blue-dark"].color,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
   },
 ];
 
-export const BALANCE_CREDIT_CATEGORY_ID = "BALANCE_CREDIT_CATEGORY_ID";
-export const BALANCE_DEBIT_CATEGORY_ID = "BALANCE_DEBIT_CATEGORY_ID";
+export const BALANCE_CREDIT_CATEGORY_ID: string = "BALANCE_CREDIT_CATEGORY_ID";
+export const BALANCE_DEBIT_CATEGORY_ID: string = "BALANCE_DEBIT_CATEGORY_ID";
 
 // ? Freeze object to ensure it is not mutated anywhere else in the app
-export const SPECIAL_CATEGORIES: Readonly<Record<string, TransactionCategory>> = Object.freeze({
+export const SPECIAL_CATEGORIES = Object.freeze({
   [BALANCE_CREDIT_CATEGORY_ID]: {
     name: "Balance credit",
     id: BALANCE_CREDIT_CATEGORY_ID,
-    type: "income",
+    type: "income" as const,
     color: NAME_TO_GROUP_COLOR["green"].color,
     icon: { name: "bank", type: "icon" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
   },
   [BALANCE_DEBIT_CATEGORY_ID]: {
     name: "Balance debit",
     id: BALANCE_DEBIT_CATEGORY_ID,
-    type: "expense",
+    type: "expense" as const,
     color: NAME_TO_GROUP_COLOR["red"].color,
     icon: { name: "bank", type: "icon" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+  },
+  UNKNOWN: {
+    name: "Unknown",
+    id: "UNKNOWN",
+    color: NAME_TO_GROUP_COLOR["gray-dark"].color,
+    icon: { name: "question-mark", type: "icon" },
   },
 });
 
-export const CATEGORIES: NonEmptyArray<TransactionCategory> = [
+export const CATEGORIES: Array<typeof categoriesTable.$inferInsert> = [
   {
     name: "Groceries",
-    id: "1",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#33cc33", // hsla(120 60% 50%)
-    icon: { emoji: "🛒", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "🛒", type: "emoji" as const },
   },
   {
     name: "Rent",
-    id: "2",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#3333cc", // hsla(240 60% 50%)
-    icon: { emoji: "🏠", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "🏠", type: "emoji" as const },
   },
   {
     name: "Utilities",
-    id: "3",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#cccc33", // hsla(60 60% 50%)
-    icon: { emoji: "💡", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "💡", type: "emoji" as const },
   },
   {
     name: "Transportation",
-    id: "4",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#cc6633", // hsla(30 60% 50%)
-    icon: { emoji: "🚗", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "🚗", type: "emoji" as const },
   },
   {
     name: "Dining",
-    id: "5",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#cc33cc", // hsla(300 60% 50%)
-    icon: { emoji: "🍽️", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "🍽️", type: "emoji" as const },
   },
   {
     name: "Entertainment",
-    id: "6",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#3399cc", // hsla(210 60% 50%)
-    icon: { emoji: "🎬", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "🎬", type: "emoji" as const },
   },
   {
     name: "Health",
-    id: "7",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#66cc33", // hsla(90 60% 50%)
-    icon: { emoji: "💊", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "💊", type: "emoji" as const },
   },
   {
     name: "Fitness",
-    id: "8",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#cc3399", // hsla(330 60% 50%)
-    icon: { emoji: "🏋️", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "🏋️", type: "emoji" as const },
   },
   {
     name: "Clothing",
-    id: "9",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#9933cc", // hsla(270 60% 50%)
-    icon: { emoji: "👗", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "👗", type: "emoji" as const },
   },
   {
     name: "Subscriptions",
-    id: "10",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#33cccc", // hsla(180 60% 50%)
-    icon: { emoji: "📺", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "📺", type: "emoji" as const },
   },
   {
     name: "Insurance",
-    id: "11",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#33cc66", // hsla(150 60% 50%)
-    icon: { emoji: "🛡️", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "🛡️", type: "emoji" as const },
   },
   {
     name: "Travel",
-    id: "12",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#3366cc", // hsla(240 60% 45%) - slight tweak to make it unique
-    icon: { emoji: "✈️", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "✈️", type: "emoji" as const },
   },
   {
     name: "Gifts",
-    id: "13",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#cc3399", // hsla(330 60% 55%) - already used
-    icon: { emoji: "🎁", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "🎁", type: "emoji" as const },
   },
   {
     name: "Education",
-    id: "14",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#cccc66", // hsla(60 60% 55%) - slight tweak
-    icon: { emoji: "🎓", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "🎓", type: "emoji" as const },
   },
   {
     name: "Home Improvement",
-    id: "15",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#33cc33", // hsla(120 60% 55%)
-    icon: { emoji: "🔨", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "🔨", type: "emoji" as const },
   },
   {
     name: "Pets",
-    id: "16",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#33cccc", // hsla(180 60% 45%) - adjusted saturation
-    icon: { emoji: "🐕", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "🐕", type: "emoji" as const },
   },
   {
     name: "Investments",
-    id: "17",
-    type: "income",
+
+    type: "income" as const,
     color: "#9933cc", // hsla(270 60% 45%)
-    icon: { emoji: "📈", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "📈", type: "emoji" as const },
   },
   {
     name: "Charity",
-    id: "18",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#3399cc", // hsla(210 60% 55%)
-    icon: { emoji: "❤️", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "❤️", type: "emoji" as const },
   },
   {
     name: "Taxes",
-    id: "19",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#66cc66", // hsla(90 60% 45%) - slight tweak
-    icon: { emoji: "💰", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "💰", type: "emoji" as const },
   },
   {
     name: "Miscellaneous",
-    id: "20",
-    type: "expense",
+
+    type: "expense" as const,
     color: "#cc6633", // hsla(30 60% 55%) - slight tweak
-    icon: { emoji: "📦", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "📦", type: "emoji" as const },
   },
   {
     name: "Salary",
-    id: "21",
-    type: "income",
+
+    type: "income" as const,
     color: "#3399cc", // hsla(200 60% 55%)
-    icon: { emoji: "💼", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "💼", type: "emoji" as const },
   },
   {
     name: "Freelance Income",
-    id: "22",
-    type: "income",
+
+    type: "income" as const,
     color: "#6644cc", // hsla(250 60% 45%)
-    icon: { emoji: "🖥️", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "🖥️", type: "emoji" as const },
   },
   {
     name: "Bonus",
-    id: "23",
-    type: "income",
+
+    type: "income" as const,
     color: "#33cc66", // hsla(160 60% 55%)
-    icon: { emoji: "💸", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "💸", type: "emoji" as const },
   },
   {
     name: "Interest",
-    id: "24",
-    type: "income",
+
+    type: "income" as const,
     color: "#66cc33", // hsla(100 60% 55%)
-    icon: { emoji: "🏦", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "🏦", type: "emoji" as const },
   },
   {
     name: "Rental Income",
-    id: "25",
-    type: "income",
+
+    type: "income" as const,
     color: "#3366cc", // hsla(220 60% 45%) - slight tweak
-    icon: { emoji: "🏢", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "🏢", type: "emoji" as const },
   },
   {
     name: "Unknown",
-    id: "26",
+
     color: "#33cc99", // hsla(170 60% 55%)
-    icon: { emoji: "❓", type: "emoji" },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    icon: { emoji: "❓", type: "emoji" as const },
   },
 ];
 
 export const CATEGORIES_MAP = CATEGORIES.reduce((result, curr) => {
   result[curr.name] = curr;
   return result;
-}, {} as Record<string, TransactionCategory>);
+}, {} as Record<string, any>);

@@ -1,11 +1,9 @@
 import { Text } from "@/components/ui/text";
-import { renderDate } from "@/lib/app-utils";
-import { SPECIAL_CATEGORIES } from "@/lib/data";
+import { QueryTransaction } from "@/db/queries/transactions";
+import { getTransactionCategory, renderDate } from "@/lib/app-utils";
 import { MaterialIcons } from "@/lib/icons/MaterialIcons";
 import { CATEGORY_ICONS, CategoryIconName } from "@/lib/icons/category-icons";
 import { formatMoney } from "@/lib/money";
-import { useAppStore } from "@/lib/store";
-import { Transaction } from "@/lib/types";
 import { assertUnreachable, cn } from "@/lib/utils";
 import { FontAwesome6 } from "@expo/vector-icons";
 import dayjs from "dayjs";
@@ -13,7 +11,7 @@ import { ComponentProps, forwardRef } from "react";
 import { Pressable, View } from "react-native";
 
 interface TransactionCardProps extends ComponentProps<typeof Pressable> {
-  transaction: Transaction;
+  transaction: QueryTransaction;
 }
 const TransactionCard = forwardRef<View, TransactionCardProps>(
   ({ transaction, ...restProps }, ref) => {
@@ -44,7 +42,10 @@ const TransactionCard = forwardRef<View, TransactionCardProps>(
         <View className="ml-auto items-end">
           <Text className="font-bold text-lg">
             {sign}
-            {formatMoney(transaction.amount)}
+            {formatMoney({
+              valueInMinorUnits: transaction.amount_value_in_minor_units,
+              currencyCode: transaction.amount_currency_code,
+            })}
           </Text>
           <Text>{renderDate(transaction.datetime)}</Text>
         </View>
@@ -55,13 +56,10 @@ const TransactionCard = forwardRef<View, TransactionCardProps>(
 
 TransactionCard.displayName = "TransactionCard";
 
-const TransactionIcon = ({ transaction }: { transaction: Transaction }) => {
-  const userCategoryMap = useAppStore((state) => state.categories);
-  const categoryMap = { ...userCategoryMap, ...SPECIAL_CATEGORIES };
-
+const TransactionIcon = ({ transaction }: { transaction: QueryTransaction }) => {
   const { type } = transaction;
   if (type === "income" || type === "expense") {
-    const category = categoryMap[transaction.categoryID];
+    const category = getTransactionCategory(transaction);
 
     return (
       <View
@@ -69,7 +67,7 @@ const TransactionIcon = ({ transaction }: { transaction: Transaction }) => {
         style={{ backgroundColor: category?.color }}
       >
         <Text className="text-2xl font-bold">
-          {category?.icon.type === "emoji"
+          {category?.icon?.type === "emoji"
             ? category?.icon.emoji
             : CATEGORY_ICONS[category?.icon.name as CategoryIconName]?.({
                 size: 24,
@@ -124,45 +122,44 @@ const TransactionIcon = ({ transaction }: { transaction: Transaction }) => {
   assertUnreachable(type);
 };
 
-const TransactionText = ({ transaction }: { transaction: Transaction }) => {
-  const transactions = useAppStore((state) => state.transactions);
-  const userCategoryMap = useAppStore((state) => state.categories);
-  const categoryMap = { ...userCategoryMap, ...SPECIAL_CATEGORIES };
-  const accounts = useAppStore((state) => state.accounts);
-
-  let topText: string | undefined;
+const TransactionText = ({ transaction }: { transaction: QueryTransaction }) => {
+  let topText: string | undefined | null;
   let bottomText: string | undefined;
+
   const { type } = transaction;
   switch (type) {
-    case "transfer":
-      const fromAccount = accounts[transaction.from];
-      const toAccount = accounts[transaction.from];
+    case "transfer": {
+      const { fromAccount, toAccount } = transaction;
       topText = transaction.title;
       bottomText = `${fromAccount?.name || "Unknown account"}→${toAccount?.name}`;
       break;
+    }
     case "expense":
-    case "income":
-      const category = categoryMap[transaction.categoryID];
+    case "income": {
+      const category = getTransactionCategory(transaction);
       topText = transaction.title;
       bottomText = category?.name || "Unknown category";
       break;
+    }
     case "lent":
-    case "borrowed":
-      const isOverdue = transaction.dueDate ? dayjs().isAfter(dayjs(transaction.dueDate)) : false;
+    case "borrowed": {
+      const isOverdue = transaction.due_date ? dayjs().isAfter(dayjs(transaction.due_date)) : false;
       topText = `${transaction.title} (${type})`;
-      bottomText = transaction.dueDate
-        ? `${isOverdue ? "Overdue" : "Due"}: ${renderDate(transaction.dueDate)}`
+      bottomText = transaction.due_date
+        ? `${isOverdue ? "Overdue" : "Due"}: ${renderDate(transaction.due_date)}`
         : undefined;
       break;
-    case "collected_debt":
-      const loanTransaction = transactions[transaction.loanID];
+    }
+    case "collected_debt": {
+      const { loanTransaction } = transaction;
       topText = transaction.title;
       bottomText = `Collected "${
         loanTransaction?.type === "lent" ? loanTransaction.title : "Deleted"
       }" loan payment`;
       break;
+    }
     case "paid_loan": {
-      const loanTransaction = transactions[transaction.loanID];
+      const { loanTransaction } = transaction;
       topText = transaction.title;
       bottomText = `Paid "${
         loanTransaction?.type === "borrowed" ? loanTransaction.title : "Deleted"

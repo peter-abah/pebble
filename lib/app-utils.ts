@@ -1,4 +1,5 @@
 import { TimePeriod } from "@/components/time-period-picker";
+import { QueryTransaction } from "@/db/queries/transactions";
 import { AppStateProperties, useAppStore } from "@/lib/store";
 import { Budget, Currency, ExpenseTransaction, Filters, Money, Transaction } from "@/lib/types";
 import { dateToKey, groupTransactionsByPeriod } from "@/lib/utils";
@@ -6,6 +7,7 @@ import dayjs from "dayjs";
 import debounce from "lodash.debounce";
 import { memoizeWithArgs } from "proxy-memoize";
 import { pieDataItem } from "react-native-gifted-charts";
+import { SPECIAL_CATEGORIES } from "./data";
 import { convertMoney } from "./money";
 import { assertUnreachable } from "./utils";
 
@@ -56,7 +58,7 @@ interface PieDataItemCustom extends pieDataItem {
 export const createChartData = memoizeWithArgs(
   <T extends Transaction>(
     transactions: Array<T>,
-    currency: Currency,
+    currencyCode: Currency["isoCode"],
     exchangeRates: AppStateProperties["exchangeRates"],
     extractKey: (transaction: T) => string
   ) => {
@@ -64,16 +66,16 @@ export const createChartData = memoizeWithArgs(
       const key = extractKey(transaction);
       const dataItem = result[key];
       let amount: Money;
-      if (transaction.amount.currency.isoCode !== currency.isoCode) {
+      if (transaction.amount.currencyCode !== currencyCode) {
         const exchangeRate =
-          exchangeRates[transaction.amount.currency.isoCode.toLocaleLowerCase()]?.rates[
-            currency.isoCode.toLocaleLowerCase()
+          exchangeRates[transaction.amount.currencyCode.toLocaleLowerCase()]?.rates[
+            currencyCode.toLocaleLowerCase()
           ];
         if (!exchangeRate) return result;
 
         amount = convertMoney(transaction.amount, {
-          from: transaction.amount.currency,
-          to: currency,
+          from: transaction.amount.currencyCode,
+          to: currencyCode,
           rate: exchangeRate,
         });
       } else {
@@ -175,4 +177,13 @@ export const renderDate = (datetime: string) => {
     return date.format("DD MMM");
   }
   return date.format("DD MMM YYYY");
+};
+
+export const getTransactionCategory = (transaction: QueryTransaction) => {
+  return (
+    transaction.category ||
+    (transaction.app_category_id
+      ? SPECIAL_CATEGORIES[transaction.app_category_id]
+      : SPECIAL_CATEGORIES.UNKNOWN)
+  );
 };

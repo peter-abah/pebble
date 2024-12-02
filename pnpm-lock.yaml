@@ -59,6 +59,15 @@ importers:
       drizzle-orm:
         specifier: ^0.36.4
         version: 0.36.4(@types/react@18.2.79)(expo-sqlite@14.0.6(expo@51.0.39(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8))))(react@18.2.0)
+      drizzle-seed:
+        specifier: ^0.1.2
+        version: 0.1.2(drizzle-orm@0.36.4(@types/react@18.2.79)(expo-sqlite@14.0.6(expo@51.0.39(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8))))(react@18.2.0))
+      drizzle-zod:
+        specifier: ^0.5.1
+        version: 0.5.1(drizzle-orm@0.36.4(@types/react@18.2.79)(expo-sqlite@14.0.6(expo@51.0.39(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8))))(react@18.2.0))(zod@3.23.8)
+      eslint-plugin-drizzle:
+        specifier: ^0.2.3
+        version: 0.2.3(eslint@8.57.1)
       expo:
         specifier: ~51.0.39
         version: 51.0.39(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8))
@@ -3333,6 +3342,20 @@ packages:
       sqlite3:
         optional: true
 
+  drizzle-seed@0.1.2:
+    resolution: {integrity: sha512-F7+1tK/f5SHXK75ISH1zKUZWslW18dr9gbYB9tQHx7t5Wm82481OE5HGKFIjWuGV1VS0eFVr7+uXl8PFwPJjPA==}
+    peerDependencies:
+      drizzle-orm: '>=0.36.4'
+    peerDependenciesMeta:
+      drizzle-orm:
+        optional: true
+
+  drizzle-zod@0.5.1:
+    resolution: {integrity: sha512-C/8bvzUH/zSnVfwdSibOgFjLhtDtbKYmkbPbUCq46QZyZCH6kODIMSOgZ8R7rVjoI+tCj3k06MRJMDqsIeoS4A==}
+    peerDependencies:
+      drizzle-orm: '>=0.23.13'
+      zod: '*'
+
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
@@ -3504,6 +3527,11 @@ packages:
         optional: true
       eslint-import-resolver-webpack:
         optional: true
+
+  eslint-plugin-drizzle@0.2.3:
+    resolution: {integrity: sha512-BO+ymHo33IUNoJlC0rbd7HP9EwwpW4VIp49R/tWQF/d2E1K2kgTf0tCXT0v9MSiBr6gGR1LtPwMLapTKEWSg9A==}
+    peerDependencies:
+      eslint: '>=8.0.0'
 
   eslint-plugin-expo@0.0.1:
     resolution: {integrity: sha512-dNri81vunJ3T+N1YWWxjLU6ux6KiukwZ4ECXCOPp8hG7M4kuvPAb9YQSIM63AT0pbtfYH/a6htikhaQcRPjhRA==}
@@ -10496,6 +10524,17 @@ snapshots:
       expo-sqlite: 14.0.6(expo@51.0.39(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8)))
       react: 18.2.0
 
+  drizzle-seed@0.1.2(drizzle-orm@0.36.4(@types/react@18.2.79)(expo-sqlite@14.0.6(expo@51.0.39(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8))))(react@18.2.0)):
+    dependencies:
+      pure-rand: 6.1.0
+    optionalDependencies:
+      drizzle-orm: 0.36.4(@types/react@18.2.79)(expo-sqlite@14.0.6(expo@51.0.39(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8))))(react@18.2.0)
+
+  drizzle-zod@0.5.1(drizzle-orm@0.36.4(@types/react@18.2.79)(expo-sqlite@14.0.6(expo@51.0.39(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8))))(react@18.2.0))(zod@3.23.8):
+    dependencies:
+      drizzle-orm: 0.36.4(@types/react@18.2.79)(expo-sqlite@14.0.6(expo@51.0.39(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8))))(react@18.2.0)
+      zod: 3.23.8
+
   eastasianwidth@0.2.0: {}
 
   ee-first@1.1.1: {}
@@ -10764,6 +10803,10 @@ snapshots:
       eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.3.3))(eslint-plugin-import@2.31.0)(eslint@8.57.1)
     transitivePeerDependencies:
       - supports-color
+
+  eslint-plugin-drizzle@0.2.3(eslint@8.57.1):
+    dependencies:
+      eslint: 8.57.1
 
   eslint-plugin-expo@0.0.1(eslint@8.57.1)(typescript@5.3.3):
     dependencies:

@@ -388,7 +388,7 @@ export const useAppStore = create<AppState>()(
     })),
     {
       name: "app-storage",
-      version: 3, // TODO: change back to 0
+      version: 0, // TODO: change back to 0
       storage: createJSONStorage(() => (Platform.OS === "web" ? localStorage : AsyncStorage)),
       onRehydrateStorage: (state) => {
         return () => state.actions.updateState("_hasHydrated", true);

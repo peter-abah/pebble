@@ -3,18 +3,19 @@ import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { db } from "@/db/client";
+import { getTransactions } from "@/db/queries/transactions";
+import { accountsTable } from "@/db/schema";
 import { DEFAULT_GROUP_COLOR } from "@/lib/constants";
 import { MaterialIcons } from "@/lib/icons/MaterialIcons";
 import { formatMoney } from "@/lib/money";
-import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
-import { Account } from "@/lib/types";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link } from "expo-router";
 import { Pressable, ScrollView, View } from "react-native";
 
 export default function Home() {
-  const transactions = useAppStore(getSortedTransactionsByDate);
-  const accountsMap = useAppStore((state) => state.accounts);
-  const accounts = Object.values(accountsMap) as Array<Account>;
+  const { data } = useLiveQuery(getTransactions());
+  const { data: accounts } = useLiveQuery(db.select().from(accountsTable));
 
   return (
     <ScreenWrapper className="h-full">
@@ -32,7 +33,10 @@ export default function Home() {
                 >
                   <Text className="text-primary-foreground font-medium">{account.name}</Text>
                   <Text className="font-bold text-2xl text-primary-foreground" numberOfLines={1}>
-                    {formatMoney(account.balance)}
+                    {formatMoney({
+                      valueInMinorUnits: account.balance_value_in_minor_units,
+                      currencyCode: account.currency_code,
+                    })}
                   </Text>
                 </Button>
               </Link>
@@ -57,7 +61,7 @@ export default function Home() {
             </Link>
           </View>
 
-          {transactions.slice(0, 10).map((transaction) => (
+          {data.slice(0, 10).map((transaction) => (
             <Link
               href={
                 transaction.type === "lent" || transaction.type === "borrowed"

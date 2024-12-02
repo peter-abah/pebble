@@ -9,3 +9,5 @@ export const accountsTable = sqliteTable("accounts", {
   currency_code: text().notNull(),
   ...timestamps,
 });
+
+export type SchemaAccount = typeof accountsTable.$inferSelect;

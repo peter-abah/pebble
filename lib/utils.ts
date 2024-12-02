@@ -57,7 +57,7 @@ export function createRange(start: number, end: number) {
   return range;
 }
 
-// gives a compiler error if I don't cover a case in switch of union types
+// typescript helper that gives a compiler error if I don't cover a case in switch of union types
 // can also be used for early return statements that are exhaustive
 export function assertUnreachable(x: never): never {
   throw new Error("Didn't expect to get here");
@@ -108,6 +108,16 @@ export const randomDate = (start: Dayjs, end: Dayjs) => {
   const endTime = end.valueOf();
   const randomTime = startTime + Math.random() * (endTime - startTime);
   return dayjs(randomTime);
+};
+
+export const convertAllObjectValuesToNewValue = <T extends object, V>(record: T, newValue: V) => {
+  const result: Partial<Record<keyof T, V>> = {};
+
+  for (let key of Object.keys(record)) {
+    result[key as keyof T] = newValue;
+  }
+
+  return result as Record<keyof T, V>;
 };
 
 export const randomElement = <T>(array: Array<T>) => {

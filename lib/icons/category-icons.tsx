@@ -42,6 +42,7 @@ export const CATEGORY_ICONS = {
   payment: (props) => <MaterialIcons name="payments" {...props} />,
   brush: (props) => <MaterialIcons name="brush" {...props} />,
   cake: (props) => <MaterialIcons name="cake" {...props} />,
+  "question-mark": (props) => <MaterialIcons name="question-mark" {...props} />,
   interests: (props) => <MaterialIcons name="interests" {...props} />,
   investment: (props) => <MaterialIcons name="stacked-line-chart" {...props} />,
   briefcase: (props) => <MaterialCommunityIcons name="briefcase" {...props} />,

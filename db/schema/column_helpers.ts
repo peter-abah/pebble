@@ -7,5 +7,6 @@ export const timestamps = {
     .default(sql`(current_timestamp)`),
   created_at: text()
     .notNull()
-    .default(sql`(current_timestamp)`),
+    .default(sql`(current_timestamp)`)
+    .$onUpdateFn(() => sql`current_timestamp`),
 };

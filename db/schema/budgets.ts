@@ -18,10 +18,10 @@ export const budgetsAccountsTable = sqliteTable(
   {
     account_id: integer()
       .notNull()
-      .references(() => accountsTable.id),
+      .references(() => accountsTable.id, { onDelete: "cascade" }),
     budget_id: integer()
       .notNull()
-      .references(() => budgetsTable.id),
+      .references(() => budgetsTable.id, { onDelete: "cascade" }),
   },
   (table) => ({
     pk: primaryKey({ columns: [table.account_id, table.budget_id] }),
@@ -33,10 +33,10 @@ export const budgetsCategoriesTable = sqliteTable(
   {
     category_id: integer()
       .notNull()
-      .references(() => categoriesTable.id),
+      .references(() => categoriesTable.id, { onDelete: "cascade" }),
     budget_id: integer()
       .notNull()
-      .references(() => budgetsTable.id),
+      .references(() => budgetsTable.id, { onDelete: "cascade" }),
   },
   (table) => ({
     pk: primaryKey({ columns: [table.category_id, table.budget_id] }),

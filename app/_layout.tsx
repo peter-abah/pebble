@@ -32,36 +32,38 @@ export {
 
 export default function RootLayout() {
   // todo: do something with migration error if it occurs
-  useLoadApp();
+  const info = useLoadApp();
   const { isDarkColorScheme } = useColorScheme();
   const accounts = useAppStore((state) => state.accounts);
   const budgets = useAppStore((state) => state.budgets);
   const exchangeRates = useAppStore((state) => state.exchangeRates);
   const { updateExchangeRate } = useAppStore((state) => state.actions);
-  const currencyCodes = useMemo(
-    () =>
-      new Set([
-        ...Object.values(accounts).map((a) => a!.currency.isoCode),
-        ...Object.values(budgets).map((b) => b!.amount.currency.isoCode),
-      ]),
-    [accounts, budgets]
-  );
+  // const currencyCodes = useMemo(
+  //   () =>
+  //     new Set([
+  //       ...Object.values(accounts).map((a) => a!.currency.isoCode),
+  //       ...Object.values(budgets).map((b) => b!.amount.currency.isoCode),
+  //     ]),
+  //   [accounts, budgets]
+  // );
 
   // updates the exchange rate every time the app is opened or the any of the account currencies changes
-  useEffect(() => {
-    const today = new Date().toISOString().slice(0, 10); //e.g 2024-11-14
-    currencyCodes.forEach((code) => {
-      if (exchangeRates[code.toLocaleLowerCase()]?.date === today) return;
+  // useEffect(() => {
+  //   const today = new Date().toISOString().slice(0, 10); //e.g 2024-11-14
+  //   currencyCodes.forEach((code) => {
+  //     if (exchangeRates[code.toLocaleLowerCase()]?.date === today) return;
 
-      fetchExchangeRates(code).then(({ data, error }) => {
-        if (!data) {
-          return;
-        }
+  //     fetchExchangeRates(code).then(({ data, error }) => {
+  //       if (!data) {
+  //         return;
+  //       }
 
-        updateExchangeRate(code, data);
-      });
-    });
-  }, [currencyCodes, updateExchangeRate, exchangeRates]);
+  //       updateExchangeRate(code, data);
+  //     });
+  //   });
+  // }, [currencyCodes, updateExchangeRate, exchangeRates]);
+
+  console.log({ info });
 
   return (
     <>
