@@ -14,19 +14,22 @@ import { Text } from "@/components/ui/text";
 import { Textarea } from "@/components/ui/textarea";
 import * as LabelPrimitive from "@rn-primitives/label";
 
+import { getAccounts } from "@/db/queries/accounts";
+import { getCategories } from "@/db/queries/categories";
 import { TRANSACTION_TYPES } from "@/lib/constants";
+import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { useAppStore } from "@/lib/store";
-import { Account, TransactionCategory } from "@/lib/types";
-import { cn, humanizeString, isStringNumeric } from "@/lib/utils";
+import { arrayToMap, cn, humanizeString, isStringNumeric } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import dayjs from "dayjs";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
 import TransactionPicker from "./transaction-picker";
-import { SPECIAL_CATEGORIES } from "@/lib/data";
 
 const baseTransactionFormSchema = z.object({
   amount: z.union([
@@ -44,8 +47,8 @@ const baseTransactionFormSchema = z.object({
 
 const transferTransactionFormSchema = baseTransactionFormSchema.merge(
   z.object({
-    from: z.string({ message: "Select sending account" }),
-    to: z.string({ message: "Select receiving account" }),
+    from: z.number({ message: "Select sending account" }),
+    to: z.number({ message: "Select receiving account" }),
     exchangeRate: z.union([
       z
         .string({ message: "Enter exchange rate" })
@@ -62,15 +65,15 @@ const transferTransactionFormSchema = baseTransactionFormSchema.merge(
 
 const normalTransactionFormSchema = baseTransactionFormSchema.merge(
   z.object({
-    categoryID: z.string({ message: "Select category" }),
-    accountID: z.string({ message: "Select account" }),
+    categoryID: z.number({ message: "Select category" }),
+    accountID: z.number({ message: "Select account" }),
     type: z.enum(["expense", "income"], { message: "Select type" }),
   })
 );
 
 const loanTransactionFormSchema = baseTransactionFormSchema.merge(
   z.object({
-    accountID: z.string({ message: "Select account" }),
+    accountID: z.number({ message: "Select account" }),
     type: z.enum(["lent", "borrowed"], { message: "Select type" }),
     dueDate: z.date({ message: "Due date must be a valid date" }).optional(),
     title: z
@@ -81,8 +84,8 @@ const loanTransactionFormSchema = baseTransactionFormSchema.merge(
 
 const loanPaymentTransactionFormSchema = z
   .object({
-    accountID: z.string({ message: "Select account" }),
-    loanID: z.string({ message: "Select loan" }),
+    accountID: z.number({ message: "Select account" }),
+    loanID: z.number({ message: "Select loan" }),
     type: z.enum(["paid_loan", "collected_debt"], { message: "Select type" }),
   })
   .merge(baseTransactionFormSchema);
@@ -95,6 +98,7 @@ const formSchema = z
     loanPaymentTransactionFormSchema,
   ])
   .superRefine((data, ctx) => {
+    // todo: bug here but test to be sure
     if (data.type === "transfer") {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
@@ -116,17 +120,15 @@ const formSchema = z
 
 export type FormSchema = z.infer<typeof formSchema>;
 
-// TODO: zod is slow, probably due to handlimg large immutable data, research on it and fix
-// THAT IS PROBABLY A ZUSTAND PROBLEM RATHER THAN ZOD, STILL TIME IT
 interface TransactionFormProps {
   defaultValues: Partial<FormSchema>;
   onSubmit: (values: FormSchema) => void;
 }
 const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
-  const userCategoryMap = useAppStore((state) => state.categories);
-  const categoryMap = { ...userCategoryMap, ...SPECIAL_CATEGORIES };
-  const accountsMap = useAppStore((state) => state.accounts);
-  const accounts = Object.values(accountsMap) as Array<Account>;
+  const { data: categories } = useLiveQuery(getCategories());
+  const { data: accounts } = useLiveQuery(getAccounts());
+  const accountsMap = useMemo(() => arrayToMap(accounts, ({ id }) => id), [accounts]);
+  const categoriesMap = useMemo(() => arrayToMap(categories, ({ id }) => id), [categories]);
   const exchangeRates = useAppStore((state) => state.exchangeRates);
 
   const {
@@ -140,15 +142,17 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
     resolver: zodResolver(formSchema),
   });
 
-  const type = watch("type");
-  const account = accountsMap[watch("accountID")];
-  const fromAccount = accountsMap[watch("from")];
-  const toAccount = accountsMap[watch("to")];
+  const accountID = watch("accountID");
+  const fromAccountID = watch("from");
+  const toAccountID = watch("to");
 
-  const currency = type === "transfer" ? fromAccount?.currency : account?.currency;
-  const categories = (Object.values(categoryMap) as Array<TransactionCategory>).filter(
-    (c) => c.type === type || !c.type
-  );
+  const account = accountsMap[accountID];
+  const fromAccount = accountsMap[fromAccountID];
+  const toAccount = accountsMap[toAccountID];
+
+  const type = watch("type");
+  const currencyCode = type === "transfer" ? fromAccount?.currency_code : account?.currency_code;
+  const currency = currencyCode ? CURRENCIES_MAP[currencyCode] : undefined;
 
   const insets = useSafeAreaInsets();
   const contentInsets = {
@@ -260,15 +264,17 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                 <View>
                   <Select
                     value={
-                      value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
+                      value
+                        ? { value: value.toString(), label: accountsMap[value]?.name || "Unknown" }
+                        : undefined
                     }
                     onValueChange={(option) => {
                       onChange(option?.value);
                       if (!option?.value) return;
 
                       const fromCurrencyCode =
-                        accountsMap[option.value]?.currency.isoCode.toLocaleLowerCase();
-                      const toCurrencyCode = toAccount?.currency.isoCode.toLocaleLowerCase();
+                        accountsMap[Number(option.value)]?.currency_code.toLocaleLowerCase();
+                      const toCurrencyCode = toAccount?.currency_code.toLocaleLowerCase();
                       if (!fromCurrencyCode || !toCurrencyCode) return;
 
                       const exchangeRate = exchangeRates[fromCurrencyCode]?.rates[toCurrencyCode];
@@ -286,7 +292,11 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                     <SelectContent insets={contentInsets} className="w-full">
                       <SelectGroup>
                         {accounts.map((account) => (
-                          <SelectItem key={account.id} label={account.name} value={account.id} />
+                          <SelectItem
+                            key={account.id}
+                            label={account.name}
+                            value={account.id.toString()}
+                          />
                         ))}
                       </SelectGroup>
                     </SelectContent>
@@ -310,16 +320,18 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                 <View>
                   <Select
                     value={
-                      value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
+                      value
+                        ? { value: value.toString(), label: accountsMap[value]?.name || "Unknown" }
+                        : undefined
                     }
                     onValueChange={(option) => {
                       onChange(option?.value);
 
                       if (!option?.value) return;
 
-                      const fromCurrencyCode = fromAccount?.currency.isoCode.toLocaleLowerCase();
+                      const fromCurrencyCode = fromAccount?.currency_code.toLocaleLowerCase();
                       const toCurrencyCode =
-                        accountsMap[option.value]?.currency.isoCode.toLocaleLowerCase();
+                        accountsMap[Number(option.value)]?.currency_code.toLocaleLowerCase();
                       if (!fromCurrencyCode || !toCurrencyCode) return;
 
                       const exchangeRate = exchangeRates[fromCurrencyCode]?.rates[toCurrencyCode];
@@ -337,7 +349,11 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                     <SelectContent insets={contentInsets} className="w-full">
                       <SelectGroup>
                         {accounts.map((account) => (
-                          <SelectItem key={account.id} label={account.name} value={account.id} />
+                          <SelectItem
+                            key={account.id}
+                            label={account.name}
+                            value={account.id.toString()}
+                          />
                         ))}
                       </SelectGroup>
                     </SelectContent>
@@ -360,7 +376,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
               <Text>Exchange rate</Text>
               {fromAccount && toAccount ? (
                 <Text className="text-xs">
-                  ({fromAccount.currency.isoCode} to {toAccount.currency.isoCode})
+                  ({fromAccount.currency_code} to {toAccount.currency_code})
                 </Text>
               ) : null}
             </LabelPrimitive.Root>
@@ -399,7 +415,9 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
               render={({ field: { value, onChange, onBlur } }) => (
                 <Select
                   value={
-                    value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
+                    value
+                      ? { value: value.toString(), label: accountsMap[value]?.name || "Unknown" }
+                      : undefined
                   }
                   onValueChange={(option) => onChange(option?.value)}
                 >
@@ -412,7 +430,11 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                   <SelectContent insets={contentInsets} className="w-full">
                     <SelectGroup>
                       {accounts.map((account) => (
-                        <SelectItem key={account.id} label={account.name} value={account.id} />
+                        <SelectItem
+                          key={account.id}
+                          label={account.name}
+                          value={account.id.toString()}
+                        />
                       ))}
                     </SelectGroup>
                   </SelectContent>
@@ -431,7 +453,10 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
               render={({ field: { value, onChange, onBlur } }) => (
                 <View>
                   <Select
-                    value={{ value, label: value && (categoryMap[value]?.name || "Unknown") }}
+                    value={{
+                      value: value.toString(),
+                      label: value ? categoriesMap[value]?.name || "Unknown" : "Unknown",
+                    }}
                     onValueChange={(option) => onChange(option?.value)}
                   >
                     <SelectTrigger className="w-full" aria-labelledby="type">
@@ -443,9 +468,11 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                     <SelectContent insets={contentInsets} className="w-full">
                       <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
                         {categories.map((category) => (
-                          <SelectItem key={category.id} label={category.name} value={category.id}>
-                            {category.name}
-                          </SelectItem>
+                          <SelectItem
+                            key={category.id}
+                            label={category.name}
+                            value={category.id.toString()}
+                          />
                         ))}
                       </ScrollView>
                     </SelectContent>
@@ -472,7 +499,9 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                 <View>
                   <Select
                     value={
-                      value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
+                      value
+                        ? { value: value.toString(), label: accountsMap[value]?.name || "Unknown" }
+                        : undefined
                     }
                     onValueChange={(option) => onChange(option?.value)}
                   >
@@ -485,7 +514,11 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                     <SelectContent insets={contentInsets} className="w-full">
                       <SelectGroup>
                         {accounts.map((account) => (
-                          <SelectItem key={account.id} label={account.name} value={account.id} />
+                          <SelectItem
+                            key={account.id}
+                            label={account.name}
+                            value={account.id.toString()}
+                          />
                         ))}
                       </SelectGroup>
                     </SelectContent>
@@ -536,7 +569,9 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                 <View>
                   <Select
                     value={
-                      value ? { value, label: accountsMap[value]?.name || "Unknown" } : undefined
+                      value
+                        ? { value: value.toString(), label: accountsMap[value]?.name || "Unknown" }
+                        : undefined
                     }
                     onValueChange={(option) => onChange(option?.value)}
                   >
@@ -549,7 +584,11 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                     <SelectContent insets={contentInsets} className="w-full">
                       <SelectGroup>
                         {accounts.map((account) => (
-                          <SelectItem key={account.id} label={account.name} value={account.id} />
+                          <SelectItem
+                            key={account.id}
+                            label={account.name}
+                            value={account.id.toString()}
+                          />
                         ))}
                       </SelectGroup>
                     </SelectContent>

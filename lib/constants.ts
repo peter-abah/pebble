@@ -1,5 +1,6 @@
+import { SchemaTransaction } from "@/db/schema";
 import { TailwindColors, tailwindColors } from "./tailwind-colors";
-import { Satisfies, TransactionType } from "./types";
+import { Satisfies } from "./types";
 import { exhaustiveUnionTuple } from "./utils";
 
 export const MONTHS = [
@@ -63,6 +64,12 @@ export const NAME_TO_GROUP_COLOR = tailwindKeys
 export const GROUP_COLORS = Object.values(HEX_TO_GROUP_COLOR) as Array<Color>;
 export const DEFAULT_GROUP_COLOR = NAME_TO_GROUP_COLOR.cyan;
 
+type TransactionType = SchemaTransaction["type"];
+export type DebitTransactionType = Satisfies<TransactionType, "expense" | "lent" | "paid_loan">;
+export type CreditTransactionType = Satisfies<
+  TransactionType,
+  "income" | "collected_debt" | "borrowed"
+>;
 export const TRANSACTION_TYPES = exhaustiveUnionTuple<TransactionType>()(
   "income",
   "expense",
@@ -72,18 +79,15 @@ export const TRANSACTION_TYPES = exhaustiveUnionTuple<TransactionType>()(
   "paid_loan",
   "collected_debt"
 );
-export const DEBIT_TRANSACTION_TYPES = ["expense", "lent", "paid_loan"] as const;
-export type DebitTransactionType = Satisfies<
-  TransactionType,
-  (typeof DEBIT_TRANSACTION_TYPES)[number]
->;
-export const CREDIT_TRANSACTION_TYPES = ["income", "collected_debt", "borrowed"] as const;
-export type CreditTransactionType = Satisfies<
-  TransactionType,
-  (typeof CREDIT_TRANSACTION_TYPES)[number]
->;
-export const LOAN_TRANSACTION_TYPES = ["lent", "borrowed"] as const;
-export type LoanTransactionType = Satisfies<
-  TransactionType,
-  (typeof LOAN_TRANSACTION_TYPES)[number]
->;
+export const DEBIT_TRANSACTION_TYPES = exhaustiveUnionTuple<DebitTransactionType>()(
+  "expense",
+  "lent",
+  "paid_loan"
+);
+
+export const CREDIT_TRANSACTION_TYPES = exhaustiveUnionTuple<CreditTransactionType>()(
+  "income",
+  "collected_debt",
+  "borrowed"
+);
+

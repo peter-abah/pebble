@@ -3,29 +3,34 @@ import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { updateCategory } from "@/db/mutations/categories";
+import { getCategories } from "@/db/queries/categories";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { CATEGORY_ICONS_NAMES } from "@/lib/icons/category-icons";
-import { useAppStore } from "@/lib/store";
+import { valueToNumber } from "@/lib/utils";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 
 const CreateCategory = () => {
-  const { id } = useLocalSearchParams<{ id: string }>();
-  const { updateCategory } = useAppStore((state) => state.actions);
-  const categoriesMap = useAppStore((state) => state.categories);
-  const category = categoriesMap[id];
+  const params = useLocalSearchParams<{ id: string }>();
+  const id = valueToNumber(params.id);
+  const {
+    data: [category],
+  } = useLiveQuery(
+    getCategories({ ids: id !== undefined ? [id] : undefined, limit: id !== undefined ? 1 : 0 }),
+    [id]
+  );
 
-  const onSubmit = ({ name, icon, color, iconType, type, parentID }: FormSchema) => {
+  const onSubmit = async ({ name, icon, color, iconType, type, parentID }: FormSchema) => {
     if (!category) return;
 
-    updateCategory({
-      ...category,
+    await updateCategory(category.id, {
       name,
       icon:
         iconType === "emoji"
           ? { type: iconType, emoji: icon }
           : { type: iconType, name: icon as (typeof CATEGORY_ICONS_NAMES)[number] },
-      parentID,
       type,
       color,
     });
@@ -56,8 +61,8 @@ const CreateCategory = () => {
           color: category.color,
           iconType: category.icon.type,
           icon: category.icon.type === "emoji" ? category.icon.emoji : category.icon.name,
-          parentID: category.parentID || undefined,
-          type: category.type,
+          // parentID: category.parentID || undefined,
+          type: category.type || undefined,
         }}
         onSubmit={onSubmit}
       />

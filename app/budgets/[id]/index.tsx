@@ -5,62 +5,49 @@ import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import { createChartData, isTransactionInBudget } from "@/lib/app-utils";
-import { SPECIAL_CATEGORIES } from "@/lib/data";
+import { deleteBudget } from "@/db/mutations/budgets";
+import { getBudgets, QueryBudget } from "@/db/queries/budgets";
+import { getCategories } from "@/db/queries/categories";
+import { getTransactions, QueryTransaction } from "@/db/queries/transactions";
+import { calculateAmountSpentInBudget, createChartData } from "@/lib/app-utils";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { PencilIcon } from "@/lib/icons/Pencil";
 import { TrashIcon } from "@/lib/icons/Trash";
-import { addMoney, convertMoney, createMoney, formatMoney } from "@/lib/money";
+import { formatMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
-import { Budget, ExpenseTransaction, Money, NormalTransaction, Transaction } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { Money } from "@/lib/types";
+import { arrayToMap, cn, valueToNumber } from "@/lib/utils";
+import dayjs from "dayjs";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link, router, useLocalSearchParams } from "expo-router";
-import { useMemo } from "react";
 import { FlatList, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 
 const BudgetScreen = () => {
-  const { id } = useLocalSearchParams() as { id: string };
-  const budget = useAppStore((state) => state.budgets[id]);
-  const transactionsMap = useAppStore((state) => state.transactions);
-  const accountsMap = useAppStore((state) => state.accounts);
+  const params = useLocalSearchParams() as { id?: string };
+  const id = valueToNumber(params.id);
   const exchangeRates = useAppStore((state) => state.exchangeRates);
-  const defaultAccountID = useAppStore((state) => state.defaultAccountID);
-  const defaultAccount = accountsMap[defaultAccountID] || Object.values(accountsMap)[0]!;
-  const { deleteBudget } = useAppStore((state) => state.actions);
-
-  const budgetTransactions = useMemo(() => {
-    if (!budget) return [];
-
-    const transactions = Object.values(transactionsMap) as Array<Transaction>;
-    return transactions.filter((t): t is ExpenseTransaction => isTransactionInBudget(t, budget));
-  }, [transactionsMap, budget]);
-
-  const amountSpent = useMemo(
-    () =>
-      budgetTransactions.reduce((result, curr) => {
-        if (result.currency.isoCode === curr.amount.currency.isoCode) {
-          return addMoney(result, curr.amount);
-        }
-
-        const baseCurrencyCode = curr.amount.currency.isoCode.toLocaleLowerCase();
-        const convertedCurrencyCode = result.currency.isoCode.toLocaleLowerCase();
-        const exchangeRate = exchangeRates[baseCurrencyCode]?.rates[convertedCurrencyCode];
-        if (exchangeRate) {
-          const convertedAmount = convertMoney(curr.amount, {
-            from: curr.amount.currency,
-            to: result.currency,
-            rate: exchangeRate,
-          });
-
-          return addMoney(result, convertedAmount);
-        }
-
-        // todo: inform about skipped transaction due to no exchange rate
-        return result;
-      }, createMoney(0, budget?.amount.currency || defaultAccount.currency)),
-    [budget?.amount.currency, defaultAccount.currency, budgetTransactions, exchangeRates]
+  const {
+    data: [budget],
+  } = useLiveQuery(
+    getBudgets({ ids: id !== undefined ? [id] : undefined, limit: id !== undefined ? 1 : 0 }),
+    [id]
   );
+
+  const { data: budgetTransactions } = useLiveQuery(
+    getTransactions({
+      categories: budget && budget.budgetsToCategories.map(({ category_id }) => category_id),
+      accounts: budget && budget.budgetsToAccounts.map(({ account_id }) => account_id),
+      period: budget?.period ? { date: dayjs(), period: budget.period } : undefined,
+      types: ["expense"],
+      limit: budget ? undefined : 0,
+    }),
+    [budget]
+  );
+
+  const amountSpent = budget
+    ? calculateAmountSpentInBudget(budget, budgetTransactions, exchangeRates)
+    : null;
 
   const onDelete = () => {
     if (!budget) return;
@@ -68,14 +55,17 @@ const BudgetScreen = () => {
     deleteBudget(budget.id);
     router.back();
   };
+
   const { Modal: DeleteModal, openModal: openDeleteModal } = usePromptModal({
     title: `Are you sure you want to delete ${budget?.name} budget.`,
     onConfirm: onDelete,
   });
 
-  const ratio = amountSpent.valueInMinorUnits / (budget?.amount.valueInMinorUnits || 1);
+  const ratio = amountSpent
+    ? amountSpent.valueInMinorUnits / (budget?.amount_value_in_minor_units || 1)
+    : 0;
 
-  if (!budget) {
+  if (!budget || !amountSpent) {
     return <ResourceNotFound title="Budget does not exist" />;
   }
   return (
@@ -116,7 +106,11 @@ const BudgetScreen = () => {
       <View className="px-6 py-4 gap-2">
         <Text className="text-neutral-600">
           <Text className="text-lg font-semibold">{formatMoney(amountSpent)}</Text>{" "}
-          {ratio < 1 ? "spent" : "overspent"} of {formatMoney(budget.amount)}
+          {ratio < 1 ? "spent" : "overspent"} of{" "}
+          {formatMoney({
+            valueInMinorUnits: budget.amount_value_in_minor_units,
+            currencyCode: budget.currency_code,
+          })}
         </Text>
 
         <View className="flex-row gap-4">
@@ -148,7 +142,7 @@ const BudgetScreen = () => {
       <FlatList
         data={budgetTransactions}
         ListHeaderComponent={<Text className="text-lg font-medium">Transactions</Text>}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Link href={`/transactions/${item.id}/edit`} asChild>
             <TransactionCard transaction={item} />
@@ -167,20 +161,31 @@ const BudgetChart = ({
   budget,
   total,
 }: {
-  transactions: Array<NormalTransaction>;
-  budget: Budget;
+  transactions: Array<QueryTransaction>;
+  budget: QueryBudget;
   total: Money;
 }) => {
-  const userCategoryMap = useAppStore((state) => state.categories);
-  const categoryMap = { ...userCategoryMap, ...SPECIAL_CATEGORIES };
   const exchangeRates = useAppStore((state) => state.exchangeRates);
 
   const chartData = createChartData(
     transactions,
-    budget.amount.currency,
+    budget.currency_code,
     exchangeRates,
-    (t) => t.categoryID
+    (t) => t.category_id || -1
   );
+
+  const { data: categories } = useLiveQuery(
+    getCategories({
+      ids: chartData.map(({ key }) => {
+        const id = valueToNumber(key);
+        return id === undefined ? -1 : id;
+      }),
+      limit: chartData.length < 1 ? 0 : undefined,
+    }),
+    [chartData]
+  );
+  const categoriesMap = arrayToMap(categories, ({ id }) => id);
+
   if (chartData.length < 1) {
     return null;
   }
@@ -196,7 +201,7 @@ const BudgetChart = ({
       />
       <View className="flex-row items-center justify-center gap-4">
         {chartData.map((dataItem) => {
-          const category = categoryMap[dataItem.key];
+          const category = categoriesMap[dataItem.key];
           if (!category) return null;
 
           return (

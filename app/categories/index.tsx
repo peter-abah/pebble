@@ -5,35 +5,26 @@ import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
+import { deleteCategory } from "@/db/mutations/categories";
+import { getCategories } from "@/db/queries/categories";
+import { SchemaCategory } from "@/db/schema";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { SearchIcon } from "@/lib/icons/Search";
 import { TrashIcon } from "@/lib/icons/Trash";
 import { CATEGORY_ICONS, CategoryIconName } from "@/lib/icons/category-icons";
-import { useAppStore } from "@/lib/store";
-import { TransactionCategory } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link, router } from "expo-router";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Pressable, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
 const Categories = () => {
-  const categoriesMap = useAppStore((state) => state.categories);
-
-  const categories = useMemo(
-    () => Object.values(categoriesMap) as Array<TransactionCategory>,
-    [categoriesMap]
-  );
-
   const [search, setSearch] = useState("");
-  const filteredCategories = useMemo(() => {
-    const trimmedSearch = search.trim();
-    if (trimmedSearch === "") return categories;
-
-    return categories.filter((category) =>
-      category.name.toLocaleLowerCase().includes(trimmedSearch.toLocaleLowerCase())
-    );
-  }, [search, categories]);
+  const { data: categories } = useLiveQuery(
+    getCategories({ search, sortBy: [{ column: "name", type: "asc" }] }),
+    [search]
+  );
 
   return (
     <ScreenWrapper className="!pb-6">
@@ -60,8 +51,8 @@ const Categories = () => {
         </View>
       </View>
       <FlatList
-        data={filteredCategories}
-        keyExtractor={(item) => item.id}
+        data={categories}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <CategoryCard category={item} />}
         contentContainerClassName="pb-16"
         className="flex-1 px-6"
@@ -75,9 +66,7 @@ const Categories = () => {
   );
 };
 
-const CategoryCard = ({ category }: { category: TransactionCategory }) => {
-  const { deleteCategory } = useAppStore((state) => state.actions);
-
+const CategoryCard = ({ category }: { category: SchemaCategory }) => {
   const { Modal, openModal } = usePromptModal({
     title: `Are you sure you want to delete '${category.name}' category?`,
     onConfirm: () => deleteCategory(category.id),

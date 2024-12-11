@@ -1,54 +1,41 @@
 import { Text } from "@/components/ui/text";
-import { isTransactionInBudget } from "@/lib/app-utils";
-import { addMoney, convertMoney, createMoney, formatMoney } from "@/lib/money";
+import { QueryBudget } from "@/db/queries/budgets";
+import { getTransactions } from "@/db/queries/transactions";
+import { calculateAmountSpentInBudget } from "@/lib/app-utils";
+import { formatMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
-import { Budget, Transaction } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import dayjs from "dayjs";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link } from "expo-router";
-import { useMemo } from "react";
 import { Pressable, View } from "react-native";
 
-export const BudgetCard = ({ budget }: { budget: Budget }) => {
-  const transactionsMap = useAppStore((state) => state.transactions);
+export const BudgetCard = ({ budget }: { budget: QueryBudget }) => {
   const exchangeRates = useAppStore((state) => state.exchangeRates);
-  const budgetTransactions = useMemo(() => {
-    const transactions = Object.values(transactionsMap) as Array<Transaction>;
-    return transactions.filter((t) => isTransactionInBudget(t, budget));
-  }, [transactionsMap, budget]);
-
-  const amountSpent = useMemo(
-    // todo: similar logic in view budget screen
-    () =>
-      budgetTransactions.reduce((result, curr) => {
-        if (result.currency.isoCode === curr.amount.currency.isoCode) {
-          return addMoney(result, curr.amount);
-        }
-
-        const baseCurrencyCode = curr.amount.currency.isoCode.toLocaleLowerCase();
-        const convertedCurrencyCode = result.currency.isoCode.toLocaleLowerCase();
-        const exchangeRate = exchangeRates[baseCurrencyCode]?.rates[convertedCurrencyCode];
-        if (exchangeRate) {
-          const convertedAmount = convertMoney(curr.amount, {
-            from: curr.amount.currency,
-            to: result.currency,
-            rate: exchangeRate,
-          });
-
-          return addMoney(result, convertedAmount);
-        }
-
-        // todo: inform about skipped transaction due to no exchange rate
-        return result;
-      }, createMoney(0, budget.amount.currency)),
-    [budget.amount.currency, budgetTransactions, exchangeRates]
+  const { data: budgetTransactions } = useLiveQuery(
+    getTransactions({
+      categories: budget.budgetsToCategories.map(({ category_id }) => category_id),
+      accounts: budget.budgetsToAccounts.map(({ account_id }) => account_id),
+      period: budget.period ? { date: dayjs(), period: budget.period } : undefined,
+      types: ["expense"],
+    }),
+    [budget]
   );
-  const ratio = amountSpent.valueInMinorUnits / budget.amount.valueInMinorUnits;
+
+  const amountSpent = calculateAmountSpentInBudget(budget, budgetTransactions, exchangeRates);
+  const ratio = amountSpent.valueInMinorUnits / budget.amount_value_in_minor_units;
+
   return (
     <Link href={`/budgets/${budget.id}`} asChild>
       <Pressable className="px-6 py-2 rounded-xl gap-1 hover:bg-neutral-100">
         <View className="flex-row items-center justify-between">
           <Text className="text-xl">{budget.name}</Text>
-          <Text>{formatMoney(budget.amount)}</Text>
+          <Text>
+            {formatMoney({
+              valueInMinorUnits: budget.amount_value_in_minor_units,
+              currencyCode: budget.currency_code,
+            })}
+          </Text>
         </View>
         <View className="flex-row gap-4">
           <View

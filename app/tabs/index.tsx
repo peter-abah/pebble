@@ -3,9 +3,8 @@ import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import { db } from "@/db/client";
+import { getAccounts } from "@/db/queries/accounts";
 import { getTransactions } from "@/db/queries/transactions";
-import { accountsTable } from "@/db/schema";
 import { DEFAULT_GROUP_COLOR } from "@/lib/constants";
 import { MaterialIcons } from "@/lib/icons/MaterialIcons";
 import { formatMoney } from "@/lib/money";
@@ -14,8 +13,11 @@ import { Link } from "expo-router";
 import { Pressable, ScrollView, View } from "react-native";
 
 export default function Home() {
-  const { data } = useLiveQuery(getTransactions());
-  const { data: accounts } = useLiveQuery(db.select().from(accountsTable));
+  const { data } = useLiveQuery(
+    getTransactions({ sortBy: [{ column: "datetime", type: "desc" }], limit: 10 })
+  );
+
+  const { data: accounts } = useLiveQuery(getAccounts({ limit: 2 }));
 
   return (
     <ScreenWrapper className="h-full">
@@ -23,7 +25,7 @@ export default function Home() {
         <Text className="font-bold text-3xl mb-6">Home</Text>
         <View>
           <View className="gap-2 flex-row">
-            {accounts.slice(0, 2).map((account) => (
+            {accounts.map((account) => (
               <Link href={`/accounts/${account.id}`} asChild key={account.id}>
                 <Button
                   className="h-auto p-4 flex-1 items-start justify-start gap-1 rounded-xl shrink-0"
@@ -61,7 +63,7 @@ export default function Home() {
             </Link>
           </View>
 
-          {data.slice(0, 10).map((transaction) => (
+          {data.map((transaction) => (
             <Link
               href={
                 transaction.type === "lent" || transaction.type === "borrowed"

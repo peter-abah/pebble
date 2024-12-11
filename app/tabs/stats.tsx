@@ -1,22 +1,23 @@
 import EmptyState from "@/components/empty-state";
 import ScreenWrapper from "@/components/screen-wrapper";
-import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
+import TimePeriodPicker from "@/components/time-period-picker";
 import { Text } from "@/components/ui/text";
+import { db } from "@/db/client";
+import { getMainAccount } from "@/db/queries/accounts";
+import { getCategories } from "@/db/queries/categories";
+import { getTransactions } from "@/db/queries/transactions";
+import { mainAccountsTable } from "@/db/schema";
 import { createChartData } from "@/lib/app-utils";
-import {
-  CREDIT_TRANSACTION_TYPES,
-  CreditTransactionType,
-  DEBIT_TRANSACTION_TYPES,
-  DebitTransactionType,
-} from "@/lib/constants";
+import { CREDIT_TRANSACTION_TYPES, DEBIT_TRANSACTION_TYPES } from "@/lib/constants";
 import { SPECIAL_CATEGORIES } from "@/lib/data";
 import { formatMoney } from "@/lib/money";
-import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
-import { Transaction, TransferTransaction } from "@/lib/types";
-import { assertUnreachable, cn, dateToKey, groupTransactionsByPeriod } from "@/lib/utils";
+import { useAppStore } from "@/lib/store";
+import { TimePeriod } from "@/lib/types";
+import { arrayToMap, assertUnreachable, cn } from "@/lib/utils";
 import dayjs from "dayjs";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { vars } from "nativewind";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Pressable, ScrollView, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 
@@ -24,56 +25,62 @@ const LENT_TRANSACTIONS_CHART_ID = "LENT_TRANSACTIONS_CHART_ID";
 const BORROWED_TRANSACTIONS_CHART_ID = "BORROWED_TRANSACTIONS_CHART_ID";
 const PAID_LOAN_TRANSACTIONS_CHART_ID = "PAID_LOAN_TRANSACTIONS_CHART_ID";
 const COLLECTED_DEBT_TRANSACTIONS_CHART_ID = "COLLECTED_DEBT_TRANSACTIONS_CHART_ID";
-
+const UNKNOWN_TYPE_CHART_ID = "UNKNOWN_TYPE_CHART_ID";
+const f = async () => {
+  const res = await db.select().from(mainAccountsTable);
+  console.log({ res });
+};
 const Stats = () => {
+  f();
   const [transactionType, setTransactionType] = useState<"minus" | "plus">("minus");
   const [currentTimePeriod, setCurrentTimePeriod] = useState<TimePeriod>(() => ({
     date: dayjs(),
     period: "monthly",
   }));
-
-  const transactionsRecord = useAppStore(getSortedTransactionsByDate);
-  const userCategoryMap = useAppStore((state) => state.categories);
-  const categoryMap = { ...userCategoryMap, ...SPECIAL_CATEGORIES };
   const exchangeRates = useAppStore((state) => state.exchangeRates);
-  const accountsMap = useAppStore((state) => state.accounts);
-  const defaultAccountID = useAppStore((state) => state.defaultAccountID);
+  const { data: transactions } = useLiveQuery(
+    getTransactions({
+      period: currentTimePeriod,
+      types: transactionType === "minus" ? DEBIT_TRANSACTION_TYPES : CREDIT_TRANSACTION_TYPES,
+    }),
+    [currentTimePeriod, transactionType]
+  );
+  const { data: categories } = useLiveQuery(getCategories());
+  const categoryMap = useMemo(() => arrayToMap(categories, ({ id }) => id), [categories]);
 
-  const mainAccount = accountsMap[defaultAccountID] || Object.values(accountsMap)[0]!;
-  const currency = mainAccount.currency;
+  const { data } = useLiveQuery(getMainAccount());
+  console.log({ data });
+  const mainAccount = data?.account;
+  if (!mainAccount) {
+    //todo: alert and redirect to set main account
+    throw new Error("You should have a main account");
+  }
 
-  const currentTransactions = groupTransactionsByPeriod[currentTimePeriod.period](
-    transactionsRecord
-  )[dateToKey(currentTimePeriod)]?.filter((t): t is Exclude<Transaction, TransferTransaction> => {
-    if (transactionType === "minus") {
-      return DEBIT_TRANSACTION_TYPES.includes(t.type as DebitTransactionType);
-    } else {
-      return CREDIT_TRANSACTION_TYPES.includes(t.type as CreditTransactionType);
+  const chartData = createChartData(transactions, mainAccount.currency_code, exchangeRates, (t) => {
+    switch (t.type) {
+      case "expense":
+      case "income":
+        return t.category_id!;
+      case "lent":
+        return LENT_TRANSACTIONS_CHART_ID;
+      case "borrowed":
+        return BORROWED_TRANSACTIONS_CHART_ID;
+      case "paid_loan":
+        return PAID_LOAN_TRANSACTIONS_CHART_ID;
+      case "collected_debt":
+        return COLLECTED_DEBT_TRANSACTIONS_CHART_ID;
+      case "transfer":
+        return UNKNOWN_TYPE_CHART_ID;
+      default:
+        assertUnreachable(t.type);
     }
   });
 
-  const chartData = currentTransactions
-    ? createChartData(currentTransactions, currency, exchangeRates, (t) => {
-        const { type } = t;
-        switch (type) {
-          case "expense":
-          case "income":
-            return t.categoryID;
-          case "lent":
-            return LENT_TRANSACTIONS_CHART_ID;
-          case "borrowed":
-            return BORROWED_TRANSACTIONS_CHART_ID;
-          case "paid_loan":
-            return PAID_LOAN_TRANSACTIONS_CHART_ID;
-          case "collected_debt":
-            return COLLECTED_DEBT_TRANSACTIONS_CHART_ID;
-          default:
-            assertUnreachable(type);
-        }
-      })
-    : null;
+  const getDataLabel = (key: string | number): string => {
+    if (typeof key === "number") {
+      return categoryMap[key]?.name || SPECIAL_CATEGORIES.UNKNOWN.name;
+    }
 
-  const getDataLabel = (key: string): string => {
     switch (key) {
       case LENT_TRANSACTIONS_CHART_ID:
         return "Lent";
@@ -84,7 +91,7 @@ const Stats = () => {
       case COLLECTED_DEBT_TRANSACTIONS_CHART_ID:
         return "Collected debt";
       default:
-        return categoryMap[key]?.name || "Unknown category";
+        return SPECIAL_CATEGORIES[key]?.name || SPECIAL_CATEGORIES.UNKNOWN.name;
     }
   };
   return (
@@ -141,7 +148,10 @@ const Stats = () => {
                   />
                   <Text className="text-lg font-medium">{getDataLabel(key)}</Text>
                   <Text className="ml-auto text-xl">
-                    {formatMoney({ valueInMinorUnits: value, currency })}
+                    {formatMoney({
+                      valueInMinorUnits: value,
+                      currencyCode: mainAccount.currency_code,
+                    })}
                   </Text>
                 </View>
               ))}

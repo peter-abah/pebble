@@ -4,6 +4,7 @@ import { getTransactionCategory, renderDate } from "@/lib/app-utils";
 import { MaterialIcons } from "@/lib/icons/MaterialIcons";
 import { CATEGORY_ICONS, CategoryIconName } from "@/lib/icons/category-icons";
 import { formatMoney } from "@/lib/money";
+import { StrictOmit } from "@/lib/types";
 import { assertUnreachable, cn } from "@/lib/utils";
 import { FontAwesome6 } from "@expo/vector-icons";
 import dayjs from "dayjs";
@@ -11,7 +12,7 @@ import { ComponentProps, forwardRef } from "react";
 import { Pressable, View } from "react-native";
 
 interface TransactionCardProps extends ComponentProps<typeof Pressable> {
-  transaction: QueryTransaction;
+  transaction: StrictOmit<QueryTransaction, "loanPaymentTransactions">;
 }
 const TransactionCard = forwardRef<View, TransactionCardProps>(
   ({ transaction, ...restProps }, ref) => {
@@ -56,7 +57,7 @@ const TransactionCard = forwardRef<View, TransactionCardProps>(
 
 TransactionCard.displayName = "TransactionCard";
 
-const TransactionIcon = ({ transaction }: { transaction: QueryTransaction }) => {
+const TransactionIcon = ({ transaction }: TransactionCardProps) => {
   const { type } = transaction;
   if (type === "income" || type === "expense") {
     const category = getTransactionCategory(transaction);
@@ -122,7 +123,7 @@ const TransactionIcon = ({ transaction }: { transaction: QueryTransaction }) => 
   assertUnreachable(type);
 };
 
-const TransactionText = ({ transaction }: { transaction: QueryTransaction }) => {
+const TransactionText = ({ transaction }: TransactionCardProps) => {
   let topText: string | undefined | null;
   let bottomText: string | undefined;
 

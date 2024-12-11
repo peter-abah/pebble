@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "02cbb8ca-09a3-46c1-932f-7c36fdea220a",
+  "id": "06c44454-292a-41ee-9553-9cb63ed62685",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "accounts": {
@@ -59,8 +59,63 @@
           "default": "(current_timestamp)"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "a_name_index": {
+          "name": "a_name_index",
+          "columns": [
+            "name"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "default_account": {
+      "name": "default_account",
+      "columns": {
+        "account_id": {
+          "name": "account_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(current_timestamp)"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(current_timestamp)"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "default_account_account_id_accounts_id_fk": {
+          "name": "default_account_account_id_accounts_id_fk",
+          "tableFrom": "default_account",
+          "tableTo": "accounts",
+          "columnsFrom": [
+            "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
@@ -306,7 +361,15 @@
           "default": "(current_timestamp)"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "c_name_index": {
+          "name": "c_name_index",
+          "columns": [
+            "name"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
@@ -439,43 +502,57 @@
         }
       },
       "indexes": {
-        "title_index": {
-          "name": "title_index",
+        "t_title_index": {
+          "name": "t_title_index",
           "columns": [
             "title"
           ],
           "isUnique": false
         },
-        "datetime_index": {
-          "name": "datetime_index",
+        "t_datetime_index": {
+          "name": "t_datetime_index",
           "columns": [
             "datetime"
           ],
           "isUnique": false
         },
-        "type_index": {
-          "name": "type_index",
+        "t_type_index": {
+          "name": "t_type_index",
           "columns": [
             "type"
           ],
           "isUnique": false
         },
-        "account_index": {
-          "name": "account_index",
+        "t_account_index": {
+          "name": "t_account_index",
+          "columns": [
+            "account_id"
+          ],
+          "isUnique": false
+        },
+        "t_from_account_index": {
+          "name": "t_from_account_index",
+          "columns": [
+            "from_account_id"
+          ],
+          "isUnique": false
+        },
+        "t_to_account_index": {
+          "name": "t_to_account_index",
           "columns": [
             "to_account_id"
           ],
           "isUnique": false
         },
-        "category_index": {
-          "name": "category_index",
+        "t_category_index": {
+          "name": "t_category_index",
           "columns": [
             "category_id"
           ],
           "isUnique": false
         },
-        "loan_index": {
-          "name": "loan_index",
+        "t_loan_index": {
+          "name": "t_loan_index",
           "columns": [
             "loan_id"
           ],

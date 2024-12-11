@@ -9,11 +9,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
+import { getMainAccount } from "@/db/queries/accounts";
 import { CURRENCIES, CURRENCIES_MAP } from "@/lib/data/currencies";
 import { renderCurrencyLabel } from "@/lib/money";
-import { useAppStore } from "@/lib/store";
 import { isStringNumeric, titleCase } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Controller, useForm } from "react-hook-form";
 import { TextInput, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -37,10 +38,10 @@ const formSchema = z.object({
   currency: z.string({ message: "Currency is required" }),
   color: z.string({ message: "Color is required" }),
   accounts: z
-    .array(z.string(), { message: "Select accounts" })
+    .array(z.number(), { message: "Select accounts" })
     .nonempty({ message: "Select accounts" }),
   categories: z
-    .array(z.string(), { message: "Select categories" })
+    .array(z.number(), { message: "Select categories" })
     .nonempty({ message: "Select categories" }),
   period: z.enum(PERIODS, { message: "Period is required" }),
 });
@@ -64,12 +65,13 @@ const BudgetForm = ({ defaultValues, onSubmit }: BudgetFormProps) => {
     resolver: zodResolver(formSchema),
   });
 
-  const defaultAccount = useAppStore((state) => state.accounts[state.defaultAccountID]);
-  if (!defaultAccount) {
-    throw new Error("You should have a default account"); // todo
+  const { data } = useLiveQuery(getMainAccount());
+  const mainAccount = data?.account;
+  if (!mainAccount) {
+    throw new Error("You should have a main account"); // todo
   }
 
-  const defaultCurrency = defaultAccount.currency;
+  const defaultCurrency = CURRENCIES_MAP[mainAccount.currency_code];
   const currencyISO = watch("currency");
   const currency = CURRENCIES_MAP[currencyISO];
 
@@ -123,7 +125,7 @@ const BudgetForm = ({ defaultValues, onSubmit }: BudgetFormProps) => {
                     typeof value === "string"
                       ? value
                       : value?.toLocaleString(undefined, {
-                          maximumFractionDigits: (currency || defaultCurrency).minorUnit,
+                          maximumFractionDigits: currency?.minorUnit || defaultCurrency?.minorUnit,
                         }) || ""
                   }
                   onBlur={onBlur}

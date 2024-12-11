@@ -6,73 +6,39 @@ import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import { renderDate } from "@/lib/app-utils";
+import { deleteTransaction } from "@/db/mutations/transactions";
+import { getTransactions } from "@/db/queries/transactions";
+import { calculateAmountPaidInLoan, renderDate } from "@/lib/app-utils";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { PencilIcon } from "@/lib/icons/Pencil";
 import { TrashIcon } from "@/lib/icons/Trash";
-import { addMoney, convertMoney, createMoney, formatMoney } from "@/lib/money";
+import { convertTransactionAmountToMoney, formatMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
-import { LoanPaymentTransaction, Transaction } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { cn, valueToNumber } from "@/lib/utils";
 import dayjs from "dayjs";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link, Redirect, router, useLocalSearchParams } from "expo-router";
-import { useMemo } from "react";
 import { FlatList, View } from "react-native";
 
 const LoanScreen = () => {
-  const { id } = useLocalSearchParams() as { id: string };
+  const params = useLocalSearchParams() as { id?: string };
+  const id = valueToNumber(params.id);
+  const {
+    data: [loan],
+  } = useLiveQuery(
+    getTransactions({
+      ids: id !== undefined ? [id] : undefined,
+      limit: id !== undefined ? 1 : undefined,
+    }),
+    [id]
+  );
 
-  const transactionsMap = useAppStore((state) => state.transactions);
-  const loan = transactionsMap[id];
-  const accountsMap = useAppStore((state) => state.accounts);
   const exchangeRates = useAppStore((state) => state.exchangeRates);
-  const defaultAccountID = useAppStore((state) => state.defaultAccountID);
-  const defaultAccount = accountsMap[defaultAccountID] || Object.values(accountsMap)[0]!;
-  const { deleteTransaction } = useAppStore((state) => state.actions);
 
-  const loanPaymentTransactions = useMemo(() => {
-    if (!loan || (loan.type !== "borrowed" && loan.type !== "lent")) return [];
-
-    const transactions = Object.values(transactionsMap) as Array<Transaction>;
-    return transactions
-      .filter((t): t is LoanPaymentTransaction => {
-        if (loan.type === "lent") {
-          return t.type === "collected_debt" && t.loanID === loan.id;
-        }
-        return t.type === "paid_loan" && t.loanID === loan.id;
-      })
-      .sort((a, b) => b.datetime.localeCompare(a.datetime));
-  }, [transactionsMap, loan]);
-
-  const amountPaid = useMemo(() => {
-    if (!loan) return createMoney(0, defaultAccount.currency);
-    return loanPaymentTransactions.reduce((result, curr) => {
-      if (result.currency.isoCode === curr.amount.currency.isoCode) {
-        return addMoney(result, curr.amount);
-      }
-
-      const baseCurrencyCode = curr.amount.currency.isoCode.toLocaleLowerCase();
-      const convertedCurrencyCode = result.currency.isoCode.toLocaleLowerCase();
-      const exchangeRate = exchangeRates[baseCurrencyCode]?.rates[convertedCurrencyCode];
-      if (exchangeRate) {
-        const convertedAmount = convertMoney(curr.amount, {
-          from: curr.amount.currency,
-          to: result.currency,
-          rate: exchangeRate,
-        });
-
-        return addMoney(result, convertedAmount);
-      }
-
-      // todo: inform about skipped transaction due to no exchange rate
-      return result;
-    }, createMoney(0, loan.amount.currency));
-  }, [defaultAccount.currency, loan, exchangeRates, loanPaymentTransactions]);
-
-  const onDelete = () => {
+  const onDelete = async () => {
     if (!loan) return;
 
-    deleteTransaction(loan.id);
+    await deleteTransaction(loan.id);
     router.back();
   };
   const { Modal: DeleteModal, openModal: openDeleteModal } = usePromptModal({
@@ -89,8 +55,9 @@ const LoanScreen = () => {
   }
 
   const today = dayjs();
-  const isOverdue = loan.dueDate ? today.isAfter(dayjs(loan.dueDate)) : false;
-  const ratio = amountPaid.valueInMinorUnits / loan.amount.valueInMinorUnits;
+  const isOverdue = loan.due_date ? today.isAfter(dayjs(loan.due_date)) : false;
+  const amountPaid = calculateAmountPaidInLoan(loan, exchangeRates);
+  const ratio = amountPaid.valueInMinorUnits / loan.amount_value_in_minor_units;
 
   return (
     <ScreenWrapper className="pb-6">
@@ -132,14 +99,14 @@ const LoanScreen = () => {
           <Text className="text-xl">
             {loan.title}{" "}
             <Text className="text-xl">
-              {formatMoney(loan.amount)} ({formatMoney(amountPaid)} paid)
+              {formatMoney(convertTransactionAmountToMoney(loan))} ({formatMoney(amountPaid)} paid)
             </Text>
           </Text>
 
-          {loan.dueDate && (
+          {loan.due_date && (
             <Text className={cn("text-lg", isOverdue && "text-red-700")}>
               {isOverdue ? "Overdue: " : "Due: "}
-              {renderDate(loan.dueDate)}
+              {renderDate(loan.due_date)}
             </Text>
           )}
         </View>
@@ -160,14 +127,14 @@ const LoanScreen = () => {
       </View>
 
       <FlatList
-        data={loanPaymentTransactions}
+        data={loan.loanPaymentTransactions}
         ListHeaderComponent={
           <View className="flex-row justify-between">
             <Text className="text-lg font-medium">Payments</Text>
             <Text className="text-lg font-medium">Total: {formatMoney(amountPaid)}</Text>
           </View>
         }
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Link href={`/transactions/${item.id}/edit`} asChild>
             <TransactionCard transaction={item} />
@@ -178,7 +145,7 @@ const LoanScreen = () => {
       />
 
       <Link
-        href={`/transactions/new?loanID=${loan.id}&type=${
+        href={`/transactions/new?loan_id=${loan.id}&type=${
           loan.type === "borrowed" ? "paid_loan" : "collected_debt"
         }`}
         asChild

@@ -20,7 +20,7 @@ import ColorPicker from "./color-picker";
 
 const formSchema = z.object({
   name: z.string(),
-  currency: z.string(),
+  currencyCode: z.string(),
   color: z.string(),
 });
 
@@ -74,7 +74,7 @@ const EditAccountForm = ({ defaultValues, onSubmit }: EditAccountFormProps) => {
             name="name"
           />
         </View>
-        {/* TODO: CHANGE IN ACCOUNT CURRENCY SHOULD MODIFY ALL ACCOUNT TRANSACTIONS */}
+        {/* TODO: BUGGG CHANGE IN ACCOUNT CURRENCY SHOULD MODIFY ALL ACCOUNT TRANSACTIONS and account balanxe */}
         <View className="gap-2 relative">
           <Label nativeID="currency" className="text-lg">
             Currency
@@ -105,12 +105,12 @@ const EditAccountForm = ({ defaultValues, onSubmit }: EditAccountFormProps) => {
                     </ScrollView>
                   </SelectContent>
                 </Select>
-                {errors.currency?.message && (
-                  <Text className="text-xs text-destructive">{errors.currency.message}</Text>
+                {errors.currencyCode?.message && (
+                  <Text className="text-xs text-destructive">{errors.currencyCode.message}</Text>
                 )}
               </View>
             )}
-            name="currency"
+            name="currencyCode"
           />
         </View>
 

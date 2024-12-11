@@ -2,20 +2,23 @@ import BudgetForm, { FormSchema } from "@/components/budget-form";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { insertBudget } from "@/db/mutations/budgets";
+import { getMainAccount } from "@/db/queries/accounts";
 import { GROUP_COLORS } from "@/lib/constants";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
-import { createMoney } from "@/lib/money";
-import { useAppStore } from "@/lib/store";
 import { randomElement } from "@/lib/utils";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { router } from "expo-router";
 import { View } from "react-native";
 
 const CreateBudget = () => {
-  const { addBudget } = useAppStore((state) => state.actions);
-  const accountsMap = useAppStore((state) => state.accounts);
-  const defaultAccountID = useAppStore((state) => state.defaultAccountID);
-  const defaultAccount = accountsMap[defaultAccountID] || Object.values(accountsMap)[0]!;
+  const { data } = useLiveQuery(getMainAccount());
+  const mainAccount = data?.account;
+  if (!mainAccount) {
+    //todo: alert and redirect to set main account
+    throw new Error("You should have a main account");
+  }
 
   const onSubmit = ({
     name,
@@ -29,9 +32,10 @@ const CreateBudget = () => {
     const currency = CURRENCIES_MAP[currencyID];
     if (!currency) return;
 
-    addBudget({
+    insertBudget({
       name,
-      amount: createMoney(amount, currency),
+      amount_value_in_minor_units: amount * 10 ** currency.minorUnit,
+      currency_code: currency.isoCode,
       color,
       period,
       categories,
@@ -59,7 +63,7 @@ const CreateBudget = () => {
         defaultValues={{
           name: "",
           amount: 0,
-          currency: defaultAccount.currency.isoCode,
+          currency: mainAccount.currency_code,
           color: randomElement(GROUP_COLORS).color,
         }}
         onSubmit={onSubmit}

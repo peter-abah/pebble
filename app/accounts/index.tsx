@@ -4,30 +4,20 @@ import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
+import { getAccounts } from "@/db/queries/accounts";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { SearchIcon } from "@/lib/icons/Search";
 import { formatMoney } from "@/lib/money";
-import { useAppStore } from "@/lib/store";
-import { Account } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link, router } from "expo-router";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Pressable, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
 const Accounts = () => {
-  const accountsMap = useAppStore((state) => state.accounts);
-  const accounts = useMemo(() => Object.values(accountsMap) as Array<Account>, [accountsMap]);
-
   const [search, setSearch] = useState("");
-  const filteredAccounts = useMemo(() => {
-    const trimmedSearch = search.trim();
-    if (trimmedSearch === "") return accounts;
-
-    return accounts.filter((account) =>
-      account.name.toLocaleLowerCase().includes(trimmedSearch.toLocaleLowerCase())
-    );
-  }, [search, accounts]);
+  const { data: accounts } = useLiveQuery(getAccounts({ search }), [search]);
 
   return (
     <ScreenWrapper className="!pb-6">
@@ -55,8 +45,8 @@ const Accounts = () => {
       </View>
 
       <FlatList
-        data={filteredAccounts}
-        keyExtractor={(item) => item.id}
+        data={accounts}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item, index }) => (
           <Link href={`/accounts/${item.id}`} asChild>
             <Pressable
@@ -67,7 +57,12 @@ const Accounts = () => {
             >
               <View className="h-5 w-5 rounded-full mr-4" style={{ backgroundColor: item.color }} />
               <Text className="text-xl">{item.name}</Text>
-              <Text className="ml-auto text-lg">{formatMoney(item.balance)}</Text>
+              <Text className="ml-auto text-lg">
+                {formatMoney({
+                  valueInMinorUnits: item.balance_value_in_minor_units,
+                  currencyCode: item.currency_code,
+                })}
+              </Text>
             </Pressable>
           </Link>
         )}

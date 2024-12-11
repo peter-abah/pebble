@@ -8,21 +8,26 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Text } from "@/components/ui/text";
+import { getAccounts } from "@/db/queries/accounts";
+import { SchemaAccount } from "@/db/schema";
 import { CheckIcon } from "@/lib/icons/Check";
-import { useAppStore } from "@/lib/store";
-import { Account } from "@/lib/types";
+import { arrayToMap } from "@/lib/utils";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useMemo } from "react";
 import { Dimensions } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
 interface AccountsInputProps {
-  value?: Array<Account["id"]>;
-  onChange: (v: Array<Account["id"]>) => void;
+  value?: Array<SchemaAccount["id"]>;
+  onChange: (v: Array<SchemaAccount["id"]>) => void;
 }
 export const AccountsInput = ({ value, onChange }: AccountsInputProps) => {
-  const accountsMap = useAppStore((state) => state.accounts);
-  const accounts = Object.values(accountsMap) as Array<Account>;
+  const { data: accounts } = useLiveQuery(
+    getAccounts({ sortBy: [{ column: "name", type: "asc" }] })
+  );
+  const accountsMap = useMemo(() => arrayToMap(accounts, ({ id }) => id), [accounts]);
 
-  const handleAccountClick = (id: Account["id"]) => {
+  const handleAccountClick = (id: SchemaAccount["id"]) => {
     if (!value) {
       onChange([id]);
       return;
@@ -37,7 +42,7 @@ export const AccountsInput = ({ value, onChange }: AccountsInputProps) => {
       return "Select Account";
     }
     if (value.length === 1) {
-      return accountsMap[value[0] as string]?.name;
+      return accountsMap[value[0]!]?.name;
     }
     if (value.length === accounts.length) {
       return "All";

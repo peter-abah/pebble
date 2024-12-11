@@ -3,18 +3,26 @@ import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { updateBudget } from "@/db/mutations/budgets";
+import { getBudgets } from "@/db/queries/budgets";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
-import { createMoney, getMoneyValueInMajorUnits } from "@/lib/money";
-import { useAppStore } from "@/lib/store";
+import { calcMoneyValueInMajorUnits } from "@/lib/money";
 import { NonEmptyArray } from "@/lib/types";
+import { valueToNumber } from "@/lib/utils";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 
 const EditBudget = () => {
-  const { id } = useLocalSearchParams<{ id: string }>();
-  const budget = useAppStore((state) => state.budgets[id]);
-  const { updateBudget } = useAppStore((state) => state.actions);
+  const params = useLocalSearchParams<{ id: string }>();
+  const id = valueToNumber(params.id);
+  const {
+    data: [budget],
+  } = useLiveQuery(
+    getBudgets({ ids: id !== undefined ? [id] : undefined, limit: id !== undefined ? 1 : 0 }),
+    [id]
+  );
 
   const onSubmit = ({
     name,
@@ -26,12 +34,15 @@ const EditBudget = () => {
     categories,
   }: FormSchema) => {
     const currency = CURRENCIES_MAP[currencyID];
-    if (!currency || !budget) return;
+    if (!currency || !budget) {
+      console.warn(`Currency with code ${currencyID} does not exist or budget with id ${id}`);
+      return;
+    }
 
-    updateBudget({
-      ...budget,
+    updateBudget(budget.id, {
       name,
-      amount: createMoney(amount, currency),
+      amount_value_in_minor_units: amount * 10 ** currency.minorUnit,
+      currency_code: currencyID,
       color,
       period,
       categories,
@@ -62,11 +73,18 @@ const EditBudget = () => {
       <BudgetForm
         defaultValues={{
           name: budget.name,
-          amount: getMoneyValueInMajorUnits(budget.amount),
-          currency: budget.amount.currency.isoCode,
-          period: budget.period,
-          accounts: budget.accounts as NonEmptyArray<string>,
-          categories: budget.categories as NonEmptyArray<string>,
+          amount: calcMoneyValueInMajorUnits({
+            valueInMinorUnits: budget.amount_value_in_minor_units,
+            currencyCode: budget.currency_code,
+          }),
+          currency: budget.currency_code,
+          period: budget.period || undefined,
+          accounts: budget.budgetsToAccounts.map(
+            ({ account_id }) => account_id
+          ) as NonEmptyArray<number>,
+          categories: budget.budgetsToCategories.map(
+            ({ category_id }) => category_id
+          ) as NonEmptyArray<number>,
           color: budget.color,
         }}
         onSubmit={onSubmit}

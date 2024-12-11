@@ -20,20 +20,20 @@ export const SPECIAL_CATEGORIES = Object.freeze({
     id: BALANCE_CREDIT_CATEGORY_ID,
     type: "income" as const,
     color: NAME_TO_GROUP_COLOR["green"].color,
-    icon: { name: "bank", type: "icon" },
+    icon: { name: "bank", type: "icon" as const },
   },
   [BALANCE_DEBIT_CATEGORY_ID]: {
     name: "Balance debit",
     id: BALANCE_DEBIT_CATEGORY_ID,
     type: "expense" as const,
     color: NAME_TO_GROUP_COLOR["red"].color,
-    icon: { name: "bank", type: "icon" },
+    icon: { name: "bank", type: "icon" as const },
   },
   UNKNOWN: {
     name: "Unknown",
     id: "UNKNOWN",
     color: NAME_TO_GROUP_COLOR["gray-dark"].color,
-    icon: { name: "question-mark", type: "icon" },
+    icon: { name: "question-mark", type: "icon" as const },
   },
 });
 

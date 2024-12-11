@@ -1,7 +1,13 @@
 import { db } from "@/db/client";
 import { resetDB } from "@/db/mutations/helpers";
 import { batchInsertTransaction, InsertTransactionPayload } from "@/db/mutations/transactions";
-import { accountsTable, categoriesTable, SchemaAccount, SchemaCategory } from "@/db/schema";
+import {
+  accountsTable,
+  categoriesTable,
+  mainAccountsTable,
+  SchemaAccount,
+  SchemaCategory,
+} from "@/db/schema";
 import dayjs from "dayjs";
 import { ACCOUNTS, CATEGORIES } from "./data";
 import { CURRENCIES_MAP } from "./data/currencies";
@@ -172,7 +178,7 @@ export const generateRandomTransactionValues = (
     type === "expense"
       ? roundToZeros(Math.random() * (500_000 - 500) + 500, 3)
       : roundToZeros(Math.random() * (1_000_000 - 50_000) + 50_000, 3);
-  const currency = CURRENCIES_MAP[account.currency_code];
+  const currency = CURRENCIES_MAP[account.currency_code.toLocaleUpperCase()];
   if (!currency) {
     throw new Error(`Currency with code: ${account.currency_code} does not exist`);
   }
@@ -188,11 +194,13 @@ export const generateRandomTransactionValues = (
   };
 };
 
+// todo: changing and setting main account
 export const loadMockData = async () => {
   await resetDB();
 
   const categories = await db.insert(categoriesTable).values(CATEGORIES).returning();
   const accounts = await db.insert(accountsTable).values(ACCOUNTS).returning();
+  await db.insert(mainAccountsTable).values({ account_id: accounts[0]!.id });
 
   const transactionValues = Array.from({ length: 50 }, () =>
     generateRandomTransactionValues(randomElement(categories), randomElement(accounts))

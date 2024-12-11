@@ -8,13 +8,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Text } from "@/components/ui/text";
+import { getAccounts } from "@/db/queries/accounts";
+import { getCategories } from "@/db/queries/categories";
+import { SchemaAccount, SchemaCategory, SchemaTransaction } from "@/db/schema";
 import { TRANSACTION_TYPES } from "@/lib/constants";
 import { CheckIcon } from "@/lib/icons/Check";
 import { FilterIcon } from "@/lib/icons/Filter";
 import { ShapesIcon } from "@/lib/icons/Shapes";
-import { useAppStore } from "@/lib/store";
-import { Account, Filters, TransactionCategory, TransactionType } from "@/lib/types";
+import { Filters } from "@/lib/types";
 import { cn, humanizeString } from "@/lib/utils";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Dimensions, Pressable, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Icon } from "./icon";
@@ -25,31 +28,24 @@ interface FiltersModalProps {
 }
 
 const FiltersModal = ({ filters, onFiltersChange }: FiltersModalProps) => {
-  const categoriesMap = useAppStore((state) => state.categories);
-  const accounstMap = useAppStore((state) => state.accounts);
-  const categories = (Object.values(categoriesMap) as Array<TransactionCategory>).filter(
-    ({ type }) => {
-      if (filters.types.length === 0 || !type) return true;
-      return filters.types.includes(type);
-    }
-  );
-  const accounts = Object.values(accounstMap) as Array<Account>;
+  const { data: categories } = useLiveQuery(getCategories());
+  const { data: accounts } = useLiveQuery(getAccounts());
 
-  const handleCategoryChange = (id: TransactionCategory["id"]) => {
+  const handleCategoryChange = (id: SchemaCategory["id"]) => {
     const newCategories = filters.categories.includes(id)
       ? filters.categories.filter((e) => e !== id)
       : [...filters.categories, id];
     onFiltersChange({ ...filters, categories: newCategories });
   };
 
-  const handleAccountChange = (id: TransactionCategory["id"]) => {
+  const handleAccountChange = (id: SchemaAccount["id"]) => {
     const newAccounts = filters.accounts.includes(id)
       ? filters.accounts.filter((e) => e !== id)
       : [...filters.accounts, id];
     onFiltersChange({ ...filters, accounts: newAccounts });
   };
 
-  const handleTypeChange = (type: TransactionType) => {
+  const handleTypeChange = (type: SchemaTransaction["type"]) => {
     const newTypes = filters.types.includes(type)
       ? filters.types.filter((e) => e !== type)
       : [...filters.types, type];
@@ -100,7 +96,7 @@ const FiltersModal = ({ filters, onFiltersChange }: FiltersModalProps) => {
             <FlatList
               data={categories}
               horizontal
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.id.toString()}
               ListHeaderComponent={
                 <Pressable
                   onPress={() =>
@@ -157,7 +153,7 @@ const FiltersModal = ({ filters, onFiltersChange }: FiltersModalProps) => {
             <FlatList
               data={accounts}
               horizontal
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
                 <Button
                   variant="outline"

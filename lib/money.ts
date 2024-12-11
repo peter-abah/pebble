@@ -1,11 +1,19 @@
+import { SchemaTransaction } from "@/db/schema";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { Currency, ExchangeRate, Money } from "@/lib/types";
 import { roundNumber } from "@/lib/utils";
 
-export const createMoney = (amountInMajorUnits: number, currency: Currency): Money => ({
-  valueInMinorUnits: amountInMajorUnits * 10 ** currency.minorUnit,
-  currencyCode: currency.isoCode,
-});
+export const createMoney = (amountInMajorUnits: number, currencyCode: string): Money => {
+  const currency = CURRENCIES_MAP[currencyCode.toLocaleUpperCase()];
+  if (!currency) {
+    throw new Error(`Currency with currency code: ${currencyCode} does not exist`);
+  }
+
+  return {
+    valueInMinorUnits: amountInMajorUnits * 10 ** currency.minorUnit,
+    currencyCode: currency.isoCode,
+  };
+};
 
 export const convertMoney = (amount: Money, exchangeRate: ExchangeRate): Money => {
   if (exchangeRate.from !== amount.currencyCode) {
@@ -42,7 +50,7 @@ export const subtractMoney = (a: Money, b: Money): Money => {
 };
 
 export const formatMoney = ({ valueInMinorUnits, currencyCode }: Money) => {
-  const currency = CURRENCIES_MAP[currencyCode];
+  const currency = CURRENCIES_MAP[currencyCode.toLocaleUpperCase()];
   if (!currency) {
     throw new Error(`Currency with currency code: ${currencyCode} does not exist`);
   }
@@ -60,16 +68,31 @@ export const formatMoney = ({ valueInMinorUnits, currencyCode }: Money) => {
   return currencySymbol + amountStr;
 };
 
-export const getMoneyValueInMajorUnits = ({ valueInMinorUnits, currencyCode }: Money) => {
-  const currency = CURRENCIES_MAP[currencyCode];
+export const calcMoneyValueInMajorUnits = ({ valueInMinorUnits, currencyCode }: Money) => {
+  const currency = CURRENCIES_MAP[currencyCode.toLocaleUpperCase()];
   if (!currency) {
     throw new Error(`Currency with currency code: ${currencyCode} does not exist`);
   }
   return valueInMinorUnits / 10 ** currency.minorUnit;
 };
 
+export const calcMoneyValueInMinorUnits = (valueInMajorUnits: number, currencyCode: string) => {
+  const currency = CURRENCIES_MAP[currencyCode.toLocaleUpperCase()];
+  if (!currency) {
+    throw new Error(`Currency with currency code: ${currencyCode} does not exist`);
+  }
+  return valueInMajorUnits * 10 ** currency.minorUnit;
+};
+
+export const convertTransactionAmountToMoney = (transaction: SchemaTransaction): Money => {
+  return {
+    valueInMinorUnits: transaction.amount_value_in_minor_units,
+    currencyCode: transaction.amount_currency_code,
+  };
+};
+
 export const renderCurrencyLabel = (isoCode: Currency["isoCode"]) => {
-  const currency = CURRENCIES_MAP[isoCode];
+  const currency = CURRENCIES_MAP[isoCode.toLocaleUpperCase()];
   if (!currency) return "";
 
   return `${currency.name} (${currency.isoCode})`;

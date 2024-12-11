@@ -1,8 +1,6 @@
-import { type TimePeriod } from "@/components/time-period-picker";
-import { NonEmptyArray, type Transaction } from "@/lib/types";
+import { NonEmptyArray, PartialRecord } from "@/lib/types";
 import { clsx, type ClassValue } from "clsx";
 import dayjs, { Dayjs } from "dayjs";
-import { memoize } from "proxy-memoize";
 import { twMerge } from "tailwind-merge";
 
 export const exhaustiveUnionTuple =
@@ -20,16 +18,39 @@ export function cn(...inputs: Array<ClassValue>) {
   return twMerge(clsx(inputs));
 }
 
-type Key = string | number | symbol;
-export function arrayToMap<T extends {}>(items: Array<T>, keyName: keyof T) {
-  const res: Record<Key, T> = {};
-  for (let item of items) {
-    const key = item[keyName] as Key;
-    res[key] = item;
+export function arrayToMap<T extends {}, K extends PropertyKey>(
+  items: Array<T>,
+  keySelector: (item: T, index: number) => K
+) {
+  const res: PartialRecord<K, T> = {};
+  for (let i = 0; i < items.length; i++) {
+    const key = keySelector(items[i]!, i);
+
+    res[key] = items[i];
   }
 
   return res;
 }
+
+export const isDateValid = (date: Date) => {
+  return Number.isNaN(date.getTime());
+};
+
+export const valueToDate = (value: any) => {
+  const date = new Date(value);
+  return isDateValid(date) ? date : undefined;
+};
+
+export const valueToNumber = (value: unknown) => {
+  if (typeof value == "number") {
+    return value;
+  }
+  const numberValue = Number(value);
+  if (Number.isNaN(numberValue)) {
+    return undefined;
+  }
+  return numberValue;
+};
 
 export const NUMBER_REGEX = /^[+-]?([0-9]*[.])?[0-9]+$/;
 export function isStringNumeric(str: string) {
@@ -103,6 +124,10 @@ export const isIn = <T>(values: ReadonlyArray<T>, x: any): x is T => {
   return values.includes(x);
 };
 
+export function setDifference<A extends B, B>(a: Set<A>, b: Set<B>) {
+  return new Set(Array.from(a).filter((item) => !b.has(item)));
+}
+
 export const randomDate = (start: Dayjs, end: Dayjs) => {
   const startTime = start.valueOf();
   const endTime = end.valueOf();
@@ -122,64 +147,4 @@ export const convertAllObjectValuesToNewValue = <T extends object, V>(record: T,
 
 export const randomElement = <T>(array: Array<T>) => {
   return array[Math.floor(Math.random() * array.length)] as T;
-};
-
-export const groupTransactionsByMonth = memoize((transactions: Array<Transaction>) =>
-  transactions.reduce((result, transaction) => {
-    const monthAndYear = dayjs(transaction.datetime).format().slice(0, 7); // e.g 2024-10
-    if (result[monthAndYear]) {
-      result[monthAndYear]!.push(transaction);
-    } else {
-      result[monthAndYear] = [transaction];
-    }
-    return result;
-  }, {} as Record<string, Array<Transaction>>)
-);
-
-export const groupTransactionsByWeek = memoize((transactions: Array<Transaction>) =>
-  transactions.reduce((result, transaction) => {
-    const firstDayOfWeek = dayjs(transaction.datetime).day(0).format().slice(0, 10); // first day of week e.g 2024-10-20
-    if (result[firstDayOfWeek]) {
-      result[firstDayOfWeek]!.push(transaction);
-    } else {
-      result[firstDayOfWeek] = [transaction];
-    }
-    return result;
-  }, {} as Record<string, Array<Transaction>>)
-);
-
-export const groupTransactionsByYear = memoize((transactions: Array<Transaction>) =>
-  transactions.reduce((result, transaction) => {
-    // using format to convert the iso string to the iso string with time offset
-    const year = dayjs(transaction.datetime).format().slice(0, 4); // e.g 2024
-    if (result[year]) {
-      result[year]!.push(transaction);
-    } else {
-      result[year] = [transaction];
-    }
-    return result;
-  }, {} as Record<string, Array<Transaction>>)
-);
-
-export const groupTransactionsByPeriod = {
-  monthly: groupTransactionsByMonth,
-  annually: groupTransactionsByYear,
-  weekly: groupTransactionsByWeek,
-  // using a proxy so any string key returns the transaction array
-  "all time": (transactions: Array<Transaction>) =>
-    new Proxy<Record<string, Array<Transaction>>>({}, { get: () => transactions }),
-} satisfies Record<TimePeriod["period"], unknown>;
-
-// used to index transactions grouped by date functions above
-export const dateToKey = ({ period, date }: TimePeriod): string => {
-  switch (period) {
-    case "annually":
-      return date.year().toString(); // 2024
-    case "monthly":
-      return date.format().slice(0, 7); // 2024-10
-    case "weekly":
-      return date.day(0).format().slice(0, 10); // first day of week: 2024-10-20
-    default:
-      return date.format("MMM DD, YYYY");
-  }
 };

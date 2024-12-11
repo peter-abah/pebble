@@ -10,18 +10,14 @@ import {
 import { Text } from "@/components/ui/text";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { ChevronRightIcon } from "@/lib/icons/ChevronRIght";
+import { PERIODS, TimePeriod } from "@/lib/types";
 import { assertUnreachable, titleCase } from "@/lib/utils";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { Option } from "@rn-primitives/select";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { Pressable, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export const periods = ["monthly", "weekly", "annually", "all time"] as const;
-export interface TimePeriod {
-  period: (typeof periods)[number];
-  date: Dayjs;
-}
 interface TimePeriodPickerProps {
   timePeriod: TimePeriod;
   onValueChange: (value: TimePeriod) => void;
@@ -54,7 +50,7 @@ function TimePeriodPicker({ timePeriod, onValueChange }: TimePeriodPickerProps) 
       case "weekly":
         onValueChange({ ...timePeriod, date: timePeriod.date.add(1, "week") });
         break;
-      case "annually":
+      case "yearly":
         onValueChange({ ...timePeriod, date: timePeriod.date.add(1, "year") });
         break;
       case "all time":
@@ -72,7 +68,7 @@ function TimePeriodPicker({ timePeriod, onValueChange }: TimePeriodPickerProps) 
       case "weekly":
         onValueChange({ ...timePeriod, date: timePeriod.date.subtract(1, "week") });
         break;
-      case "annually":
+      case "yearly":
         onValueChange({ ...timePeriod, date: timePeriod.date.subtract(1, "year") });
         break;
       case "all time":
@@ -111,7 +107,7 @@ function TimePeriodPicker({ timePeriod, onValueChange }: TimePeriodPickerProps) 
           </SelectTrigger>
           <SelectContent insets={contentInsets}>
             <SelectGroup>
-              {periods.map((period) => (
+              {PERIODS.map((period) => (
                 <SelectItem key={period} value={period} label={titleCase(period)}>
                   {titleCase(period)}
                 </SelectItem>
@@ -126,14 +122,15 @@ function TimePeriodPicker({ timePeriod, onValueChange }: TimePeriodPickerProps) 
 
 const renderDate = (timePeriod: TimePeriod): string => {
   switch (timePeriod.period) {
-    case "annually":
+    case "yearly":
       return timePeriod.date.year().toString();
     case "monthly":
       return timePeriod.date.format("MMM YYYY");
-    case "weekly":
+    case "weekly": {
       const firstDay = timePeriod.date.day(0);
       const lastDay = timePeriod.date.day(6);
       return `${firstDay.format("MMM DD")} - ${lastDay.format("MMM DD, YYYY")}`;
+    }
     case "all time":
       return timePeriod.date.format("MMM DD, YYYY");
   }

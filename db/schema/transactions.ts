@@ -1,4 +1,4 @@
-import { and, eq, isNotNull, or, relations, SQL, sql } from "drizzle-orm";
+import { and, eq, isNotNull, or, SQL, sql } from "drizzle-orm";
 import {
   AnySQLiteColumn,
   check,
@@ -49,14 +49,14 @@ export const transactionsTable = sqliteTable(
     ...timestamps,
   },
   (table) => ({
-    titleIndex: index("title_index").on(table.title),
-    datetimeIndex: index("datetime_index").on(table.datetime),
-    typeIndex: index("type_index").on(table.type),
-    accountIndex: index("account_index").on(table.account_id),
-    fromAccountIndex: index("account_index").on(table.from_account_id),
-    toAccountIndex: index("account_index").on(table.to_account_id),
-    categoryIndex: index("category_index").on(table.category_id),
-    loanIndex: index("loan_index").on(table.loan_id),
+    titleIndex: index("t_title_index").on(table.title),
+    datetimeIndex: index("t_datetime_index").on(table.datetime),
+    typeIndex: index("t_type_index").on(table.type),
+    accountIndex: index("t_account_index").on(table.account_id),
+    fromAccountIndex: index("t_from_account_index").on(table.from_account_id),
+    toAccountIndex: index("t_to_account_index").on(table.to_account_id),
+    categoryIndex: index("t_category_index").on(table.category_id),
+    loanIndex: index("t_loan_index").on(table.loan_id),
 
     // check constraint to ensure columns specific for each transaction type are not null
     typeSpecificChecks: check(
@@ -94,28 +94,5 @@ export const transactionsTable = sqliteTable(
     ),
   })
 );
-
-export const transactionsRelations = relations(transactionsTable, ({ one }) => ({
-  category: one(categoriesTable, {
-    fields: [transactionsTable.category_id],
-    references: [categoriesTable.id],
-  }),
-  account: one(accountsTable, {
-    fields: [transactionsTable.account_id],
-    references: [accountsTable.id],
-  }),
-  fromAccount: one(accountsTable, {
-    fields: [transactionsTable.from_account_id],
-    references: [accountsTable.id],
-  }),
-  toAccount: one(accountsTable, {
-    fields: [transactionsTable.to_account_id],
-    references: [accountsTable.id],
-  }),
-  loanTransaction: one(transactionsTable, {
-    fields: [transactionsTable.loan_id],
-    references: [transactionsTable.id],
-  }),
-}));
 
 export type SchemaTransaction = typeof transactionsTable.$inferSelect;

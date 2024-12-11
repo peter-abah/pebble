@@ -9,8 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
 import { emojiPattern } from "@/lib/emoji-regex";
-import { useAppStore } from "@/lib/store";
-import { Satisfies, TransactionCategory, TransactionType } from "@/lib/types";
+import { humanizeString, titleCase } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { TextInput, View } from "react-native";
@@ -19,7 +18,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
 import ColorPicker from "./color-picker";
 import IconPicker from "./icon-picker";
-import { humanizeString, titleCase } from "@/lib/utils";
 
 const emojiAtStartPattern = new RegExp(`^${emojiPattern}`);
 const formSchema = z
@@ -47,13 +45,7 @@ const formSchema = z
     return { ...data, icon: emoji };
   });
 
-export type FormSchema = Satisfies<
-  {
-    type: Extract<TransactionType, "income" | "expense">;
-    iconType: TransactionCategory["icon"]["type"];
-  },
-  z.infer<typeof formSchema>
->;
+export type FormSchema = z.infer<typeof formSchema>;
 
 interface CategoryFormProps {
   defaultValues: Partial<FormSchema>;
@@ -70,12 +62,16 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
     defaultValues,
     resolver: zodResolver(formSchema),
   });
-  const categoryMap = useAppStore((state) => state.categories);
-  const type = watch("type");
-  const name = watch("name");
-  const parentCategories = (Object.values(categoryMap) as Array<TransactionCategory>).filter(
-    (c) => (c.type === type || !c.type) && c.name !== name
-  );
+
+  // todo: for parent category
+  // const { data: categories } = useLiveQuery(
+  //   getCategories({ sortBy: [{ column: "name", type: "asc" }] })
+  // );
+  // const type = watch("type");
+  // const name = watch("name");
+  // const parentCategories = categories.filter(
+  //   (c) => (c.type === type || !c.type) && c.name !== name
+  // );
 
   const insets = useSafeAreaInsets();
   const contentInsets = {
@@ -148,7 +144,8 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
           />
         </View>
 
-        <View className="gap-2 relative">
+        {/* todo: implement parent category */}
+        {/* <View className="gap-2 relative">
           <Label nativeID="parent" className="text-lg">
             Parent Category
           </Label>
@@ -185,7 +182,7 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
             )}
             name="parentID"
           />
-        </View>
+        </View> */}
         <View className="flex-row gap-4">
           <View className="gap-2 relative flex-1">
             <Label nativeID="color" className="text-lg">

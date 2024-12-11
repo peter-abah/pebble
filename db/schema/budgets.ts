@@ -42,3 +42,5 @@ export const budgetsCategoriesTable = sqliteTable(
     pk: primaryKey({ columns: [table.category_id, table.budget_id] }),
   })
 );
+
+export type SchemaBudget = typeof budgetsTable.$inferSelect;

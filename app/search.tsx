@@ -1,38 +1,45 @@
 import EmptyState from "@/components/empty-state";
 import FiltersModal from "@/components/filters-modal";
 import ScreenWrapper from "@/components/screen-wrapper";
-import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
+import TimePeriodPicker from "@/components/time-period-picker";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
-import { filterTransactions } from "@/lib/app-utils";
+import { getAccounts } from "@/db/queries/accounts";
+import { getCategories } from "@/db/queries/categories";
+import { getTransactions } from "@/db/queries/transactions";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { SearchIcon } from "@/lib/icons/Search";
-import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
-import { Filters, Transaction } from "@/lib/types";
+import { Filters, TimePeriod } from "@/lib/types";
 import dayjs from "dayjs";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import { FlatList, View } from "react-native";
 
 const Search = () => {
   const [search, setSearch] = useState("");
-  const transactions = useAppStore(getSortedTransactionsByDate) as Array<Transaction>;
-  const categoriesMap = useAppStore((state) => state.categories);
-  const accountsMap = useAppStore((state) => state.accounts);
-
   const [currentTimePeriod, setCurrentTimePeriod] = useState<TimePeriod>(() => ({
     date: dayjs(),
     period: "monthly",
   }));
   const [filters, setFilters] = useState<Filters>({ categories: [], accounts: [], types: [] });
-
-  const filtered = filterTransactions(transactions, {
-    search,
-    period: currentTimePeriod,
-    filters: filters,
-  });
+  const { data: transactions } = useLiveQuery(
+    getTransactions({
+      search,
+      period: currentTimePeriod,
+      ...filters,
+      sortBy: [{ column: "datetime", type: "desc" }],
+    }),
+    [search, currentTimePeriod, filters]
+  );
+  const { data: categories } = useLiveQuery(getCategories({ ids: filters.categories }), [
+    filters.categories,
+  ]);
+  const { data: accounts } = useLiveQuery(getAccounts({ ids: filters.accounts }), [
+    filters.accounts,
+  ]);
 
   return (
     <ScreenWrapper className="!pb-6">
@@ -67,12 +74,12 @@ const Search = () => {
           <View className="flex flex-row gap-2 items-center">
             <Text className="text-sm font-medium">Categories:</Text>
             <FlatList
-              data={filters.categories}
+              data={categories}
               horizontal
-              keyExtractor={(item) => item}
+              keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
                 <View className="flex-row gap-1 border border-border rounded-xl px-3 py-1.5">
-                  <Text className="text-sm">{categoriesMap[item]?.name}</Text>
+                  <Text className="text-sm">{item.name}</Text>
                 </View>
               )}
               contentContainerClassName="gap-4"
@@ -83,12 +90,12 @@ const Search = () => {
           <View className="flex flex-row gap-2 items-center">
             <Text className="text-sm font-medium">Accounts:</Text>
             <FlatList
-              data={filters.accounts}
+              data={accounts}
               horizontal
-              keyExtractor={(item) => item}
+              keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
                 <View className="flex-row gap-1 border border-border rounded-xl px-3 py-1.5">
-                  <Text className="text-sm">{accountsMap[item]?.name}</Text>
+                  <Text className="text-sm">{item.name}</Text>
                 </View>
               )}
               contentContainerClassName="gap-4"
@@ -114,8 +121,8 @@ const Search = () => {
       </View>
 
       <FlatList
-        data={filtered}
-        keyExtractor={(item) => item.id}
+        data={transactions}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Link
             href={

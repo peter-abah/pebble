@@ -25,7 +25,7 @@ const formSchema = z.object({
     z.number().optional(),
   ]),
   name: z.string({ message: "Enter account name" }).min(1, { message: "Enter account name" }),
-  currency: z.string({ message: "Select currency" }),
+  currencyCode: z.string({ message: "Select currency" }),
   color: z.string({ message: "Select color" }),
 });
 
@@ -45,8 +45,8 @@ const NewAccountForm = ({ defaultValues, onSubmit }: NewAccountFormProps) => {
     defaultValues,
     resolver: zodResolver(formSchema),
   });
-  const currencyISO = watch("currency");
-  const currency = CURRENCIES_MAP[currencyISO];
+  const currencyCode = watch("currencyCode");
+  const currency = CURRENCIES_MAP[currencyCode];
 
   const insets = useSafeAreaInsets();
   const contentInsets = {
@@ -113,12 +113,12 @@ const NewAccountForm = ({ defaultValues, onSubmit }: NewAccountFormProps) => {
                     </ScrollView>
                   </SelectContent>
                 </Select>
-                {errors.currency?.message && (
-                  <Text className="text-xs text-destructive">{errors.currency.message}</Text>
+                {errors.currencyCode?.message && (
+                  <Text className="text-xs text-destructive">{errors.currencyCode.message}</Text>
                 )}
               </View>
             )}
-            name="currency"
+            name="currencyCode"
           />
         </View>
 

@@ -2,36 +2,35 @@ import AccountForm, { FormSchema } from "@/components/new-account-form";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { insertAccount } from "@/db/mutations/accounts";
+import { insertTransaction } from "@/db/mutations/transactions";
 import { GROUP_COLORS } from "@/lib/constants";
 import { BALANCE_CREDIT_CATEGORY_ID } from "@/lib/data";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
-import { createMoney } from "@/lib/money";
-import { useAppStore } from "@/lib/store";
 import { randomElement } from "@/lib/utils";
 import { router } from "expo-router";
 import { View } from "react-native";
 
 const CreateAccount = () => {
-  const { addAccount, addTransaction } = useAppStore((state) => state.actions);
-
-  const onSubmit = ({ name, currency: currencyID, balance, color }: FormSchema) => {
-    const currency = CURRENCIES_MAP[currencyID];
+  const onSubmit = async ({ name, currencyCode, balance, color }: FormSchema) => {
+    const currency = CURRENCIES_MAP[currencyCode];
     if (!currency) return;
 
-    const account = addAccount({
+    const account = await insertAccount({
       name,
-      balance: createMoney(0, currency),
-      currency,
+      balance_value_in_minor_units: 0,
+      currency_code: currencyCode,
       color,
     });
 
     if (balance && balance > 0) {
-      addTransaction({
+      await insertTransaction({
         title: "Initial account balance",
-        categoryID: BALANCE_CREDIT_CATEGORY_ID,
-        accountID: account.id,
-        amount: createMoney(balance, account.currency),
+        app_category_id: BALANCE_CREDIT_CATEGORY_ID,
+        account_id: account.id,
+        amount_value_in_minor_units: balance * 10 ** currency.minorUnit,
+        amount_currency_code: currency.isoCode,
         type: "income",
         datetime: new Date().toISOString(),
       });

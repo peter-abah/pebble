@@ -4,26 +4,44 @@ import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionForm, { FormSchema } from "@/components/transaction-form";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { db } from "@/db/client";
+import { deleteTransaction, updateTransaction } from "@/db/mutations/transactions";
+import { getAccounts } from "@/db/queries/accounts";
+import { getTransactions } from "@/db/queries/transactions";
+import { SchemaTransaction, transactionsTable } from "@/db/schema";
+import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { TrashIcon } from "@/lib/icons/Trash";
-import { createMoney, getMoneyValueInMajorUnits } from "@/lib/money";
-import { useAppStore } from "@/lib/store";
-import { Transaction } from "@/lib/types";
-import { assertUnreachable } from "@/lib/utils";
+import {
+  calcMoneyValueInMajorUnits,
+  calcMoneyValueInMinorUnits,
+  convertTransactionAmountToMoney,
+} from "@/lib/money";
+import { arrayToMap, assertUnreachable, valueToDate, valueToNumber } from "@/lib/utils";
+import { eq } from "drizzle-orm";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { router, useLocalSearchParams } from "expo-router";
+import { useMemo } from "react";
 import { Alert, View } from "react-native";
 
 const EditTransaction = () => {
-  const { id } = useLocalSearchParams() as { id: string };
-  const { updateTransaction, deleteTransaction } = useAppStore((state) => state.actions);
-  const transactionMap = useAppStore((state) => state.transactions);
-  const transaction = transactionMap[id];
-  const accountsMap = useAppStore((state) => state.accounts);
+  const params = useLocalSearchParams() as { id?: string };
+  const id = valueToNumber(params.id);
+  const {
+    data: [transaction],
+  } = useLiveQuery(
+    getTransactions({
+      ids: id !== undefined ? [id] : undefined,
+      limit: id !== undefined ? 1 : undefined,
+    })
+  );
+  const { data: accounts } = useLiveQuery(getAccounts());
+  const accountsMap = useMemo(() => arrayToMap(accounts, ({ id }) => id), [accounts]);
 
-  const onDelete = () => {
+  const onDelete = async () => {
     if (!transaction) return;
 
-    deleteTransaction(transaction.id);
+    await deleteTransaction(transaction.id);
     router.back();
   };
 
@@ -32,35 +50,35 @@ const EditTransaction = () => {
     onConfirm: onDelete,
   });
 
-  const onSubmit = (data: FormSchema) => {
+  const onSubmit = async (data: FormSchema) => {
     if (!transaction) return;
 
     const { amount, title, note, type, datetime } = data;
+
     switch (type) {
       case "transfer": {
         const { from, to, exchangeRate } = data;
 
-        const fromCurrency = accountsMap[from]?.currency;
-        const toCurrency = accountsMap[to]?.currency;
-        if (!fromCurrency) {
-          Alert.alert("Sending account does not exist.");
+        const fromCurrencyCode = accountsMap[from]?.currency_code || "";
+        const toCurrencyCode = accountsMap[to]?.currency_code || "";
+        if (!CURRENCIES_MAP[fromCurrencyCode]) {
+          Alert.alert("Sending account does not have a currency");
           return;
         }
-        if (!toCurrency) {
-          Alert.alert("Receiving account does not exist.");
+        if (!CURRENCIES_MAP[toCurrencyCode]) {
+          Alert.alert("Receiving account does not have a currency");
           return;
         }
 
-        updateTransaction({
-          ...transaction,
-          amount: createMoney(amount, fromCurrency),
+        updateTransaction(transaction.id, {
+          amount_value_in_minor_units: calcMoneyValueInMinorUnits(amount, fromCurrencyCode),
           type,
-          from,
-          to,
+          from_account_id: from,
+          to_account_id: to,
           title,
           note,
-          exchangeRate: { from: fromCurrency, to: toCurrency, rate: exchangeRate },
           datetime: datetime.toISOString(),
+          exchange_rate: exchangeRate,
         });
         break;
       }
@@ -68,20 +86,20 @@ const EditTransaction = () => {
       case "expense": {
         const { accountID, categoryID } = data;
 
-        const currency = accountsMap[accountID]?.currency;
-        if (!currency) {
-          Alert.alert("Account does not exist");
+        const currencyCode = accountsMap[accountID]?.currency_code || "";
+        if (!CURRENCIES_MAP[currencyCode]) {
+          Alert.alert("Account does not have a currency");
           return;
         }
 
-        updateTransaction({
-          ...transaction,
-          amount: createMoney(amount, currency),
+        updateTransaction(transaction.id, {
+          amount_value_in_minor_units: calcMoneyValueInMinorUnits(amount, currencyCode),
+          amount_currency_code: currencyCode,
           type,
-          categoryID,
+          category_id: categoryID,
           title,
           note,
-          accountID,
+          account_id: accountID,
           datetime: datetime.toISOString(),
         });
         break;
@@ -90,20 +108,20 @@ const EditTransaction = () => {
       case "borrowed": {
         const { accountID, dueDate } = data;
 
-        const currency = accountsMap[accountID]?.currency;
-        if (!currency) {
-          Alert.alert("Account does not exist");
+        const currencyCode = accountsMap[accountID]?.currency_code || "";
+        if (!CURRENCIES_MAP[currencyCode]) {
+          Alert.alert("Account does not have a currency");
           return;
         }
 
-        updateTransaction({
-          ...transaction,
-          amount: createMoney(amount, currency),
+        updateTransaction(transaction.id, {
+          amount_value_in_minor_units: calcMoneyValueInMinorUnits(amount, currencyCode),
+          amount_currency_code: currencyCode,
           type,
-          dueDate: dueDate ? dueDate.toISOString() : undefined,
+          due_date: dueDate ? dueDate.toISOString() : undefined,
           title,
           note,
-          accountID,
+          account_id: accountID,
           datetime: datetime.toISOString(),
         });
         break;
@@ -112,29 +130,33 @@ const EditTransaction = () => {
       case "collected_debt": {
         const { accountID, loanID } = data;
 
-        const currency = accountsMap[accountID]?.currency;
-        if (!currency) {
-          Alert.alert("Account does not exist");
+        const currencyCode = accountsMap[accountID]?.currency_code || "";
+        if (!CURRENCIES_MAP[currencyCode]) {
+          Alert.alert("Account does not have a currency");
           return;
         }
-        const loanTransaction = transactionMap[loanID];
+
+        const [loanTransaction] = await db
+          .select()
+          .from(transactionsTable)
+          .where(eq(transactionsTable, loanID));
         if (!loanTransaction) {
           Alert.alert("Loan transaction does not exist");
           return;
         }
         if (loanTransaction.type !== "borrowed" && loanTransaction.type !== "lent") {
-          Alert.alert("Loan transaction selected is not a loan");
+          Alert.alert("Transaction selected is not a loan transaction");
           return;
         }
 
-        updateTransaction({
-          ...transaction,
-          amount: createMoney(amount, currency),
+        updateTransaction(transaction.id, {
+          amount_value_in_minor_units: calcMoneyValueInMinorUnits(amount, currencyCode),
+          amount_currency_code: currencyCode,
           type,
-          loanID: loanTransaction.id,
+          loan_id: loanTransaction.id,
           title,
           note,
-          accountID,
+          account_id: accountID,
           datetime: datetime.toISOString(),
         });
         break;
@@ -181,13 +203,12 @@ const EditTransaction = () => {
   );
 };
 
-const getTransactionDefaultValues = (transaction: Transaction): FormSchema => {
+const getTransactionDefaultValues = (transaction: SchemaTransaction): FormSchema => {
   const baseDefaultValues = {
-    title: transaction.title,
-    datetime: new Date(transaction.datetime),
-    note: transaction.note,
-
-    amount: getMoneyValueInMajorUnits(transaction.amount),
+    title: transaction.title || undefined,
+    datetime: valueToDate(transaction.datetime) || new Date(),
+    note: transaction.note || undefined,
+    amount: calcMoneyValueInMajorUnits(convertTransactionAmountToMoney(transaction)),
   };
 
   const type = transaction.type;
@@ -196,35 +217,35 @@ const getTransactionDefaultValues = (transaction: Transaction): FormSchema => {
     case "income":
       return {
         ...baseDefaultValues,
-        type: transaction.type,
-        categoryID: transaction.categoryID,
-        accountID: transaction.accountID,
+        type: type,
+        categoryID: transaction.category_id!,
+        accountID: transaction.account_id!,
       };
 
     case "transfer":
       return {
         ...baseDefaultValues,
-        type: transaction.type,
-        from: transaction.from,
-        to: transaction.to,
-        exchangeRate: transaction.exchangeRate.rate,
+        type: type,
+        from: transaction.from_account_id!,
+        to: transaction.to_account_id!,
+        exchangeRate: transaction.exchange_rate!,
       };
     case "lent":
     case "borrowed":
       return {
         ...baseDefaultValues,
-        title: transaction.title,
-        type: transaction.type,
-        accountID: transaction.accountID,
-        dueDate: transaction.dueDate !== undefined ? new Date(transaction.dueDate) : undefined,
+        title: transaction.title!,
+        type: type,
+        accountID: transaction.account_id!,
+        dueDate: valueToDate(transaction.due_date),
       };
     case "collected_debt":
     case "paid_loan":
       return {
         ...baseDefaultValues,
-        accountID: transaction.accountID,
-        loanID: transaction.loanID,
-        type: transaction.type,
+        accountID: transaction.account_id!,
+        loanID: transaction.loan_id!,
+        type: type,
       };
     default:
       assertUnreachable(type);

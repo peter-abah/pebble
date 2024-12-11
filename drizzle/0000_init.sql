@@ -8,6 +8,14 @@ CREATE TABLE `accounts` (
 	`created_at` text DEFAULT (current_timestamp) NOT NULL
 );
 --> statement-breakpoint
+CREATE INDEX `a_name_index` ON `accounts` (`name`);--> statement-breakpoint
+CREATE TABLE `default_account` (
+	`account_id` integer NOT NULL,
+	`updated_at` text DEFAULT (current_timestamp) NOT NULL,
+	`created_at` text DEFAULT (current_timestamp) NOT NULL,
+	FOREIGN KEY (`account_id`) REFERENCES `accounts`(`id`) ON UPDATE no action ON DELETE cascade
+);
+--> statement-breakpoint
 CREATE TABLE `budgets_accounts` (
 	`account_id` integer NOT NULL,
 	`budget_id` integer NOT NULL,
@@ -45,6 +53,7 @@ CREATE TABLE `categories` (
 	`created_at` text DEFAULT (current_timestamp) NOT NULL
 );
 --> statement-breakpoint
+CREATE INDEX `c_name_index` ON `categories` (`name`);--> statement-breakpoint
 CREATE TABLE `transactions` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`amount_value_in_minor_units` integer NOT NULL,
@@ -71,9 +80,11 @@ CREATE TABLE `transactions` (
 	CONSTRAINT "type_specific_fields_check" CHECK(((("transactions"."type" = 'expense' or "transactions"."type" = 'income') and ("transactions"."category_id" is not null or "transactions"."app_category_id" is not null or "transactions"."account_id" is not null)) or ("transactions"."type" = 'transfer' and "transactions"."from_account_id" is not null and "transactions"."to_account_id" is not null and "transactions"."exchange_rate" is not null) or (("transactions"."type" = 'lent' or "transactions"."type" = 'borrowed') and "transactions"."title" is not null and "transactions"."account_id" is not null) or (("transactions"."type" = 'paid_loan' or "transactions"."type" = 'collected_debt') and "transactions"."loan_id" is not null and "transactions"."account_id" is not null)))
 );
 --> statement-breakpoint
-CREATE INDEX `title_index` ON `transactions` (`title`);--> statement-breakpoint
-CREATE INDEX `datetime_index` ON `transactions` (`datetime`);--> statement-breakpoint
-CREATE INDEX `type_index` ON `transactions` (`type`);--> statement-breakpoint
-CREATE INDEX `account_index` ON `transactions` (`to_account_id`);--> statement-breakpoint
-CREATE INDEX `category_index` ON `transactions` (`category_id`);--> statement-breakpoint
-CREATE INDEX `loan_index` ON `transactions` (`loan_id`);
+CREATE INDEX `t_title_index` ON `transactions` (`title`);--> statement-breakpoint
+CREATE INDEX `t_datetime_index` ON `transactions` (`datetime`);--> statement-breakpoint
+CREATE INDEX `t_type_index` ON `transactions` (`type`);--> statement-breakpoint
+CREATE INDEX `t_account_index` ON `transactions` (`account_id`);--> statement-breakpoint
+CREATE INDEX `t_from_account_index` ON `transactions` (`from_account_id`);--> statement-breakpoint
+CREATE INDEX `t_to_account_index` ON `transactions` (`to_account_id`);--> statement-breakpoint
+CREATE INDEX `t_category_index` ON `transactions` (`category_id`);--> statement-breakpoint
+CREATE INDEX `t_loan_index` ON `transactions` (`loan_id`);

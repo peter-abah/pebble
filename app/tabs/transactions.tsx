@@ -1,29 +1,33 @@
 import EmptyState from "@/components/empty-state";
 import FloatingAddButton from "@/components/floating-add-button";
 import ScreenWrapper from "@/components/screen-wrapper";
-import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
+import TimePeriodPicker from "@/components/time-period-picker";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { getTransactions } from "@/db/queries/transactions";
 import { SearchIcon } from "@/lib/icons/Search";
-import { getSortedTransactionsByDate, useAppStore } from "@/lib/store";
-import { dateToKey, groupTransactionsByPeriod } from "@/lib/utils";
+import { TimePeriod } from "@/lib/types";
 import dayjs from "dayjs";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
 const Transactions = () => {
-  const transactions = useAppStore(getSortedTransactionsByDate);
-
   const [currentTimePeriod, setCurrentTimePeriod] = useState<TimePeriod>(() => ({
     date: dayjs(),
     period: "monthly",
   }));
 
-  const currentTransactions =
-    groupTransactionsByPeriod[currentTimePeriod.period](transactions)[dateToKey(currentTimePeriod)];
+  const { data: transactions } = useLiveQuery(
+    getTransactions({
+      period: currentTimePeriod,
+      sortBy: [{ column: "datetime", type: "desc" }],
+    }),
+    [currentTimePeriod]
+  );
 
   return (
     <ScreenWrapper className="!pb-6">
@@ -49,8 +53,8 @@ const Transactions = () => {
       </View>
 
       <FlatList
-        data={currentTransactions}
-        keyExtractor={(item) => item.id}
+        data={transactions}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Link
             href={

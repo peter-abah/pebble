@@ -5,28 +5,18 @@ import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
+import { getBudgets } from "@/db/queries/budgets";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { SearchIcon } from "@/lib/icons/Search";
-import { useAppStore } from "@/lib/store";
-import { Budget } from "@/lib/types";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link, router } from "expo-router";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
 const Budgets = () => {
-  const budgetsMap = useAppStore((state) => state.budgets);
-  const budgets = useMemo(() => Object.values(budgetsMap) as Array<Budget>, [budgetsMap]);
-
   const [search, setSearch] = useState("");
-  const filteredBudgets = useMemo(() => {
-    const trimmedSearch = search.trim();
-    if (trimmedSearch === "") return budgets;
-
-    return budgets.filter((budget) =>
-      budget.name.toLocaleLowerCase().includes(trimmedSearch.toLocaleLowerCase())
-    );
-  }, [search, budgets]);
+  const { data: budgets } = useLiveQuery(getBudgets({ search }), [search]);
 
   return (
     <ScreenWrapper className="!pb-6">
@@ -54,8 +44,8 @@ const Budgets = () => {
       </View>
 
       <FlatList
-        data={filteredBudgets}
-        keyExtractor={(item) => item.id}
+        data={budgets}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <BudgetCard budget={item} />}
         className="flex-1"
         ListEmptyComponent={<EmptyState title="No Budgets To Show" />}

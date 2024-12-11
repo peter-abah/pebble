@@ -5,30 +5,20 @@ import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
+import { getTransactions } from "@/db/queries/transactions";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { SearchIcon } from "@/lib/icons/Search";
-import { useAppStore } from "@/lib/store";
-import { LoanTransaction } from "@/lib/types";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link, router } from "expo-router";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
 const Loans = () => {
-  const transactionsMap = useAppStore((state) => state.transactions);
-  const loans = Object.values(transactionsMap).filter(
-    (t): t is LoanTransaction => t?.type === "borrowed" || t?.type === "lent"
-  );
-
   const [search, setSearch] = useState("");
-  const filteredLoans = useMemo(() => {
-    const trimmedSearch = search.trim();
-    if (trimmedSearch === "") return loans;
-
-    return loans.filter((loan) =>
-      loan.title.toLocaleLowerCase().includes(trimmedSearch.toLocaleLowerCase())
-    );
-  }, [search, loans]);
+  const { data: loans } = useLiveQuery(
+    getTransactions({ search: search.trim(), sortBy: [{ column: "datetime", type: "asc" }] })
+  );
 
   return (
     <ScreenWrapper className="!pb-6">
@@ -56,8 +46,8 @@ const Loans = () => {
       </View>
 
       <FlatList
-        data={filteredLoans}
-        keyExtractor={(item) => item.id}
+        data={loans}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Link href={`/loans/${item.id}`} asChild>
             <TransactionCard transaction={item} />

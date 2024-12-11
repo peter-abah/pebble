@@ -1,9 +1,11 @@
-import { NonNullableFields, StrictOmit } from "@/lib/types";
-import { assertUnreachable } from "@/lib/utils";
+import { NonNullableFields, RequiredFields, StrictOmit } from "@/lib/types";
 import { eq } from "drizzle-orm";
 import { db } from "../client";
-import { accountsTable } from "../schema/accounts";
 import { SchemaTransaction, transactionsTable } from "../schema/transactions";
+import {
+  updateAccountBalanceForDeletedTransaction,
+  updateAccountBalanceForInsertedTransaction,
+} from "./helpers";
 
 type InsertTransaction = typeof transactionsTable.$inferInsert;
 type ExpenseIncomeFields = NonNullableFields<
@@ -55,113 +57,17 @@ export type InsertTransactionPayload =
   | LoanFields
   | LoanPaymentFields;
 
-const updateAccountBalanceForNewTransaction = async (payload: InsertTransactionPayload) => {
-  switch (payload.type) {
-    case "expense":
-    case "lent":
-    case "paid_loan": {
-      const [account] = await db
-        .select()
-        .from(accountsTable)
-        .where(eq(accountsTable.id, payload.account_id));
-      if (!account || account.currency_code !== payload.amount_currency_code) {
-        throw new Error(
-          "Account does not exist or account currency does not match transaction currency"
-        );
-      }
-
-      await db
-        .update(accountsTable)
-        .set({
-          balance_value_in_minor_units:
-            account.balance_value_in_minor_units - payload.amount_value_in_minor_units,
-        })
-        .where(eq(accountsTable.id, account.id));
-      break;
-    }
-    case "income":
-    case "borrowed":
-    case "collected_debt": {
-      const [account] = await db
-        .select()
-        .from(accountsTable)
-        .where(eq(accountsTable.id, payload.account_id));
-      if (!account || account.currency_code !== payload.amount_currency_code) {
-        throw new Error(
-          "Account does not exist or account currency does not match transaction currency"
-        );
-      }
-
-      await db
-        .update(accountsTable)
-        .set({
-          balance_value_in_minor_units:
-            account.balance_value_in_minor_units + payload.amount_value_in_minor_units,
-        })
-        .where(eq(accountsTable.id, account.id));
-      break;
-    }
-    case "transfer":
-    case undefined:
-    case null: {
-      const [fromAccount] = await db
-        .select()
-        .from(accountsTable)
-        .where(eq(accountsTable.id, payload.from_account_id));
-      const [toAccount] = await db
-        .select()
-        .from(accountsTable)
-        .where(eq(accountsTable.id, payload.to_account_id));
-
-      if (
-        !fromAccount ||
-        !toAccount ||
-        fromAccount.currency_code !== payload.amount_currency_code
-      ) {
-        throw new Error(
-          "Sending or receiving account does not exist or account currency does not match transaction currency"
-        );
-      }
-
-      const convertedAmount = payload.amount_value_in_minor_units * payload.exchange_rate;
-
-      await db
-        .update(accountsTable)
-        .set({
-          balance_value_in_minor_units:
-            fromAccount.balance_value_in_minor_units - payload.amount_value_in_minor_units,
-        })
-        .where(eq(accountsTable.id, fromAccount.id));
-      await db
-        .update(accountsTable)
-        .set({
-          balance_value_in_minor_units: toAccount.balance_value_in_minor_units + convertedAmount,
-        })
-        .where(eq(accountsTable.id, toAccount.id));
-
-      break;
-    }
-    default:
-      assertUnreachable(payload);
-  }
-};
-
 export const insertTransaction = async (
   payload: InsertTransactionPayload
 ): Promise<SchemaTransaction> => {
   const transaction = await db.transaction(async (tx) => {
     const [transaction] = await db.insert(transactionsTable).values(payload).returning();
 
-    try {
-      await updateAccountBalanceForNewTransaction(payload);
-    } catch {
-      tx.rollback();
-    }
-
     if (!transaction) {
       return tx.rollback();
     }
 
+    await updateAccountBalanceForInsertedTransaction(transaction);
     return transaction;
   });
 
@@ -172,16 +78,64 @@ export const batchInsertTransaction = async (batchPayload: Array<InsertTransacti
   const transactions = await db.transaction(async (tx) => {
     const transactions = await db.insert(transactionsTable).values(batchPayload).returning();
 
-    for (let payload of batchPayload) {
-      try {
-        await updateAccountBalanceForNewTransaction(payload);
-      } catch {
-        tx.rollback();
-      }
+    for (let transaction of transactions) {
+      await updateAccountBalanceForInsertedTransaction(transaction);
     }
 
     return transactions;
   });
 
   return transactions;
+};
+
+type UpdateTransactionPayload = RequiredFields<Partial<InsertTransaction>, "type">;
+
+export const updateTransaction = async (
+  id: SchemaTransaction["id"],
+  payload: UpdateTransactionPayload
+): Promise<SchemaTransaction> => {
+  const [transaction] = await db
+    .select()
+    .from(transactionsTable)
+    .where(eq(transactionsTable.id, id));
+
+  if (!transaction) {
+    throw Error(`Transaction with id ${id} does not exist. Cannot update transaction`);
+  }
+
+  const updatedTransaction = await db.transaction(async (tx) => {
+    const [updated] = await db
+      .update(transactionsTable)
+      .set(payload)
+      .where(eq(transactionsTable.id, id))
+      .returning();
+
+    if (!updated) {
+      return tx.rollback();
+    }
+
+    // removing the previous transaction from the account and add the updated amount, updates the correct balance
+    await updateAccountBalanceForDeletedTransaction(transaction);
+    await updateAccountBalanceForInsertedTransaction(updated);
+
+    return updated;
+  });
+
+  return updatedTransaction;
+};
+
+export const deleteTransaction = async (id: SchemaTransaction["id"]) => {
+  const [transaction] = await db
+    .select()
+    .from(transactionsTable)
+    .where(eq(transactionsTable.id, id));
+
+  // todo: throw or fail silently
+  if (!transaction) {
+    throw Error(`Transaction with id ${id} does not exist. Cannot delete transaction`);
+  }
+  await db.transaction(async (tx) => {
+    await updateAccountBalanceForDeletedTransaction(transaction);
+    await db.delete(transactionsTable).where(eq(transactionsTable.id, id));
+  });
 };

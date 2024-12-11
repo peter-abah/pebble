@@ -1,85 +1,59 @@
-import { TimePeriod } from "@/components/time-period-picker";
 import { QueryTransaction } from "@/db/queries/transactions";
+import { SchemaAccount, SchemaBudget, SchemaTransaction } from "@/db/schema";
+import {
+  CREDIT_TRANSACTION_TYPES,
+  CreditTransactionType,
+  DEBIT_TRANSACTION_TYPES,
+  DebitTransactionType,
+} from "@/lib/constants";
+import { addMoney, convertMoney, createMoney } from "@/lib/money";
 import { AppStateProperties, useAppStore } from "@/lib/store";
-import { Budget, Currency, ExpenseTransaction, Filters, Money, Transaction } from "@/lib/types";
-import { dateToKey, groupTransactionsByPeriod } from "@/lib/utils";
+import { Currency, ExchangeRate, Money, StrictOmit } from "@/lib/types";
 import dayjs from "dayjs";
-import debounce from "lodash.debounce";
 import { memoizeWithArgs } from "proxy-memoize";
 import { pieDataItem } from "react-native-gifted-charts";
 import { SPECIAL_CATEGORIES } from "./data";
-import { convertMoney } from "./money";
-import { assertUnreachable } from "./utils";
 
-export const isTransactionInBudget = (
-  transaction: Transaction,
-  budget: Budget
-): transaction is ExpenseTransaction => {
-  //? only expense transaction is in budget
-  if (transaction.type !== "expense") return false;
-
-  let matchesPeriod: boolean;
-  switch (budget.period) {
-    case "weekly": {
-      const firstDayOfThisWeek = dayjs().day(0).format().slice(0, 10);
-      const firstDayOfTransactionWeek = dayjs(transaction.datetime).day(0).format().slice(0, 10);
-      matchesPeriod = firstDayOfThisWeek === firstDayOfTransactionWeek;
-      break;
-    }
-    case "monthly": {
-      const thisMonth = dayjs().format().slice(0, 7);
-      const transactionMonth = dayjs(transaction.datetime).format().slice(0, 7);
-      matchesPeriod = thisMonth === transactionMonth;
-      break;
-    }
-    case "yearly": {
-      const thisYear = dayjs().format().slice(0, 4);
-      const transactionYear = dayjs(transaction.datetime).format().slice(0, 4);
-      matchesPeriod = thisYear === transactionYear;
-      break;
-    }
-    default:
-      assertUnreachable(budget.period);
-  }
-
-  return (
-    budget.accounts.includes(transaction.accountID) &&
-    budget.categories.includes(transaction.categoryID) &&
-    matchesPeriod
-  );
-};
-
-interface PieDataItemCustom extends pieDataItem {
-  key: string;
+interface PieDataItemCustom<K extends PropertyKey = PropertyKey> extends pieDataItem {
+  key: K;
 }
 
 // ? assumes it is okay to add all transactions together and the transactions hace been filtered
 // ? before passing them to the function
 export const createChartData = memoizeWithArgs(
-  <T extends Transaction>(
-    transactions: Array<T>,
+  <K extends PropertyKey>(
+    transactions: Array<SchemaTransaction>,
     currencyCode: Currency["isoCode"],
     exchangeRates: AppStateProperties["exchangeRates"],
-    extractKey: (transaction: T) => string
+    extractKey: (transaction: SchemaTransaction) => K
   ) => {
     const chartDataMap = transactions.reduce((result, transaction) => {
       const key = extractKey(transaction);
       const dataItem = result[key];
       let amount: Money;
-      if (transaction.amount.currencyCode !== currencyCode) {
+      if (transaction.amount_currency_code !== currencyCode) {
         const exchangeRate =
-          exchangeRates[transaction.amount.currencyCode.toLocaleLowerCase()]?.rates[
+          exchangeRates[transaction.amount_currency_code.toLocaleLowerCase()]?.rates[
             currencyCode.toLocaleLowerCase()
           ];
         if (!exchangeRate) return result;
 
-        amount = convertMoney(transaction.amount, {
-          from: transaction.amount.currencyCode,
-          to: currencyCode,
-          rate: exchangeRate,
-        });
+        amount = convertMoney(
+          {
+            valueInMinorUnits: transaction.amount_value_in_minor_units,
+            currencyCode: transaction.amount_currency_code,
+          },
+          {
+            from: transaction.amount_currency_code,
+            to: currencyCode,
+            rate: exchangeRate,
+          }
+        );
       } else {
-        amount = transaction.amount;
+        amount = {
+          valueInMinorUnits: transaction.amount_value_in_minor_units,
+          currencyCode: transaction.amount_currency_code,
+        };
       }
 
       if (dataItem) {
@@ -94,8 +68,8 @@ export const createChartData = memoizeWithArgs(
         };
       }
       return result;
-    }, {} as Record<string, PieDataItemCustom>);
-    const chartData = Object.values(chartDataMap) as Array<PieDataItemCustom>;
+    }, {} as Record<K, PieDataItemCustom<K>>);
+    const chartData = Object.values(chartDataMap) as Array<PieDataItemCustom<K>>;
 
     // add distinct colors to each data item
     const colors = useAppStore.getState().chartColors;
@@ -107,53 +81,6 @@ export const createChartData = memoizeWithArgs(
     }
 
     return chartData;
-  }
-);
-
-export const searchTransactions = memoizeWithArgs(
-  (transactions: Array<Transaction>, search: string) => {
-    const trimmedSearch = search.trim();
-    if (trimmedSearch === "") return transactions;
-
-    return transactions.filter(
-      (transaction) =>
-        transaction.title && transaction.title.toLowerCase().includes(search.trim().toLowerCase())
-    );
-  }
-);
-
-export const debouncedSearchTransactions = debounce(searchTransactions, 200, {
-  leading: true,
-  trailing: true,
-});
-
-export const filterTransactions = memoizeWithArgs(
-  (
-    transactions: Array<Transaction>,
-    { search, filters, period }: { search: string; filters: Filters; period: TimePeriod }
-  ) => {
-    const transactionsForPeriod =
-      groupTransactionsByPeriod[period.period](transactions)[dateToKey(period)] || [];
-
-    const transactionsForSearch = debouncedSearchTransactions(transactionsForPeriod, search);
-
-    const transactionsForFilters = transactionsForSearch.filter(
-      (transaction) =>
-        (filters.accounts.length === 0 ||
-          (transaction.type === "transfer"
-            ? filters.accounts.includes(transaction.to) ||
-              filters.accounts.includes(transaction.from)
-            : filters.accounts.includes(transaction.accountID))) &&
-        (filters.categories.length === 0 ||
-          filters.categories.includes(
-            transaction.type === "expense" || transaction.type === "income"
-              ? transaction.categoryID
-              : ""
-          )) &&
-        (filters.types.length === 0 || filters.types.includes(transaction.type))
-    );
-
-    return transactionsForFilters;
   }
 );
 
@@ -179,7 +106,9 @@ export const renderDate = (datetime: string) => {
   return date.format("DD MMM YYYY");
 };
 
-export const getTransactionCategory = (transaction: QueryTransaction) => {
+export const getTransactionCategory = (
+  transaction: StrictOmit<QueryTransaction, "loanPaymentTransactions">
+) => {
   return (
     transaction.category ||
     (transaction.app_category_id
@@ -187,3 +116,140 @@ export const getTransactionCategory = (transaction: QueryTransaction) => {
       : SPECIAL_CATEGORIES.UNKNOWN)
   );
 };
+
+export const calculateAccountIncome = memoizeWithArgs(
+  (account: SchemaAccount, transactions: Array<QueryTransaction>) => {
+    return transactions
+      .filter((t) => {
+        if (t.type === "transfer") {
+          return t.to_account_id === account.id;
+        }
+        CREDIT_TRANSACTION_TYPES.includes(t.type as CreditTransactionType);
+      })
+      .reduce((acc, curr) => {
+        if (curr.type === "transfer") {
+          const exchangeRate: ExchangeRate = {
+            from: curr.fromAccount?.currency_code!,
+            to: curr.toAccount?.currency_code!,
+            rate: curr.exchange_rate!,
+          };
+          return addMoney(
+            acc,
+            convertMoney(
+              {
+                valueInMinorUnits: curr.amount_value_in_minor_units,
+                currencyCode: curr.amount_currency_code,
+              },
+              exchangeRate
+            )
+          );
+        }
+        return addMoney(acc, {
+          valueInMinorUnits: curr.amount_value_in_minor_units,
+          currencyCode: curr.amount_currency_code,
+        });
+      }, createMoney(0, account.currency_code));
+  }
+);
+
+export const calculateAccountExpenses = memoizeWithArgs(
+  (account: SchemaAccount, transactions: Array<QueryTransaction>) => {
+    return transactions
+      .filter((t) => {
+        if (t.type === "transfer") {
+          return t.from_account_id === account.id;
+        }
+        return DEBIT_TRANSACTION_TYPES.includes(t.type as DebitTransactionType);
+      })
+      .reduce(
+        (a, b) =>
+          addMoney(a, {
+            valueInMinorUnits: b.amount_value_in_minor_units,
+            currencyCode: b.amount_currency_code,
+          }),
+        createMoney(0, account.currency_code)
+      );
+  }
+);
+
+export const calculateAmountSpentInBudget = memoizeWithArgs(
+  (
+    budget: SchemaBudget,
+    transactions: Array<SchemaTransaction>,
+    exchangeRates: AppStateProperties["exchangeRates"]
+  ) => {
+    return transactions.reduce((result, transaction) => {
+      if (transaction.type !== "expense") return result;
+
+      if (result.currencyCode === transaction.amount_currency_code) {
+        return addMoney(result, {
+          valueInMinorUnits: transaction.amount_value_in_minor_units,
+          currencyCode: transaction.amount_currency_code,
+        });
+      }
+
+      const baseCurrencyCode = transaction.amount_currency_code.toLocaleLowerCase();
+      const convertedCurrencyCode = result.currencyCode.toLocaleLowerCase();
+      const exchangeRate = exchangeRates[baseCurrencyCode]?.rates[convertedCurrencyCode];
+      if (exchangeRate) {
+        const convertedAmount = convertMoney(
+          {
+            valueInMinorUnits: transaction.amount_value_in_minor_units,
+            currencyCode: transaction.amount_currency_code,
+          },
+          {
+            from: transaction.amount_currency_code,
+            to: budget.currency_code,
+            rate: exchangeRate,
+          }
+        );
+
+        return addMoney(result, convertedAmount);
+      }
+
+      console.warn(
+        `Exchange rate not found for ${baseCurrencyCode} to ${convertedCurrencyCode}. Transaction with id: ${transaction.id} skipped`
+      );
+      // todo: inform about skipped transaction due to no exchange rate
+      return result;
+    }, createMoney(0, budget.currency_code));
+  }
+);
+
+export const calculateAmountPaidInLoan = memoizeWithArgs(
+  (loan: QueryTransaction, exchangeRates: AppStateProperties["exchangeRates"]) => {
+    return loan.loanPaymentTransactions.reduce((result, transaction) => {
+      if (result.currencyCode === transaction.amount_currency_code) {
+        return addMoney(result, {
+          valueInMinorUnits: transaction.amount_value_in_minor_units,
+          currencyCode: transaction.amount_currency_code,
+        });
+      }
+
+      const baseCurrencyCode = transaction.amount_currency_code.toLocaleLowerCase();
+      const convertedCurrencyCode = result.currencyCode.toLocaleLowerCase();
+      const exchangeRate = exchangeRates[baseCurrencyCode]?.rates[convertedCurrencyCode];
+      if (exchangeRate) {
+        const convertedAmount = convertMoney(
+          {
+            valueInMinorUnits: transaction.amount_value_in_minor_units,
+            currencyCode: transaction.amount_currency_code,
+          },
+          {
+            from: transaction.amount_currency_code,
+            to: result.currencyCode,
+            rate: exchangeRate,
+          }
+        );
+
+        return addMoney(result, convertedAmount);
+      }
+
+      console.warn(
+        `Exchange rate not found for ${baseCurrencyCode} to ${convertedCurrencyCode}. Transaction with id: ${transaction.id} skipped`
+      );
+      // todo: inform about skipped transaction due to no exchange rate
+      return result;
+    }, createMoney(0, loan.amount_currency_code));
+  }
+);

@@ -1,30 +1,33 @@
 import { Button } from "@/components/ui/button";
 import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Text } from "@/components/ui/text";
 import { ShapesIcon } from "@/lib/icons/Shapes";
-import { useAppStore } from "@/lib/store";
-import { TransactionCategory } from "@/lib/types";
-import { cn } from "@/lib/utils";
+
+import { getCategories } from "@/db/queries/categories";
+import { SchemaCategory } from "@/db/schema";
+import { arrayToMap, cn } from "@/lib/utils";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useMemo } from "react";
 import { Dimensions, Pressable, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Icon } from "./icon";
 
 interface CategoriesInputProps {
-  value?: Array<TransactionCategory["id"]>;
-  onChange: (v: Array<TransactionCategory["id"]>) => void;
+  value?: Array<SchemaCategory["id"]>;
+  onChange: (v: Array<SchemaCategory["id"]>) => void;
 }
 export const CategoriesInput = ({ value, onChange }: CategoriesInputProps) => {
-  const categoriesMap = useAppStore((state) => state.categories);
-  const categories = Object.values(categoriesMap) as Array<TransactionCategory>;
+  const { data: categories } = useLiveQuery(getCategories());
+  const categoriesMap = useMemo(() => arrayToMap(categories, ({ id }) => id), [categories]);
 
-  const handleCategoryClick = (id: TransactionCategory["id"]) => {
+  const handleCategoryClick = (id: SchemaCategory["id"]) => {
     if (!value) {
       onChange([id]);
       return;
@@ -39,7 +42,7 @@ export const CategoriesInput = ({ value, onChange }: CategoriesInputProps) => {
       return "Select Category";
     }
     if (value.length === 1) {
-      return categoriesMap[value[0] as string]?.name;
+      return categoriesMap[value[0]!]?.name;
     }
     if (value.length === categories.length) {
       return "All";

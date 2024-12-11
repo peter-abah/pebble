@@ -3,92 +3,59 @@ import FloatingAddButton from "@/components/floating-add-button";
 import { usePromptModal } from "@/components/prompt-modal";
 import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
-import TimePeriodPicker, { TimePeriod } from "@/components/time-period-picker";
+import TimePeriodPicker from "@/components/time-period-picker";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { deleteAccount } from "@/db/mutations/accounts";
+import { getAccounts } from "@/db/queries/accounts";
+import { getTransactions } from "@/db/queries/transactions";
+import { calculateAccountExpenses, calculateAccountIncome } from "@/lib/app-utils";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { PencilIcon } from "@/lib/icons/Pencil";
 import { TrashIcon } from "@/lib/icons/Trash";
 import { TrendingDownIcon } from "@/lib/icons/TrendingDown";
 import { TrendingUpIcon } from "@/lib/icons/TrendingUp";
-import { addMoney, convertMoney, createMoney, formatMoney } from "@/lib/money";
-import { useAppStore } from "@/lib/store";
-import { Transaction } from "@/lib/types";
-import { dateToKey, groupTransactionsByPeriod } from "@/lib/utils";
+import { formatMoney } from "@/lib/money";
+import { TimePeriod } from "@/lib/types";
+import { valueToNumber } from "@/lib/utils";
 import dayjs from "dayjs";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link, router, useLocalSearchParams } from "expo-router";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { FlatList, View } from "react-native";
 
 const AccountScreen = () => {
-  const { id } = useLocalSearchParams() as { id: string };
-  const account = useAppStore((state) => state.accounts[id]);
-  const { deleteAccount } = useAppStore((state) => state.actions);
+  const params = useLocalSearchParams() as { id?: string };
+  const id = valueToNumber(params.id);
+  const {
+    data: [account],
+  } = useLiveQuery(
+    getAccounts({ ids: id !== undefined ? [id] : undefined, limit: id !== undefined ? 1 : 0 })
+  );
 
   const [currentTimePeriod, setCurrentTimePeriod] = useState<TimePeriod>(() => ({
     date: dayjs(),
     period: "monthly",
   }));
 
-  const transactionsMap = useAppStore((state) => state.transactions);
-  const transactions = useMemo(
-    () => Object.values(transactionsMap) as Array<Transaction>,
-    [transactionsMap]
+  const { data: transactions } = useLiveQuery(
+    getTransactions({
+      period: currentTimePeriod,
+      sortBy: [{ column: "datetime", type: "desc" }],
+      accounts: account?.id ? [account.id] : undefined,
+      limit: account?.id ? undefined : 0,
+    }),
+    [currentTimePeriod, account?.id]
   );
 
-  const accountTransactions = useMemo(() => {
-    if (!account) return [];
-    // filter transactions by account and sort by date in descending order
-    return transactions
-      .filter((t) =>
-        t.type === "transfer"
-          ? t.to === account.id || t.from === account.id
-          : t.accountID === account.id
-      )
-      .sort((a, b) => b.datetime.localeCompare(a.datetime));
-  }, [transactions, account]);
+  const income = account ? calculateAccountIncome(account, transactions) : null;
+  const expenses = account ? calculateAccountExpenses(account, transactions) : null;
 
-  const currentTransactions =
-    groupTransactionsByPeriod[currentTimePeriod.period](accountTransactions)[
-      dateToKey(currentTimePeriod)
-    ];
-
-  const income = useMemo(() => {
-    if (!account) return null;
-
-    return (currentTransactions || [])
-      .filter((t) => {
-        if (t.type === "transfer") {
-          return t.to === account.id;
-        }
-        return t.type === "income";
-      })
-      .reduce((acc, curr) => {
-        if (curr.type === "transfer") {
-          return addMoney(acc, convertMoney(curr.amount, curr.exchangeRate));
-        }
-        return addMoney(acc, curr.amount);
-      }, createMoney(0, account.currency));
-  }, [currentTransactions, account]);
-
-  const expenses = useMemo(() => {
-    if (!account) return null;
-
-    return (currentTransactions || [])
-      ?.filter((t) => {
-        if (t.type === "transfer") {
-          return t.from === account.id;
-        }
-        return t.type === "expense";
-      })
-      .reduce((a, b) => addMoney(a, b.amount), createMoney(0, account.currency));
-  }, [currentTransactions, account]);
-
-  const onDelete = () => {
+  const onDelete = async () => {
     if (!account) return;
 
-    deleteAccount(account.id);
+    await deleteAccount(account.id);
     router.back();
   };
 
@@ -141,7 +108,12 @@ const AccountScreen = () => {
 
       <View className="px-6 gap-2 py-2">
         <Text className="text-sm font-bold text-muted-foreground">Total balance</Text>
-        <Text className="font-bold text-2xl">{formatMoney(account.balance)}</Text>
+        <Text className="font-bold text-2xl">
+          {formatMoney({
+            valueInMinorUnits: account.balance_value_in_minor_units,
+            currencyCode: account.currency_code,
+          })}
+        </Text>
       </View>
 
       <View className="flex-row gap-4 py-2 px-6">
@@ -176,8 +148,8 @@ const AccountScreen = () => {
       </View>
 
       <FlatList
-        data={currentTransactions}
-        keyExtractor={(item) => item.id}
+        data={transactions}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Link
             href={
@@ -194,7 +166,7 @@ const AccountScreen = () => {
         ListEmptyComponent={<EmptyState title="No transactions to show" />}
       />
 
-      <Link href={`/transactions/new?accountID=${account.id}`} asChild>
+      <Link href={`/transactions/new?account_id=${account.id}`} asChild>
         <FloatingAddButton />
       </Link>
       <DeleteModal />

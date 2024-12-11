@@ -3,26 +3,33 @@ import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { updateAccount } from "@/db/mutations/accounts";
+import { getAccounts } from "@/db/queries/accounts";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
-import { useAppStore } from "@/lib/store";
+import { valueToNumber } from "@/lib/utils";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 
 const EditAccount = () => {
-  const { id } = useLocalSearchParams() as { id: string };
-  const { updateAccount } = useAppStore((state) => state.actions);
-  const account = useAppStore((state) => state.accounts[id]);
+  const params = useLocalSearchParams() as { id?: string };
+  const id = valueToNumber(params.id);
+  const {
+    data: [account],
+  } = useLiveQuery(
+    getAccounts({ ids: id !== undefined ? [id] : undefined, limit: id !== undefined ? 1 : 0 }),
+    [id]
+  );
 
-  const onSubmit = ({ name, currency: currencyISO, color }: FormSchema) => {
-    const currency = CURRENCIES_MAP[currencyISO];
+  const onSubmit = ({ name, currencyCode, color }: FormSchema) => {
+    const currency = CURRENCIES_MAP[currencyCode];
     if (!account || !currency) return;
 
-    updateAccount({
-      ...account,
+    updateAccount(account.id, {
       name,
       color,
-      currency,
+      currency_code: currencyCode,
     });
     router.back();
   };
@@ -48,7 +55,7 @@ const EditAccount = () => {
       <EditAccountForm
         defaultValues={{
           name: account.name,
-          currency: account.currency.isoCode,
+          currencyCode: account.currency_code,
           color: account.color,
         }}
         onSubmit={onSubmit}

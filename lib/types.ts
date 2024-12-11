@@ -1,3 +1,6 @@
+import { SchemaCategory, SchemaTransaction } from "@/db/schema";
+import { Dayjs } from "dayjs";
+
 // todo: move gen types to separate file
 export type PartialRecord<K extends string | number | symbol, T> = Partial<Record<K, T>>;
 export type AtLeast<T, K extends keyof T> = Partial<T> & Pick<T, K>;
@@ -64,111 +67,21 @@ export type Icon =
       type: "emoji";
     };
 
-export interface TransactionCategory extends WithTimestamps {
-  name: string;
-  id: string; // unique
-  parentID?: string | null;
-  color: string; // css color
-  icon: Icon;
-  type?: Extract<TransactionType, "expense" | "income">; // if undefined, then applies to all types
-}
-
-export interface Account extends WithTimestamps {
-  name: string;
-  id: string;
-  balance: Money;
-  color: string;
-  currency: Currency;
-}
-
 export interface ExchangeRate {
   from: Currency["isoCode"];
   to: Currency["isoCode"];
   rate: number;
 }
 
-interface BaseTransaction extends WithTimestamps {
-  id: string; // unique
-  amount: Money;
-  datetime: string;
-  title?: string;
-  note?: string;
-}
-
-export interface NormalTransaction extends BaseTransaction {
-  type: "expense" | "income";
-  categoryID: TransactionCategory["id"];
-  accountID: Account["id"];
-}
-
-export interface ExpenseTransaction extends NormalTransaction {
-  type: "expense";
-}
-
-export interface IncomeTransaction extends NormalTransaction {
-  type: "income";
-}
-
-export interface TransferTransaction extends BaseTransaction {
-  type: "transfer";
-  from: Account["id"];
-  to: Account["id"];
-  exchangeRate: ExchangeRate;
-}
-
-export interface LoanTransaction extends BaseTransaction {
-  type: "lent" | "borrowed";
-  accountID: Account["id"];
-  dueDate?: string;
-  title: string;
-  // todo: support interest rates
-}
-
-export interface LentTransaction extends LoanTransaction {
-  type: "lent";
-}
-export interface BorrowedTransaction extends LoanTransaction {
-  type: "borrowed";
-}
-
-export interface LoanPaymentTransaction extends BaseTransaction {
-  type: "paid_loan" | "collected_debt";
-  loanID: LoanTransaction["id"];
-  accountID: Account["id"];
-}
-
-export interface PaidLoanTransaction extends LoanPaymentTransaction {
-  type: "paid_loan";
-}
-
-export interface CollectedDebtTransaction extends LoanPaymentTransaction {
-  type: "collected_debt";
-}
-
-export type Transaction =
-  | IncomeTransaction
-  | ExpenseTransaction
-  | TransferTransaction
-  | LentTransaction
-  | BorrowedTransaction
-  | PaidLoanTransaction
-  | CollectedDebtTransaction;
-
-export type TransactionType = Transaction["type"];
-
-export interface Budget extends WithTimestamps {
-  id: string;
-  name: string;
-  categories: Array<TransactionCategory["id"]>;
-  accounts: Array<Account["id"]>;
-  period: "weekly" | "monthly" | "yearly";
-  amount: Money;
-  color: string;
-}
-
 // UI STUFF
 export interface Filters {
-  categories: Array<TransactionCategory["id"]>;
-  types: Array<TransactionType>;
-  accounts: Array<Account["id"]>;
+  categories: Array<SchemaCategory["id"]>;
+  types: Array<SchemaTransaction["type"]>;
+  accounts: Array<SchemaTransaction["id"]>;
+}
+
+export const PERIODS = ["monthly", "weekly", "yearly", "all time"] as const;
+export interface TimePeriod {
+  period: (typeof PERIODS)[number];
+  date: Dayjs;
 }

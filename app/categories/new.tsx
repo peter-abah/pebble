@@ -2,25 +2,23 @@ import CategoryForm, { FormSchema } from "@/components/category-form";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { insertCategory } from "@/db/mutations/categories";
 import { GROUP_COLORS } from "@/lib/constants";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { CATEGORY_ICONS_NAMES } from "@/lib/icons/category-icons";
-import { useAppStore } from "@/lib/store";
 import { randomElement } from "@/lib/utils";
 import { router } from "expo-router";
 import { View } from "react-native";
 
+// todo: sub categories
 const CreateCategory = () => {
-  const { addCategory } = useAppStore((state) => state.actions);
-
   const onSubmit = ({ name, icon, color, iconType, type, parentID }: FormSchema) => {
-    addCategory({
+    insertCategory({
       name,
       icon:
         iconType === "emoji"
           ? { type: iconType, emoji: icon }
           : { type: iconType, name: icon as (typeof CATEGORY_ICONS_NAMES)[number] },
-      parentID,
       type,
       color,
     });
