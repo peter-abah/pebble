@@ -2,12 +2,21 @@ import { getAccounts } from "@/db/queries/accounts";
 import { getBudgets } from "@/db/queries/budgets";
 import { fetchExchangeRates } from "@/lib/api";
 import { useAppStore } from "@/lib/store";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo } from "react";
 
 export const useUpdateExchangeRate = () => {
-  const { data: accounts } = useLiveQuery(getAccounts());
-  const { data: budgets } = useLiveQuery(getBudgets());
+  const { data: accounts } = useQuery({
+    queryKey: ["accounts"],
+    queryFn: () => getAccounts(),
+    initialData: [],
+  });
+  const { data: budgets } = useQuery({
+    queryKey: ["budgets"],
+    queryFn: () => getBudgets(),
+    initialData: [],
+  });
+
   const exchangeRates = useAppStore((state) => state.exchangeRates);
   const { updateExchangeRate } = useAppStore((state) => state.actions);
   const currencyCodes = useMemo(

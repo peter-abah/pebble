@@ -11,10 +11,11 @@ import {
 import { Text } from "@/components/ui/text";
 import { getMainAccount } from "@/db/queries/accounts";
 import { CURRENCIES, CURRENCIES_MAP } from "@/lib/data/currencies";
+import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { renderCurrencyLabel } from "@/lib/money";
 import { isStringNumeric, titleCase } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useQuery } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 import { TextInput, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -23,6 +24,8 @@ import * as z from "zod";
 import { AccountsInput } from "./accounts-input";
 import { CategoriesInput } from "./categories-input";
 import ColorPicker from "./color-picker";
+import EmptyState from "./empty-state";
+import ResourceNotFound from "./resource-not-found";
 
 const PERIODS = ["weekly", "monthly", "yearly"] as const;
 const formSchema = z.object({
@@ -65,16 +68,6 @@ const BudgetForm = ({ defaultValues, onSubmit }: BudgetFormProps) => {
     resolver: zodResolver(formSchema),
   });
 
-  const { data } = useLiveQuery(getMainAccount());
-  const mainAccount = data?.account;
-  if (!mainAccount) {
-    throw new Error("You should have a main account"); // todo
-  }
-
-  const defaultCurrency = CURRENCIES_MAP[mainAccount.currency_code];
-  const currencyISO = watch("currency");
-  const currency = CURRENCIES_MAP[currencyISO];
-
   const insets = useSafeAreaInsets();
   const contentInsets = {
     top: insets.top,
@@ -82,6 +75,36 @@ const BudgetForm = ({ defaultValues, onSubmit }: BudgetFormProps) => {
     left: 24,
     right: 24,
   };
+
+  const {
+    data,
+    isError: isMainAccountError,
+    isPending: isMainAccountPending,
+  } = useQuery({
+    queryKey: ["accounts", "mainAccount"],
+    queryFn: () => getMainAccount(),
+  });
+
+  if (isMainAccountPending) {
+    return (
+      <EmptyState
+        title="Loading..."
+        icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
+      />
+    );
+  }
+  if (isMainAccountError) {
+    return <ResourceNotFound title="An error occured fetching  data" />;
+  }
+
+  const mainAccount = data?.account;
+  if (!mainAccount) {
+    //todo: alert and redirect to set main account
+    throw new Error("You should have a main account");
+  }
+  const defaultCurrency = CURRENCIES_MAP[mainAccount.currency_code];
+  const currencyISO = watch("currency");
+  const currency = CURRENCIES_MAP[currencyISO];
 
   return (
     <View style={{ flex: 1 }}>

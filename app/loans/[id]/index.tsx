@@ -7,16 +7,17 @@ import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { deleteTransaction } from "@/db/mutations/transactions";
-import { getTransactions } from "@/db/queries/transactions";
+import { getTransaction } from "@/db/queries/transactions";
 import { calculateAmountPaidInLoan, renderDate } from "@/lib/app-utils";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
+import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { PencilIcon } from "@/lib/icons/Pencil";
 import { TrashIcon } from "@/lib/icons/Trash";
 import { convertTransactionAmountToMoney, formatMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { cn, valueToNumber } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link, Redirect, router, useLocalSearchParams } from "expo-router";
 import { FlatList, View } from "react-native";
 
@@ -24,14 +25,13 @@ const LoanScreen = () => {
   const params = useLocalSearchParams() as { id?: string };
   const id = valueToNumber(params.id);
   const {
-    data: [loan],
-  } = useLiveQuery(
-    getTransactions({
-      ids: id !== undefined ? [id] : undefined,
-      limit: id !== undefined ? 1 : undefined,
-    }),
-    [id]
-  );
+    data: loan,
+    isPending: isLoanPending,
+    isError: isLoanError,
+  } = useQuery({
+    queryKey: ["transactions", id],
+    queryFn: () => (id ? getTransaction(id) : undefined),
+  });
 
   const exchangeRates = useAppStore((state) => state.exchangeRates);
 
@@ -45,6 +45,19 @@ const LoanScreen = () => {
     title: `Are you sure you want to delete ${loan?.title} loan.`,
     onConfirm: onDelete,
   });
+
+  if (isLoanPending) {
+    return (
+      <EmptyState
+        title="Loading..."
+        icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
+      />
+    );
+  }
+
+  if (isLoanError) {
+    return <ResourceNotFound title="An error occured fetching loan" />;
+  }
 
   if (!loan) {
     return <ResourceNotFound title="Loan does not exist" />;

@@ -12,7 +12,7 @@ import { getTransactions, QueryTransaction } from "@/db/queries/transactions";
 import { convertTransactionAmountToMoney, formatMoney } from "@/lib/money";
 import { Filters } from "@/lib/types";
 import { arrayToMap, assertUnreachable } from "@/lib/utils";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useQuery } from "@tanstack/react-query";
 import { memoize } from "proxy-memoize";
 import { useMemo, useState } from "react";
 import { Dimensions, FlatList } from "react-native";
@@ -33,10 +33,11 @@ const TransactionPicker = ({
 }: TransactionPickerProps) => {
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const { data: transactions } = useLiveQuery(getTransactions({ search, ...filters }), [
-    search,
-    filters,
-  ]);
+  const { data: transactions, isError: isTransactionsError } = useQuery({
+    queryKey: ["transactions", { search, ...filters }],
+    queryFn: () => getTransactions({ search, ...filters }),
+    initialData: [],
+  });
   const transactionsMap = useMemo(() => arrayToMap(transactions, ({ id }) => id), [transactions]);
   const transaction = value ? transactionsMap[value] : undefined;
 
@@ -92,15 +93,19 @@ const TransactionPicker = ({
           />
         </DialogHeader>
 
-        <FlatList
-          data={transactions}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <TransactionCard transaction={item} onPress={() => handleTransactionClick(item.id)} />
-          )}
-          className="flex-1 py-2"
-          ListEmptyComponent={<EmptyState title="No transactions to show" />}
-        />
+        {isTransactionsError ? (
+          <Text className="py-2"> An error occured fetching transactions</Text>
+        ) : (
+          <FlatList
+            data={transactions}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <TransactionCard transaction={item} onPress={() => handleTransactionClick(item.id)} />
+            )}
+            className="flex-1 py-2"
+            ListEmptyComponent={<EmptyState title="No transactions to show" />}
+          />
+        )}
 
         <DialogClose asChild>
           <Button className="mt-4">

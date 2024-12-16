@@ -1,4 +1,4 @@
-import { and, asc, desc, inArray, like, SQL, sql } from "drizzle-orm";
+import { and, asc, desc, eq, inArray, like, SQL, sql } from "drizzle-orm";
 import { db } from "../client";
 import { categoriesTable, SchemaCategory } from "../schema";
 
@@ -21,6 +21,12 @@ export const getCategories = (options?: GetCategoriesOptions) => {
     orderBy,
     where: and(...filters),
     limit: options?.limit && options.limit,
+  });
+};
+
+export const getCategory = (id: SchemaCategory["id"]) => {
+  return db.query.categoriesTable.findFirst({
+    where: eq(categoriesTable.id, id),
   });
 };
 

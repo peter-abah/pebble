@@ -21,14 +21,15 @@ import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { useAppStore } from "@/lib/store";
 import { arrayToMap, cn, humanizeString, isStringNumeric } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
+import ResourceNotFound from "./resource-not-found";
 import TransactionPicker from "./transaction-picker";
 
 const baseTransactionFormSchema = z.object({
@@ -125,10 +126,19 @@ interface TransactionFormProps {
   onSubmit: (values: FormSchema) => void;
 }
 const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
-  const { data: categories } = useLiveQuery(getCategories());
-  const { data: accounts } = useLiveQuery(getAccounts());
+  const { data: accounts, isError: isAccountsError } = useQuery({
+    queryKey: ["accounts"],
+    queryFn: () => getAccounts(),
+    initialData: [],
+  });
   const accountsMap = useMemo(() => arrayToMap(accounts, ({ id }) => id), [accounts]);
+  const { data: categories, isError: isCategoriesError } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () => getCategories(),
+    initialData: [],
+  });
   const categoriesMap = useMemo(() => arrayToMap(categories, ({ id }) => id), [categories]);
+
   const exchangeRates = useAppStore((state) => state.exchangeRates);
 
   const {
@@ -161,6 +171,10 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
     left: 12,
     right: 12,
   };
+
+  if (isCategoriesError || isAccountsError) {
+    return <ResourceNotFound title="An error occured" />;
+  }
 
   // TODO: go to next input after finishing  input
   return (

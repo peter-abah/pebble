@@ -1,6 +1,7 @@
-import { and, asc, desc, inArray, like, SQL, sql } from "drizzle-orm";
+import { and, asc, desc, eq, inArray, like, SQL, sql } from "drizzle-orm";
 import { db } from "../client";
 import { accountsTable, mainAccountsTable, SchemaAccount } from "../schema";
+import { transactionRelationFields } from "./transactions";
 
 interface GetAccountsOptions {
   search?: string;
@@ -18,9 +19,29 @@ export const getAccounts = (options?: GetAccountsOptions) => {
   return db.query.accountsTable.findMany({
     orderBy,
     where: and(...filters),
+
     limit: options?.limit && options.limit,
   });
 };
+
+export const getAccount = (id: SchemaAccount["id"]) => {
+  return db.query.accountsTable.findFirst({
+    where: eq(accountsTable.id, id),
+    with: {
+      toTransactions: {
+        with: transactionRelationFields,
+      },
+      fromTransactions: {
+        with: transactionRelationFields,
+      },
+      otherTransactions: {
+        with: transactionRelationFields,
+      },
+    },
+  });
+};
+
+export type QueryAccount = Awaited<ReturnType<typeof getAccount>>;
 
 const buildAccountsFilters = ({ search, ids }: GetAccountsOptions) => {
   const filters: Array<SQL> = [];

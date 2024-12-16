@@ -1,21 +1,21 @@
 import EmptyState from "@/components/empty-state";
+import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker from "@/components/time-period-picker";
 import { Text } from "@/components/ui/text";
-import { db } from "@/db/client";
 import { getMainAccount } from "@/db/queries/accounts";
 import { getCategories } from "@/db/queries/categories";
 import { getTransactions } from "@/db/queries/transactions";
-import { mainAccountsTable } from "@/db/schema";
 import { createChartData } from "@/lib/app-utils";
 import { CREDIT_TRANSACTION_TYPES, DEBIT_TRANSACTION_TYPES } from "@/lib/constants";
 import { SPECIAL_CATEGORIES } from "@/lib/data";
+import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { formatMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { TimePeriod } from "@/lib/types";
 import { arrayToMap, assertUnreachable, cn } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { vars } from "nativewind";
 import { useMemo, useState } from "react";
 import { Pressable, ScrollView, View } from "react-native";
@@ -26,30 +26,58 @@ const BORROWED_TRANSACTIONS_CHART_ID = "BORROWED_TRANSACTIONS_CHART_ID";
 const PAID_LOAN_TRANSACTIONS_CHART_ID = "PAID_LOAN_TRANSACTIONS_CHART_ID";
 const COLLECTED_DEBT_TRANSACTIONS_CHART_ID = "COLLECTED_DEBT_TRANSACTIONS_CHART_ID";
 const UNKNOWN_TYPE_CHART_ID = "UNKNOWN_TYPE_CHART_ID";
-const f = async () => {
-  const res = await db.select().from(mainAccountsTable);
-  console.log({ res });
-};
+
 const Stats = () => {
-  f();
   const [transactionType, setTransactionType] = useState<"minus" | "plus">("minus");
   const [currentTimePeriod, setCurrentTimePeriod] = useState<TimePeriod>(() => ({
     date: dayjs(),
     period: "monthly",
   }));
   const exchangeRates = useAppStore((state) => state.exchangeRates);
-  const { data: transactions } = useLiveQuery(
-    getTransactions({
-      period: currentTimePeriod,
-      types: transactionType === "minus" ? DEBIT_TRANSACTION_TYPES : CREDIT_TRANSACTION_TYPES,
-    }),
-    [currentTimePeriod, transactionType]
-  );
-  const { data: categories } = useLiveQuery(getCategories());
-  const categoryMap = useMemo(() => arrayToMap(categories, ({ id }) => id), [categories]);
+  const { data: transactions, isError: isTransactionsError } = useQuery({
+    queryKey: [
+      "transactions",
+      {
+        period: currentTimePeriod,
+        type: transactionType,
+      },
+    ],
+    queryFn: () =>
+      getTransactions({
+        period: currentTimePeriod,
+        types: transactionType === "minus" ? DEBIT_TRANSACTION_TYPES : CREDIT_TRANSACTION_TYPES,
+      }),
+    initialData: [],
+  });
+  const { data: categories, isError: isCategoriesError } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () => getCategories(),
+    initialData: [],
+  });
+  const categoriesMap = useMemo(() => arrayToMap(categories, ({ id }) => id), [categories]);
 
-  const { data } = useLiveQuery(getMainAccount());
-  console.log({ data });
+  const {
+    data,
+    isError: isMainAccountError,
+    isPending: isMainAccountPending,
+  } = useQuery({
+    queryKey: ["accounts", "mainAccount"],
+    queryFn: () => getMainAccount(),
+  });
+
+  if (isMainAccountPending) {
+    return (
+      <EmptyState
+        title="Loading..."
+        icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
+      />
+    );
+  }
+
+  if (isCategoriesError || isTransactionsError || isMainAccountError) {
+    return <ResourceNotFound title="An error occured fetching stats data" />;
+  }
+
   const mainAccount = data?.account;
   if (!mainAccount) {
     //todo: alert and redirect to set main account
@@ -78,7 +106,7 @@ const Stats = () => {
 
   const getDataLabel = (key: string | number): string => {
     if (typeof key === "number") {
-      return categoryMap[key]?.name || SPECIAL_CATEGORIES.UNKNOWN.name;
+      return categoriesMap[key]?.name || SPECIAL_CATEGORIES.UNKNOWN.name;
     }
 
     switch (key) {
@@ -94,6 +122,7 @@ const Stats = () => {
         return SPECIAL_CATEGORIES[key]?.name || SPECIAL_CATEGORIES.UNKNOWN.name;
     }
   };
+
   return (
     <ScreenWrapper className="!pb-6">
       <View className="flex-row gap-4 items-center py-4 px-6 justify-between">

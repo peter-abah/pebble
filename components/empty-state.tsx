@@ -9,9 +9,10 @@ interface EmptyStateProps {
   icon?: ReactNode;
 }
 
+// todo: rename to more general name
 const EmptyState = ({ title, description, icon }: EmptyStateProps) => {
   return (
-    <View className="flex-1 justify-center items-center pt-10">
+    <View className="flex-1 justify-center items-center py-10 border">
       <View className="p-10 rounded-full bg-muted mb-6">
         {icon ? (
           icon

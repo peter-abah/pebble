@@ -1,16 +1,18 @@
 import BudgetForm, { FormSchema } from "@/components/budget-form";
+import EmptyState from "@/components/empty-state";
 import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { updateBudget } from "@/db/mutations/budgets";
-import { getBudgets } from "@/db/queries/budgets";
+import { getBudget } from "@/db/queries/budgets";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
+import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { calcMoneyValueInMajorUnits } from "@/lib/money";
 import { NonEmptyArray } from "@/lib/types";
 import { valueToNumber } from "@/lib/utils";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useQuery } from "@tanstack/react-query";
 import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 
@@ -18,11 +20,13 @@ const EditBudget = () => {
   const params = useLocalSearchParams<{ id: string }>();
   const id = valueToNumber(params.id);
   const {
-    data: [budget],
-  } = useLiveQuery(
-    getBudgets({ ids: id !== undefined ? [id] : undefined, limit: id !== undefined ? 1 : 0 }),
-    [id]
-  );
+    data: budget,
+    isPending: isBudgetPending,
+    isError: isBudgetError,
+  } = useQuery({
+    queryKey: ["budgets", id],
+    queryFn: () => (id ? getBudget(id) : undefined),
+  });
 
   const onSubmit = ({
     name,
@@ -52,8 +56,21 @@ const EditBudget = () => {
     router.back();
   };
 
+  if (isBudgetError) {
+    return <ResourceNotFound title="An error occured fetching budget" />;
+  }
+
+  if (isBudgetPending) {
+    return (
+      <EmptyState
+        title="Loading..."
+        icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
+      />
+    );
+  }
+
   if (!budget) {
-    return <ResourceNotFound title="Budget does not exist" />;
+    return <ResourceNotFound title="Budget not found" />;
   }
 
   return (

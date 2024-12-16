@@ -1,6 +1,6 @@
 import { TimePeriod } from "@/lib/types";
 import { assertUnreachable } from "@/lib/utils";
-import { and, asc, between, desc, inArray, like, or, sql, SQL } from "drizzle-orm";
+import { and, asc, between, desc, eq, inArray, like, or, sql, SQL } from "drizzle-orm";
 import { db } from "../client";
 import { SchemaAccount, SchemaCategory, SchemaTransaction, transactionsTable } from "../schema";
 
@@ -15,6 +15,24 @@ interface GetTransactionsOptions {
   limit?: number;
 }
 
+export const transactionRelationFields = Object.freeze({
+  category: true,
+  account: true,
+  fromAccount: true,
+  toAccount: true,
+  loanTransaction: true,
+  loanPaymentTransactions: {
+    with: Object.freeze({
+      category: true,
+      account: true,
+      fromAccount: true,
+      toAccount: true,
+      loanTransaction: true,
+    }),
+  },
+});
+
+// todo: sort by default
 export const getTransactions = (options?: GetTransactionsOptions) => {
   const orderBy = options?.sortBy
     ? options.sortBy.map(({ column, type }) =>
@@ -26,25 +44,19 @@ export const getTransactions = (options?: GetTransactionsOptions) => {
   return db.query.transactionsTable.findMany({
     orderBy,
     where: and(...filters),
-    with: {
-      category: true,
-      account: true,
-      fromAccount: true,
-      toAccount: true,
-      loanTransaction: true,
-      loanPaymentTransactions: {
-        with: {
-          category: true,
-          account: true,
-          fromAccount: true,
-          toAccount: true,
-          loanTransaction: true,
-        },
-      },
-    },
+    with: transactionRelationFields,
     limit: options?.limit ? options.limit : undefined,
   });
 };
+
+export const getTransaction = (id: SchemaTransaction["id"]) => {
+  return db.query.transactionsTable.findFirst({
+    where: eq(transactionsTable.id, id),
+    with: transactionRelationFields,
+  });
+};
+
+export type QueryTransaction = NonNullable<Awaited<ReturnType<typeof getTransaction>>>;
 
 const buildTransactionsFilters = ({
   search,
@@ -102,5 +114,3 @@ const buildTransactionsFilters = ({
 
   return filters;
 };
-
-export type QueryTransaction = Awaited<ReturnType<typeof getTransactions>>[number];

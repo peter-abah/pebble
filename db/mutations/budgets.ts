@@ -1,6 +1,7 @@
+import { setDifference } from "@/lib/utils";
 import { and, eq, inArray } from "drizzle-orm";
 import { db } from "../client";
-import { getBudgets, QueryBudget } from "../queries/budgets";
+import { getBudget, QueryBudget } from "../queries/budgets";
 import {
   budgetsAccountsTable,
   budgetsCategoriesTable,
@@ -9,7 +10,6 @@ import {
   SchemaBudget,
   SchemaCategory,
 } from "../schema";
-import { setDifference } from "@/lib/utils";
 
 type InsertBudgetPayload = typeof budgetsTable.$inferInsert & {
   accounts: Array<SchemaAccount["id"]>;
@@ -44,7 +44,7 @@ export const updateBudget = async (
   id: SchemaBudget["id"],
   payload: Partial<InsertBudgetPayload>
 ) => {
-  const [budget] = await getBudgets({ ids: [id] });
+  const budget = await getBudget(id);
   if (!budget) {
     // todo: to fail silently or to throw an error
     throw new Error(`Budget with id ${id} does not exist`);

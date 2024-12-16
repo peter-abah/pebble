@@ -1,9 +1,10 @@
+import { useUpdateExchangeRate } from "@/hooks/use-update-exchange-rates";
 import "../global.css";
 
 import { useLoadApp } from "@/hooks/use-load-app";
-import { useUpdateExchangeRate } from "@/hooks/use-update-exchange-rates";
 import { Theme, ThemeProvider } from "@react-navigation/native";
 import { PortalHost } from "@rn-primitives/portal";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { Stack } from "expo-router";
@@ -23,6 +24,8 @@ const DARK_THEME: Theme = {
   colors: NAV_THEME.dark,
 };
 
+const queryClient = new QueryClient({ defaultOptions: { queries: { networkMode: "always" } } });
+
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -31,25 +34,29 @@ export {
 export default function RootLayout() {
   const info = useLoadApp();
   const { isDarkColorScheme } = useColorScheme();
-  useUpdateExchangeRate();
 
   if (info.migrationError) {
     console.log(info.migrationError);
   }
 
   return (
-    <>
-      {/* <StoreProvider> */}
+    <QueryClientProvider client={queryClient}>
       <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
         <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="tabs" />
-          </Stack>
-          <PortalHost />
-        </GestureHandlerRootView>
+        <LayoutView />
       </ThemeProvider>
-      {/* </StoreProvider> */}
-    </>
+    </QueryClientProvider>
   );
 }
+
+const LayoutView = () => {
+  useUpdateExchangeRate();
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="tabs" />
+      </Stack>
+      <PortalHost />
+    </GestureHandlerRootView>
+  );
+};

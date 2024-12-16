@@ -3,23 +3,14 @@ import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { insertBudget } from "@/db/mutations/budgets";
-import { getMainAccount } from "@/db/queries/accounts";
 import { GROUP_COLORS } from "@/lib/constants";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { randomElement } from "@/lib/utils";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { router } from "expo-router";
 import { View } from "react-native";
 
 const CreateBudget = () => {
-  const { data } = useLiveQuery(getMainAccount());
-  const mainAccount = data?.account;
-  if (!mainAccount) {
-    //todo: alert and redirect to set main account
-    throw new Error("You should have a main account");
-  }
-
   const onSubmit = ({
     name,
     currency: currencyID,
@@ -63,7 +54,6 @@ const CreateBudget = () => {
         defaultValues={{
           name: "",
           amount: 0,
-          currency: mainAccount.currency_code,
           color: randomElement(GROUP_COLORS).color,
         }}
         onSubmit={onSubmit}

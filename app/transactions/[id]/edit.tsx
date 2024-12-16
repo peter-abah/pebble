@@ -1,3 +1,4 @@
+import EmptyState from "@/components/empty-state";
 import { usePromptModal } from "@/components/prompt-modal";
 import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
@@ -7,10 +8,11 @@ import { Text } from "@/components/ui/text";
 import { db } from "@/db/client";
 import { deleteTransaction, updateTransaction } from "@/db/mutations/transactions";
 import { getAccounts } from "@/db/queries/accounts";
-import { getTransactions } from "@/db/queries/transactions";
+import { getTransaction } from "@/db/queries/transactions";
 import { SchemaTransaction, transactionsTable } from "@/db/schema";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
+import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { TrashIcon } from "@/lib/icons/Trash";
 import {
   calcMoneyValueInMajorUnits,
@@ -18,8 +20,8 @@ import {
   convertTransactionAmountToMoney,
 } from "@/lib/money";
 import { arrayToMap, assertUnreachable, valueToDate, valueToNumber } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
 import { eq } from "drizzle-orm";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { router, useLocalSearchParams } from "expo-router";
 import { useMemo } from "react";
 import { Alert, View } from "react-native";
@@ -28,14 +30,18 @@ const EditTransaction = () => {
   const params = useLocalSearchParams() as { id?: string };
   const id = valueToNumber(params.id);
   const {
-    data: [transaction],
-  } = useLiveQuery(
-    getTransactions({
-      ids: id !== undefined ? [id] : undefined,
-      limit: id !== undefined ? 1 : undefined,
-    })
-  );
-  const { data: accounts } = useLiveQuery(getAccounts());
+    data: transaction,
+    isPending: isTransactionPending,
+    isError: isTransactionError,
+  } = useQuery({
+    queryKey: ["transactions", id],
+    queryFn: () => (id ? getTransaction(id) : undefined),
+  });
+  const { data: accounts, isError: isAccountsError } = useQuery({
+    queryKey: ["accounts"],
+    queryFn: () => getAccounts(),
+    initialData: [],
+  });
   const accountsMap = useMemo(() => arrayToMap(accounts, ({ id }) => id), [accounts]);
 
   const onDelete = async () => {
@@ -167,6 +173,19 @@ const EditTransaction = () => {
 
     router.back();
   };
+
+  if (isTransactionPending) {
+    return (
+      <EmptyState
+        title="Loading..."
+        icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
+      />
+    );
+  }
+
+  if (isTransactionError || isAccountsError) {
+    return <ResourceNotFound title="An error occured fetching transaction" />;
+  }
 
   if (!transaction) {
     return <ResourceNotFound title="Transaction does not exist" />;

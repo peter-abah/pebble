@@ -12,19 +12,23 @@ import { getAccounts } from "@/db/queries/accounts";
 import { SchemaAccount } from "@/db/schema";
 import { CheckIcon } from "@/lib/icons/Check";
 import { arrayToMap } from "@/lib/utils";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { Dimensions } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
+import ResourceNotFound from "./resource-not-found";
 
 interface AccountsInputProps {
   value?: Array<SchemaAccount["id"]>;
   onChange: (v: Array<SchemaAccount["id"]>) => void;
 }
 export const AccountsInput = ({ value, onChange }: AccountsInputProps) => {
-  const { data: accounts } = useLiveQuery(
-    getAccounts({ sortBy: [{ column: "name", type: "asc" }] })
-  );
+  // todo: invalidate queries on mutations, maybe use mutations
+  const { data: accounts, isError: isAccountsError } = useQuery({
+    queryKey: ["accounts"],
+    queryFn: () => getAccounts({ sortBy: [{ column: "name", type: "asc" }] }),
+    initialData: [],
+  });
   const accountsMap = useMemo(() => arrayToMap(accounts, ({ id }) => id), [accounts]);
 
   const handleAccountClick = (id: SchemaAccount["id"]) => {
@@ -49,6 +53,10 @@ export const AccountsInput = ({ value, onChange }: AccountsInputProps) => {
     }
     return `${value.length} account${value.length > 0 ? "ies" : ""} selected`;
   };
+
+  if (isAccountsError) {
+    return <ResourceNotFound title="An error occured fetching accounts" />;
+  }
 
   return (
     <Dialog>

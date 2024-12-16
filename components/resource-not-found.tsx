@@ -13,6 +13,7 @@ interface ResourceNotFoundProps {
   icon?: ReactNode;
 }
 
+// todo: rename to more general name, errorish
 const ResourceNotFound = ({ title, description, icon }: ResourceNotFoundProps) => {
   return (
     <ScreenWrapper>

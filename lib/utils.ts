@@ -2,6 +2,16 @@ import { NonEmptyArray, PartialRecord } from "@/lib/types";
 import { clsx, type ClassValue } from "clsx";
 import dayjs, { Dayjs } from "dayjs";
 import { twMerge } from "tailwind-merge";
+import { ReadonlyDeep } from "type-fest";
+
+/**
+ * Deeply freezes an object by recursively freezing all of its properties.
+ * - https://gist.github.com/tkrotoff/e997cd6ff8d6cf6e51e6bb6146407fc3
+ */
+export function deepFreeze<T extends object>(obj: T) {
+  Object.values(obj).forEach((value) => Object.isFrozen(value) || deepFreeze(value));
+  return Object.freeze(obj) as ReadonlyDeep<T>;
+}
 
 export const exhaustiveUnionTuple =
   <T>() =>
@@ -18,10 +28,10 @@ export function cn(...inputs: Array<ClassValue>) {
   return twMerge(clsx(inputs));
 }
 
-export function arrayToMap<T extends {}, K extends PropertyKey>(
+export const arrayToMap = <T extends {}, K extends PropertyKey>(
   items: Array<T>,
   keySelector: (item: T, index: number) => K
-) {
+) => {
   const res: PartialRecord<K, T> = {};
   for (let i = 0; i < items.length; i++) {
     const key = keySelector(items[i]!, i);
@@ -30,7 +40,7 @@ export function arrayToMap<T extends {}, K extends PropertyKey>(
   }
 
   return res;
-}
+};
 
 export const isDateValid = (date: Date) => {
   return Number.isNaN(date.getTime());
@@ -123,6 +133,11 @@ export const shuffle = <T>(array: Array<T>) => {
 export const isIn = <T>(values: ReadonlyArray<T>, x: any): x is T => {
   return values.includes(x);
 };
+
+export function excludeKey<T extends object, K extends keyof T>(obj: T, key: K) {
+  const { [key]: _, ...rest } = obj;
+  return rest;
+}
 
 export function setDifference<A extends B, B>(a: Set<A>, b: Set<B>) {
   return new Set(Array.from(a).filter((item) => !b.has(item)));

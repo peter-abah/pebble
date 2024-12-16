@@ -8,10 +8,11 @@ import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { deleteAccount } from "@/db/mutations/accounts";
-import { getAccounts } from "@/db/queries/accounts";
+import { getAccount } from "@/db/queries/accounts";
 import { getTransactions } from "@/db/queries/transactions";
 import { calculateAccountExpenses, calculateAccountIncome } from "@/lib/app-utils";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
+import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { PencilIcon } from "@/lib/icons/Pencil";
 import { TrashIcon } from "@/lib/icons/Trash";
 import { TrendingDownIcon } from "@/lib/icons/TrendingDown";
@@ -19,38 +20,41 @@ import { TrendingUpIcon } from "@/lib/icons/TrendingUp";
 import { formatMoney } from "@/lib/money";
 import { TimePeriod } from "@/lib/types";
 import { valueToNumber } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { FlatList, View } from "react-native";
 
+// todo: add logging, errors and other events
 const AccountScreen = () => {
   const params = useLocalSearchParams() as { id?: string };
   const id = valueToNumber(params.id);
   const {
-    data: [account],
-  } = useLiveQuery(
-    getAccounts({ ids: id !== undefined ? [id] : undefined, limit: id !== undefined ? 1 : 0 })
-  );
+    data: account,
+    isError: isAccountError,
+    isPending: isAccountPending,
+  } = useQuery({
+    queryKey: ["accounts", id],
+    queryFn: async () => (id ? getAccount(id) : undefined),
+  });
 
   const [currentTimePeriod, setCurrentTimePeriod] = useState<TimePeriod>(() => ({
     date: dayjs(),
     period: "monthly",
   }));
 
-  const { data: transactions } = useLiveQuery(
-    getTransactions({
-      period: currentTimePeriod,
-      sortBy: [{ column: "datetime", type: "desc" }],
-      accounts: account?.id ? [account.id] : undefined,
-      limit: account?.id ? undefined : 0,
-    }),
-    [currentTimePeriod, account?.id]
-  );
-
-  const income = account ? calculateAccountIncome(account, transactions) : null;
-  const expenses = account ? calculateAccountExpenses(account, transactions) : null;
+  const { data: accountTransactions } = useQuery({
+    queryKey: ["transactions", { period: currentTimePeriod, accounts: [account?.id] }],
+    queryFn: async () =>
+      getTransactions({
+        period: currentTimePeriod,
+        sortBy: [{ column: "datetime", type: "desc" }],
+        accounts: account?.id ? [account.id] : undefined,
+        limit: account?.id ? undefined : 0,
+      }),
+    initialData: [],
+  });
 
   const onDelete = async () => {
     if (!account) return;
@@ -64,9 +68,26 @@ const AccountScreen = () => {
     onConfirm: onDelete,
   });
 
+  if (isAccountPending) {
+    return (
+      <EmptyState
+        title="Loading..."
+        icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
+      />
+    );
+  }
+
+  if (isAccountError) {
+    return <ResourceNotFound title="An error occured, could not fetch account" />;
+  }
+
   if (!account) {
     return <ResourceNotFound title="Account does not exist" />;
   }
+
+  const income = calculateAccountIncome(account, accountTransactions);
+  const expenses = calculateAccountExpenses(account, accountTransactions);
+
   return (
     <ScreenWrapper className="pb-6">
       <View className="flex-row gap-4 items-center px-6 py-4">
@@ -117,38 +138,35 @@ const AccountScreen = () => {
       </View>
 
       <View className="flex-row gap-4 py-2 px-6">
-        {income ? (
-          <Button
-            variant="outline"
-            className="justify-start flex-1 p-3 h-auto items-center flex-row gap-2"
-          >
-            <View className="bg-green-600 items-center justify-center rounded-full w-10 h-10">
-              <TrendingDownIcon className="text-white" size={24} />
-            </View>
-            <View>
-              <Text>Income</Text>
-              <Text className="font-bold">{formatMoney(income)}</Text>
-            </View>
-          </Button>
-        ) : null}
-        {expenses ? (
-          <Button
-            variant="outline"
-            className="justify-start flex-1 p-3 h-auto items-center flex-row gap-2"
-          >
-            <View className="bg-red-600 items-center justify-center rounded-full w-10 h-10">
-              <TrendingUpIcon className="text-white" size={24} />
-            </View>
-            <View>
-              <Text>Expenses</Text>
-              <Text className="font-bold">{formatMoney(expenses)}</Text>
-            </View>
-          </Button>
-        ) : null}
+        <Button
+          variant="outline"
+          className="justify-start flex-1 p-3 h-auto items-center flex-row gap-2"
+        >
+          <View className="bg-green-600 items-center justify-center rounded-full w-10 h-10">
+            <TrendingDownIcon className="text-white" size={24} />
+          </View>
+          <View>
+            <Text>Income</Text>
+            <Text className="font-bold">{formatMoney(income)}</Text>
+          </View>
+        </Button>
+
+        <Button
+          variant="outline"
+          className="justify-start flex-1 p-3 h-auto items-center flex-row gap-2"
+        >
+          <View className="bg-red-600 items-center justify-center rounded-full w-10 h-10">
+            <TrendingUpIcon className="text-white" size={24} />
+          </View>
+          <View>
+            <Text>Expenses</Text>
+            <Text className="font-bold">{formatMoney(expenses)}</Text>
+          </View>
+        </Button>
       </View>
 
       <FlatList
-        data={transactions}
+        data={accountTransactions}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Link

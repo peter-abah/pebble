@@ -47,6 +47,7 @@ const formSchema = z
 
 export type FormSchema = z.infer<typeof formSchema>;
 
+// todo: impl parent category
 interface CategoryFormProps {
   defaultValues: Partial<FormSchema>;
   onSubmit: (values: FormSchema) => void;
@@ -62,16 +63,6 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
     defaultValues,
     resolver: zodResolver(formSchema),
   });
-
-  // todo: for parent category
-  // const { data: categories } = useLiveQuery(
-  //   getCategories({ sortBy: [{ column: "name", type: "asc" }] })
-  // );
-  // const type = watch("type");
-  // const name = watch("name");
-  // const parentCategories = categories.filter(
-  //   (c) => (c.type === type || !c.type) && c.name !== name
-  // );
 
   const insets = useSafeAreaInsets();
   const contentInsets = {

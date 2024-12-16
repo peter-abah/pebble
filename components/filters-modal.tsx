@@ -17,19 +17,26 @@ import { FilterIcon } from "@/lib/icons/Filter";
 import { ShapesIcon } from "@/lib/icons/Shapes";
 import { Filters } from "@/lib/types";
 import { cn, humanizeString } from "@/lib/utils";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useQuery } from "@tanstack/react-query";
 import { Dimensions, Pressable, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Icon } from "./icon";
-
 interface FiltersModalProps {
   filters: Filters;
   onFiltersChange: (newFilters: Filters) => void;
 }
 
 const FiltersModal = ({ filters, onFiltersChange }: FiltersModalProps) => {
-  const { data: categories } = useLiveQuery(getCategories());
-  const { data: accounts } = useLiveQuery(getAccounts());
+  const { data: categories, isError: isCategoriesError } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () => getCategories({ sortBy: [{ column: "name", type: "asc" }] }),
+    initialData: [],
+  });
+  const { data: accounts, isError: isAccountsError } = useQuery({
+    queryKey: ["accounts"],
+    queryFn: () => getAccounts({ sortBy: [{ column: "name", type: "asc" }] }),
+    initialData: [],
+  });
 
   const handleCategoryChange = (id: SchemaCategory["id"]) => {
     const newCategories = filters.categories.includes(id)
@@ -93,82 +100,90 @@ const FiltersModal = ({ filters, onFiltersChange }: FiltersModalProps) => {
 
           <View>
             <Text className="text-lg font-semibold">Categories</Text>
-            <FlatList
-              data={categories}
-              horizontal
-              keyExtractor={(item) => item.id.toString()}
-              ListHeaderComponent={
-                <Pressable
-                  onPress={() =>
-                    onFiltersChange({
-                      ...filters,
-                      categories: [],
-                    })
-                  }
-                  className="gap-1 items-center"
-                >
-                  <View
-                    className={cn(
-                      "w-16 h-16 px-1 justify-center items-center rounded-xl",
-                      filters.categories.length === 0 && "border-2 border-foreground/40"
-                    )}
+            {isCategoriesError ? (
+              <Text className="text-sm">An error occured fetching categories</Text>
+            ) : (
+              <FlatList
+                data={categories}
+                horizontal
+                keyExtractor={(item) => item.id.toString()}
+                contentContainerClassName="gap-4"
+                ListHeaderComponent={
+                  <Pressable
+                    onPress={() =>
+                      onFiltersChange({
+                        ...filters,
+                        categories: [],
+                      })
+                    }
+                    className="gap-1 items-center"
                   >
-                    <ShapesIcon size={24} className="text-foreground" />
-                  </View>
-                  <Text className="text-sm" numberOfLines={1}>
-                    All
-                  </Text>
-                </Pressable>
-              }
-              renderItem={({ item }) => (
-                <Pressable
-                  onPress={() => handleCategoryChange(item.id)}
-                  className="gap-1 items-center"
-                >
-                  <View
-                    className={cn(
-                      "w-16 h-16 px-1 justify-center items-center rounded-xl",
-                      filters.categories.includes(item.id) && "border-2 border-foreground/40"
-                    )}
-                    style={{
-                      backgroundColor: item.color + "55", // make hex color semitransparent
-                    }}
+                    <View
+                      className={cn(
+                        "w-16 h-16 px-1 justify-center items-center rounded-xl",
+                        filters.categories.length === 0 && "border-2 border-foreground/40"
+                      )}
+                    >
+                      <ShapesIcon size={24} className="text-foreground" />
+                    </View>
+                    <Text className="text-sm" numberOfLines={1}>
+                      All
+                    </Text>
+                  </Pressable>
+                }
+                renderItem={({ item }) => (
+                  <Pressable
+                    onPress={() => handleCategoryChange(item.id)}
+                    className="gap-1 items-center"
                   >
-                    <Icon
-                      type={item.icon.type}
-                      value={item.icon.type === "emoji" ? item.icon.emoji : item.icon.name}
-                    />
-                  </View>
-                  <Text className="text-xs" numberOfLines={1}>
-                    {item.name}
-                  </Text>
-                </Pressable>
-              )}
-              contentContainerClassName="gap-4"
-            />
+                    <View
+                      className={cn(
+                        "w-16 h-16 px-1 justify-center items-center rounded-xl",
+                        filters.categories.includes(item.id) && "border-2 border-foreground/40"
+                      )}
+                      style={{
+                        backgroundColor: item.color + "55", // make hex color semitransparent
+                      }}
+                    >
+                      <Icon
+                        type={item.icon.type}
+                        value={item.icon.type === "emoji" ? item.icon.emoji : item.icon.name}
+                      />
+                    </View>
+                    <Text className="text-xs" numberOfLines={1}>
+                      {item.name}
+                    </Text>
+                  </Pressable>
+                )}
+              />
+            )}
           </View>
 
           <View className="flex-row gap-3 items-center">
             <Text className="font-bold">Account:</Text>
-            <FlatList
-              data={accounts}
-              horizontal
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item }) => (
-                <Button
-                  variant="outline"
-                  className="flex-row gap-1"
-                  style={{ borderColor: item.color + "88" }}
-                  onPress={() => handleAccountChange(item.id)}
-                >
-                  {filters.accounts.includes(item.id) && (
-                    <CheckIcon size={16} className="text-foreground" />
-                  )}
-                  <Text>{item.name}</Text>
-                </Button>
-              )}
-              contentContainerClassName="gap-4"
-            />
+            {isAccountsError ? (
+              <Text className="text-sm">An error occured fetching accounts</Text>
+            ) : (
+              <FlatList
+                data={accounts}
+                horizontal
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                  <Button
+                    variant="outline"
+                    className="flex-row gap-1"
+                    style={{ borderColor: item.color + "88" }}
+                    onPress={() => handleAccountChange(item.id)}
+                  >
+                    {filters.accounts.includes(item.id) && (
+                      <CheckIcon size={16} className="text-foreground" />
+                    )}
+                    <Text>{item.name}</Text>
+                  </Button>
+                )}
+                contentContainerClassName="gap-4"
+              />
+            )}
           </View>
         </View>
         <DialogClose asChild>

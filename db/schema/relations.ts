@@ -39,14 +39,17 @@ export const transactionsRelations = relations(transactionsTable, ({ one, many }
   account: one(accountsTable, {
     fields: [transactionsTable.account_id],
     references: [accountsTable.id],
+    relationName: "accountOtherTransactions",
   }),
   fromAccount: one(accountsTable, {
     fields: [transactionsTable.from_account_id],
     references: [accountsTable.id],
+    relationName: "accountFromTransactions",
   }),
   toAccount: one(accountsTable, {
     fields: [transactionsTable.to_account_id],
     references: [accountsTable.id],
+    relationName: "accountToTransactions",
   }),
   loanTransaction: one(transactionsTable, {
     fields: [transactionsTable.loan_id],
@@ -61,4 +64,10 @@ export const mainAccountRelations = relations(mainAccountsTable, ({ one }) => ({
     fields: [mainAccountsTable.account_id],
     references: [accountsTable.id],
   }),
+}));
+
+export const accountsRelations = relations(accountsTable, ({ many }) => ({
+  otherTransactions: many(transactionsTable, { relationName: "accountOtherTransactions" }),
+  toTransactions: many(transactionsTable, { relationName: "accountToTransactions" }),
+  fromTransactions: many(transactionsTable, { relationName: "accountFromTransactions" }),
 }));

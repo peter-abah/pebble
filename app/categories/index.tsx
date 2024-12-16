@@ -1,6 +1,7 @@
 import EmptyState from "@/components/empty-state";
 import FloatingAddButton from "@/components/floating-add-button";
 import { usePromptModal } from "@/components/prompt-modal";
+import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,7 +14,7 @@ import { SearchIcon } from "@/lib/icons/Search";
 import { TrashIcon } from "@/lib/icons/Trash";
 import { CATEGORY_ICONS, CategoryIconName } from "@/lib/icons/category-icons";
 import { cn } from "@/lib/utils";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useQuery } from "@tanstack/react-query";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import { Pressable, View } from "react-native";
@@ -21,10 +22,15 @@ import { FlatList } from "react-native-gesture-handler";
 
 const Categories = () => {
   const [search, setSearch] = useState("");
-  const { data: categories } = useLiveQuery(
-    getCategories({ search, sortBy: [{ column: "name", type: "asc" }] }),
-    [search]
-  );
+  const { data: categories, isError: isCategoriesError } = useQuery({
+    queryKey: ["categories", { search: search.trim() }],
+    queryFn: () => getCategories({ search, sortBy: [{ column: "name", type: "asc" }] }),
+    initialData: [],
+  });
+
+  if (isCategoriesError) {
+    return <ResourceNotFound title="An error occured fetching categories." />;
+  }
 
   return (
     <ScreenWrapper className="!pb-6">

@@ -5,25 +5,49 @@ import { calculateAmountSpentInBudget } from "@/lib/app-utils";
 import { formatMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link } from "expo-router";
 import { Pressable, View } from "react-native";
 
 export const BudgetCard = ({ budget }: { budget: QueryBudget }) => {
   const exchangeRates = useAppStore((state) => state.exchangeRates);
-  const { data: budgetTransactions } = useLiveQuery(
-    getTransactions({
-      categories: budget.budgetsToCategories.map(({ category_id }) => category_id),
-      accounts: budget.budgetsToAccounts.map(({ account_id }) => account_id),
-      period: budget.period ? { date: dayjs(), period: budget.period } : undefined,
-      types: ["expense"],
-    }),
-    [budget]
-  );
+
+  const budgetCategoriesIDs =
+    budget && budget.budgetsToCategories.map(({ category_id }) => category_id);
+  const budgetAccountsIDs = budget && budget.budgetsToAccounts.map(({ account_id }) => account_id);
+  const budgetPeriod = budget?.period ? { date: dayjs(), period: budget.period } : undefined;
+  const { data: budgetTransactions, isError: isBudgetTransactionsError } = useQuery({
+    queryKey: [
+      "transactions",
+      {
+        categories: budgetCategoriesIDs,
+        accounts: budgetAccountsIDs,
+        period: budgetPeriod,
+        type: "expense",
+      },
+    ],
+    queryFn: async () =>
+      await getTransactions({
+        categories: budgetCategoriesIDs,
+        accounts: budgetAccountsIDs,
+        period: budgetPeriod,
+        types: ["expense"],
+        limit: budget ? undefined : 0,
+      }),
+    initialData: [],
+  });
 
   const amountSpent = calculateAmountSpentInBudget(budget, budgetTransactions, exchangeRates);
   const ratio = amountSpent.valueInMinorUnits / budget.amount_value_in_minor_units;
+
+  if (isBudgetTransactionsError) {
+    return (
+      <View className="px-6 py-2">
+        <Text className="text-xl">An error occured fetching budget daa</Text>
+      </View>
+    );
+  }
 
   return (
     <Link href={`/budgets/${budget.id}`} asChild>

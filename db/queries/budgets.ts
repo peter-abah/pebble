@@ -1,7 +1,20 @@
-import { and, inArray, like, SQL, sql } from "drizzle-orm";
+import { and, eq, inArray, like, SQL, sql } from "drizzle-orm";
 import { db } from "../client";
 import { budgetsTable, SchemaBudget } from "../schema/budgets";
+import { deepFreeze } from "@/lib/utils";
 
+export const budgetRelations = deepFreeze({
+  budgetsToAccounts: {
+    with: {
+      account: true as const,
+    },
+  },
+  budgetsToCategories: {
+    with: {
+      category: true as const,
+    },
+  },
+});
 interface GetBudgetsOptions {
   search?: string;
   ids?: Array<SchemaBudget["id"]>;
@@ -12,22 +25,18 @@ export const getBudgets = (options?: GetBudgetsOptions) => {
   return db.query.budgetsTable.findMany({
     where: and(...filters),
     limit: options?.limit && options.limit,
-    with: {
-      budgetsToAccounts: {
-        with: {
-          account: true,
-        },
-      },
-      budgetsToCategories: {
-        with: {
-          category: true,
-        },
-      },
-    },
+    with: budgetRelations,
   });
 };
 
-export type QueryBudget = Awaited<ReturnType<typeof getBudgets>>[number];
+export const getBudget = (id: SchemaBudget["id"]) => {
+  return db.query.budgetsTable.findFirst({
+    where: eq(budgetsTable.id, id),
+    with: budgetRelations,
+  });
+};
+
+export type QueryBudget = NonNullable<Awaited<ReturnType<typeof getBudget>>>;
 
 const buildBudgetsFilters = ({ search, ids }: GetBudgetsOptions) => {
   const filters: Array<SQL> = [];

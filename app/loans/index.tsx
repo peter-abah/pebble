@@ -1,5 +1,6 @@
 import EmptyState from "@/components/empty-state";
 import FloatingAddButton from "@/components/floating-add-button";
+import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,7 @@ import { Text } from "@/components/ui/text";
 import { getTransactions } from "@/db/queries/transactions";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { SearchIcon } from "@/lib/icons/Search";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useQuery } from "@tanstack/react-query";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
@@ -16,9 +17,19 @@ import { FlatList } from "react-native-gesture-handler";
 
 const Loans = () => {
   const [search, setSearch] = useState("");
-  const { data: loans } = useLiveQuery(
-    getTransactions({ search: search.trim(), sortBy: [{ column: "datetime", type: "asc" }] })
-  );
+  const { data: loans, isError: isLoanError } = useQuery({
+    queryKey: ["transactions", { types: ["lent", "borrowed"] }],
+    queryFn: () =>
+      getTransactions({
+        search: search.trim(),
+        types: ["lent", "borrowed"],
+        sortBy: [{ column: "datetime", type: "asc" }],
+      }),
+  });
+
+  if (isLoanError) {
+    return <ResourceNotFound title="An error occured fetching loans" />;
+  }
 
   return (
     <ScreenWrapper className="!pb-6">

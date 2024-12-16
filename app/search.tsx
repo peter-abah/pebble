@@ -12,8 +12,9 @@ import { getTransactions } from "@/db/queries/transactions";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { SearchIcon } from "@/lib/icons/Search";
 import { Filters, TimePeriod } from "@/lib/types";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import { FlatList, View } from "react-native";
@@ -25,21 +26,30 @@ const Search = () => {
     period: "monthly",
   }));
   const [filters, setFilters] = useState<Filters>({ categories: [], accounts: [], types: [] });
-  const { data: transactions } = useLiveQuery(
-    getTransactions({
-      search,
-      period: currentTimePeriod,
-      ...filters,
-      sortBy: [{ column: "datetime", type: "desc" }],
-    }),
-    [search, currentTimePeriod, filters]
-  );
-  const { data: categories } = useLiveQuery(getCategories({ ids: filters.categories }), [
-    filters.categories,
-  ]);
-  const { data: accounts } = useLiveQuery(getAccounts({ ids: filters.accounts }), [
-    filters.accounts,
-  ]);
+
+  // checking just the error state because the db query is very fast and resolves in less than a sec
+  const { data: transactions, isError: isTransactionsError } = useQuery({
+    queryKey: ["transactions", { search, period: currentTimePeriod, filters }],
+    queryFn: async () =>
+      getTransactions({
+        search,
+        period: currentTimePeriod,
+        ...filters,
+        sortBy: [{ column: "datetime", type: "desc" }],
+      }),
+    initialData: [],
+  });
+
+  const { data: categories, isError: isCategoriesError } = useQuery({
+    queryKey: ["categories", { ids: filters.categories }],
+    queryFn: async () => await getCategories({ ids: filters.categories }),
+    initialData: [],
+  });
+  const { data: accounts, isError: isAccountsError } = useQuery({
+    queryKey: ["categories", { ids: filters.categories }],
+    queryFn: async () => await getAccounts({ ids: filters.categories }),
+    initialData: [],
+  });
 
   return (
     <ScreenWrapper className="!pb-6">
@@ -73,33 +83,41 @@ const Search = () => {
         {filters.categories.length > 0 ? (
           <View className="flex flex-row gap-2 items-center">
             <Text className="text-sm font-medium">Categories:</Text>
-            <FlatList
-              data={categories}
-              horizontal
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item }) => (
-                <View className="flex-row gap-1 border border-border rounded-xl px-3 py-1.5">
-                  <Text className="text-sm">{item.name}</Text>
-                </View>
-              )}
-              contentContainerClassName="gap-4"
-            />
+            {isCategoriesError ? (
+              <Text className="text-sm">"Error. Could not fetch categories"</Text>
+            ) : (
+              <FlatList
+                data={categories}
+                horizontal
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                  <View className="flex-row gap-1 border border-border rounded-xl px-3 py-1.5">
+                    <Text className="text-sm">{item.name}</Text>
+                  </View>
+                )}
+                contentContainerClassName="gap-4"
+              />
+            )}
           </View>
         ) : null}
         {filters.accounts.length > 0 ? (
           <View className="flex flex-row gap-2 items-center">
             <Text className="text-sm font-medium">Accounts:</Text>
-            <FlatList
-              data={accounts}
-              horizontal
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item }) => (
-                <View className="flex-row gap-1 border border-border rounded-xl px-3 py-1.5">
-                  <Text className="text-sm">{item.name}</Text>
-                </View>
-              )}
-              contentContainerClassName="gap-4"
-            />
+            {isAccountsError ? (
+              <Text className="text-sm">Error. Could not fetch accounts</Text>
+            ) : (
+              <FlatList
+                data={accounts}
+                horizontal
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                  <View className="flex-row gap-1 border border-border rounded-xl px-3 py-1.5">
+                    <Text className="text-sm">{item.name}</Text>
+                  </View>
+                )}
+                contentContainerClassName="gap-4"
+              />
+            )}
           </View>
         ) : null}
         {filters.types.length > 0 ? (
@@ -120,33 +138,41 @@ const Search = () => {
         ) : null}
       </View>
 
-      <FlatList
-        data={transactions}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <Link
-            href={
-              item.type === "lent" || item.type === "borrowed"
-                ? `/loans/${item.id}`
-                : `/transactions/${item.id}/edit`
-            }
-            asChild
-          >
-            <TransactionCard transaction={item} />
-          </Link>
-        )}
-        className="flex-1 px-6"
-        ListEmptyComponent={
-          search === "" ? (
-            <EmptyState
-              title="Search transactions"
-              icon={<SearchIcon size={100} className="text-muted-foreground" />}
-            />
-          ) : (
-            <EmptyState title="No transactions to show" />
-          )
-        }
-      />
+      {isTransactionsError ? (
+        <EmptyState
+          title="An error occured."
+          icon={<MaterialIcons name="error" size={100} className="text-muted-foreground" />}
+        />
+      ) : (
+        <FlatList
+          data={transactions}
+          keyExtractor={(item) => item.id.toString()}
+          className="flex-1 px-6"
+          contentContainerClassName="flex-1"
+          renderItem={({ item }) => (
+            <Link
+              href={
+                item.type === "lent" || item.type === "borrowed"
+                  ? `/loans/${item.id}`
+                  : `/transactions/${item.id}/edit`
+              }
+              asChild
+            >
+              <TransactionCard transaction={item} />
+            </Link>
+          )}
+          ListEmptyComponent={
+            search === "" ? (
+              <EmptyState
+                title="Search transactions"
+                icon={<SearchIcon size={100} className="text-muted-foreground" />}
+              />
+            ) : (
+              <EmptyState title="No transactions to show" />
+            )
+          }
+        />
+      )}
     </ScreenWrapper>
   );
 };

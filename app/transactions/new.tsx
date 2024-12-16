@@ -1,3 +1,5 @@
+import EmptyState from "@/components/empty-state";
+import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionForm, { FormSchema } from "@/components/transaction-form";
 import { Button } from "@/components/ui/button";
@@ -8,11 +10,12 @@ import { getAccounts, getMainAccount } from "@/db/queries/accounts";
 import { SchemaAccount, SchemaTransaction, transactionsTable } from "@/db/schema";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
+import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { calcMoneyValueInMinorUnits } from "@/lib/money";
 import { StringifyValues } from "@/lib/types";
 import { arrayToMap, assertUnreachable, valueToDate, valueToNumber } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
 import { eq } from "drizzle-orm";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { router, useLocalSearchParams } from "expo-router";
 import { useMemo } from "react";
 import { Alert, View } from "react-native";
@@ -22,14 +25,20 @@ type Params = Partial<
 >;
 const CreateTransaction = () => {
   const params = useLocalSearchParams<Params>();
-  const { data: accounts } = useLiveQuery(getAccounts());
+  const { data: accounts, isError: isAccountsError } = useQuery({
+    queryKey: ["accounts"],
+    queryFn: () => getAccounts(),
+    initialData: [],
+  });
   const accountsMap = useMemo(() => arrayToMap(accounts, ({ id }) => id), [accounts]);
-  const { data } = useLiveQuery(getMainAccount());
-  const mainAccount = data?.account;
-  if (!mainAccount) {
-    //todo: alert and redirect to set main account
-    throw new Error("You should have a main account");
-  }
+  const {
+    data,
+    isError: isMainAccountError,
+    isPending: isMainAccountPending,
+  } = useQuery({
+    queryKey: ["accounts", "mainAccount"],
+    queryFn: () => getMainAccount(),
+  });
 
   const onSubmit = async (data: FormSchema) => {
     const { amount, title, note, type, datetime } = data;
@@ -146,6 +155,25 @@ const CreateTransaction = () => {
 
     router.back();
   };
+
+  const mainAccount = data?.account;
+
+  if (isMainAccountPending) {
+    return (
+      <EmptyState
+        title="Loading..."
+        icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
+      />
+    );
+  }
+
+  if (isAccountsError || isMainAccountError) {
+    return <ResourceNotFound title="An error occured fetching data" />;
+  }
+  if (!mainAccount) {
+    //todo: alert and redirect to set main account
+    throw new Error("You should have a main account");
+  }
 
   return (
     <ScreenWrapper className="!py-6">

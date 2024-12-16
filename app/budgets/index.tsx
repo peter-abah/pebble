@@ -1,6 +1,7 @@
 import { BudgetCard } from "@/components/budget-card";
 import EmptyState from "@/components/empty-state";
 import FloatingAddButton from "@/components/floating-add-button";
+import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +9,7 @@ import { Text } from "@/components/ui/text";
 import { getBudgets } from "@/db/queries/budgets";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { SearchIcon } from "@/lib/icons/Search";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useQuery } from "@tanstack/react-query";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
@@ -16,7 +17,15 @@ import { FlatList } from "react-native-gesture-handler";
 
 const Budgets = () => {
   const [search, setSearch] = useState("");
-  const { data: budgets } = useLiveQuery(getBudgets({ search }), [search]);
+  const { data: budgets, isError: isBudgetsError } = useQuery({
+    queryKey: ["budgets", { search: search.trim() }],
+    queryFn: () => getBudgets({ search }),
+    initialData: [],
+  });
+
+  if (isBudgetsError) {
+    return <ResourceNotFound title="An error occured. Could not fetch budgets." />;
+  }
 
   return (
     <ScreenWrapper className="!pb-6">

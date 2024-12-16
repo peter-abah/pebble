@@ -1,5 +1,6 @@
 import EmptyState from "@/components/empty-state";
 import FloatingAddButton from "@/components/floating-add-button";
+import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker from "@/components/time-period-picker";
 import TransactionCard from "@/components/transaction-card";
@@ -8,8 +9,8 @@ import { Text } from "@/components/ui/text";
 import { getTransactions } from "@/db/queries/transactions";
 import { SearchIcon } from "@/lib/icons/Search";
 import { TimePeriod } from "@/lib/types";
+import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
@@ -21,13 +22,20 @@ const Transactions = () => {
     period: "monthly",
   }));
 
-  const { data: transactions } = useLiveQuery(
-    getTransactions({
-      period: currentTimePeriod,
-      sortBy: [{ column: "datetime", type: "desc" }],
-    }),
-    [currentTimePeriod]
-  );
+  const { data: transactions, isError: isTransactionsError } = useQuery({
+    queryKey: ["transactions", { period: currentTimePeriod }],
+    queryFn: () =>
+      getTransactions({
+        period: currentTimePeriod,
+        sortBy: [{ column: "datetime", type: "desc" }],
+      }),
+    initialData: [],
+  });
+
+  // todo: same error msgs for all pages
+  if (isTransactionsError) {
+    return <ResourceNotFound title="An error occured fetching transactions" />;
+  }
 
   return (
     <ScreenWrapper className="!pb-6">

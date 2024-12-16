@@ -1,14 +1,16 @@
 import CategoryForm, { FormSchema } from "@/components/category-form";
+import EmptyState from "@/components/empty-state";
 import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { updateCategory } from "@/db/mutations/categories";
-import { getCategories } from "@/db/queries/categories";
+import { getCategory } from "@/db/queries/categories";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { CATEGORY_ICONS_NAMES } from "@/lib/icons/category-icons";
+import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { valueToNumber } from "@/lib/utils";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useQuery } from "@tanstack/react-query";
 import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 
@@ -16,11 +18,13 @@ const CreateCategory = () => {
   const params = useLocalSearchParams<{ id: string }>();
   const id = valueToNumber(params.id);
   const {
-    data: [category],
-  } = useLiveQuery(
-    getCategories({ ids: id !== undefined ? [id] : undefined, limit: id !== undefined ? 1 : 0 }),
-    [id]
-  );
+    data: category,
+    isError: isCategoryError,
+    isPending: isCategoryPending,
+  } = useQuery({
+    queryKey: ["categories", id],
+    queryFn: () => (id ? getCategory(id) : undefined),
+  });
 
   const onSubmit = async ({ name, icon, color, iconType, type, parentID }: FormSchema) => {
     if (!category) return;
@@ -36,6 +40,19 @@ const CreateCategory = () => {
     });
     router.back();
   };
+
+  if (isCategoryPending) {
+    return (
+      <EmptyState
+        title="Loading..."
+        icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
+      />
+    );
+  }
+
+  if (isCategoryError) {
+    return <ResourceNotFound title="An error occured fetching category" />;
+  }
 
   if (!category) {
     return <ResourceNotFound title="Category does not exist" />;

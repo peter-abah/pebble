@@ -1,4 +1,5 @@
 import EditAccountForm, { FormSchema } from "@/components/edit-account-form";
+import EmptyState from "@/components/empty-state";
 import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
@@ -7,20 +8,27 @@ import { updateAccount } from "@/db/mutations/accounts";
 import { getAccounts } from "@/db/queries/accounts";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
+import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { valueToNumber } from "@/lib/utils";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useQuery } from "@tanstack/react-query";
 import { router, useLocalSearchParams } from "expo-router";
+import { PropsWithChildren } from "react";
 import { View } from "react-native";
 
+// add animation to loading indicator
 const EditAccount = () => {
   const params = useLocalSearchParams() as { id?: string };
   const id = valueToNumber(params.id);
   const {
-    data: [account],
-  } = useLiveQuery(
-    getAccounts({ ids: id !== undefined ? [id] : undefined, limit: id !== undefined ? 1 : 0 }),
-    [id]
-  );
+    data: accountsData,
+    isError: isAccountError,
+    isPending: isAccountPending,
+  } = useQuery({
+    queryKey: ["accounts", id],
+    queryFn: async () =>
+      getAccounts({ ids: id !== undefined ? [id] : undefined, limit: id !== undefined ? 1 : 0 }),
+  });
+  const account = accountsData?.[0];
 
   const onSubmit = ({ name, currencyCode, color }: FormSchema) => {
     const currency = CURRENCIES_MAP[currencyCode];
@@ -34,10 +42,40 @@ const EditAccount = () => {
     router.back();
   };
 
+  if (isAccountPending) {
+    return (
+      <Layout>
+        <EmptyState
+          title="Loading..."
+          icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
+        />
+      </Layout>
+    );
+  }
+
+  if (isAccountError) {
+    return <ResourceNotFound title="An error occured fetching account" />;
+  }
+
   if (!account) {
     return <ResourceNotFound title="Account does not exist" />;
   }
 
+  return (
+    <Layout>
+      <EditAccountForm
+        defaultValues={{
+          name: account.name,
+          currencyCode: account.currency_code,
+          color: account.color,
+        }}
+        onSubmit={onSubmit}
+      />
+    </Layout>
+  );
+};
+
+const Layout = ({ children }: PropsWithChildren) => {
   return (
     <ScreenWrapper className="!pb-6">
       <View className="flex-row gap-4 items-center py-4 px-6">
@@ -52,14 +90,7 @@ const EditAccount = () => {
         <Text className="font-bold text-2xl">Edit Account</Text>
       </View>
 
-      <EditAccountForm
-        defaultValues={{
-          name: account.name,
-          currencyCode: account.currency_code,
-          color: account.color,
-        }}
-        onSubmit={onSubmit}
-      />
+      {children}
     </ScreenWrapper>
   );
 };
