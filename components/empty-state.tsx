@@ -12,7 +12,7 @@ interface EmptyStateProps {
 // todo: rename to more general name
 const EmptyState = ({ title, description, icon }: EmptyStateProps) => {
   return (
-    <View className="flex-1 justify-center items-center py-10 border">
+    <View className="flex-1 justify-center items-center py-10">
       <View className="p-10 rounded-full bg-muted mb-6">
         {icon ? (
           icon

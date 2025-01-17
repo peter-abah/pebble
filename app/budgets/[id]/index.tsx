@@ -14,6 +14,7 @@ import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { PencilIcon } from "@/lib/icons/Pencil";
 import { TrashIcon } from "@/lib/icons/Trash";
 import { formatMoney } from "@/lib/money";
+import { queryClient } from "@/lib/react-query";
 import { useAppStore } from "@/lib/store";
 import { Money } from "@/lib/types";
 import { arrayToMap, cn, valueToNumber } from "@/lib/utils";
@@ -64,10 +65,12 @@ const BudgetScreen = () => {
     initialData: [],
   });
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (!budget) return;
 
-    deleteBudget(budget.id);
+    await deleteBudget(budget.id);
+    queryClient.invalidateQueries({ queryKey: ["budgets"] });
+
     router.back();
   };
 

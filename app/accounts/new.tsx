@@ -8,6 +8,7 @@ import { GROUP_COLORS } from "@/lib/constants";
 import { BALANCE_CREDIT_CATEGORY_ID } from "@/lib/data";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
+import { queryClient } from "@/lib/react-query";
 import { randomElement } from "@/lib/utils";
 import { router } from "expo-router";
 import { View } from "react-native";
@@ -23,6 +24,7 @@ const CreateAccount = () => {
       currency_code: currencyCode,
       color,
     });
+    queryClient.invalidateQueries({ queryKey: ["accounts"] });
 
     if (balance && balance > 0) {
       await insertTransaction({
@@ -34,6 +36,7 @@ const CreateAccount = () => {
         type: "income",
         datetime: new Date().toISOString(),
       });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
     }
     router.back();
   };

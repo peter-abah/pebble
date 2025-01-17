@@ -12,6 +12,7 @@ import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { calcMoneyValueInMinorUnits } from "@/lib/money";
+import { queryClient } from "@/lib/react-query";
 import { StringifyValues } from "@/lib/types";
 import { arrayToMap, assertUnreachable, valueToDate, valueToNumber } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
@@ -152,6 +153,7 @@ const CreateTransaction = () => {
       default:
         assertUnreachable(type);
     }
+    queryClient.invalidateQueries({ queryKey: ["transactions"] });
 
     router.back();
   };

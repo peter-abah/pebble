@@ -18,6 +18,7 @@ import { TrashIcon } from "@/lib/icons/Trash";
 import { TrendingDownIcon } from "@/lib/icons/TrendingDown";
 import { TrendingUpIcon } from "@/lib/icons/TrendingUp";
 import { formatMoney } from "@/lib/money";
+import { queryClient } from "@/lib/react-query";
 import { TimePeriod } from "@/lib/types";
 import { valueToNumber } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
@@ -60,6 +61,7 @@ const AccountScreen = () => {
     if (!account) return;
 
     await deleteAccount(account.id);
+    queryClient.invalidateQueries({ queryKey: ["accounts"] });
     router.back();
   };
 

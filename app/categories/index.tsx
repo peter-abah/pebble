@@ -13,6 +13,7 @@ import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { SearchIcon } from "@/lib/icons/Search";
 import { TrashIcon } from "@/lib/icons/Trash";
 import { CATEGORY_ICONS, CategoryIconName } from "@/lib/icons/category-icons";
+import { queryClient } from "@/lib/react-query";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { Link, router } from "expo-router";
@@ -75,7 +76,10 @@ const Categories = () => {
 const CategoryCard = ({ category }: { category: SchemaCategory }) => {
   const { Modal, openModal } = usePromptModal({
     title: `Are you sure you want to delete '${category.name}' category?`,
-    onConfirm: () => deleteCategory(category.id),
+    onConfirm: async () => {
+      await deleteCategory(category.id);
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+    },
   });
 
   return (

@@ -10,6 +10,7 @@ import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { calcMoneyValueInMajorUnits } from "@/lib/money";
+import { queryClient } from "@/lib/react-query";
 import { NonEmptyArray } from "@/lib/types";
 import { valueToNumber } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
@@ -28,7 +29,7 @@ const EditBudget = () => {
     queryFn: () => (id ? getBudget(id) : undefined),
   });
 
-  const onSubmit = ({
+  const onSubmit = async ({
     name,
     currency: currencyID,
     amount,
@@ -43,7 +44,7 @@ const EditBudget = () => {
       return;
     }
 
-    updateBudget(budget.id, {
+    await updateBudget(budget.id, {
       name,
       amount_value_in_minor_units: amount * 10 ** currency.minorUnit,
       currency_code: currencyID,
@@ -52,6 +53,7 @@ const EditBudget = () => {
       categories,
       accounts,
     });
+    queryClient.invalidateQueries({ queryKey: ["budgets"] });
 
     router.back();
   };

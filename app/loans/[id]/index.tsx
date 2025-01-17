@@ -14,6 +14,7 @@ import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { PencilIcon } from "@/lib/icons/Pencil";
 import { TrashIcon } from "@/lib/icons/Trash";
 import { convertTransactionAmountToMoney, formatMoney } from "@/lib/money";
+import { queryClient } from "@/lib/react-query";
 import { useAppStore } from "@/lib/store";
 import { cn, valueToNumber } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
@@ -39,6 +40,7 @@ const LoanScreen = () => {
     if (!loan) return;
 
     await deleteTransaction(loan.id);
+    queryClient.invalidateQueries({ queryKey: ["transactions"] });
     router.back();
   };
   const { Modal: DeleteModal, openModal: openDeleteModal } = usePromptModal({

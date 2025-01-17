@@ -9,6 +9,7 @@ import { getAccounts } from "@/db/queries/accounts";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
+import { queryClient } from "@/lib/react-query";
 import { valueToNumber } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { router, useLocalSearchParams } from "expo-router";
@@ -30,15 +31,17 @@ const EditAccount = () => {
   });
   const account = accountsData?.[0];
 
-  const onSubmit = ({ name, currencyCode, color }: FormSchema) => {
+  const onSubmit = async ({ name, currencyCode, color }: FormSchema) => {
     const currency = CURRENCIES_MAP[currencyCode];
     if (!account || !currency) return;
 
-    updateAccount(account.id, {
+    await updateAccount(account.id, {
       name,
       color,
       currency_code: currencyCode,
     });
+    queryClient.invalidateQueries({ queryKey: ["accounts"] });
+
     router.back();
   };
 

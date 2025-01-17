@@ -6,12 +6,13 @@ import { insertBudget } from "@/db/mutations/budgets";
 import { GROUP_COLORS } from "@/lib/constants";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
+import { queryClient } from "@/lib/react-query";
 import { randomElement } from "@/lib/utils";
 import { router } from "expo-router";
 import { View } from "react-native";
 
 const CreateBudget = () => {
-  const onSubmit = ({
+  const onSubmit = async ({
     name,
     currency: currencyID,
     amount,
@@ -23,7 +24,7 @@ const CreateBudget = () => {
     const currency = CURRENCIES_MAP[currencyID];
     if (!currency) return;
 
-    insertBudget({
+    await insertBudget({
       name,
       amount_value_in_minor_units: amount * 10 ** currency.minorUnit,
       currency_code: currency.isoCode,
@@ -32,6 +33,7 @@ const CreateBudget = () => {
       categories,
       accounts,
     });
+    queryClient.invalidateQueries({ queryKey: ["budgets"] });
 
     router.back();
   };

@@ -8,12 +8,18 @@ import { SettingsIcon } from "@/lib/icons/Settings";
 import { ShapesIcon } from "@/lib/icons/Shapes";
 import { WalletCardsIcon } from "@/lib/icons/WalletCards";
 import { loadMockData } from "@/lib/mock";
+import { queryClient } from "@/lib/react-query";
 import { Link } from "expo-router";
 import { ComponentProps, ReactNode, forwardRef } from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 const More = () => {
+  const onLoadTestData = async () => {
+    await loadMockData();
+    queryClient.invalidateQueries({ queryKey: ["transactions"] });
+  };
+
   return (
     <ScreenWrapper>
       <View className="flex-row gap-4 items-center pt-8 px-6 py-4 justify-between">
@@ -86,7 +92,7 @@ const More = () => {
 
         <ActionButton
           title="Load test data"
-          onPress={loadMockData}
+          onPress={onLoadTestData}
           icon={
             <MaterialCommunityIcons name="database" size={24} className="text-foreground mr-2" />
           }

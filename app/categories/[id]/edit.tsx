@@ -9,6 +9,7 @@ import { getCategory } from "@/db/queries/categories";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { CATEGORY_ICONS_NAMES } from "@/lib/icons/category-icons";
 import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
+import { queryClient } from "@/lib/react-query";
 import { valueToNumber } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { router, useLocalSearchParams } from "expo-router";
@@ -38,6 +39,7 @@ const CreateCategory = () => {
       type,
       color,
     });
+    queryClient.invalidateQueries({ queryKey: ["categories"] });
     router.back();
   };
 

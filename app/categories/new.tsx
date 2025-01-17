@@ -6,14 +6,15 @@ import { insertCategory } from "@/db/mutations/categories";
 import { GROUP_COLORS } from "@/lib/constants";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { CATEGORY_ICONS_NAMES } from "@/lib/icons/category-icons";
+import { queryClient } from "@/lib/react-query";
 import { randomElement } from "@/lib/utils";
 import { router } from "expo-router";
 import { View } from "react-native";
 
 // todo: sub categories
 const CreateCategory = () => {
-  const onSubmit = ({ name, icon, color, iconType, type, parentID }: FormSchema) => {
-    insertCategory({
+  const onSubmit = async ({ name, icon, color, iconType, type, parentID }: FormSchema) => {
+    await insertCategory({
       name,
       icon:
         iconType === "emoji"
@@ -22,6 +23,7 @@ const CreateCategory = () => {
       type,
       color,
     });
+    queryClient.invalidateQueries({ queryKey: ["categories"] });
     router.back();
   };
 

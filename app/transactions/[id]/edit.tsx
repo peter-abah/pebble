@@ -19,6 +19,7 @@ import {
   calcMoneyValueInMinorUnits,
   convertTransactionAmountToMoney,
 } from "@/lib/money";
+import { queryClient } from "@/lib/react-query";
 import { arrayToMap, assertUnreachable, valueToDate, valueToNumber } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { eq } from "drizzle-orm";
@@ -48,6 +49,8 @@ const EditTransaction = () => {
     if (!transaction) return;
 
     await deleteTransaction(transaction.id);
+    queryClient.invalidateQueries({ queryKey: ["transactions"] });
+
     router.back();
   };
 
@@ -170,6 +173,7 @@ const EditTransaction = () => {
       default:
         assertUnreachable(type);
     }
+    queryClient.invalidateQueries({ queryKey: ["transactions"] });
 
     router.back();
   };

@@ -468,7 +468,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                 <View>
                   <Select
                     value={{
-                      value: value.toString(),
+                      value: value ? value.toString() : "",
                       label: value ? categoriesMap[value]?.name || "Unknown" : "Unknown",
                     }}
                     onValueChange={(option) => onChange(option?.value)}
