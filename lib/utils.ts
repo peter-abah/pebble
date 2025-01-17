@@ -43,11 +43,12 @@ export const arrayToMap = <T extends {}, K extends PropertyKey>(
 };
 
 export const isDateValid = (date: Date) => {
-  return Number.isNaN(date.getTime());
+  return !Number.isNaN(date.getTime());
 };
 
 export const valueToDate = (value: any) => {
   const date = new Date(value);
+  console.log({ datetime: date.getTime });
   return isDateValid(date) ? date : undefined;
 };
 
