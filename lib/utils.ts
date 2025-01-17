@@ -48,7 +48,6 @@ export const isDateValid = (date: Date) => {
 
 export const valueToDate = (value: any) => {
   const date = new Date(value);
-  console.log({ datetime: date.getTime });
   return isDateValid(date) ? date : undefined;
 };
 

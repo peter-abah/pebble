@@ -154,6 +154,8 @@ const CreateTransaction = () => {
         assertUnreachable(type);
     }
     queryClient.invalidateQueries({ queryKey: ["transactions"] });
+    // change in transactions updates account balance
+    queryClient.invalidateQueries({ queryKey: ["accounts"] });
 
     router.back();
   };

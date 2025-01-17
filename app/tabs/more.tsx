@@ -18,6 +18,8 @@ const More = () => {
   const onLoadTestData = async () => {
     await loadMockData();
     queryClient.invalidateQueries({ queryKey: ["transactions"] });
+    queryClient.invalidateQueries({ queryKey: ["accounts"] });
+    queryClient.invalidateQueries({ queryKey: ["categories"] });
   };
 
   return (

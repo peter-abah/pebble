@@ -23,7 +23,6 @@ interface AccountsInputProps {
   onChange: (v: Array<SchemaAccount["id"]>) => void;
 }
 export const AccountsInput = ({ value, onChange }: AccountsInputProps) => {
-  // todo: invalidate queries on mutations, maybe use mutations
   const { data: accounts, isError: isAccountsError } = useQuery({
     queryKey: ["accounts"],
     queryFn: () => getAccounts({ sortBy: [{ column: "name", type: "asc" }] }),

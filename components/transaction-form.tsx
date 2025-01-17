@@ -19,7 +19,7 @@ import { getCategories } from "@/db/queries/categories";
 import { TRANSACTION_TYPES } from "@/lib/constants";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { useAppStore } from "@/lib/store";
-import { arrayToMap, cn, humanizeString, isStringNumeric } from "@/lib/utils";
+import { arrayToMap, cn, humanizeString, isStringNumeric, valueToNumber } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
@@ -99,8 +99,7 @@ const formSchema = z
     loanPaymentTransactionFormSchema,
   ])
   .superRefine((data, ctx) => {
-    // todo: bug here but test to be sure
-    if (data.type === "transfer") {
+    if (data.type === "transfer" && data.from === data.to) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Receiving account cannot be same sending account.",
@@ -283,7 +282,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                         : undefined
                     }
                     onValueChange={(option) => {
-                      onChange(option?.value);
+                      onChange(valueToNumber(option?.value));
                       if (!option?.value) return;
 
                       const fromCurrencyCode =
@@ -339,7 +338,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                         : undefined
                     }
                     onValueChange={(option) => {
-                      onChange(option?.value);
+                      onChange(valueToNumber(option?.value));
 
                       if (!option?.value) return;
 
@@ -433,7 +432,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                       ? { value: value.toString(), label: accountsMap[value]?.name || "Unknown" }
                       : undefined
                   }
-                  onValueChange={(option) => onChange(option?.value)}
+                  onValueChange={(option) => onChange(valueToNumber(option?.value))}
                 >
                   <SelectTrigger className="w-full" aria-labelledby="type">
                     <SelectValue
@@ -469,9 +468,9 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                   <Select
                     value={{
                       value: value ? value.toString() : "",
-                      label: value ? categoriesMap[value]?.name || "Unknown" : "Unknown",
+                      label: value ? categoriesMap[value]?.name || "Unknown" : "Choose category",
                     }}
-                    onValueChange={(option) => onChange(option?.value)}
+                    onValueChange={(option) => onChange(valueToNumber(option?.value))}
                   >
                     <SelectTrigger className="w-full" aria-labelledby="type">
                       <SelectValue
@@ -517,7 +516,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                         ? { value: value.toString(), label: accountsMap[value]?.name || "Unknown" }
                         : undefined
                     }
-                    onValueChange={(option) => onChange(option?.value)}
+                    onValueChange={(option) => onChange(valueToNumber(option?.value))}
                   >
                     <SelectTrigger className="w-full" aria-labelledby="type">
                       <SelectValue
@@ -587,7 +586,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                         ? { value: value.toString(), label: accountsMap[value]?.name || "Unknown" }
                         : undefined
                     }
-                    onValueChange={(option) => onChange(option?.value)}
+                    onValueChange={(option) => onChange(valueToNumber(option?.value))}
                   >
                     <SelectTrigger className="w-full" aria-labelledby="type">
                       <SelectValue

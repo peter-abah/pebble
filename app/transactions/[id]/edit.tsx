@@ -50,6 +50,8 @@ const EditTransaction = () => {
 
     await deleteTransaction(transaction.id);
     queryClient.invalidateQueries({ queryKey: ["transactions"] });
+    // change in transactions updates account balance
+    queryClient.invalidateQueries({ queryKey: ["accounts"] });
 
     router.back();
   };
@@ -174,6 +176,8 @@ const EditTransaction = () => {
         assertUnreachable(type);
     }
     queryClient.invalidateQueries({ queryKey: ["transactions"] });
+    // change in transactions updates account balance
+    queryClient.invalidateQueries({ queryKey: ["accounts"] });
 
     router.back();
   };

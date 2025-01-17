@@ -41,6 +41,9 @@ const LoanScreen = () => {
 
     await deleteTransaction(loan.id);
     queryClient.invalidateQueries({ queryKey: ["transactions"] });
+    // change in transactions updates account balance
+    queryClient.invalidateQueries({ queryKey: ["accounts"] });
+
     router.back();
   };
   const { Modal: DeleteModal, openModal: openDeleteModal } = usePromptModal({
