@@ -104,14 +104,34 @@ export function humanizeString(input: string) {
     .replace(/^\w/, (c) => c.toUpperCase()); // Capitalize the first letter
 }
 
-// todo: fix colors, not random
+// loops through the color wheel, with small divisions at first but the divisions increase
+// over time to ensure the colors are distinct regardless of the number of colors needed
+// the lightness values are used to alternate between light and dark colors for more varied colors
+const lightnessValues = [70, 30];
 export const generateColors = (n: number) => {
   let colors = [];
+  let hueN = 1;
+  let hue = 360 / hueN;
+  let lightnessIndex = 0;
+
   for (let i = 0; i < n; i++) {
-    let hue = ((i * 360) / n) % 360;
-    colors.push(`hsl(${hue}, 100%, ${Math.random() * 40 + 50}%)`); //
+    colors.push(`hsl(${hue}, 100%, ${lightnessValues[lightnessIndex]}%)`); //
+    // multiplying the offset by 2 ensures previous colors are skipped, in later divisions
+    hue += (360 / hueN) * 2;
+
+    if (hue > 360) {
+      if (lightnessIndex < lightnessValues.length - 1) {
+        lightnessIndex += 1;
+        hue = 360 / hueN;
+      } else {
+        // the cycle is reset here, and the divisions are doubled
+        hueN *= 2;
+        hue = 360 / hueN; // starts at diff point on the wheel
+        lightnessIndex = 0;
+      }
+    }
   }
-  shuffle(colors);
+
   return colors;
 };
 

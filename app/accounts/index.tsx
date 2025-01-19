@@ -1,7 +1,7 @@
-import{PlaceholderBlock}from "@/components/placeholder-block";
+import { ErrorScreen } from "@/components/error-screen";
 import FloatingAddButton from "@/components/floating-add-button";
+import { PlaceholderBlock } from "@/components/placeholder-block";
 import { usePromptModal } from "@/components/prompt-modal";
-import{ErrorScreen}from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,7 +32,7 @@ const Accounts = () => {
     isPending: isMainAccountPending,
   } = useQuery({
     queryKey: ["accounts", "mainAccount"],
-    queryFn: async () => await getMainAccount() ?? null,
+    queryFn: async () => (await getMainAccount()) ?? null,
   });
 
   const { Modal: MainAccountPromptModal, openModal } = usePromptModal({
@@ -41,7 +41,6 @@ const Accounts = () => {
   });
 
   useEffect(() => {
-    console.log({ isMainAccountPending, mainAccount });
     if (!isMainAccountPending && !mainAccount) {
       openModal();
     }

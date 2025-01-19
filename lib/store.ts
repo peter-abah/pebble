@@ -4,13 +4,10 @@ import { Platform } from "react-native";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { CATEGORIES } from "./data";
-import { generateColors, shuffle } from "./utils";
 
 setAutoFreeze(false);
 
 export interface AppStateProperties {
-  chartColors: Array<string>;
   exchangeRates: Record<string, { date: string; rates: Record<string, number> }>;
   _hasHydrated: boolean;
 }
@@ -25,11 +22,7 @@ export interface AppState extends AppStateProperties {
   actions: AppStateActions;
 }
 
-const chartColors = generateColors(CATEGORIES.length);
-shuffle(chartColors);
-
 const DEFAULT_STATE: AppStateProperties = {
-  chartColors,
   _hasHydrated: false,
   exchangeRates: {},
 };

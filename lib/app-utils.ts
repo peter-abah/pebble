@@ -7,12 +7,13 @@ import {
   DebitTransactionType,
 } from "@/lib/constants";
 import { addMoney, convertMoney, createMoney } from "@/lib/money";
-import { AppStateProperties, useAppStore } from "@/lib/store";
+import { AppStateProperties } from "@/lib/store";
 import { Currency, ExchangeRate, Money, StrictOmit } from "@/lib/types";
 import dayjs from "dayjs";
 import { memoizeWithArgs } from "proxy-memoize";
 import { pieDataItem } from "react-native-gifted-charts";
 import { SPECIAL_CATEGORIES } from "./data";
+import { generateColors } from "./utils";
 
 interface PieDataItemCustom<K extends PropertyKey = PropertyKey> extends pieDataItem {
   key: K;
@@ -69,10 +70,12 @@ export const createChartData = memoizeWithArgs(
       }
       return result;
     }, {} as Record<K, PieDataItemCustom<K>>);
+
     const chartData = Object.values(chartDataMap) as Array<PieDataItemCustom<K>>;
+    chartData.sort((a, b) => b.value - a.value);
 
     // add distinct colors to each data item
-    const colors = useAppStore.getState().chartColors;
+    const colors = generateColors(chartData.length);
     for (let i = 0; i < chartData.length; i++) {
       const dataItem = chartData[i];
       if (dataItem) {
