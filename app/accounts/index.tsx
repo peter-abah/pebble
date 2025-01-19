@@ -1,19 +1,21 @@
 import EmptyState from "@/components/empty-state";
 import FloatingAddButton from "@/components/floating-add-button";
+import { usePromptModal } from "@/components/prompt-modal";
 import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
-import { getAccounts } from "@/db/queries/accounts";
+import { getAccounts, getMainAccount } from "@/db/queries/accounts";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { MaterialIcons } from "@/lib/icons/MaterialIcons";
 import { SearchIcon } from "@/lib/icons/Search";
+import { StarIcon } from "@/lib/icons/Star";
 import { formatMoney } from "@/lib/money";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { Link, router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pressable, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
@@ -26,10 +28,33 @@ const Accounts = () => {
       await getAccounts({ sortBy: [{ column: "name", type: "asc" }], search: search.trim() }),
     initialData: [],
   });
+  const {
+    data: mainAccount,
+    isError: isMainAccountError,
+    error: mainAccountError,
+    isPending: isMainAccountPending,
+  } = useQuery({
+    queryKey: ["accounts", "mainAccount"],
+    queryFn: () => getMainAccount(),
+  });
 
-  if (isAccountsError) {
+  const { Modal: MainAccountPromptModal, openModal } = usePromptModal({
+    title: "No main account set",
+    description: "You need to set a main account to use the app.",
+  });
+
+  useEffect(() => {
+    console.log({ isMainAccountPending, mainAccount });
+    if (!isMainAccountPending && !mainAccount) {
+      openModal();
+    }
+  }, [isMainAccountPending, mainAccount, openModal]);
+
+  if (isAccountsError || isMainAccountError) {
+    console.log({ mainAccountError });
     return <ResourceNotFound title="An error occured fetching accounts" />;
   }
+
   return (
     <ScreenWrapper className="!pb-6">
       <View className="flex-row gap-4 items-center py-4 px-6">
@@ -79,6 +104,9 @@ const Accounts = () => {
                   style={{ backgroundColor: item.color }}
                 />
                 <Text className="text-xl">{item.name}</Text>
+                {mainAccount?.account_id === item.id && (
+                  <StarIcon className="text-primary ml-4 fill-black" size={16} />
+                )}
                 <Text className="ml-auto text-lg">
                   {formatMoney({
                     valueInMinorUnits: item.balance_value_in_minor_units,
@@ -91,6 +119,8 @@ const Accounts = () => {
           ListEmptyComponent={<EmptyState title="No accounts to show" />}
         />
       )}
+
+      <MainAccountPromptModal />
 
       <Link href={"/accounts/new"} asChild>
         <FloatingAddButton />

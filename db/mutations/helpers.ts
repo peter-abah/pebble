@@ -5,8 +5,8 @@ import {
   budgetsCategoriesTable,
   budgetsTable,
   categoriesTable,
-  transactionsTable,
   mainAccountsTable,
+  transactionsTable,
 } from "@/db/schema";
 import { assertUnreachable } from "@/lib/utils";
 import { eq } from "drizzle-orm";

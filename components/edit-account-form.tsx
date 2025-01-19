@@ -17,11 +17,13 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
 import ColorPicker from "./color-picker";
+import { Checkbox } from "./ui/checkbox";
 
 const formSchema = z.object({
   name: z.string(),
   currencyCode: z.string(),
   color: z.string(),
+  isMainAccount: z.boolean().optional(),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
@@ -129,6 +131,25 @@ const EditAccountForm = ({ defaultValues, onSubmit }: EditAccountFormProps) => {
               </View>
             )}
             name="color"
+          />
+        </View>
+
+        <View className="gap-2 relative flex-row items-center justify-between">
+          <Label nativeID="isMainAccount" className="text-lg">
+            Set as main account
+          </Label>
+          <Controller
+            control={control}
+            render={({ field: { value, onChange, onBlur } }) => (
+              <Checkbox
+                checked={value || false}
+                // the user is only allowed to set the account as the main account, the user can unset
+                // the only way to unset is to set another account as the main account
+                // TODO: indicate this in the ui so the user is not confused
+                onCheckedChange={(v) => (defaultValues.isMainAccount ? undefined : onChange(v))}
+              />
+            )}
+            name="isMainAccount"
           />
         </View>
       </ScrollView>

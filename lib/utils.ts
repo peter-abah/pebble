@@ -46,6 +46,8 @@ export const isDateValid = (date: Date) => {
   return !Number.isNaN(date.getTime());
 };
 
+export const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
 export const valueToDate = (value: any) => {
   const date = new Date(value);
   return isDateValid(date) ? date : undefined;

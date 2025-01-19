@@ -16,10 +16,11 @@ export const accountsTable = sqliteTable(
   })
 );
 
+// todo: handle data during migrations
 // main account will be last updated row,
 // other rows will serve as history of previous main accounts
-// todo: rename to main accounts
-export const mainAccountsTable = sqliteTable("default_account", {
+export const mainAccountsTable = sqliteTable("main_accounts", {
+  id: integer().primaryKey({ autoIncrement: true }),
   account_id: integer()
     .notNull()
     .references(() => accountsTable.id, { onDelete: "cascade" }),

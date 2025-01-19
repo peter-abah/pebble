@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import { db } from "../client";
 import { categoriesTable, SchemaCategory } from "../schema";
 
-// todo: what happens to related transactions (deleted)
+// todo: what happens to related transactions (deleted), inform user of this
 export const deleteCategory = async (id: SchemaCategory["id"]) => {
   await db.delete(categoriesTable).where(eq(categoriesTable.id, id));
 };

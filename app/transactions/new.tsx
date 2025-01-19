@@ -17,7 +17,7 @@ import { StringifyValues } from "@/lib/types";
 import { arrayToMap, assertUnreachable, valueToDate, valueToNumber } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { eq } from "drizzle-orm";
-import { router, useLocalSearchParams } from "expo-router";
+import { Redirect, router, useLocalSearchParams } from "expo-router";
 import { useMemo } from "react";
 import { Alert, View } from "react-native";
 
@@ -175,8 +175,8 @@ const CreateTransaction = () => {
     return <ResourceNotFound title="An error occured fetching data" />;
   }
   if (!mainAccount) {
-    //todo: alert and redirect to set main account
-    throw new Error("You should have a main account");
+    // this should not occur normally
+    return <Redirect href="/accounts" />;
   }
 
   return (

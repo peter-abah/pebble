@@ -79,6 +79,7 @@ const CategoryCard = ({ category }: { category: SchemaCategory }) => {
     onConfirm: async () => {
       await deleteCategory(category.id);
       queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
     },
   });
 

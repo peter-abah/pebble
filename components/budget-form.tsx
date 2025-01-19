@@ -26,6 +26,7 @@ import { CategoriesInput } from "./categories-input";
 import ColorPicker from "./color-picker";
 import EmptyState from "./empty-state";
 import ResourceNotFound from "./resource-not-found";
+import { Redirect } from "expo-router";
 
 const PERIODS = ["weekly", "monthly", "yearly"] as const;
 const formSchema = z.object({
@@ -99,8 +100,8 @@ const BudgetForm = ({ defaultValues, onSubmit }: BudgetFormProps) => {
 
   const mainAccount = data?.account;
   if (!mainAccount) {
-    //todo: alert and redirect to set main account
-    throw new Error("You should have a main account");
+    // this should not occur normally
+    return <Redirect href="/accounts" />;
   }
   const defaultCurrency = CURRENCIES_MAP[mainAccount.currency_code];
   const currencyISO = watch("currency");

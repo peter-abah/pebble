@@ -16,6 +16,7 @@ import { TimePeriod } from "@/lib/types";
 import { arrayToMap, assertUnreachable, cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
+import { Redirect } from "expo-router";
 import { vars } from "nativewind";
 import { useMemo, useState } from "react";
 import { Pressable, ScrollView, View } from "react-native";
@@ -80,8 +81,8 @@ const Stats = () => {
 
   const mainAccount = data?.account;
   if (!mainAccount) {
-    //todo: alert and redirect to set main account
-    throw new Error("You should have a main account");
+    // this should not occur normally
+    return <Redirect href="/accounts" />;
   }
 
   const chartData = createChartData(transactions, mainAccount.currency_code, exchangeRates, (t) => {

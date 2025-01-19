@@ -9,7 +9,8 @@ CREATE TABLE `accounts` (
 );
 --> statement-breakpoint
 CREATE INDEX `a_name_index` ON `accounts` (`name`);--> statement-breakpoint
-CREATE TABLE `default_account` (
+CREATE TABLE `main_accounts` (
+	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`account_id` integer NOT NULL,
 	`updated_at` text DEFAULT (current_timestamp) NOT NULL,
 	`created_at` text DEFAULT (current_timestamp) NOT NULL,

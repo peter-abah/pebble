@@ -4,8 +4,8 @@ import ResourceNotFound from "@/components/resource-not-found";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import { updateAccount } from "@/db/mutations/accounts";
-import { getAccounts } from "@/db/queries/accounts";
+import { insertMainAccount, updateAccount } from "@/db/mutations/accounts";
+import { getAccount, getMainAccount } from "@/db/queries/accounts";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
@@ -21,17 +21,23 @@ const EditAccount = () => {
   const params = useLocalSearchParams() as { id?: string };
   const id = valueToNumber(params.id);
   const {
-    data: accountsData,
+    data: account,
     isError: isAccountError,
     isPending: isAccountPending,
   } = useQuery({
     queryKey: ["accounts", id],
-    queryFn: async () =>
-      getAccounts({ ids: id !== undefined ? [id] : undefined, limit: id !== undefined ? 1 : 0 }),
+    queryFn: async () => (id ? await getAccount(id) : undefined),
   });
-  const account = accountsData?.[0];
+  const {
+    data: mainAccount,
+    isError: isMainAccountError,
+    isPending: isMainAccountPending,
+  } = useQuery({
+    queryKey: ["accounts", "mainAccount"],
+    queryFn: () => getMainAccount(),
+  });
 
-  const onSubmit = async ({ name, currencyCode, color }: FormSchema) => {
+  const onSubmit = async ({ name, currencyCode, color, isMainAccount }: FormSchema) => {
     const currency = CURRENCIES_MAP[currencyCode];
     if (!account || !currency) return;
 
@@ -40,12 +46,15 @@ const EditAccount = () => {
       color,
       currency_code: currencyCode,
     });
+    if (isMainAccount && mainAccount?.account_id !== account.id) {
+      await insertMainAccount(account.id);
+    }
     queryClient.invalidateQueries({ queryKey: ["accounts"] });
 
     router.back();
   };
 
-  if (isAccountPending) {
+  if (isAccountPending || isMainAccountPending) {
     return (
       <Layout>
         <EmptyState
@@ -56,7 +65,7 @@ const EditAccount = () => {
     );
   }
 
-  if (isAccountError) {
+  if (isAccountError || isMainAccountError) {
     return <ResourceNotFound title="An error occured fetching account" />;
   }
 
@@ -71,6 +80,7 @@ const EditAccount = () => {
           name: account.name,
           currencyCode: account.currency_code,
           color: account.color,
+          isMainAccount: mainAccount?.account_id === account.id,
         }}
         onSubmit={onSubmit}
       />

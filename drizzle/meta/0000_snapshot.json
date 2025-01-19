@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "06c44454-292a-41ee-9553-9cb63ed62685",
+  "id": "c8ba765e-0a77-4b24-a586-c635065aa437",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "accounts": {
@@ -73,9 +73,16 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "default_account": {
-      "name": "default_account",
+    "main_accounts": {
+      "name": "main_accounts",
       "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
         "account_id": {
           "name": "account_id",
           "type": "integer",
@@ -102,9 +109,9 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "default_account_account_id_accounts_id_fk": {
-          "name": "default_account_account_id_accounts_id_fk",
-          "tableFrom": "default_account",
+        "main_accounts_account_id_accounts_id_fk": {
+          "name": "main_accounts_account_id_accounts_id_fk",
+          "tableFrom": "main_accounts",
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"

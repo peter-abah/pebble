@@ -8,12 +8,13 @@ import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { deleteAccount } from "@/db/mutations/accounts";
-import { getAccount } from "@/db/queries/accounts";
+import { getAccount, getMainAccount } from "@/db/queries/accounts";
 import { getTransactions } from "@/db/queries/transactions";
 import { calculateAccountExpenses, calculateAccountIncome } from "@/lib/app-utils";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { PencilIcon } from "@/lib/icons/Pencil";
+import { StarIcon } from "@/lib/icons/Star";
 import { TrashIcon } from "@/lib/icons/Trash";
 import { TrendingDownIcon } from "@/lib/icons/TrendingDown";
 import { TrendingUpIcon } from "@/lib/icons/TrendingUp";
@@ -25,7 +26,7 @@ import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-import { FlatList, View } from "react-native";
+import { Alert, FlatList, View } from "react-native";
 
 // todo: add logging, errors and other events
 const AccountScreen = () => {
@@ -37,7 +38,12 @@ const AccountScreen = () => {
     isPending: isAccountPending,
   } = useQuery({
     queryKey: ["accounts", id],
-    queryFn: async () => (id ? getAccount(id) : undefined),
+    queryFn: async () => (id ? await getAccount(id) : undefined),
+  });
+
+  const { data: mainAccount } = useQuery({
+    queryKey: ["accounts", "mainAccount"],
+    queryFn: () => getMainAccount(),
   });
 
   const [currentTimePeriod, setCurrentTimePeriod] = useState<TimePeriod>(() => ({
@@ -62,6 +68,10 @@ const AccountScreen = () => {
 
     await deleteAccount(account.id);
     queryClient.invalidateQueries({ queryKey: ["accounts"] });
+
+    // need to invalidate related transactions will be deleted and related budgets will be updated
+    queryClient.invalidateQueries({ queryKey: ["transactions"] });
+    queryClient.invalidateQueries({ queryKey: ["budgets"] });
     router.back();
   };
 
@@ -69,6 +79,18 @@ const AccountScreen = () => {
     title: `Are you sure you want to delete ${account?.name} account`,
     onConfirm: onDelete,
   });
+
+  const handleDeletePress = () => {
+    if (account?.id === mainAccount?.account_id) {
+      Alert.alert(
+        "Cannot delete main account.",
+        "Set another account as the main account to delete"
+      );
+      return;
+    }
+
+    openDeleteModal();
+  };
 
   if (isAccountPending) {
     return (
@@ -101,7 +123,12 @@ const AccountScreen = () => {
         >
           <ChevronLeftIcon className="text-foreground" size={24} />
         </Button>
-        <Text className="font-bold text-2xl">{account.name}</Text>
+        <View className="flex-row items-center gap-2">
+          <Text className="font-bold text-2xl">{account.name}</Text>
+          {mainAccount?.account_id === account.id && (
+            <StarIcon className="text-primary fill-black" size={20} />
+          )}
+        </View>
 
         <View className="items-center flex-row ml-auto gap-3">
           <Link href={`/accounts/${account.id}/edit`} asChild>
@@ -117,7 +144,7 @@ const AccountScreen = () => {
           <Button
             className="rounded-full p-0 active:bg-accent ml-auto items-center justify-center"
             variant="ghost"
-            onPress={openDeleteModal}
+            onPress={handleDeletePress}
             size="icon"
           >
             <TrashIcon className="text-foreground" size={24} />

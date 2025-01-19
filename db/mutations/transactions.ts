@@ -1,5 +1,5 @@
 import { NonNullableFields, RequiredFields, StrictOmit } from "@/lib/types";
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { db } from "../client";
 import { SchemaTransaction, transactionsTable } from "../schema/transactions";
 import {
@@ -137,5 +137,20 @@ export const deleteTransaction = async (id: SchemaTransaction["id"]) => {
   await db.transaction(async (tx) => {
     await updateAccountBalanceForDeletedTransaction(transaction);
     await db.delete(transactionsTable).where(eq(transactionsTable.id, id));
+  });
+};
+
+export const batchDeleteTransactions = async (transactions: Array<SchemaTransaction>) => {
+  await db.transaction(async (tx) => {
+    await db.delete(transactionsTable).where(
+      inArray(
+        transactionsTable.id,
+        transactions.map(({ id }) => id)
+      )
+    );
+
+    for (let transaction of transactions) {
+      await updateAccountBalanceForDeletedTransaction(transaction);
+    }
   });
 };

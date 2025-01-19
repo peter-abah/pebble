@@ -1,3 +1,4 @@
+import { StrictOmit } from "@/lib/types";
 import * as React from "react";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
@@ -13,11 +14,14 @@ import { Text } from "~/components/ui/text";
 
 interface PromptModalProps {
   open: boolean;
-  onConfirm: () => void;
+  onConfirm?: () => void;
   onCancel?: () => void;
   setOpen: (v: boolean) => void;
   title: string;
   description?: string;
+  confirmText?: string;
+  cancelText?: string;
+  hideCancelBtn?: boolean;
 }
 
 export function PromptModal({
@@ -27,6 +31,9 @@ export function PromptModal({
   setOpen,
   title,
   description,
+  confirmText,
+  cancelText,
+  hideCancelBtn,
 }: PromptModalProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -36,12 +43,14 @@ export function PromptModal({
           {description ? <DialogDescription>{description}</DialogDescription> : null}
         </DialogHeader>
         <DialogFooter className="flex-row gap-4 justify-end items-end">
-          <Button variant="secondary" onPress={onCancel ? onCancel : () => setOpen(false)}>
-            <Text>Cancel</Text>
-          </Button>
+          {!hideCancelBtn && (
+            <Button variant="secondary" onPress={onCancel ? onCancel : () => setOpen(false)}>
+              <Text>{cancelText ? cancelText : "Cancel"}</Text>
+            </Button>
+          )}
 
-          <Button onPress={onConfirm}>
-            <Text>Confirm</Text>
+          <Button onPress={onConfirm ? onConfirm : () => setOpen(false)}>
+            <Text>{confirmText ? confirmText : "Confirm"}</Text>
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -49,30 +58,13 @@ export function PromptModal({
   );
 }
 
-interface UsePromptModalProps {
-  onConfirm: () => void;
-  onCancel?: () => void;
-  title: string;
-  description?: string;
+interface UsePromptModalProps extends StrictOmit<PromptModalProps, "open" | "setOpen"> {
+  open?: boolean;
 }
-export const usePromptModal = ({
-  title,
-  description,
-  onConfirm,
-  onCancel,
-}: UsePromptModalProps) => {
-  const [open, setOpen] = useState(false);
+export const usePromptModal = ({ open: isOpenProp, ...restProps }: UsePromptModalProps) => {
+  const [open, setOpen] = useState(isOpenProp || false);
 
-  const Modal = () => (
-    <PromptModal
-      title={title}
-      description={description}
-      open={open}
-      setOpen={setOpen}
-      onConfirm={onConfirm}
-      onCancel={onCancel}
-    />
-  );
+  const Modal = () => <PromptModal open={open} setOpen={setOpen} {...restProps} />;
 
   return {
     Modal,

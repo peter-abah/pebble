@@ -5,9 +5,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { GROUP_COLORS } from "@/lib/constants";
-import { cn } from "@/lib/utils";
+import { GROUP_COLORS, HEX_TO_GROUP_COLOR } from "@/lib/constants";
+import { cn, humanizeString } from "@/lib/utils";
 import { vars } from "nativewind";
+import { useState } from "react";
 import { Dimensions } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -18,16 +19,19 @@ interface ColorPickerProps {
 }
 const ColorPicker = ({ value, onChange }: ColorPickerProps) => {
   const insets = useSafeAreaInsets();
-  const contentInsets = {
+
+  const [contentInsets, setContentInsets] = useState({
     top: insets.top,
     bottom: insets.bottom,
     left: 24,
     right: 24,
-  };
+  });
+
+  const colorName = HEX_TO_GROUP_COLOR[value]?.name;
   const selectValue = value
     ? {
         value,
-        label: value,
+        label: humanizeString(colorName || value),
       }
     : undefined;
 
@@ -37,28 +41,31 @@ const ColorPicker = ({ value, onChange }: ColorPickerProps) => {
       onValueChange={(option) => onChange(option?.value)}
       className="w-full"
     >
-      <SelectTrigger className="w-full gap-1 h-10 items-center" aria-labelledby="type">
+      <SelectTrigger
+        className="w-full gap-1 items-center"
+        aria-labelledby="color"
+        onLayout={(event) => {
+          const { width } = event.nativeEvent.layout;
+          setContentInsets((prev) => ({
+            ...prev,
+            right: Dimensions.get("screen").width - (prev.left + width),
+          }));
+        }}
+      >
         <SelectValue
-          className={cn("px-4 py-2 flex-1 rounded-lg text-white", !value && "text-foreground")}
+          className={cn("px-4 py-2 flex-1 rounded-xl text-white", !value && "text-foreground")}
           style={{ backgroundColor: value || "transparent" }}
           placeholder="Select Color"
         />
       </SelectTrigger>
-      <SelectContent
-        insets={{
-          ...contentInsets,
-          left: 24,
-          right: (Dimensions.get("screen").width - contentInsets.left * 2) / 2,
-        }}
-        className="w-full"
-      >
+      <SelectContent insets={contentInsets} className="w-full">
         <FlatList
           data={GROUP_COLORS}
           renderItem={({ item: color }) => (
             <SelectItem
               label={""}
               value={color.color}
-              className="text-white h-auto py-2 px-4 rounded-lg active:bg-[--bg]/10 bg-[--bg]"
+              className="text-white h-auto py-2 px-4 rounded-xl active:bg-[--bg]/10 bg-[--bg]"
               style={vars({ "--bg": color.color || "#333" })}
             />
           )}
