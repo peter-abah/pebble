@@ -1,6 +1,6 @@
 import EditAccountForm, { FormSchema } from "@/components/edit-account-form";
-import{PlaceholderBlock}from "@/components/placeholder-block";
-import{ErrorScreen}from "@/components/error-screen";
+import { PlaceholderBlock } from "@/components/placeholder-block";
+import { ErrorScreen } from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
@@ -26,7 +26,7 @@ const EditAccount = () => {
     isPending: isAccountPending,
   } = useQuery({
     queryKey: ["accounts", id],
-    queryFn: async () => (id ? await getAccount(id) : undefined),
+    queryFn: async () => (id ? (await getAccount(id)) ?? null : null),
   });
   const {
     data: mainAccount,
@@ -34,7 +34,7 @@ const EditAccount = () => {
     isPending: isMainAccountPending,
   } = useQuery({
     queryKey: ["accounts", "mainAccount"],
-    queryFn: () => getMainAccount(),
+    queryFn: async () => (await getMainAccount()) ?? null,
   });
 
   const onSubmit = async ({ name, currencyCode, color, isMainAccount }: FormSchema) => {

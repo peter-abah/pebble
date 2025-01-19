@@ -38,7 +38,7 @@ const CreateTransaction = () => {
     isPending: isMainAccountPending,
   } = useQuery({
     queryKey: ["accounts", "mainAccount"],
-    queryFn: () => getMainAccount(),
+    queryFn: async () => await getMainAccount() ?? null,
   });
 
   const onSubmit = async (data: FormSchema) => {

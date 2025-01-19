@@ -1,5 +1,5 @@
-import{PlaceholderBlock}from "@/components/placeholder-block";
-import{ErrorScreen}from "@/components/error-screen";
+import { ErrorScreen } from "@/components/error-screen";
+import { PlaceholderBlock } from "@/components/placeholder-block";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker from "@/components/time-period-picker";
 import { Text } from "@/components/ui/text";
@@ -63,7 +63,7 @@ const Stats = () => {
     isPending: isMainAccountPending,
   } = useQuery({
     queryKey: ["accounts", "mainAccount"],
-    queryFn: () => getMainAccount(),
+    queryFn: async () => (await getMainAccount()) ?? null,
   });
 
   if (isMainAccountPending) {

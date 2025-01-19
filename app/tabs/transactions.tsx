@@ -32,7 +32,6 @@ const Transactions = () => {
     initialData: [],
   });
 
-  // todo: same error msgs for all pages
   if (isTransactionsError) {
     return <ErrorScreen title="An error occured fetching transactions" />;
   }

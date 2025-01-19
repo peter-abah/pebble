@@ -1,6 +1,6 @@
-import{PlaceholderBlock}from "@/components/placeholder-block";
+import { ErrorScreen } from "@/components/error-screen";
+import { PlaceholderBlock } from "@/components/placeholder-block";
 import { usePromptModal } from "@/components/prompt-modal";
-import{ErrorScreen}from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
@@ -35,7 +35,7 @@ const BudgetScreen = () => {
     isError: isBudgetError,
   } = useQuery({
     queryKey: ["budgets", id],
-    queryFn: () => (id ? getBudget(id) : undefined),
+    queryFn: async () => (id ? (await getBudget(id)) ?? null : null),
   });
 
   const budgetCategoriesIDs =
@@ -55,8 +55,8 @@ const BudgetScreen = () => {
     ],
     queryFn: async () =>
       await getTransactions({
-        categories: budgetCategoriesIDs,
-        accounts: budgetAccountsIDs,
+        categories: budgetCategoriesIDs || undefined,
+        accounts: budgetAccountsIDs || undefined,
         period: budgetPeriod,
         types: ["expense"],
         limit: budget ? undefined : 0,

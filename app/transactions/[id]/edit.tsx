@@ -1,6 +1,6 @@
-import{PlaceholderBlock}from "@/components/placeholder-block";
+import { PlaceholderBlock } from "@/components/placeholder-block";
 import { usePromptModal } from "@/components/prompt-modal";
-import{ErrorScreen}from "@/components/error-screen";
+import { ErrorScreen } from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionForm, { FormSchema } from "@/components/transaction-form";
 import { Button } from "@/components/ui/button";
@@ -36,7 +36,7 @@ const EditTransaction = () => {
     isError: isTransactionError,
   } = useQuery({
     queryKey: ["transactions", id],
-    queryFn: () => (id ? getTransaction(id) : undefined),
+    queryFn: async () => (id ? (await getTransaction(id)) ?? null : null),
   });
   const { data: accounts, isError: isAccountsError } = useQuery({
     queryKey: ["accounts"],

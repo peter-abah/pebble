@@ -31,7 +31,7 @@ const LoanScreen = () => {
     isError: isLoanError,
   } = useQuery({
     queryKey: ["transactions", id],
-    queryFn: () => (id ? getTransaction(id) : undefined),
+    queryFn: async () => (id ? (await getTransaction(id)) ?? null : null),
   });
 
   const exchangeRates = useAppStore((state) => state.exchangeRates);

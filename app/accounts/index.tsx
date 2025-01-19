@@ -32,7 +32,7 @@ const Accounts = () => {
     isPending: isMainAccountPending,
   } = useQuery({
     queryKey: ["accounts", "mainAccount"],
-    queryFn: () => getMainAccount(),
+    queryFn: async () => await getMainAccount() ?? null,
   });
 
   const { Modal: MainAccountPromptModal, openModal } = usePromptModal({

@@ -4,7 +4,6 @@ import { getMainAccount } from "../queries/accounts";
 import { accountsTable, mainAccountsTable, SchemaAccount, transactionsTable } from "../schema";
 import { batchDeleteTransactions } from "./transactions";
 
-// todo: fix react query undefined issue
 export const deleteAccount = async (id: SchemaAccount["id"]) => {
   const mainAccount = await getMainAccount();
   if (mainAccount?.account_id === id) {

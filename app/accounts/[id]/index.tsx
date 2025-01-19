@@ -1,7 +1,7 @@
-import{PlaceholderBlock}from "@/components/placeholder-block";
+import { PlaceholderBlock } from "@/components/placeholder-block";
 import FloatingAddButton from "@/components/floating-add-button";
 import { usePromptModal } from "@/components/prompt-modal";
-import{ErrorScreen}from "@/components/error-screen";
+import { ErrorScreen } from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker from "@/components/time-period-picker";
 import TransactionCard from "@/components/transaction-card";
@@ -43,7 +43,7 @@ const AccountScreen = () => {
 
   const { data: mainAccount } = useQuery({
     queryKey: ["accounts", "mainAccount"],
-    queryFn: () => getMainAccount(),
+    queryFn: async () => (await getMainAccount()) ?? null,
   });
 
   const [currentTimePeriod, setCurrentTimePeriod] = useState<TimePeriod>(() => ({

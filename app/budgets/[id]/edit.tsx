@@ -1,6 +1,6 @@
 import BudgetForm, { FormSchema } from "@/components/budget-form";
-import{PlaceholderBlock}from "@/components/placeholder-block";
-import{ErrorScreen}from "@/components/error-screen";
+import { ErrorScreen } from "@/components/error-screen";
+import { PlaceholderBlock } from "@/components/placeholder-block";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
@@ -26,7 +26,7 @@ const EditBudget = () => {
     isError: isBudgetError,
   } = useQuery({
     queryKey: ["budgets", id],
-    queryFn: () => (id ? getBudget(id) : undefined),
+    queryFn: async () => (id ? (await getBudget(id)) ?? null : null),
   });
 
   const onSubmit = async ({
