@@ -88,7 +88,7 @@ const LoanScreen = () => {
         >
           <ChevronLeftIcon className="text-foreground" size={24} />
         </Button>
-        <Text className="font-bold text-2xl">Loan</Text>
+        <Text className="font-sans_bold text-2xl">Loan</Text>
 
         <View className="items-center flex-row ml-auto gap-3">
           <Link href={`/transactions/${loan.id}/edit`} asChild>
@@ -138,7 +138,7 @@ const LoanScreen = () => {
               }}
             />
           </View>
-          <Text className={cn("font-medium", ratio > 1 && "text-green-700")}>
+          <Text className={cn("font-sans_medium", ratio > 1 && "text-green-700")}>
             {(ratio * 100).toLocaleString(undefined, { maximumFractionDigits: 2 })}%
           </Text>
         </View>
@@ -148,8 +148,8 @@ const LoanScreen = () => {
         data={loan.loanPaymentTransactions}
         ListHeaderComponent={
           <View className="flex-row justify-between">
-            <Text className="text-lg font-medium">Payments</Text>
-            <Text className="text-lg font-medium">Total: {formatMoney(amountPaid)}</Text>
+            <Text className="text-lg font-sans_medium">Payments</Text>
+            <Text className="text-lg font-sans_medium">Total: {formatMoney(amountPaid)}</Text>
           </View>
         }
         keyExtractor={(item) => item.id.toString()}

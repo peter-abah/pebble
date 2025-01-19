@@ -25,7 +25,7 @@ const More = () => {
   return (
     <ScreenWrapper>
       <View className="flex-row gap-4 items-center pt-8 px-6 py-4 justify-between">
-        <Text className="font-semibold text-2xl">More Actions</Text>
+        <Text className="font-sans_semibold text-2xl">More Actions</Text>
       </View>
 
       <ScrollView className="px-6 flex-1" contentContainerClassName="gap-4">
@@ -117,7 +117,7 @@ const ActionButton = forwardRef<View, ActionButtonProps>(({ title, icon, ...rest
       {...rest}
     >
       {icon}
-      <Text className="font-medium text-lg">{title}</Text>
+      <Text className="font-sans_medium text-lg">{title}</Text>
     </Button>
   );
 });

@@ -49,7 +49,7 @@ const CreateBudget = () => {
         >
           <ChevronLeftIcon className="text-foreground" size={24} />
         </Button>
-        <Text className="font-bold text-2xl">New Budget</Text>
+        <Text className="font-sans_bold text-2xl">New Budget</Text>
       </View>
 
       <BudgetForm

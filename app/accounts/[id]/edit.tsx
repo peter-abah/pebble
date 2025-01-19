@@ -100,7 +100,7 @@ const Layout = ({ children }: PropsWithChildren) => {
         >
           <ChevronLeftIcon className="text-foreground" size={24} />
         </Button>
-        <Text className="font-bold text-2xl">Edit Account</Text>
+        <Text className="font-sans_bold text-2xl">Edit Account</Text>
       </View>
 
       {children}

@@ -127,7 +127,7 @@ const Stats = () => {
   return (
     <ScreenWrapper className="!pb-6">
       <View className="flex-row gap-4 items-center py-4 px-6 justify-between">
-        <Text className="font-semibold text-2xl">Stats</Text>
+        <Text className="font-sans_semibold text-2xl">Stats</Text>
       </View>
 
       <ScrollView className="flex-1" contentContainerClassName="px-6 gap-4">
@@ -176,7 +176,7 @@ const Stats = () => {
                     className="w-10 h-10 rounded-full bg-[var(--bg)] mr-2"
                     style={vars({ "--bg": color! })}
                   />
-                  <Text className="text-lg font-medium">{getDataLabel(key)}</Text>
+                  <Text className="text-lg font-sans_medium">{getDataLabel(key)}</Text>
                   <Text className="ml-auto text-xl">
                     {formatMoney({
                       valueInMinorUnits: value,

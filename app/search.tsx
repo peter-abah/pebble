@@ -67,7 +67,7 @@ const Search = () => {
         >
           <ChevronLeftIcon className="text-foreground" size={24} />
         </Button>
-        <Text className="font-bold text-2xl">Search</Text>
+        <Text className="font-sans_bold text-2xl">Search</Text>
       </View>
 
       <View className="px-6 mb-4 flex-row gap-2 items-center">
@@ -87,7 +87,7 @@ const Search = () => {
       <View className="px-6 py-2 gap-2">
         {filters.categories.length > 0 ? (
           <View className="flex flex-row gap-2 items-center">
-            <Text className="text-sm font-medium">Categories:</Text>
+            <Text className="text-sm font-sans_medium">Categories:</Text>
             {isCategoriesError ? (
               <Text className="text-sm">"Error. Could not fetch categories"</Text>
             ) : (
@@ -107,7 +107,7 @@ const Search = () => {
         ) : null}
         {filters.accounts.length > 0 ? (
           <View className="flex flex-row gap-2 items-center">
-            <Text className="text-sm font-medium">Accounts:</Text>
+            <Text className="text-sm font-sans_medium">Accounts:</Text>
             {isAccountsError ? (
               <Text className="text-sm">Error. Could not fetch accounts</Text>
             ) : (
@@ -127,7 +127,7 @@ const Search = () => {
         ) : null}
         {filters.types.length > 0 ? (
           <View className="flex flex-row gap-2 items-center">
-            <Text className="text-sm font-medium">Transaction type:</Text>
+            <Text className="text-sm font-sans_medium">Transaction type:</Text>
             <FlatList
               data={filters.types}
               horizontal

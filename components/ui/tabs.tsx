@@ -28,14 +28,14 @@ const TabsTrigger = React.forwardRef<
   return (
     <TextClassContext.Provider
       value={cn(
-        'text-sm native:text-base font-medium web:transition-all',
+        'text-sm native:text-base font-sans_medium web:transition-all',
         value === props.value && 'text-primary-foreground'
       )}
     >
       <TabsPrimitive.Trigger
         ref={ref}
         className={cn(
-          'inline-flex items-center justify-center shadow-none web:whitespace-nowrap rounded-2xl px-3 py-2 text-sm font-medium web:transition-all web:focus-visible:outline-none',
+          'inline-flex items-center justify-center shadow-none web:whitespace-nowrap rounded-2xl px-3 py-2 text-sm font-sans_medium web:transition-all web:focus-visible:outline-none',
           props.disabled && 'web:pointer-events-none opacity-50',
           props.value === value && 'bg-primary text-primary-foreground',
           className

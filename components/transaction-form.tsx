@@ -181,7 +181,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
       <ScrollView contentContainerClassName="py-4 gap-4" className="flex-1 px-6">
         <View>
           <View className="flex-row gap-1 items-center">
-            <Text className="text-3xl font-semibold leading-none mt-1.5">
+            <Text className="text-3xl font-sans_semibold leading-none mt-1.5">
               {currency?.symbol || ""}
             </Text>
             <Controller
@@ -201,7 +201,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
                   onBlur={onBlur}
                   onChangeText={onChange}
                   inputMode="numeric"
-                  className="text-3xl font-semibold p-0 grow"
+                  className="text-3xl font-sans_semibold p-0 grow"
                 />
               )}
               name="amount"

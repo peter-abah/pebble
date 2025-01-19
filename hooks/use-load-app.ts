@@ -1,6 +1,13 @@
 import { db } from "@/db/client";
 import migrations from "@/drizzle/migrations";
 import { useAppStore } from "@/lib/store";
+import {
+  Nunito_400Regular,
+  Nunito_500Medium,
+  Nunito_600SemiBold,
+  Nunito_700Bold,
+  useFonts,
+} from "@expo-google-fonts/nunito";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 import { SplashScreen } from "expo-router";
@@ -41,9 +48,17 @@ const useLoadTheme = () => {
 export const useLoadApp = () => {
   const hasStoreHydrated = useAppStore((state) => state._hasHydrated);
   const isColorSchemeLoaded = useLoadTheme();
+  const [fontSuccess, fontError] = useFonts({
+    Nunito_400Regular,
+    Nunito_500Medium,
+    Nunito_600SemiBold,
+    Nunito_700Bold,
+  });
+  const fontLoaded = fontSuccess || fontError;
   const { success, error } = useMigrations(db, migrations);
   const migrationLoaded = success || error;
-  const allLoaded = migrationLoaded && isColorSchemeLoaded && hasStoreHydrated;
+
+  const allLoaded = migrationLoaded && isColorSchemeLoaded && hasStoreHydrated && fontLoaded;
 
   useEffect(() => {
     if (allLoaded) {
@@ -56,5 +71,7 @@ export const useLoadApp = () => {
     migrationError: error,
     isColorSchemeLoaded,
     storeLoaded: hasStoreHydrated,
+    fontSuccess,
+    fontError,
   };
 };

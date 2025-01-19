@@ -43,7 +43,6 @@ const BudgetScreen = () => {
   const budgetAccountsIDs = budget && budget.budgetsToAccounts.map(({ account_id }) => account_id);
   const budgetPeriod = budget?.period ? { date: dayjs(), period: budget.period } : undefined;
 
-  // todo: do something if there is an error
   const { data: budgetTransactions, isError: isBudgetTransactionsError } = useQuery({
     queryKey: [
       "transactions",
@@ -74,7 +73,7 @@ const BudgetScreen = () => {
     router.back();
   };
 
-  if (isBudgetError) {
+  if (isBudgetError || isBudgetTransactionsError) {
     return <ResourceNotFound title="An error occured fetching budget" />;
   }
 
@@ -122,7 +121,7 @@ const BudgetView = ({ budget, budgetTransactions, onDelete }: BudgetViewProps) =
         >
           <ChevronLeftIcon className="text-foreground" size={24} />
         </Button>
-        <Text className="font-bold text-2xl">{budget.name}</Text>
+        <Text className="font-sans_bold text-2xl">{budget.name}</Text>
 
         <View className="items-center flex-row ml-auto gap-3">
           <Link href={`/budgets/${budget.id}/edit`} asChild>
@@ -148,7 +147,7 @@ const BudgetView = ({ budget, budgetTransactions, onDelete }: BudgetViewProps) =
 
       <View className="px-6 py-4 gap-2">
         <Text className="text-neutral-600">
-          <Text className="text-lg font-semibold">{formatMoney(amountSpent)}</Text>{" "}
+          <Text className="text-lg font-sans_semibold">{formatMoney(amountSpent)}</Text>{" "}
           {ratio < 1 ? "spent" : "overspent"} of{" "}
           {formatMoney({
             valueInMinorUnits: budget.amount_value_in_minor_units,
@@ -169,7 +168,7 @@ const BudgetView = ({ budget, budgetTransactions, onDelete }: BudgetViewProps) =
               }}
             />
           </View>
-          <Text className={cn("font-medium", ratio > 1 && "text-destructive")}>
+          <Text className={cn("font-sans_medium", ratio > 1 && "text-destructive")}>
             {(ratio * 100).toLocaleString(undefined, { maximumFractionDigits: 2 })}%
           </Text>
         </View>
@@ -177,14 +176,14 @@ const BudgetView = ({ budget, budgetTransactions, onDelete }: BudgetViewProps) =
 
       {budgetTransactions.length > 0 ? (
         <View className="px-6 py-4 gap-2">
-          <Text className="font-medium">Spending by Categories</Text>
+          <Text className="font-sans_medium">Spending by Categories</Text>
           <BudgetChart transactions={budgetTransactions} total={amountSpent} budget={budget} />
         </View>
       ) : null}
 
       <FlatList
         data={budgetTransactions}
-        ListHeaderComponent={<Text className="text-lg font-medium">Transactions</Text>}
+        ListHeaderComponent={<Text className="text-lg font-sans_medium">Transactions</Text>}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Link href={`/transactions/${item.id}/edit`} asChild>
@@ -230,7 +229,7 @@ const BudgetChart = ({
         data={chartData}
         donut
         centerLabelComponent={() => (
-          <Text className="font-semibold text-sm">{formatMoney(total)}</Text>
+          <Text className="font-sans_semibold text-sm">{formatMoney(total)}</Text>
         )}
       />
       <View className="flex-row items-center justify-center gap-4">

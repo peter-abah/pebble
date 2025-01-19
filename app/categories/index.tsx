@@ -47,7 +47,7 @@ const Categories = () => {
         >
           <ChevronLeftIcon className="text-foreground" size={24} />
         </Button>
-        <Text className="font-semibold text-2xl">Categories</Text>
+        <Text className="font-sans_semibold text-2xl">Categories</Text>
       </View>
 
       <View className="px-6 py-2">
@@ -96,7 +96,7 @@ const CategoryCard = ({ category }: { category: SchemaCategory }) => {
               style={{ backgroundColor: category.color }}
             >
               {category.icon.type === "emoji" ? (
-                <Text className="text-2xl font-bold">{category.icon.emoji}</Text>
+                <Text className="text-2xl font-sans_bold">{category.icon.emoji}</Text>
               ) : (
                 CATEGORY_ICONS[category.icon.name as CategoryIconName]?.({
                   size: 24,
@@ -105,9 +105,7 @@ const CategoryCard = ({ category }: { category: SchemaCategory }) => {
               )}
             </View>
 
-            {/* TODO: choose font for app */}
-
-            <Text className="text-xl font-medium">{category.name}</Text>
+            <Text className="text-xl font-sans_medium">{category.name}</Text>
           </Pressable>
         </Link>
         <Button

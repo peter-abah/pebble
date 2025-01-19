@@ -24,8 +24,8 @@ const EmptyState = ({ title, description, icon }: EmptyStateProps) => {
           />
         )}
       </View>
-      <Text className="text-2xl font-bold mb-3 w-4/5 text-center">{title}</Text>
-      {description ? <Text className="text-lg font-medium w-4/5">{description}</Text> : null}
+      <Text className="text-2xl font-sans_bold mb-3 w-4/5 text-center">{title}</Text>
+      {description ? <Text className="text-lg font-sans_medium w-4/5">{description}</Text> : null}
     </View>
   );
 };

@@ -40,7 +40,7 @@ const Transactions = () => {
   return (
     <ScreenWrapper className="!pb-6">
       <View className="flex-row gap-4 items-center py-4 px-6 justify-between">
-        <Text className="font-semibold text-2xl">Transactions</Text>
+        <Text className="font-sans_semibold text-2xl">Transactions</Text>
 
         <View className="flex-row items-center gap-4">
           <Link href="/search" asChild>

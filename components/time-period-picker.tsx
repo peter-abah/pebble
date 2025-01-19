@@ -90,7 +90,7 @@ function TimePeriodPicker({ timePeriod, onValueChange }: TimePeriodPickerProps) 
             <ChevronLeftIcon className="text-foreground" size={20} />
           </Button>
           <Pressable onPress={showDatePicker}>
-            <Text className="font-semibold">{renderDate(timePeriod)}</Text>
+            <Text className="font-sans_semibold">{renderDate(timePeriod)}</Text>
           </Pressable>
           <Button variant={"ghost"} size="icon" onPress={incrementDate}>
             <ChevronRightIcon className="text-foreground" size={20} />

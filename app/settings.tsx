@@ -35,12 +35,12 @@ const Settings = () => {
         >
           <ChevronLeftIcon className="text-foreground" size={24} />
         </Button>
-        <Text className="font-semibold text-2xl">Settings</Text>
+        <Text className="font-sans_semibold text-2xl">Settings</Text>
       </View>
 
       <ScrollView className="px-6" contentContainerClassName="gap-5">
         <View className="gap-2">
-          <Text className="text-lg font-semibold">Theme</Text>
+          <Text className="text-lg font-sans_semibold">Theme</Text>
           <View className="flex-row items-center justify-between">
             <Text>Theme mode</Text>
 
@@ -58,7 +58,7 @@ const Settings = () => {
         </View>
 
         <View className="gap-3">
-          <Text className="text-lg font-semibold">Notifications</Text>
+          <Text className="text-lg font-sans_semibold">Notifications</Text>
           <View className="gap-1.5">
             <View className="flex-row items-center justify-between">
               <Text>Add transaction reminder</Text>
@@ -85,14 +85,14 @@ const Settings = () => {
         </View>
 
         <View className="gap-3">
-          <Text className="text-lg font-semibold">Security</Text>
+          <Text className="text-lg font-sans_semibold">Security</Text>
           <Button variant={"ghost"} className="-ml-4">
             <Text className="w-full font-normal text-base">Passcode</Text>
           </Button>
         </View>
 
         <View className="gap-3">
-          <Text className="text-lg font-semibold">Data</Text>
+          <Text className="text-lg font-sans_semibold">Data</Text>
 
           <Button variant={"ghost"} className="-ml-4">
             <Text className="w-full font-normal text-base">Export Pebble data file</Text>

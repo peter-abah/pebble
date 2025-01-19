@@ -35,8 +35,8 @@ const ResourceNotFound = ({ title, description, icon }: ResourceNotFoundProps) =
             <MaterialIcons name="error" size={100} className="text-muted-foreground" />
           )}
         </View>
-        <Text className="text-2xl font-bold mb-3 w-4/5 text-center">{title}</Text>
-        {description ? <Text className="text-lg font-medium w-4/5">{description}</Text> : null}
+        <Text className="text-2xl font-sans_bold mb-3 w-4/5 text-center">{title}</Text>
+        {description ? <Text className="text-lg font-sans_medium w-4/5">{description}</Text> : null}
         <Link href={"/"} asChild>
           <Button className="mx-auto mt-6 px-8">
             <Text className="text-lg">Back to home</Text>

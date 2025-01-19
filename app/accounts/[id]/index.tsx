@@ -124,7 +124,7 @@ const AccountScreen = () => {
           <ChevronLeftIcon className="text-foreground" size={24} />
         </Button>
         <View className="flex-row items-center gap-2">
-          <Text className="font-bold text-2xl">{account.name}</Text>
+          <Text className="font-sans_bold text-2xl">{account.name}</Text>
           {mainAccount?.account_id === account.id && (
             <StarIcon className="text-primary fill-black" size={20} />
           )}
@@ -157,8 +157,8 @@ const AccountScreen = () => {
       </View>
 
       <View className="px-6 gap-2 py-2">
-        <Text className="text-sm font-bold text-muted-foreground">Total balance</Text>
-        <Text className="font-bold text-2xl">
+        <Text className="text-sm font-sans_bold text-muted-foreground">Total balance</Text>
+        <Text className="font-sans_bold text-2xl">
           {formatMoney({
             valueInMinorUnits: account.balance_value_in_minor_units,
             currencyCode: account.currency_code,
@@ -176,7 +176,7 @@ const AccountScreen = () => {
           </View>
           <View>
             <Text>Income</Text>
-            <Text className="font-bold">{formatMoney(income)}</Text>
+            <Text className="font-sans_bold">{formatMoney(income)}</Text>
           </View>
         </Button>
 
@@ -189,7 +189,7 @@ const AccountScreen = () => {
           </View>
           <View>
             <Text>Expenses</Text>
-            <Text className="font-bold">{formatMoney(expenses)}</Text>
+            <Text className="font-sans_bold">{formatMoney(expenses)}</Text>
           </View>
         </Button>
       </View>

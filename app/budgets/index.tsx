@@ -42,7 +42,7 @@ const Budgets = () => {
         >
           <ChevronLeftIcon className="text-foreground" size={24} />
         </Button>
-        <Text className="font-semibold text-2xl">Budgets</Text>
+        <Text className="font-sans_semibold text-2xl">Budgets</Text>
       </View>
 
       <View className="px-6 py-2">

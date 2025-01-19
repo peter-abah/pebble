@@ -41,7 +41,7 @@ const TransactionCard = forwardRef<View, TransactionCardProps>(
         <TransactionText transaction={transaction} />
 
         <View className="ml-auto items-end">
-          <Text className="font-bold text-lg">
+          <Text className="font-sans_bold text-lg">
             {sign}
             {formatMoney({
               valueInMinorUnits: transaction.amount_value_in_minor_units,
@@ -67,7 +67,7 @@ const TransactionIcon = ({ transaction }: TransactionCardProps) => {
         className="w-12 h-12 rounded-full items-center justify-center mr-2"
         style={{ backgroundColor: category?.color }}
       >
-        <Text className="text-2xl font-bold">
+        <Text className="text-2xl font-sans_bold">
           {category?.icon?.type === "emoji"
             ? category?.icon.emoji
             : CATEGORY_ICONS[category?.icon.name as CategoryIconName]?.({
@@ -173,7 +173,7 @@ const TransactionText = ({ transaction }: TransactionCardProps) => {
 
   return (
     <View className="shrink gap-1">
-      <Text className="font-medium leading-none" numberOfLines={1}>
+      <Text className="font-sans_medium leading-none" numberOfLines={1}>
         {topText || bottomText}
       </Text>
 

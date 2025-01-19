@@ -74,7 +74,7 @@ export const BudgetCard = ({ budget }: { budget: QueryBudget }) => {
               }}
             />
           </View>
-          <Text className={cn("text-sm font-medium", ratio > 1 && "text-destructive")}>
+          <Text className={cn("text-sm font-sans_medium", ratio > 1 && "text-destructive")}>
             {(ratio * 100).toLocaleString(undefined, { maximumFractionDigits: 2 })}%
           </Text>
         </View>

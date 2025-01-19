@@ -28,15 +28,16 @@ export default function Home() {
   return (
     <ScreenWrapper className="h-full">
       <ScrollView contentContainerStyle={{ padding: 24 }}>
-        <Text className="font-bold text-3xl mb-6">Home</Text>
+        <Text className="font-sans_bold text-3xl mb-6">Home</Text>
         <View>
           <View className="gap-2 flex-row">
             {isAccountsError ? (
               <View className="rounded-xl p-4 border border-border flex-1">
-                <Text className="text-lg font-medium">An error occured fetching accounts</Text>
+                <Text className="text-lg font-sans_medium">An error occured fetching accounts</Text>
               </View>
             ) : (
               accounts.map((account) => (
+                // todo: move to separate component
                 <Link href={`/accounts/${account.id}`} asChild key={account.id}>
                   <Button
                     className="h-auto p-4 flex-1 items-start justify-start gap-1 rounded-xl shrink-0"
@@ -44,8 +45,8 @@ export default function Home() {
                       backgroundColor: account.color || DEFAULT_GROUP_COLOR.color,
                     }}
                   >
-                    <Text className="text-primary-foreground font-medium">{account.name}</Text>
-                    <Text className="font-bold text-2xl text-primary-foreground" numberOfLines={1}>
+                    <Text className="text-primary-foreground font-sans_medium">{account.name}</Text>
+                    <Text className="font-sans_bold text-2xl text-primary-foreground" numberOfLines={1}>
                       {formatMoney({
                         valueInMinorUnits: account.balance_value_in_minor_units,
                         currencyCode: account.currency_code,
@@ -66,7 +67,7 @@ export default function Home() {
 
         <View className="mt-8">
           <View className="flex-row items-center justify-between mb-2">
-            <Text className="font-medium text-xl">Transactions</Text>
+            <Text className="font-sans_medium text-xl">Transactions</Text>
             <Link
               href="/tabs/transactions"
               className="px-2 py-1 -my-1 -mx-2 rounded-sm active:bg-muted"

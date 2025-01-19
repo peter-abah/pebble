@@ -88,7 +88,7 @@ const TransactionPicker = ({
         }}
       >
         <DialogHeader className="gap-2">
-          <DialogTitle className="text-xl font-medium">Select Transaction</DialogTitle>
+          <DialogTitle className="text-xl font-sans_medium">Select Transaction</DialogTitle>
 
           <Input
             className="border border-border px-3 py-2 flex-1 rounded-xl"

@@ -190,7 +190,7 @@ const CreateTransaction = () => {
         >
           <ChevronLeftIcon className="text-foreground" size={24} />
         </Button>
-        <Text className="font-bold text-2xl">Add transaction</Text>
+        <Text className="font-sans_bold text-2xl">Add transaction</Text>
       </View>
 
       <TransactionForm

@@ -45,7 +45,7 @@ const IconPicker = ({
           {iconValue ? (
             <Icon type={iconTypeValue!} value={iconValue} color={color} />
           ) : (
-            <Text className="text-sm font-medium text-muted-foreground">Select Icon</Text>
+            <Text className="text-sm font-sans_medium text-muted-foreground">Select Icon</Text>
           )}
         </Button>
       </DialogTrigger>
@@ -60,11 +60,11 @@ const IconPicker = ({
           <DialogTitle>Pick Icon</DialogTitle>
           {iconTypeValue === "emoji" ? (
             <Button variant={"secondary"} onPress={() => onIconTypeChange("icon")}>
-              <Text className="font-medium">Use Icon</Text>
+              <Text className="font-sans_medium">Use Icon</Text>
             </Button>
           ) : (
             <Button variant={"secondary"} onPress={() => onIconTypeChange("emoji")}>
-              <Text className="font-medium">Use Emoji</Text>
+              <Text className="font-sans_medium">Use Emoji</Text>
             </Button>
           )}
         </DialogHeader>

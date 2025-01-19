@@ -86,7 +86,7 @@ const EditBudget = () => {
         >
           <ChevronLeftIcon className="text-foreground" size={24} />
         </Button>
-        <Text className="font-bold text-2xl">Edit Budget</Text>
+        <Text className="font-sans_bold text-2xl">Edit Budget</Text>
       </View>
 
       <BudgetForm

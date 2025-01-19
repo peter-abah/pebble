@@ -77,7 +77,7 @@ const FiltersModal = ({ filters, onFiltersChange }: FiltersModalProps) => {
         </DialogHeader>
         <View className="gap-4">
           <View className="flex-row gap-2 items-center">
-            <Text className="font-bold">Type:</Text>
+            <Text className="font-sans_bold">Type:</Text>
             <FlatList
               data={TRANSACTION_TYPES}
               horizontal
@@ -99,7 +99,7 @@ const FiltersModal = ({ filters, onFiltersChange }: FiltersModalProps) => {
           </View>
 
           <View>
-            <Text className="text-lg font-semibold">Categories</Text>
+            <Text className="text-lg font-sans_semibold">Categories</Text>
             {isCategoriesError ? (
               <Text className="text-sm">An error occured fetching categories</Text>
             ) : (
@@ -160,7 +160,7 @@ const FiltersModal = ({ filters, onFiltersChange }: FiltersModalProps) => {
           </View>
 
           <View className="flex-row gap-3 items-center">
-            <Text className="font-bold">Account:</Text>
+            <Text className="font-sans_bold">Account:</Text>
             {isAccountsError ? (
               <Text className="text-sm">An error occured fetching accounts</Text>
             ) : (

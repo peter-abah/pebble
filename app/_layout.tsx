@@ -33,8 +33,8 @@ export default function RootLayout() {
   const info = useLoadApp();
   const { isDarkColorScheme } = useColorScheme();
 
-  if (info.migrationError) {
-    console.log(info.migrationError);
+  if (info.migrationError || info.fontError) {
+    console.log(info);
   }
 
   return (
