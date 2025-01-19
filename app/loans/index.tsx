@@ -28,7 +28,7 @@ const Loans = () => {
   });
 
   if (isLoanError) {
-    return <ResourceNotFound title="An error occured fetching loans" />;
+    return <ResourceNotFound title="An error occured fetching loans." />;
   }
 
   const searchedLoans = search.trim()

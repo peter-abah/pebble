@@ -57,7 +57,7 @@ const CreateCategory = () => {
   }
 
   if (!category) {
-    return <ResourceNotFound title="Category does not exist" />;
+    return <ResourceNotFound title="Category not found" />;
   }
 
   return (

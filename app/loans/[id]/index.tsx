@@ -61,11 +61,11 @@ const LoanScreen = () => {
   }
 
   if (isLoanError) {
-    return <ResourceNotFound title="An error occured fetching loan" />;
+    return <ResourceNotFound title="An error occured fetching loan." />;
   }
 
   if (!loan) {
-    return <ResourceNotFound title="Loan does not exist" />;
+    return <ResourceNotFound title="Transaction not found" />;
   }
 
   if (loan.type !== "borrowed" && loan.type !== "lent") {

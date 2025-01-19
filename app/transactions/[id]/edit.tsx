@@ -196,7 +196,7 @@ const EditTransaction = () => {
   }
 
   if (!transaction) {
-    return <ResourceNotFound title="Transaction does not exist" />;
+    return <ResourceNotFound title="Transaction not found." />;
   }
 
   return (

@@ -29,7 +29,6 @@ const Accounts = () => {
   const {
     data: mainAccount,
     isError: isMainAccountError,
-    error: mainAccountError,
     isPending: isMainAccountPending,
   } = useQuery({
     queryKey: ["accounts", "mainAccount"],
@@ -49,7 +48,6 @@ const Accounts = () => {
   }, [isMainAccountPending, mainAccount, openModal]);
 
   if (isAccountsError || isMainAccountError) {
-    console.log({ mainAccountError });
     return <ResourceNotFound title="An error occured fetching accounts" />;
   }
 

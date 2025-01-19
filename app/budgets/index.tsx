@@ -24,7 +24,7 @@ const Budgets = () => {
   });
 
   if (isBudgetsError) {
-    return <ResourceNotFound title="An error occured. Could not fetch budgets." />;
+    return <ResourceNotFound title="An error occured fetching budgets." />;
   }
 
   const searchedBudgets = search.trim()

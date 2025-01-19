@@ -102,11 +102,11 @@ const AccountScreen = () => {
   }
 
   if (isAccountError) {
-    return <ResourceNotFound title="An error occured, could not fetch account" />;
+    return <ResourceNotFound title="An error occured fetching account" />;
   }
 
   if (!account) {
-    return <ResourceNotFound title="Account does not exist" />;
+    return <ResourceNotFound title="Account not found" />;
   }
 
   const income = calculateAccountIncome(account, accountTransactions);
