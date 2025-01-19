@@ -19,13 +19,11 @@ import { useEffect, useState } from "react";
 import { Pressable, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
-// todo: improve search performance, currently every change in search will trigger a db query
 const Accounts = () => {
   const [search, setSearch] = useState("");
   const { data: accounts, isError: isAccountsError } = useQuery({
-    queryKey: ["accounts", { search: search.trim() }],
-    queryFn: async () =>
-      await getAccounts({ sortBy: [{ column: "name", type: "asc" }], search: search.trim() }),
+    queryKey: ["accounts"],
+    queryFn: async () => await getAccounts({ sortBy: [{ column: "name", type: "asc" }] }),
     initialData: [],
   });
   const {
@@ -54,6 +52,10 @@ const Accounts = () => {
     console.log({ mainAccountError });
     return <ResourceNotFound title="An error occured fetching accounts" />;
   }
+
+  const searchedAccounts = search.trim()
+    ? accounts.filter((a) => a.name.toLocaleLowerCase().includes(search.trim().toLocaleLowerCase()))
+    : accounts;
 
   return (
     <ScreenWrapper className="!pb-6">
@@ -87,7 +89,7 @@ const Accounts = () => {
         />
       ) : (
         <FlatList
-          data={accounts}
+          data={searchedAccounts}
           keyExtractor={(item) => item.id.toString()}
           className="flex-1 px-6"
           contentContainerClassName="flex-1"

@@ -34,12 +34,17 @@ const TransactionPicker = ({
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const { data: transactions, isError: isTransactionsError } = useQuery({
-    queryKey: ["transactions", { search, ...filters }],
-    queryFn: () => getTransactions({ search, ...filters }),
+    queryKey: ["transactions", filters],
+    queryFn: () => getTransactions(filters),
     initialData: [],
   });
   const transactionsMap = useMemo(() => arrayToMap(transactions, ({ id }) => id), [transactions]);
   const transaction = value ? transactionsMap[value] : undefined;
+  const searchedTransactions = search.trim()
+    ? transactions.filter(
+        (t) => t.title && t.title.toLocaleLowerCase().includes(search.trim().toLocaleLowerCase())
+      )
+    : transactions;
 
   const handleTransactionClick = (id: number) => {
     onChange(id);
@@ -97,7 +102,7 @@ const TransactionPicker = ({
           <Text className="py-2"> An error occured fetching transactions</Text>
         ) : (
           <FlatList
-            data={transactions}
+            data={searchedTransactions}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <TransactionCard transaction={item} onPress={() => handleTransactionClick(item.id)} />

@@ -18,14 +18,18 @@ import { FlatList } from "react-native-gesture-handler";
 const Budgets = () => {
   const [search, setSearch] = useState("");
   const { data: budgets, isError: isBudgetsError } = useQuery({
-    queryKey: ["budgets", { search: search.trim() }],
-    queryFn: () => getBudgets({ search }),
+    queryKey: ["budgets"],
+    queryFn: () => getBudgets(),
     initialData: [],
   });
 
   if (isBudgetsError) {
     return <ResourceNotFound title="An error occured. Could not fetch budgets." />;
   }
+
+  const searchedBudgets = search.trim()
+    ? budgets.filter((a) => a.name.toLocaleLowerCase().includes(search.trim().toLocaleLowerCase()))
+    : budgets;
 
   return (
     <ScreenWrapper className="!pb-6">
@@ -53,7 +57,7 @@ const Budgets = () => {
       </View>
 
       <FlatList
-        data={budgets}
+        data={searchedBudgets}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <BudgetCard budget={item} />}
         className="flex-1"

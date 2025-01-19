@@ -21,15 +21,21 @@ const Loans = () => {
     queryKey: ["transactions", { types: ["lent", "borrowed"] }],
     queryFn: () =>
       getTransactions({
-        search: search.trim(),
         types: ["lent", "borrowed"],
         sortBy: [{ column: "datetime", type: "asc" }],
       }),
+    initialData: [],
   });
 
   if (isLoanError) {
     return <ResourceNotFound title="An error occured fetching loans" />;
   }
+
+  const searchedLoans = search.trim()
+    ? loans.filter(
+        (l) => l.title && l.title.toLocaleLowerCase().includes(search.trim().toLocaleLowerCase())
+      )
+    : loans;
 
   return (
     <ScreenWrapper className="!pb-6">
@@ -57,7 +63,7 @@ const Loans = () => {
       </View>
 
       <FlatList
-        data={loans}
+        data={searchedLoans}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Link href={`/loans/${item.id}`} asChild>

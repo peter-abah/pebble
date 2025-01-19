@@ -24,14 +24,17 @@ import { FlatList } from "react-native-gesture-handler";
 const Categories = () => {
   const [search, setSearch] = useState("");
   const { data: categories, isError: isCategoriesError } = useQuery({
-    queryKey: ["categories", { search: search.trim() }],
-    queryFn: () => getCategories({ search, sortBy: [{ column: "name", type: "asc" }] }),
+    queryKey: ["categories"],
+    queryFn: () => getCategories({ sortBy: [{ column: "name", type: "asc" }] }),
     initialData: [],
   });
 
   if (isCategoriesError) {
     return <ResourceNotFound title="An error occured fetching categories." />;
   }
+  const filteredCategories = search.trim()
+    ? categories.filter((c) => c.name.toLowerCase().includes(search.trim().toLowerCase()))
+    : categories;
 
   return (
     <ScreenWrapper className="!pb-6">
@@ -58,7 +61,7 @@ const Categories = () => {
         </View>
       </View>
       <FlatList
-        data={categories}
+        data={filteredCategories}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <CategoryCard category={item} />}
         contentContainerClassName="pb-16"

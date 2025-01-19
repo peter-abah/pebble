@@ -29,10 +29,9 @@ const Search = () => {
 
   // checking just the error state because the db query is very fast and resolves in less than a sec
   const { data: transactions, isError: isTransactionsError } = useQuery({
-    queryKey: ["transactions", { search, period: currentTimePeriod, filters }],
+    queryKey: ["transactions", { period: currentTimePeriod, filters }],
     queryFn: async () =>
       getTransactions({
-        search,
         period: currentTimePeriod,
         ...filters,
         sortBy: [{ column: "datetime", type: "desc" }],
@@ -50,6 +49,12 @@ const Search = () => {
     queryFn: async () => await getAccounts({ ids: filters.categories }),
     initialData: [],
   });
+
+  const searchedTransactions = search.trim()
+    ? transactions.filter(
+        (t) => t.title && t.title.toLocaleLowerCase().includes(search.trim().toLocaleLowerCase())
+      )
+    : transactions;
 
   return (
     <ScreenWrapper className="!pb-6">
@@ -145,7 +150,7 @@ const Search = () => {
         />
       ) : (
         <FlatList
-          data={transactions}
+          data={searchedTransactions}
           keyExtractor={(item) => item.id.toString()}
           className="flex-1 px-6"
           contentContainerClassName="flex-1"
