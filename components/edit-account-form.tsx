@@ -76,6 +76,7 @@ const EditAccountForm = ({ defaultValues, onSubmit }: EditAccountFormProps) => {
             name="name"
           />
         </View>
+        {/* todo: currency list takes time to render in select && currency list sort in select */}
         {/* todo: inform users of the type of change that occurs when currency is changed */}
         {/* TODO: BUGGG CHANGE IN ACCOUNT CURRENCY SHOULD MODIFY ALL ACCOUNT TRANSACTIONS and account balanxe
           this will involve account transactions being able to have diff currency from related account. also need

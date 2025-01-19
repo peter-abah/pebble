@@ -1,14 +1,12 @@
-import{PlaceholderBlock}from "@/components/placeholder-block";
+import { AccountCard } from "@/components/account-card";
 import FloatingAddButton from "@/components/floating-add-button";
+import { PlaceholderBlock } from "@/components/placeholder-block";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
-import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { getAccounts } from "@/db/queries/accounts";
 import { getTransactions } from "@/db/queries/transactions";
-import { DEFAULT_GROUP_COLOR } from "@/lib/constants";
 import { MaterialIcons } from "@/lib/icons/MaterialIcons";
-import { formatMoney } from "@/lib/money";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "expo-router";
 import { Pressable, ScrollView, View } from "react-native";
@@ -37,32 +35,20 @@ export default function Home() {
               </View>
             ) : (
               accounts.map((account) => (
-                // todo: move to separate component
                 <Link href={`/accounts/${account.id}`} asChild key={account.id}>
-                  <Button
-                    className="h-auto p-4 flex-1 items-start justify-start gap-1 rounded-xl shrink-0"
-                    style={{
-                      backgroundColor: account.color || DEFAULT_GROUP_COLOR.color,
-                    }}
-                  >
-                    <Text className="text-primary-foreground font-sans_medium">{account.name}</Text>
-                    <Text className="font-sans_bold text-2xl text-primary-foreground" numberOfLines={1}>
-                      {formatMoney({
-                        valueInMinorUnits: account.balance_value_in_minor_units,
-                        currencyCode: account.currency_code,
-                      })}
-                    </Text>
-                  </Button>
+                  <AccountCard account={account} />
                 </Link>
               ))
             )}
           </View>
-          <Link href="/accounts" asChild>
-            <Pressable className="px-2 py-1 mt-1 ml-auto -mx-2 rounded-sm active:bg-muted flex-row gap-1 items-center">
-              <Text>view accounts</Text>
-              <MaterialIcons name="arrow-right-alt" className="text-foreground" size={16} />
-            </Pressable>
-          </Link>
+          {accounts.length > 2 && (
+            <Link href="/accounts" asChild>
+              <Pressable className="px-2 py-1 mt-1 ml-auto -mx-2 rounded-sm active:bg-muted flex-row gap-1 items-center">
+                <Text>view all accounts</Text>
+                <MaterialIcons name="arrow-right-alt" className="text-foreground" size={16} />
+              </Pressable>
+            </Link>
+          )}
         </View>
 
         <View className="mt-8">

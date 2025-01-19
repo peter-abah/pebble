@@ -1,3 +1,4 @@
+import { AccountCard } from "@/components/account-card";
 import { ErrorScreen } from "@/components/error-screen";
 import FloatingAddButton from "@/components/floating-add-button";
 import { PlaceholderBlock } from "@/components/placeholder-block";
@@ -10,13 +11,10 @@ import { getAccounts, getMainAccount } from "@/db/queries/accounts";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { MaterialIcons } from "@/lib/icons/MaterialIcons";
 import { SearchIcon } from "@/lib/icons/Search";
-import { StarIcon } from "@/lib/icons/Star";
-import { formatMoney } from "@/lib/money";
-import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { Link, router } from "expo-router";
 import { useEffect, useState } from "react";
-import { Pressable, View } from "react-native";
+import { View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
 const Accounts = () => {
@@ -89,30 +87,10 @@ const Accounts = () => {
           data={searchedAccounts}
           keyExtractor={(item) => item.id.toString()}
           className="flex-1 px-6"
-          contentContainerClassName="flex-1"
+          contentContainerClassName="gap-6"
           renderItem={({ item, index }) => (
             <Link href={`/accounts/${item.id}`} asChild>
-              <Pressable
-                className={cn(
-                  "p-4 flex-row items-center border-border",
-                  index < accounts.length - 1 && "border-b"
-                )}
-              >
-                <View
-                  className="h-5 w-5 rounded-full mr-4"
-                  style={{ backgroundColor: item.color }}
-                />
-                <Text className="text-xl">{item.name}</Text>
-                {mainAccount?.account_id === item.id && (
-                  <StarIcon className="text-primary ml-4 fill-black" size={16} />
-                )}
-                <Text className="ml-auto text-lg">
-                  {formatMoney({
-                    valueInMinorUnits: item.balance_value_in_minor_units,
-                    currencyCode: item.currency_code,
-                  })}
-                </Text>
-              </Pressable>
+              <AccountCard account={item} />
             </Link>
           )}
           ListEmptyComponent={<PlaceholderBlock title="No accounts to show" />}
