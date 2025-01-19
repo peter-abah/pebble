@@ -1,10 +1,18 @@
 import { eq } from "drizzle-orm";
 import { db } from "../client";
-import { categoriesTable, SchemaCategory } from "../schema";
+import { categoriesTable, SchemaCategory, transactionsTable } from "../schema";
+import { batchDeleteTransactions } from "./transactions";
 
-// todo: what happens to related transactions (deleted), inform user of this
+// todo: category, showing transactions and total
 export const deleteCategory = async (id: SchemaCategory["id"]) => {
-  await db.delete(categoriesTable).where(eq(categoriesTable.id, id));
+  await db.transaction(async () => {
+    const transactions = await db
+      .select()
+      .from(transactionsTable)
+      .where(eq(transactionsTable.category_id, id));
+    await batchDeleteTransactions(transactions);
+    await db.delete(categoriesTable).where(eq(categoriesTable.id, id));
+  });
 };
 
 type InsertCategoryPayload = typeof categoriesTable.$inferInsert;

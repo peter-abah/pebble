@@ -1,7 +1,7 @@
-import{PlaceholderBlock}from "@/components/placeholder-block";
+import { ErrorScreen } from "@/components/error-screen";
 import FloatingAddButton from "@/components/floating-add-button";
+import { PlaceholderBlock } from "@/components/placeholder-block";
 import { usePromptModal } from "@/components/prompt-modal";
-import{ErrorScreen}from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -77,13 +77,17 @@ const Categories = () => {
 };
 
 const CategoryCard = ({ category }: { category: SchemaCategory }) => {
+  const onDelete = async () => {
+    await deleteCategory(category.id);
+    queryClient.invalidateQueries({ queryKey: ["categories"] });
+    queryClient.invalidateQueries({ queryKey: ["transactions"] });
+    queryClient.invalidateQueries({ queryKey: ["accounts"] });
+  };
+
   const { Modal, openModal } = usePromptModal({
     title: `Are you sure you want to delete '${category.name}' category?`,
-    onConfirm: async () => {
-      await deleteCategory(category.id);
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-      queryClient.invalidateQueries({ queryKey: ["transactions"] });
-    },
+    description: "This will permanently delete the category and all related transactions",
+    onConfirm: onDelete,
   });
 
   return (
