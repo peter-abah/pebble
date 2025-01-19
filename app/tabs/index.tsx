@@ -1,4 +1,4 @@
-import EmptyState from "@/components/empty-state";
+import{PlaceholderBlock}from "@/components/placeholder-block";
 import FloatingAddButton from "@/components/floating-add-button";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
@@ -77,7 +77,7 @@ export default function Home() {
           </View>
 
           {isTransactionsError ? (
-            <EmptyState
+            <PlaceholderBlock
               title="An error occured fetching transactions"
               icon={<MaterialIcons name="error" size={100} className="text-muted-foreground" />}
             />

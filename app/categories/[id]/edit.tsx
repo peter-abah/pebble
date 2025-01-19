@@ -1,6 +1,6 @@
 import CategoryForm, { FormSchema } from "@/components/category-form";
-import EmptyState from "@/components/empty-state";
-import ResourceNotFound from "@/components/resource-not-found";
+import{PlaceholderBlock}from "@/components/placeholder-block";
+import{ErrorScreen}from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
@@ -45,7 +45,7 @@ const CreateCategory = () => {
 
   if (isCategoryPending) {
     return (
-      <EmptyState
+      <PlaceholderBlock
         title="Loading..."
         icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
       />
@@ -53,11 +53,11 @@ const CreateCategory = () => {
   }
 
   if (isCategoryError) {
-    return <ResourceNotFound title="An error occured fetching category" />;
+    return <ErrorScreen title="An error occured fetching category" />;
   }
 
   if (!category) {
-    return <ResourceNotFound title="Category not found" />;
+    return <ErrorScreen title="Category not found" />;
   }
 
   return (

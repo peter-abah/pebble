@@ -1,6 +1,6 @@
-import EmptyState from "@/components/empty-state";
+import{PlaceholderBlock}from "@/components/placeholder-block";
 import { usePromptModal } from "@/components/prompt-modal";
-import ResourceNotFound from "@/components/resource-not-found";
+import{ErrorScreen}from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
@@ -74,12 +74,12 @@ const BudgetScreen = () => {
   };
 
   if (isBudgetError || isBudgetTransactionsError) {
-    return <ResourceNotFound title="An error occured fetching budget" />;
+    return <ErrorScreen title="An error occured fetching budget" />;
   }
 
   if (isBudgetPending) {
     return (
-      <EmptyState
+      <PlaceholderBlock
         title="Loading..."
         icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
       />
@@ -87,7 +87,7 @@ const BudgetScreen = () => {
   }
 
   if (!budget) {
-    return <ResourceNotFound title="Budget not found" />;
+    return <ErrorScreen title="Budget not found" />;
   }
 
   return (
@@ -191,7 +191,7 @@ const BudgetView = ({ budget, budgetTransactions, onDelete }: BudgetViewProps) =
           </Link>
         )}
         className="flex-1 px-6 py-4"
-        ListEmptyComponent={<EmptyState title="No transactions to show" />}
+        ListEmptyComponent={<PlaceholderBlock title="No transactions to show" />}
       />
       <DeleteModal />
     </ScreenWrapper>

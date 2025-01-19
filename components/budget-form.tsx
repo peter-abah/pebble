@@ -24,8 +24,8 @@ import * as z from "zod";
 import { AccountsInput } from "./accounts-input";
 import { CategoriesInput } from "./categories-input";
 import ColorPicker from "./color-picker";
-import EmptyState from "./empty-state";
-import ResourceNotFound from "./resource-not-found";
+import{PlaceholderBlock}from "./placeholder-block";
+import{ErrorScreen}from "./error-screen";
 import { Redirect } from "expo-router";
 
 const PERIODS = ["weekly", "monthly", "yearly"] as const;
@@ -88,14 +88,14 @@ const BudgetForm = ({ defaultValues, onSubmit }: BudgetFormProps) => {
 
   if (isMainAccountPending) {
     return (
-      <EmptyState
+      <PlaceholderBlock
         title="Loading..."
         icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
       />
     );
   }
   if (isMainAccountError) {
-    return <ResourceNotFound title="An error occured fetching  data" />;
+    return <ErrorScreen title="An error occured fetching  data" />;
   }
 
   const mainAccount = data?.account;

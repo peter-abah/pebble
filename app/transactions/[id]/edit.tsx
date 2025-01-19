@@ -1,6 +1,6 @@
-import EmptyState from "@/components/empty-state";
+import{PlaceholderBlock}from "@/components/placeholder-block";
 import { usePromptModal } from "@/components/prompt-modal";
-import ResourceNotFound from "@/components/resource-not-found";
+import{ErrorScreen}from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionForm, { FormSchema } from "@/components/transaction-form";
 import { Button } from "@/components/ui/button";
@@ -184,7 +184,7 @@ const EditTransaction = () => {
 
   if (isTransactionPending) {
     return (
-      <EmptyState
+      <PlaceholderBlock
         title="Loading..."
         icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
       />
@@ -192,11 +192,11 @@ const EditTransaction = () => {
   }
 
   if (isTransactionError || isAccountsError) {
-    return <ResourceNotFound title="An error occured fetching transaction" />;
+    return <ErrorScreen title="An error occured fetching transaction" />;
   }
 
   if (!transaction) {
-    return <ResourceNotFound title="Transaction not found." />;
+    return <ErrorScreen title="Transaction not found." />;
   }
 
   return (

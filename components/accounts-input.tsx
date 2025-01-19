@@ -16,7 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { Dimensions } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import ResourceNotFound from "./resource-not-found";
+import{ErrorScreen}from "./error-screen";
 
 interface AccountsInputProps {
   value?: Array<SchemaAccount["id"]>;
@@ -54,7 +54,7 @@ export const AccountsInput = ({ value, onChange }: AccountsInputProps) => {
   };
 
   if (isAccountsError) {
-    return <ResourceNotFound title="An error occured fetching accounts" />;
+    return <ErrorScreen title="An error occured fetching accounts" />;
   }
 
   return (

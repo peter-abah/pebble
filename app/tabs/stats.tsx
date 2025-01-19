@@ -1,5 +1,5 @@
-import EmptyState from "@/components/empty-state";
-import ResourceNotFound from "@/components/resource-not-found";
+import{PlaceholderBlock}from "@/components/placeholder-block";
+import{ErrorScreen}from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker from "@/components/time-period-picker";
 import { Text } from "@/components/ui/text";
@@ -68,7 +68,7 @@ const Stats = () => {
 
   if (isMainAccountPending) {
     return (
-      <EmptyState
+      <PlaceholderBlock
         title="Loading..."
         icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
       />
@@ -76,7 +76,7 @@ const Stats = () => {
   }
 
   if (isCategoriesError || isTransactionsError || isMainAccountError) {
-    return <ResourceNotFound title="An error occured fetching stats data" />;
+    return <ErrorScreen title="An error occured fetching stats data" />;
   }
 
   const mainAccount = data?.account;
@@ -188,7 +188,7 @@ const Stats = () => {
             </View>
           </>
         ) : (
-          <EmptyState title="No data to show" />
+          <PlaceholderBlock title="No data to show" />
         )}
       </ScrollView>
     </ScreenWrapper>

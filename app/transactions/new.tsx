@@ -1,5 +1,5 @@
-import EmptyState from "@/components/empty-state";
-import ResourceNotFound from "@/components/resource-not-found";
+import{PlaceholderBlock}from "@/components/placeholder-block";
+import{ErrorScreen}from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionForm, { FormSchema } from "@/components/transaction-form";
 import { Button } from "@/components/ui/button";
@@ -164,7 +164,7 @@ const CreateTransaction = () => {
 
   if (isMainAccountPending) {
     return (
-      <EmptyState
+      <PlaceholderBlock
         title="Loading..."
         icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
       />
@@ -172,7 +172,7 @@ const CreateTransaction = () => {
   }
 
   if (isAccountsError || isMainAccountError) {
-    return <ResourceNotFound title="An error occured fetching data" />;
+    return <ErrorScreen title="An error occured fetching data" />;
   }
   if (!mainAccount) {
     // this should not occur normally

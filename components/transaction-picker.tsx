@@ -16,7 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 import { memoize } from "proxy-memoize";
 import { useMemo, useState } from "react";
 import { Dimensions, FlatList } from "react-native";
-import EmptyState from "./empty-state";
+import{PlaceholderBlock}from "./placeholder-block";
 import TransactionCard from "./transaction-card";
 import { Input } from "./ui/input";
 
@@ -108,7 +108,7 @@ const TransactionPicker = ({
               <TransactionCard transaction={item} onPress={() => handleTransactionClick(item.id)} />
             )}
             className="flex-1 py-2"
-            ListEmptyComponent={<EmptyState title="No transactions to show" />}
+            ListEmptyComponent={<PlaceholderBlock title="No transactions to show" />}
           />
         )}
 

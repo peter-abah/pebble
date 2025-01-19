@@ -1,4 +1,4 @@
-import EmptyState from "@/components/empty-state";
+import{PlaceholderBlock}from "@/components/placeholder-block";
 import FiltersModal from "@/components/filters-modal";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker from "@/components/time-period-picker";
@@ -144,7 +144,7 @@ const Search = () => {
       </View>
 
       {isTransactionsError ? (
-        <EmptyState
+        <PlaceholderBlock
           title="An error occured."
           icon={<MaterialIcons name="error" size={100} className="text-muted-foreground" />}
         />
@@ -168,12 +168,12 @@ const Search = () => {
           )}
           ListEmptyComponent={
             search === "" ? (
-              <EmptyState
+              <PlaceholderBlock
                 title="Search transactions"
                 icon={<SearchIcon size={100} className="text-muted-foreground" />}
               />
             ) : (
-              <EmptyState title="No transactions to show" />
+              <PlaceholderBlock title="No transactions to show" />
             )
           }
         />

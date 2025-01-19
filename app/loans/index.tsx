@@ -1,6 +1,6 @@
-import EmptyState from "@/components/empty-state";
+import{PlaceholderBlock}from "@/components/placeholder-block";
 import FloatingAddButton from "@/components/floating-add-button";
-import ResourceNotFound from "@/components/resource-not-found";
+import{ErrorScreen}from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
@@ -28,7 +28,7 @@ const Loans = () => {
   });
 
   if (isLoanError) {
-    return <ResourceNotFound title="An error occured fetching loans." />;
+    return <ErrorScreen title="An error occured fetching loans." />;
   }
 
   const searchedLoans = search.trim()
@@ -71,7 +71,7 @@ const Loans = () => {
           </Link>
         )}
         className="flex-1 px-6 py-4"
-        ListEmptyComponent={<EmptyState title="No Loans To Show" />}
+        ListEmptyComponent={<PlaceholderBlock title="No Loans To Show" />}
       />
 
       <Link href="/transactions/new?type=lent" asChild>

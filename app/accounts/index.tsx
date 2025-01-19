@@ -1,7 +1,7 @@
-import EmptyState from "@/components/empty-state";
+import{PlaceholderBlock}from "@/components/placeholder-block";
 import FloatingAddButton from "@/components/floating-add-button";
 import { usePromptModal } from "@/components/prompt-modal";
-import ResourceNotFound from "@/components/resource-not-found";
+import{ErrorScreen}from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,7 +48,7 @@ const Accounts = () => {
   }, [isMainAccountPending, mainAccount, openModal]);
 
   if (isAccountsError || isMainAccountError) {
-    return <ResourceNotFound title="An error occured fetching accounts" />;
+    return <ErrorScreen title="An error occured fetching accounts" />;
   }
 
   const searchedAccounts = search.trim()
@@ -81,7 +81,7 @@ const Accounts = () => {
       </View>
 
       {isAccountsError ? (
-        <EmptyState
+        <PlaceholderBlock
           title="An error occured."
           icon={<MaterialIcons name="error" size={100} className="text-muted-foreground" />}
         />
@@ -116,7 +116,7 @@ const Accounts = () => {
               </Pressable>
             </Link>
           )}
-          ListEmptyComponent={<EmptyState title="No accounts to show" />}
+          ListEmptyComponent={<PlaceholderBlock title="No accounts to show" />}
         />
       )}
 

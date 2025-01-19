@@ -1,6 +1,6 @@
-import EmptyState from "@/components/empty-state";
+import{PlaceholderBlock}from "@/components/placeholder-block";
 import FloatingAddButton from "@/components/floating-add-button";
-import ResourceNotFound from "@/components/resource-not-found";
+import{ErrorScreen}from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker from "@/components/time-period-picker";
 import TransactionCard from "@/components/transaction-card";
@@ -34,7 +34,7 @@ const Transactions = () => {
 
   // todo: same error msgs for all pages
   if (isTransactionsError) {
-    return <ResourceNotFound title="An error occured fetching transactions" />;
+    return <ErrorScreen title="An error occured fetching transactions" />;
   }
 
   return (
@@ -76,7 +76,7 @@ const Transactions = () => {
           </Link>
         )}
         className="flex-1 px-6 py-2"
-        ListEmptyComponent={<EmptyState title="No transactions to show" />}
+        ListEmptyComponent={<PlaceholderBlock title="No transactions to show" />}
       />
 
       <Link href="/transactions/new" asChild>

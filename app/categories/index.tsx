@@ -1,7 +1,7 @@
-import EmptyState from "@/components/empty-state";
+import{PlaceholderBlock}from "@/components/placeholder-block";
 import FloatingAddButton from "@/components/floating-add-button";
 import { usePromptModal } from "@/components/prompt-modal";
-import ResourceNotFound from "@/components/resource-not-found";
+import{ErrorScreen}from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,7 +30,7 @@ const Categories = () => {
   });
 
   if (isCategoriesError) {
-    return <ResourceNotFound title="An error occured fetching categories." />;
+    return <ErrorScreen title="An error occured fetching categories." />;
   }
   const filteredCategories = search.trim()
     ? categories.filter((c) => c.name.toLowerCase().includes(search.trim().toLowerCase()))
@@ -66,7 +66,7 @@ const Categories = () => {
         renderItem={({ item }) => <CategoryCard category={item} />}
         contentContainerClassName="pb-16"
         className="flex-1 px-6"
-        ListEmptyComponent={<EmptyState title="No categories to show" />}
+        ListEmptyComponent={<PlaceholderBlock title="No categories to show" />}
       />
 
       <Link href={"/categories/new"} asChild>

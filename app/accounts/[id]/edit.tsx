@@ -1,6 +1,6 @@
 import EditAccountForm, { FormSchema } from "@/components/edit-account-form";
-import EmptyState from "@/components/empty-state";
-import ResourceNotFound from "@/components/resource-not-found";
+import{PlaceholderBlock}from "@/components/placeholder-block";
+import{ErrorScreen}from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
@@ -57,7 +57,7 @@ const EditAccount = () => {
   if (isAccountPending || isMainAccountPending) {
     return (
       <Layout>
-        <EmptyState
+        <PlaceholderBlock
           title="Loading..."
           icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
         />
@@ -66,11 +66,11 @@ const EditAccount = () => {
   }
 
   if (isAccountError || isMainAccountError) {
-    return <ResourceNotFound title="An error occured fetching account" />;
+    return <ErrorScreen title="An error occured fetching account" />;
   }
 
   if (!account) {
-    return <ResourceNotFound title="Account does not exist" />;
+    return <ErrorScreen title="Account does not exist" />;
   }
 
   return (

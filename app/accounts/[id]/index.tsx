@@ -1,7 +1,7 @@
-import EmptyState from "@/components/empty-state";
+import{PlaceholderBlock}from "@/components/placeholder-block";
 import FloatingAddButton from "@/components/floating-add-button";
 import { usePromptModal } from "@/components/prompt-modal";
-import ResourceNotFound from "@/components/resource-not-found";
+import{ErrorScreen}from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker from "@/components/time-period-picker";
 import TransactionCard from "@/components/transaction-card";
@@ -94,7 +94,7 @@ const AccountScreen = () => {
 
   if (isAccountPending) {
     return (
-      <EmptyState
+      <PlaceholderBlock
         title="Loading..."
         icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
       />
@@ -102,11 +102,11 @@ const AccountScreen = () => {
   }
 
   if (isAccountError) {
-    return <ResourceNotFound title="An error occured fetching account" />;
+    return <ErrorScreen title="An error occured fetching account" />;
   }
 
   if (!account) {
-    return <ResourceNotFound title="Account not found" />;
+    return <ErrorScreen title="Account not found" />;
   }
 
   const income = calculateAccountIncome(account, accountTransactions);
@@ -210,7 +210,7 @@ const AccountScreen = () => {
           </Link>
         )}
         className="flex-1 px-6 py-2"
-        ListEmptyComponent={<EmptyState title="No transactions to show" />}
+        ListEmptyComponent={<PlaceholderBlock title="No transactions to show" />}
       />
 
       <Link href={`/transactions/new?account_id=${account.id}`} asChild>

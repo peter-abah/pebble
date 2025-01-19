@@ -1,7 +1,7 @@
-import EmptyState from "@/components/empty-state";
+import{PlaceholderBlock}from "@/components/placeholder-block";
 import FloatingAddButton from "@/components/floating-add-button";
 import { usePromptModal } from "@/components/prompt-modal";
-import ResourceNotFound from "@/components/resource-not-found";
+import{ErrorScreen}from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
@@ -53,7 +53,7 @@ const LoanScreen = () => {
 
   if (isLoanPending) {
     return (
-      <EmptyState
+      <PlaceholderBlock
         title="Loading..."
         icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
       />
@@ -61,11 +61,11 @@ const LoanScreen = () => {
   }
 
   if (isLoanError) {
-    return <ResourceNotFound title="An error occured fetching loan." />;
+    return <ErrorScreen title="An error occured fetching loan." />;
   }
 
   if (!loan) {
-    return <ResourceNotFound title="Transaction not found" />;
+    return <ErrorScreen title="Transaction not found" />;
   }
 
   if (loan.type !== "borrowed" && loan.type !== "lent") {
@@ -159,7 +159,7 @@ const LoanScreen = () => {
           </Link>
         )}
         className="flex-1 px-6 py-4"
-        ListEmptyComponent={<EmptyState title="No payments to show" />}
+        ListEmptyComponent={<PlaceholderBlock title="No payments to show" />}
       />
 
       <Link

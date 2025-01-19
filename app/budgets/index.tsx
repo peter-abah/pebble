@@ -1,7 +1,7 @@
 import { BudgetCard } from "@/components/budget-card";
-import EmptyState from "@/components/empty-state";
+import{PlaceholderBlock}from "@/components/placeholder-block";
 import FloatingAddButton from "@/components/floating-add-button";
-import ResourceNotFound from "@/components/resource-not-found";
+import{ErrorScreen}from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,7 +24,7 @@ const Budgets = () => {
   });
 
   if (isBudgetsError) {
-    return <ResourceNotFound title="An error occured fetching budgets." />;
+    return <ErrorScreen title="An error occured fetching budgets." />;
   }
 
   const searchedBudgets = search.trim()
@@ -61,7 +61,7 @@ const Budgets = () => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <BudgetCard budget={item} />}
         className="flex-1"
-        ListEmptyComponent={<EmptyState title="No Budgets To Show" />}
+        ListEmptyComponent={<PlaceholderBlock title="No Budgets To Show" />}
       />
 
       <Link href={"/budgets/new"} asChild>

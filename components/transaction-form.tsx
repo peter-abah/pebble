@@ -29,7 +29,7 @@ import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
-import ResourceNotFound from "./resource-not-found";
+import{ErrorScreen}from "./error-screen";
 import TransactionPicker from "./transaction-picker";
 
 const baseTransactionFormSchema = z.object({
@@ -172,7 +172,7 @@ const TransactionForm = ({ defaultValues, onSubmit }: TransactionFormProps) => {
   };
 
   if (isCategoriesError || isAccountsError) {
-    return <ResourceNotFound title="An error occured" />;
+    return <ErrorScreen title="An error occured" />;
   }
 
   // TODO: go to next input after finishing  input

@@ -7,14 +7,13 @@ import { Link, router } from "expo-router";
 import { ReactNode } from "react";
 import { View } from "react-native";
 
-interface ResourceNotFoundProps {
+interface ErrorScreenProps {
   title: string;
   description?: string;
   icon?: ReactNode;
 }
 
-// todo: rename to more general name, errorish
-const ResourceNotFound = ({ title, description, icon }: ResourceNotFoundProps) => {
+export const ErrorScreen = ({ title, description, icon }: ErrorScreenProps) => {
   return (
     <ScreenWrapper>
       <View className="flex-row gap-4 items-center px-6 py-4">
@@ -46,5 +45,3 @@ const ResourceNotFound = ({ title, description, icon }: ResourceNotFoundProps) =
     </ScreenWrapper>
   );
 };
-
-export default ResourceNotFound;

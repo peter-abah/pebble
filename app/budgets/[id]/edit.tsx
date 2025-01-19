@@ -1,6 +1,6 @@
 import BudgetForm, { FormSchema } from "@/components/budget-form";
-import EmptyState from "@/components/empty-state";
-import ResourceNotFound from "@/components/resource-not-found";
+import{PlaceholderBlock}from "@/components/placeholder-block";
+import{ErrorScreen}from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
@@ -59,12 +59,12 @@ const EditBudget = () => {
   };
 
   if (isBudgetError) {
-    return <ResourceNotFound title="An error occured fetching budget" />;
+    return <ErrorScreen title="An error occured fetching budget" />;
   }
 
   if (isBudgetPending) {
     return (
-      <EmptyState
+      <PlaceholderBlock
         title="Loading..."
         icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
       />
@@ -72,7 +72,7 @@ const EditBudget = () => {
   }
 
   if (!budget) {
-    return <ResourceNotFound title="Budget not found" />;
+    return <ErrorScreen title="Budget not found" />;
   }
 
   return (
