@@ -135,45 +135,6 @@ const CategoryForm = ({ defaultValues, onSubmit }: CategoryFormProps) => {
           />
         </View>
 
-        {/* todo: implement parent category */}
-        {/* <View className="gap-2 relative">
-          <Label nativeID="parent" className="text-lg">
-            Parent Category
-          </Label>
-          <Controller
-            control={control}
-            render={({ field: { value, onChange, onBlur } }) => (
-              <View>
-                <Select
-                  value={
-                    value === undefined
-                      ? value
-                      : { value, label: value && (categoryMap[value]?.name || "Unknown") }
-                  }
-                  onValueChange={(option) => onChange(option?.value)}
-                >
-                  <SelectTrigger className="w-full" aria-labelledby="type">
-                    <SelectValue
-                      className="text-foreground text-sm native:text-lg"
-                      placeholder="None"
-                    />
-                  </SelectTrigger>
-                  <SelectContent insets={contentInsets} className="w-full">
-                    <ScrollView className="max-h-40" onStartShouldSetResponder={() => true}>
-                      {parentCategories.map((category) => (
-                        <SelectItem key={category.id} label={category.name} value={category.id} />
-                      ))}
-                    </ScrollView>
-                  </SelectContent>
-                </Select>
-                {errors.parentID?.message && (
-                  <Text className="text-xs text-destructive">{errors.parentID.message}</Text>
-                )}
-              </View>
-            )}
-            name="parentID"
-          />
-        </View> */}
         <View className="flex-row gap-4">
           <View className="gap-2 relative flex-1">
             <Label nativeID="color" className="text-lg">

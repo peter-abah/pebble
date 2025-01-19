@@ -25,6 +25,7 @@ export const resetDB = async () => {
   });
 };
 
+// todo: store account balance like a cache with a balance for all transactions maybe a join table.
 export const updateAccountBalanceForInsertedTransaction = async (
   transaction: SchemaTransaction
 ) => {

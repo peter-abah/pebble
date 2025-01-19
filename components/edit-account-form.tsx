@@ -12,7 +12,7 @@ import { CURRENCIES } from "@/lib/data/currencies";
 import { renderCurrencyLabel } from "@/lib/money";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import { TextInput, View } from "react-native";
+import { Alert, TextInput, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as z from "zod";
@@ -76,7 +76,10 @@ const EditAccountForm = ({ defaultValues, onSubmit }: EditAccountFormProps) => {
             name="name"
           />
         </View>
-        {/* TODO: BUGGG CHANGE IN ACCOUNT CURRENCY SHOULD MODIFY ALL ACCOUNT TRANSACTIONS and account balanxe */}
+        {/* todo: inform users of the type of change that occurs when currency is changed */}
+        {/* TODO: BUGGG CHANGE IN ACCOUNT CURRENCY SHOULD MODIFY ALL ACCOUNT TRANSACTIONS and account balanxe
+          this will involve account transactions being able to have diff currency from related account. also need
+          to store exchange rates in db */}
         <View className="gap-2 relative">
           <Label nativeID="currency" className="text-lg">
             Currency
@@ -145,8 +148,16 @@ const EditAccountForm = ({ defaultValues, onSubmit }: EditAccountFormProps) => {
                 checked={value || false}
                 // the user is only allowed to set the account as the main account, the user can unset
                 // the only way to unset is to set another account as the main account
-                // TODO: indicate this in the ui so the user is not confused
-                onCheckedChange={(v) => (defaultValues.isMainAccount ? undefined : onChange(v))}
+                onCheckedChange={(v) => {
+                  if (defaultValues.isMainAccount) {
+                    Alert.alert(
+                      "Cannot remove account as main account",
+                      "Set another account as the main account to remove this account as the main account."
+                    );
+                    return;
+                  }
+                  onChange(v);
+                }}
               />
             )}
             name="isMainAccount"
