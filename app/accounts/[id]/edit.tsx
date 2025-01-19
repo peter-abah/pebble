@@ -1,6 +1,7 @@
 import EditAccountForm, { FormSchema } from "@/components/edit-account-form";
-import { PlaceholderBlock } from "@/components/placeholder-block";
 import { ErrorScreen } from "@/components/error-screen";
+import { Loader } from "@/components/loader";
+import { PlaceholderBlock } from "@/components/placeholder-block";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
@@ -8,7 +9,6 @@ import { insertMainAccount, updateAccount } from "@/db/mutations/accounts";
 import { getAccount, getMainAccount } from "@/db/queries/accounts";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
-import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { queryClient } from "@/lib/react-query";
 import { valueToNumber } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
@@ -16,7 +16,6 @@ import { router, useLocalSearchParams } from "expo-router";
 import { PropsWithChildren } from "react";
 import { View } from "react-native";
 
-// add animation to loading indicator
 const EditAccount = () => {
   const params = useLocalSearchParams() as { id?: string };
   const id = valueToNumber(params.id);
@@ -57,10 +56,7 @@ const EditAccount = () => {
   if (isAccountPending || isMainAccountPending) {
     return (
       <Layout>
-        <PlaceholderBlock
-          title="Loading..."
-          icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
-        />
+        <PlaceholderBlock title="Loading..." icon={<Loader />} />
       </Layout>
     );
   }

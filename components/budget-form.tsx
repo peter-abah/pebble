@@ -11,11 +11,11 @@ import {
 import { Text } from "@/components/ui/text";
 import { getMainAccount } from "@/db/queries/accounts";
 import { CURRENCIES, CURRENCIES_MAP } from "@/lib/data/currencies";
-import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { renderCurrencyLabel } from "@/lib/money";
 import { isStringNumeric, titleCase } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
+import { Redirect } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import { TextInput, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -24,9 +24,9 @@ import * as z from "zod";
 import { AccountsInput } from "./accounts-input";
 import { CategoriesInput } from "./categories-input";
 import ColorPicker from "./color-picker";
-import { PlaceholderBlock } from "./placeholder-block";
 import { ErrorScreen } from "./error-screen";
-import { Redirect } from "expo-router";
+import { Loader } from "./loader";
+import { PlaceholderBlock } from "./placeholder-block";
 
 const PERIODS = ["weekly", "monthly", "yearly"] as const;
 const formSchema = z.object({
@@ -87,12 +87,7 @@ const BudgetForm = ({ defaultValues, onSubmit }: BudgetFormProps) => {
   });
 
   if (isMainAccountPending) {
-    return (
-      <PlaceholderBlock
-        title="Loading..."
-        icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
-      />
-    );
+    return <PlaceholderBlock title="Loading..." icon={<Loader />} />;
   }
   if (isMainAccountError) {
     return <ErrorScreen title="An error occured fetching  data" />;

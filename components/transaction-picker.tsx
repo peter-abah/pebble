@@ -16,7 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 import { memoize } from "proxy-memoize";
 import { useMemo, useState } from "react";
 import { Dimensions, FlatList } from "react-native";
-import{PlaceholderBlock}from "./placeholder-block";
+import { PlaceholderBlock } from "./placeholder-block";
 import TransactionCard from "./transaction-card";
 import { Input } from "./ui/input";
 

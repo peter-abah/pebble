@@ -1,4 +1,5 @@
 import { ErrorScreen } from "@/components/error-screen";
+import { Loader } from "@/components/loader";
 import { PlaceholderBlock } from "@/components/placeholder-block";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TimePeriodPicker from "@/components/time-period-picker";
@@ -9,7 +10,6 @@ import { getTransactions } from "@/db/queries/transactions";
 import { createChartData } from "@/lib/app-utils";
 import { CREDIT_TRANSACTION_TYPES, DEBIT_TRANSACTION_TYPES } from "@/lib/constants";
 import { SPECIAL_CATEGORIES } from "@/lib/data";
-import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { formatMoney } from "@/lib/money";
 import { useAppStore } from "@/lib/store";
 import { TimePeriod } from "@/lib/types";
@@ -67,12 +67,7 @@ const Stats = () => {
   });
 
   if (isMainAccountPending) {
-    return (
-      <PlaceholderBlock
-        title="Loading..."
-        icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
-      />
-    );
+    return <PlaceholderBlock title="Loading..." icon={<Loader />} />;
   }
 
   if (isCategoriesError || isTransactionsError || isMainAccountError) {

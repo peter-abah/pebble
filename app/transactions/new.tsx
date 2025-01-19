@@ -1,5 +1,6 @@
-import{PlaceholderBlock}from "@/components/placeholder-block";
-import{ErrorScreen}from "@/components/error-screen";
+import { ErrorScreen } from "@/components/error-screen";
+import { Loader } from "@/components/loader";
+import { PlaceholderBlock } from "@/components/placeholder-block";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionForm, { FormSchema } from "@/components/transaction-form";
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,6 @@ import { getAccounts, getMainAccount } from "@/db/queries/accounts";
 import { SchemaAccount, SchemaTransaction, transactionsTable } from "@/db/schema";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
-import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { calcMoneyValueInMinorUnits } from "@/lib/money";
 import { queryClient } from "@/lib/react-query";
 import { StringifyValues } from "@/lib/types";
@@ -38,7 +38,7 @@ const CreateTransaction = () => {
     isPending: isMainAccountPending,
   } = useQuery({
     queryKey: ["accounts", "mainAccount"],
-    queryFn: async () => await getMainAccount() ?? null,
+    queryFn: async () => (await getMainAccount()) ?? null,
   });
 
   const onSubmit = async (data: FormSchema) => {
@@ -163,12 +163,7 @@ const CreateTransaction = () => {
   const mainAccount = data?.account;
 
   if (isMainAccountPending) {
-    return (
-      <PlaceholderBlock
-        title="Loading..."
-        icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
-      />
-    );
+    return <PlaceholderBlock title="Loading..." icon={<Loader />} />;
   }
 
   if (isAccountsError || isMainAccountError) {

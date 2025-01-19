@@ -1,6 +1,7 @@
+import { ErrorScreen } from "@/components/error-screen";
+import { Loader } from "@/components/loader";
 import { PlaceholderBlock } from "@/components/placeholder-block";
 import { usePromptModal } from "@/components/prompt-modal";
-import { ErrorScreen } from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionForm, { FormSchema } from "@/components/transaction-form";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,6 @@ import { getTransaction } from "@/db/queries/transactions";
 import { SchemaTransaction, transactionsTable } from "@/db/schema";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
-import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { TrashIcon } from "@/lib/icons/Trash";
 import {
   calcMoneyValueInMajorUnits,
@@ -183,12 +183,7 @@ const EditTransaction = () => {
   };
 
   if (isTransactionPending) {
-    return (
-      <PlaceholderBlock
-        title="Loading..."
-        icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
-      />
-    );
+    return <PlaceholderBlock title="Loading..." icon={<Loader />} />;
   }
 
   if (isTransactionError || isAccountsError) {

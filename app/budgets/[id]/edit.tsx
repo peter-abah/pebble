@@ -1,5 +1,6 @@
 import BudgetForm, { FormSchema } from "@/components/budget-form";
 import { ErrorScreen } from "@/components/error-screen";
+import { Loader } from "@/components/loader";
 import { PlaceholderBlock } from "@/components/placeholder-block";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,6 @@ import { updateBudget } from "@/db/mutations/budgets";
 import { getBudget } from "@/db/queries/budgets";
 import { CURRENCIES_MAP } from "@/lib/data/currencies";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
-import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { calcMoneyValueInMajorUnits } from "@/lib/money";
 import { queryClient } from "@/lib/react-query";
 import { NonEmptyArray } from "@/lib/types";
@@ -63,12 +63,7 @@ const EditBudget = () => {
   }
 
   if (isBudgetPending) {
-    return (
-      <PlaceholderBlock
-        title="Loading..."
-        icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
-      />
-    );
+    return <PlaceholderBlock title="Loading..." icon={<Loader />} />;
   }
 
   if (!budget) {

@@ -1,6 +1,7 @@
 import CategoryForm, { FormSchema } from "@/components/category-form";
-import{PlaceholderBlock}from "@/components/placeholder-block";
-import{ErrorScreen}from "@/components/error-screen";
+import { ErrorScreen } from "@/components/error-screen";
+import { Loader } from "@/components/loader";
+import { PlaceholderBlock } from "@/components/placeholder-block";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
@@ -8,7 +9,6 @@ import { updateCategory } from "@/db/mutations/categories";
 import { getCategory } from "@/db/queries/categories";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
 import { CATEGORY_ICONS_NAMES } from "@/lib/icons/category-icons";
-import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { queryClient } from "@/lib/react-query";
 import { valueToNumber } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
@@ -24,7 +24,7 @@ const CreateCategory = () => {
     isPending: isCategoryPending,
   } = useQuery({
     queryKey: ["categories", id],
-    queryFn: () => (id ? getCategory(id) : undefined),
+    queryFn: async () => (id ? (await getCategory(id)) ?? null : null),
   });
 
   const onSubmit = async ({ name, icon, color, iconType, type, parentID }: FormSchema) => {
@@ -44,12 +44,7 @@ const CreateCategory = () => {
   };
 
   if (isCategoryPending) {
-    return (
-      <PlaceholderBlock
-        title="Loading..."
-        icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
-      />
-    );
+    return <PlaceholderBlock title="Loading..." icon={<Loader />} />;
   }
 
   if (isCategoryError) {

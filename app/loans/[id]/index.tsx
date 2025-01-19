@@ -1,7 +1,8 @@
-import { PlaceholderBlock } from "@/components/placeholder-block";
-import FloatingAddButton from "@/components/floating-add-button";
-import { usePromptModal } from "@/components/prompt-modal";
 import { ErrorScreen } from "@/components/error-screen";
+import FloatingAddButton from "@/components/floating-add-button";
+import { Loader } from "@/components/loader";
+import { PlaceholderBlock } from "@/components/placeholder-block";
+import { usePromptModal } from "@/components/prompt-modal";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,6 @@ import { deleteTransaction } from "@/db/mutations/transactions";
 import { getTransaction } from "@/db/queries/transactions";
 import { calculateAmountPaidInLoan, renderDate } from "@/lib/app-utils";
 import { ChevronLeftIcon } from "@/lib/icons/ChevronLeft";
-import { LoaderCircleIcon } from "@/lib/icons/loader-circle";
 import { PencilIcon } from "@/lib/icons/Pencil";
 import { TrashIcon } from "@/lib/icons/Trash";
 import { convertTransactionAmountToMoney, formatMoney } from "@/lib/money";
@@ -53,12 +53,7 @@ const LoanScreen = () => {
   });
 
   if (isLoanPending) {
-    return (
-      <PlaceholderBlock
-        title="Loading..."
-        icon={<LoaderCircleIcon size={100} className="text-muted-foreground" />}
-      />
-    );
+    return <PlaceholderBlock title="Loading..." icon={<Loader />} />;
   }
 
   if (isLoanError) {
