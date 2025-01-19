@@ -130,17 +130,36 @@ export const deleteTransaction = async (id: SchemaTransaction["id"]) => {
     .from(transactionsTable)
     .where(eq(transactionsTable.id, id));
 
-  // todo: throw or fail silently
+  // todo: throw or fail silently or log
   if (!transaction) {
     throw Error(`Transaction with id ${id} does not exist. Cannot delete transaction`);
   }
+
   await db.transaction(async (tx) => {
+    /* todo: remove the relation in all related transactions (loan and loan payment)
+     * instead of deleting the payment transactions.
+     * need to remove a check constraint. don't know if that is okay
+
+    await db
+      .update(transactionsTable)
+      .set({ loan_id: null })
+      .where(eq(transactionsTable.loan_id, id)); 
+    */
+
+    const relatedTransactions = await db
+      .select()
+      .from(transactionsTable)
+      .where(eq(transactionsTable.loan_id, id));
+    await batchDeleteTransactions(relatedTransactions);
+
     await updateAccountBalanceForDeletedTransaction(transaction);
     await db.delete(transactionsTable).where(eq(transactionsTable.id, id));
   });
 };
 
 export const batchDeleteTransactions = async (transactions: Array<SchemaTransaction>) => {
+  if (transactions.length === 0) return;
+
   await db.transaction(async (tx) => {
     await db.delete(transactionsTable).where(
       inArray(

@@ -150,7 +150,7 @@ const EditTransaction = () => {
         const [loanTransaction] = await db
           .select()
           .from(transactionsTable)
-          .where(eq(transactionsTable, loanID));
+          .where(eq(transactionsTable.id, loanID));
         if (!loanTransaction) {
           Alert.alert("Loan transaction does not exist");
           return;

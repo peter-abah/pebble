@@ -43,9 +43,9 @@ export const transactionsTable = sqliteTable(
     due_date: text(), // truly nullable
 
     // loan payment transaction
-    loan_id: integer()
-      // todo: check in app to convert to normal transaction or just inform it is going to be deleted
-      .references((): AnySQLiteColumn => transactionsTable.id, { onDelete: "cascade" }),
+    loan_id: integer().references((): AnySQLiteColumn => transactionsTable.id, {
+      onDelete: "cascade",
+    }),
     ...timestamps,
   },
   (table) => ({

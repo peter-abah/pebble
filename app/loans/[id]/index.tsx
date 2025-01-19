@@ -1,7 +1,7 @@
-import{PlaceholderBlock}from "@/components/placeholder-block";
+import { PlaceholderBlock } from "@/components/placeholder-block";
 import FloatingAddButton from "@/components/floating-add-button";
 import { usePromptModal } from "@/components/prompt-modal";
-import{ErrorScreen}from "@/components/error-screen";
+import { ErrorScreen } from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import TransactionCard from "@/components/transaction-card";
 import { Button } from "@/components/ui/button";
@@ -47,7 +47,8 @@ const LoanScreen = () => {
     router.back();
   };
   const { Modal: DeleteModal, openModal: openDeleteModal } = usePromptModal({
-    title: `Are you sure you want to delete ${loan?.title} loan.`,
+    title: "Are you sure you want to delete this transaction?",
+    description: "This will also deleted any payment transactions for the loan.",
     onConfirm: onDelete,
   });
 

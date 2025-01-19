@@ -194,7 +194,6 @@ export const generateRandomTransactionValues = (
   };
 };
 
-// todo: changing and setting main account
 export const loadMockData = async () => {
   await resetDB();
 
