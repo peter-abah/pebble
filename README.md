@@ -1,50 +1,54 @@
-# Welcome to your Expo app 👋
+# Pebble - Expense Tracker App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Pebble is a mobile application built using Expo and React Native that helps users manage their finances by tracking expenses, incomes, loans, and budgets. The app provides a user-friendly interface to manage accounts, transactions, and budgets efficiently.
 
-## Get started
+## Table of Contents
 
-1. Install dependencies
+- Features
+- Installation
+- License
 
-   ```bash
-   npm install
-   ```
+## Features
 
-2. Start the app
+- **Account Management**: Create and manage multiple accounts with different currencies.
+- **Transaction Tracking**: Record and categorize expenses, incomes, transfers, and loans.
+- **Budgeting**: Set up budgets and track spending against them.
+- **Loan Management**: Track lent and borrowed money, including repayments.
+- **Statistics**: Visualize spending and income data with charts.
+- **Notifications**: Set reminders for transactions and upcoming payments.
+- **Data Export/Import**: Export and import data in various formats.
 
-   ```bash
-    npx expo start
-   ```
+## Installation
 
-In the output, you'll find options to open the app in a
+To get started with Pebble, follow these steps:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+1. **Clone the repository**:
+    ```sh
+    git clone https://github.com/your-username/pebble.git
+    cd pebble
+    ```
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+2. **Install dependencies**:
+    ```sh
+    npm install
+    ```
 
-## Get a fresh project
+3. **Start the development server**:
+    ```sh
+    npm start
+    ```
 
-When you're ready, run:
+4. **Run on Android**:
+    ```sh
+    npm run android
+    ```
 
-```bash
-npm run reset-project
-```
+5. **Run on iOS**:
+    ```sh
+    npm run ios
+    ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-## Learn more
+## License
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
