@@ -1,7 +1,7 @@
 import { BudgetCard } from "@/components/budget-card";
-import{PlaceholderBlock}from "@/components/placeholder-block";
+import { PlaceholderBlock } from "@/components/placeholder-block";
 import FloatingAddButton from "@/components/floating-add-button";
-import{ErrorScreen}from "@/components/error-screen";
+import { ErrorScreen } from "@/components/error-screen";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,7 +33,7 @@ const Budgets = () => {
 
   return (
     <ScreenWrapper className="!pb-6">
-      <View className="flex-row gap-4 items-center py-4 px-6">
+      <View className="flex-row gap-4 items-center pt-8 pb-4 px-6">
         <Button
           onPress={() => router.back()}
           className="rounded-full p-0 active:bg-accent -ml-2 items-center justify-center"

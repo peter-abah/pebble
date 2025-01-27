@@ -26,7 +26,7 @@ const Settings = () => {
 
   return (
     <ScreenWrapper>
-      <View className="flex-row gap-4 items-center pt-8 px-6 py-4">
+      <View className="flex-row gap-4 items-center pt-8 px-6 pb-4">
         <Button
           onPress={() => router.back()}
           className="rounded-full p-0 active:bg-accent -ml-2 items-center justify-center"

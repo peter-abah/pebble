@@ -121,7 +121,7 @@ const Stats = () => {
 
   return (
     <ScreenWrapper className="!pb-6">
-      <View className="flex-row gap-4 items-center py-4 px-6 justify-between">
+      <View className="flex-row gap-4 items-center pt-8 pb-4 px-6 justify-between">
         <Text className="font-sans_semibold text-2xl">Stats</Text>
       </View>
 

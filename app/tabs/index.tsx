@@ -25,7 +25,7 @@ export default function Home() {
 
   return (
     <ScreenWrapper className="h-full">
-      <ScrollView contentContainerStyle={{ padding: 24 }}>
+      <ScrollView contentContainerClassName="pt-8 p-6">
         <Text className="font-sans_bold text-3xl mb-6">Home</Text>
         <View>
           <View className="gap-2 flex-row">

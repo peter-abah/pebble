@@ -109,7 +109,7 @@ const AccountScreen = () => {
 
   return (
     <ScreenWrapper className="pb-6">
-      <View className="flex-row gap-4 items-center px-6 py-4">
+      <View className="flex-row gap-4 items-center px-6 pt-8 pb-4">
         <Button
           onPress={() => router.back()}
           className="rounded-full p-0 active:bg-accent -ml-2 items-center justify-center"

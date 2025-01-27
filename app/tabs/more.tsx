@@ -24,7 +24,7 @@ const More = () => {
 
   return (
     <ScreenWrapper>
-      <View className="flex-row gap-4 items-center pt-8 px-6 py-4 justify-between">
+      <View className="flex-row gap-4 items-center pt-8 px-6 pb-4 justify-between">
         <Text className="font-sans_semibold text-2xl">More Actions</Text>
       </View>
 

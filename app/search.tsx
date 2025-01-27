@@ -58,7 +58,7 @@ const Search = () => {
 
   return (
     <ScreenWrapper className="!pb-6">
-      <View className="flex-row gap-4 items-center py-4 px-6">
+      <View className="flex-row gap-4 items-center pt-8 pb-4 px-6">
         <Button
           onPress={() => router.back()}
           className="rounded-full p-0 -ml-2 items-center justify-center"
